@@ -1,27 +1,30 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.8 1994/11/17 02:44:47 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.9 1994/11/17 03:11:56 Gussmann Exp $
 %
 % $Author: Gussmann $
 %
-% $Date: 1994/11/17 02:44:47 $
+% $Date: 1994/11/17 03:11:56 $
 %
-% $Header: E:/DINBRF/RCS/dinbrief.d%v 1.8 1994/11/17 02:44:47 Gussmann Exp Gussmann $
+% $Header: E:/DINBRF/RCS/dinbrief.d%v 1.9 1994/11/17 03:11:56 Gussmann Exp $
 %
-% $Locker: Gussmann $
+% $Locker:  $
 %
 % $Name:  $
 %
 % $RCSfile: dinbrief.d%v $
 %
-% $Revision: 1.8 $
+% $Revision: 1.9 $
 %
 % $Source: E:/DINBRF/RCS/dinbrief.d%v $
 %
 % $State: Exp $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.9  1994/11/17 03:11:56  Gussmann
+% Error corrected within the documentation.
+%
 % Revision 1.8  1994/11/17 02:44:47  Gussmann
 % - More documentation added.
 % - Errors corrected:
@@ -105,30 +108,37 @@
 %   This document describs the usage and the documentation of a new
 %   \LaTeX-Style or a \LaTeXe-Class. This class/style implements
 %   a new document layout for writing letters, according to the rules
-%   of DIN (Deutsches Institut f\"ur Normung, german institute of
-%   standardization). Therefore the rules how to write such letters
+%   of DIN (Deutsches Institut f\"ur Normung, German standardization
+%   institute). Therefore the rules how to write such letters
 %   are in German, because we think there is less interest outside
 %   of Germany. Of course most of the macros are explained in English.
 % \end{abstract}
 %
 % \tableofcontents
 %
-% \section{The document style dinbrief}
-%
-%    \begin{macrocode}
+% ^^A   \begin{macrocode}
+% \iffalse
 %<*documentation|dintab>
-%    \end{macrocode}
+% \fi
+% ^^A   \end{macrocode}
 %
-%    \begin{macrocode}
+% \iffalse
 \expandafter\ifx\csname documentclass\endcsname\relax
-    \documentstyle[12pt,german]{article}
+    \documentstyle[10pt,german]{article}
     \typeout{Using the commando \string\documentstyle.}
   \else
-    \documentclass[12pt]{article}
+    \documentclass[10pt]{article}
     \usepackage{german}
     \typeout{Using the commando \string\documentclass.}
   \fi
-%    \end{macrocode}
+
+\title{Standard Document Class `dinbrief'\\ for \LaTeX{} version 2e\\
+       Standard Document Style `dinbrief'\\ for \LaTeX{} version 2.09}
+
+\author{%
+Copyright (C) 1993, 94\\ by Klaus Dieter Braune, Richard Gussmann
+}
+% \fi
 %
 \newenvironment{decl}%
     {\par\small\addvspace{4.5ex plus 1ex}%
@@ -148,6 +158,22 @@
   \newcommand{\oarg}[1]{{\tt[}\m{#1}{\tt]}}
 \fi
 %
+\makeatletter
+\expandafter\ifx\csname cmd\endcsname\relax
+  \def\cmd#1{\cs{\expandafter\cmd@to@cs\string#1}}
+\fi
+%
+\expandafter\ifx\csname cmd@to@cs\endcsname\relax
+\def\cmd@to@cs#1#2{\char\number`#2\relax}
+\fi
+\makeatother
+%
+\expandafter\ifx\csname cs\endcsname\relax
+\def\cs#1{{\tt\char`\\#1}}
+\fi
+%
+\newcommand{\env}[2]{\cmd{#1}{\protect\tt\char`\{#2\char`\}}}
+%
 \germanTeX
 %
 \expandafter\ifx\csname emph\endcsname\relax
@@ -155,13 +181,14 @@
                                  %  definition!
 \fi
 
-%    \begin{macrocode}
+% \iffalse
 \begin{document}
-%    \end{macrocode}
+\maketitle
+% \fi
 %
-%    \begin{macrocode}
+% \iffalse
 %</documentation|dintab>
-%    \end{macrocode}
+% \fi
 %    \begin{macrocode}
 %<*documentation>
 %    \end{macrocode}
@@ -170,56 +197,71 @@
 \renewcommand{\topfraction}{0.65}
 \renewcommand{\bottomfraction}{0.85}
 %
-\section{Users Guide}
+\expandafter\ifx\csname sect\endcsname\relax
+  \let\sect=\section
+\fi
+\expandafter\ifx\csname ssect\endcsname\relax
+  \let\ssect=\subsection
+\fi
+\expandafter\ifx\csname sssect\endcsname\relax
+  \let\sssect=\subsubsection
+\fi
+%
+% ^^A Title switch
+\section{Benutzerhandbuch (User's Guide)}
 %
 % ^^A\subsection{Briefe}\index{Briefe}
 
-\LaTeX\ erlaubt neben der mathe"-ma"-tisch-wissen"-schaft"-lichen
-Textverarbeitung u.a.\ auch das Erstellen
-von Briefen\index{Briefe}.
-F"ur englische Briefe existiert in der Makrosammlung \LaTeX\ die
-Style-Klasse {\tt letter}. Deutsche Briefe k"onnen mit dem Stil {\tt dinbrief}
+Mit \LaTeX\ k"onnen (nat"urlich) auch Briefe geschrieben werden.
+F"ur englische Briefe gibt es die Dokumentklasse \cs{letter}.
+Deutsche Briefe k"onnen mit dem Stil \cs{dinbrief}
 geschrieben werden.
- 
-\subsection{\LaTeX-Briefe (letter)}\index{Briefe, \LaTeX}
-\index{letter}\index{Briefe!letter}
- 
-Wird als Dokumentklasse {\tt letter} (oder eine Variante davon) angegeben,
-kann zwischen \verb+\begin{document}+ und \verb+\end{document}+ ein oder
-mehrere Briefe geschrieben werden.
- 
-Mit \verb+\signature{...}+\index{signature@\verb+\signature+}  und
-\verb+\address{...}+\index{address@\verb+\address+}
-definiert man Name und Adresse des Absenders.
-Das Datum kann durch den Befehl \verb+\date{...}+\index{date@\verb+\date+}
-fest eingesetzt werden (standardm"a"sig ist es auf das aktuelle
-Tagesdatum eingestellt), ebenso wie die Telefonnummer mit
-\verb+\telephone{...}+.\index{telephone@\verb+\telephone+}
- 
-\verb+\begin{letter}{...}+
-beginnt einen Brief an den im Parameter mit Name und Adresse angegebenen
-Empf"anger. In \verb+{...}+ f"ugt man hierbei die Adresse des
-Adressaten ein. Durch \verb+\encl{...}+\index{encl@\verb+\encl+}
-k"onnen Anlagen eingef"ugt
-werden, \verb+\cc{...}+\index{cc@\verb+\cc+} steht f"ur den Verteiler zur
-Verf"ugung und \verb+\ps{...}+\index{ps@\verb+\ps+} ist f"ur das "ubliche
-P.S. da.
- 
-\verb+\opening{...}+\index{opening@\verb+\opening+} (mu"s angegeben werden)
-schreibt die Anrede und \verb+\closing{...}+\index{closing@\verb+\closing+}
-den abschlie"senden Gru"s, an den automatisch
-die mit \verb+\signature{...}+\index{signature@\verb+\signature+} vereinbarte
-Unterschrift angef"ugt wird.
- 
-Die Gliederung in Abs"atze geschieht wie immer in \LaTeX\ durch Einf"ugen
-einer Leerzeile, dadurch l"a"st der Formatierer dann im Dokument ebenfalls
-etwa eine Leerzeile Platz. \verb+\end{letter}+ beendet den jeweiligen Brief.
- 
-Durch Angabe des Befehls \verb+\makelabels+ vor \verb+\begin{document}+,
-werden au"serdem Adre"s-Etiketten erzeugt.
- 
-Abb.~\ref{brief} enth"alt ein Beispiel f"ur einen Brief.
 
+In den Briefen k"onnen u.a.\ Formeln,
+Tabellen und beliebige Listen verwendet werden.
+In einem Dokument k"onnen mehrere Briefe geschrieben werden.
+Die Gliederung in Abs"atze erfolgt durch Einf"ugen einer
+Leerzeile (wie in \LaTeX\ "ublich).
+
+\sect{Befehle in der \protect\cs{dinbrief}-Klasse}
+\index{Briefe!DIN 676}\index{DIN-Brief}\index{Briefe!dinbrief@\cs{dinbrief}}
+
+Bereits vor \env\begin{document} kann man Angaben machen, die f"ur
+alle Briefe g"ultig sind, z.B.\ {\bf Absender\/} (\cs{address}
+bzw.\ (\cs{backaddress}), {\bf Absendeort\/} (\cs{place}),
+{\bf Telefon\/} (\cs{phone}) und {\bf Unterschrift\/} (\cs{signature}).
+
+\ssect{Aus der \protect\cs{letter}-Klasse "ubernommene Befehle}
+
+Jeder Brief steht in einer eigenen \cs{letter}-Umgebung.
+Der Empf"anger wird als Argument des
+\env\begin{letter}-Befehls angegeben
+(\env\begin{letter}\arg{Anschrift}).
+
+Eine entscheidende Bedeutung beim Schreiben von Briefen
+hat der \cs{opening}-Befehl. Nur dieser Befehl setzt
+den Briefkopf, die Absenderangaben und die Adresse des
+Empf"angers. Die {\bf Anrede des Empf"angers\/} wird als
+Argument angegeben (\cmd\opening\arg{Anrede}).
+
+Danach folgt der eigentliche Brieftext. Die abschlie"sende
+{\bf Gru"sformel\/} wird mit dem Befehl \cmd\closing\arg{Gru"sformel}
+gesetzt. Dieser Befehl f"ugt auch die maschinenschriftliche
+Wiederholung der Unterschrift an, wie sie mit dem
+\cs{signature}-Befehl festgelegt wurde.
+
+Im Anschlu"s an die Gru"sformel werden {\bf Anlagen-\/} \cmd\encl\arg{Anlage},
+{\bf Verteilvermerke\/} \cmd\cc\arg{Verteiler} und das {\bf Postscriptum\/}
+\cmd\ps\arg{Postscriptum} an den
+Brief angef"ugt.
+
+Mit dem Befehl \cs{makelabels} (vor \env\begin{document})
+werden zus"atzlich {\bf Adre"s-Etiketten\/} erzeugt.
+
+Dar"uberhinaus wurden die oben erw"ahnten Befehle
+\cs{address}, \cs{place} und \cs{signature} aus
+der \cs{letter}-Klasse "ubernommen.
+ 
 \begin{figure}[p]
 \begin{center}
 {\small
@@ -269,40 +311,197 @@ unseren Mikrowellenherd...
 \end{center}
 \end{figure}
 
-\subsection{Deutsche Briefe (dinbrief)}\index{Briefe, deutsche}
-\index{dinbrief}
+\ssect{Zus"atzliche Befehle im DIN-Brief}
 
-Die Dokument Class Option {\tt dinbrief} unterscheidet sich in folgendem vom
-{\tt letter}-Stil:
+Die {\bf Telefonnummer\/} des Absenders wird mit dem Befehl
+\cmd\phone\arg{Vorwahl}\arg{Rufnummer/Durchwahl}
+festgelegt. Sie wird in der Bezugszeichenzeile
+ausgegeben.
 
-Neben dem deutschen Layout sind zus"atzliche Befehle verf"ugbar:
+Der {\bf Bezug\/} auf einen empfangenen Brief ist m"oglich
+mit Hilfe des Befehls
+\cmd\yourmail\arg{Ihre Zeichen, Ihre Nachricht vom}.
+Eine entsprechende Kennzeichnung eigener Briefe
+erfolgt durch den Befehl
+\cmd\sign\arg{Unsere Zeichen, unsere Nachricht vom}.
 
-\verb+\phone{+{\it Vorwahl\/}\verb+}{+{\it Rufnummer\/}\verb+}+
-\index{phone@\verb+\phone+},
-\verb+\concern{..}+\index{concern@\verb+\concern+}, um ein "`Betreff"'
-einzuf"ugen, \verb+\yourmail{...}+\index{yourmail@\verb+\yourmail+} f"ur
-{\it Ihre Zeichen, Ihre Nachricht vom\/} und \verb+\sign{...}+
-\index{sign@\verb+\sign+}, um {\it Unsere Zeichen\/} anzugeben.
-Au"serdem l"a"st sich mit \verb+\backaddress{...}+
-\index{backaddress@\verb+\backaddress+} die Adresse des
-Absenders im Fenster des Briefkuverts einblenden. Zudem erlaubt es
-\verb+\place{...}+\index{place@\verb+\place+} den Brief au"ser mit dem Datum
-auch mit dem Ort des Schreibens zu versehen.
+Der {\bf Name des Sachbearbeiters\/} kann durch den Befehl
+\cmd\writer\arg{Sachbearbeiter} festgelegt werden.
 
-\subsubsection{Fenster}\index{Fenster}
- 
+Die Bezugszeichenzeile wird nur gesetzt, falls einer der
+Befehle \cs{yourmail}, \cs{sign} oder \cs{writer} verwendet
+wird. Der Befehl \cs{writer} schaltet zus"atzlich auf das
+in der DIN Norm~676 (Entwurf Mai~1991) festgelegte Layout um.
+
+Die stichworthaltige Inhaltsangabe (der "`Betreff"') des
+Briefes wird durch den Befehl \cs{concern}\arg{"`Betreff"'}
+angegeben. Mit \cs{backaddress} wird die Adresse festgelegt,
+die im Brieffenster als Absenderadresse eingeblendet wird.
+
+Abbildung~\ref{brief} enth"alt ein Beispiel f"ur einen Brief.
+Die Anwendung der Befehle und ihre Reihenfolge in der Quelldatei
+kann dem Beispiel entnommen werden.
+
 F"ur alle, denen das "`Fenster"' um die Adresse nicht gef"allt,
 besteht die M"oglichkeit, durch Angabe von
-\verb+\nowindowrules+\index{nowindowrules@\verb+\nowindowrules+}
-vor dem Befehl \verb+\opening+ dieses abzuschalten.
-Durch \verb+\windowrules+\index{windowrules@\verb+\windowrules+} l"a"st es
+\cmd\nowindowrules\index{nowindowrules@\verb+\nowindowrules+}
+vor dem Befehl \cmd\opening dieses abzuschalten.
+Durch \cmd\windowrules\index{windowrules@\verb+\windowrules+} l"a"st es
 sich wieder aktivieren.
  
-\subsubsection{Faltmarkierung}\index{Faltmarkierung}
- 
 Die Faltmarkierung am linken Papierrand wird durch den Befehl
-\verb+\nowindowtics+\index{nowindowtics@\verb+\nowindowtics+} ab- und mit
-\verb+\windowtics+\index{windowtics@\verb+\windowtics+} wieder angeschaltet.
+\cmd\nowindowtics\index{nowindowtics@\verb+\nowindowtics+} ab- und mit
+\cmd\windowtics\index{windowtics@\verb+\windowtics+} wieder angeschaltet.
+
+\ssect{Befehlsreferenz}
+
+\begin{description}
+%  ^^A\item[\env\begin{document}] \hfil\break
+%  ^^A\item[\env\end{document}] \hfil\break
+  \item[\env\begin{letter}\arg{{Anschrift}} \dots\ \env\end{letter}] \hfil\break
+        Diese Befehle rahmen jeden einzelnen Brief ein. Die
+        Anschrift des Empf"angers wird als Argument des Befehls
+        \env\begin{letter}\arg{Anschrift} angegeben.
+        Die einzelnen Zeilen in der Anschrift werden durch
+        \cmd\\ getrennt.
+        Es d"urfen weitere Briefe folgen.
+
+  \item[\cmd\signature\arg{Unterschrift des Absenders}] \hfil\break
+        Dieser Befehl legt die maschinenschriftliche
+        Wiederholung der Unterschrift fest.
+        Der Befehl gilt solange, bis ein weiterer
+        \cmd\signature-Befehl eine neue "`Unterschrift"'
+        festlegt.
+
+  \item[\cmd\address\arg{{Name und Adresse des Absenders}}] \hfil\break
+        Die Adresse des Absenders wird vereinbart.
+        Dieser Befehl gilt f"ur den laufenden und alle
+        weiteren Briefe; er gilt solange, bis ein
+        weiterer \cmd\address-Befehl angegeben wird.
+
+  \item[\cmd\backaddress\arg{{Absenderadresse im Brief\kern 0pt fenster}}] \hfil\break
+        Der Befehl legt die Anschrift des Absenders oben im
+        Anschriftenfeld des Briefs fest.
+
+  \item[\cmd\place\arg{{Ortsangabe im Brief}}] \hfil\break
+
+
+
+  \item[\cmd\date\arg{{Briefdatum}}] \hfil\break
+        Wird dieser Befehl nicht angegeben, so wird das
+        aktuelle Tagesdatum im Brief verwendet.
+
+  \item[\cmd\yourmail\arg{{Ihre Zeichen, Ihre Nachricht vom}}] \hfil\break
+        Dieser Befehl legt den Inhalt des Feldes {\bf Ihre
+        Zeichen, Ihre Nachricht vom\/} in der
+        Bezugszeichenzeile fest.
+
+  \item[\cmd\sign\arg{{Unsere Zeichen (, unsere Nachricht vom)}}] \hfil\break
+        Dieser Befehl legt den Inhalt des Feldes
+        {\bf Unsere Zeichen \dots\/} fest.
+
+  \item[\cmd\phone\arg{{Vorwahl}}\arg{{Rufnummer/Durchwahl}}] \hfil\break
+        Die Telefonnummer aufgeteilt nach Vorwahl und Rufnummer oder
+        Durchwahl wird mit dem Befehl \cmd\phone{} vereinbart. Diese
+        Angaben werden in der Bezugszeichenzeile ausgegeben.
+
+  \item[\cmd\writer\arg{{Sachbearbeiter}}] \hfil\break
+        Die Neufassung der Norm DIN~676 vom Mai 1991 sieht in
+        der Bezugszeichenzeile ein weiteres Feld f"ur den
+        Sachbearbeiter vor. Mit dem Befehl \cmd\writer{}
+        kann ein solcher Sachbearbeiter angegeben werden.
+
+
+  \item[\cmd\concern\arg{{Betreff}}] \hfil\break
+
+
+  \item[\cmd\opening\arg{{Anrede}}] \hfil\break
+        Dieser Befehl vereinbart die Anrede des Empf"angers und setzt
+        den Briefkopf, die Empf"angerangaben, eine eventuell vorhandene
+        Bezugszeichenzeile, den Betreff und die Anrede des Empf"angers.
+        Aus diesem Grund darf dieser Befehl auch nicht fehlen.
+
+  \item[\cmd\centeraddress] \hfil\break
+        Die Empf"angeranschrift wird im Feld f"ur das Brieffenster
+        vertikal zentriert ausgerichtet.
+
+  \item[\cmd\normaladdress] \hfil\break
+        Die Empf"angeranschrift wird nicht im Feld f"ur das Brieffenster
+        vertikal zentriert ausgerichtet. Die Anschrift f"ullt das
+        Anschriftenfeld un unten beginnend auf.
+
+  \item[\cmd\encl\arg{{Anlagen}}] \hfil\break
+        Der Vermerk "uber dem Brief beigef"ugte Anlagen
+        wird mit dem Befehl \cmd\encl{} an den Brief
+        angeh"angt. Die einzelnen Eintragungen k"onnen
+        durch \cmd\\{} getrennt werden.
+
+        Die Reihenfolge der Verwendung der Befehle
+        \cmd\encl, \cmd\cc{} und \cmd\ps{} ist
+        beliebig. Die Norm empfiehlt allerdings
+        den Anlagenvermerk vor dem Verteilvermerk
+        anzubringen.
+
+  \item[\cmd\cc\arg{{Verteiler}}] \hfil\break
+        Der Vermerk "uber weitere Empf"anger dieses Briefes wird
+        mit dem Befehl \cmd\cc{} gesetzt. Die einzelnen Eintragungen
+        k"onnen durch \cmd\\ getrennt werden.
+
+  \item[\cmd\ps\arg{{Postscriptum}}] \hfil\break
+        Gesch"aftsbriefe enthalten kein Postskriptum.
+        Es wurde trotzdem die M"oglichkeit geschaffen,
+        ein solches zu verwenden. Mit dem Befehl
+        \cmd\ps{} wird ein Postskriptum gesetzt.
+
+  \item[\cmd\makelabels] \hfil\break
+        Dieser Befehl mu"s in der Pr"aambel stehen; also
+        zwischen \cmd\documentstyle{} oder \cmd\documentclass{}
+        und dem \env\begin{document}-Befehl.
+        Mit diesem Befehl wird das Ausdrucken von
+        Adress-Etiketten aktiviert.
+
+  \item[\cmd\labelstyle\arg{{Stil der Label}}] \hfil\break
+        Dieser Befehl vereinbart das Layout der
+        Adress-Etiketten. Es gibt Drucker, die in der
+        Lage sind, Briefumschl"age zu bedrucken. Mit diesem
+        Befehl legt man die Form der Briefumschl"age fest.
+
+  \item[\cmd\bottomtext\arg{{Feld f\"ur Kapitalgesellschaften}}] \hfil\break
+        Am Fu"s des Briefbogens werden Gesch"aftsangaben und zus"atzlich
+        bei Kapitalgesellschaften gesellschaftsrechtliche Angaben
+        angegeben. Der Befehl \cmd\bottomtext{} vereinbart diese
+        Angaben.
+
+        Dieser Befehl mu"s nach \env\begin{document}{} stehen.
+
+  \item[\cmd\nowindowrules] \hfil\break
+        Das Anschriftenfeld im Brief wird oben und unten durch
+        einen Rahmen vom "ubrigen Brief abgegrenzt. Dieser
+        Befehl schaltet den Rahmen ab.
+
+  \item[\cmd\windowrules] \hfil\break
+        Die Hervorhebung der Anschrift des Empf"angers durch
+        einen Rahmen ober- und unterhalt derselben wird durch
+        diesen Befehl aktiviert.
+
+  \item[\cmd\nowindowtics] \hfil\break
+        Es werden keine Faltmarkierungen am linken Briefrand
+        ausgedruckt.
+
+  \item[\cmd\windowtics] \hfil\break
+        Es werden Faltmarkierungen am linken Briefrand
+        geruckt.
+
+  \item[\cmd\disabledraftstandard] \hfil\break
+        Die Bestandteile des Briefes werden entsprechend den
+        Vorschriften der Norm DIN~676 vom Dezember 1976 auf
+        dem Briefbogen ausgegeben.
+
+  \item[\cmd\enabledraftstandard] \hfil\break
+        Die Bestandteile des Briefes werden entsprechend den
+        Vorschriften des Entwurfs der Norm DIN~676 vom
+        Mai 1993 auf dem Briefbogen ausgegeben.
+\end{description}
 
 %    \begin{macrocode}
 %</documentation>
@@ -332,7 +531,7 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
     \verb|\yourmail|\arg{{Ihre Zeichen, Ihre Nachricht vom}}    \\
     \verb|\sign|\arg{{Unsere Zeichen (, unsere Nachricht vom)}} \\
     \verb|\phone|\arg{{Vorwahl}}\arg{{Rufnummer/Durchwahl}}     \\
-    \verb|\processor|\arg{{Sachbearbeiter}}                     \\
+    \verb|\writer|\arg{{Sachbearbeiter}}                        \\
   \hline
     \verb|\concern|\arg{{Betreff}}                              \\
     \verb|\opening|\arg{{Anrede}}                               \\
@@ -409,9 +608,9 @@ in Abb. \ref{briefkopf} aufnehmen:
 \newlength{\UKAwd}
 \newlength{\ADDRwd}
 %
- \font\fa=cmcsc10  scaled 1440
- \font\fb=cmss12   scaled 1095
- \font\fc=cmss10   scaled 1000
+\font\fa=cmcsc10  scaled 1440
+\font\fb=cmss12   scaled 1095
+\font\fc=cmss10   scaled 1000
 %
 \def\briefkopf{
  \settowidth{\UKAwd}{\fa Institut f"ur Verpackungen}
@@ -572,7 +771,7 @@ unseren Mikrowellenherd...
 \end{center}
 \end{figure}
 
-\subsection{Einige Regeln f"ur das Briefeschreiben}
+\ssect{Einige Regeln f"ur das Briefeschreiben}
 An dieser Stelle zitieren wir einige Passagen aus den
 Normen DIN~5008 (Regeln f"ur das Maschinenschreiben) und
 DIN~676 (Gesch"aftsbrief).
@@ -725,7 +924,7 @@ auf bekannte Fehler hingewiesen.
           \item die Namen des Vorsitzenden und aller Mitglieder
                 des Vorstandes (bei Gesellschaften mit
                 beschr"ankter Haftung die Namen der
-                Gesch"aftsf"uhrer),
+                Gesch"afts\-f"uhrer),
         \end{itemize}
         am Fu"s des Vordrucks aufzuf"uhren.\hfil\break
         Die Rechtsform kann auch im Briefkopf als Bestandteil
@@ -755,8 +954,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1994/11/17 02:44:47 $}
-\def\RCSrevision{$Revision: 1.8 $}
+\def\RCSdate{$Date: 1994/11/17 03:11:56 $}
+\def\RCSrevision{$Revision: 1.9 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -2332,25 +2531,25 @@ auf bekannte Fehler hingewiesen.
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\processor}
-%   This macro takes as argument the name of the processor (Sachbearbeiter)
-%   and stores it in |\@processor|. It also toggles the the
+% \begin{macro}{\writer}
+%   This macro takes as argument the name of the writer (Sachbearbeiter)
+%   and stores it in |\@writer|. It also toggles the the
 %   |\@reflinetrue|-switch to get an referline and further
 %   enables the layout of the new DIN draft standard 676 from May 1991.
 %    \begin{macrocode}
-\def\processor#1{\gdef\@processor{#1}\@reflinetrue\enabledraftstandard}
+\def\writer#1{\gdef\@writer{#1}\@reflinetrue\enabledraftstandard}
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@processor}
+% \begin{macro}{\@writer}
 %    \begin{macrocode}
-\def\@processor{}
+\def\@writer{}
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\processormsg}
+% \begin{macro}{\writermsg}
 %    \begin{macrocode}
-\def\processormsg{,\ Bearbeiter}
+\def\writermsg{,\ Bearbeiter}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3231,7 +3430,7 @@ auf bekannte Fehler hingewiesen.
                                %\else
                                %  \ \@prephone{}%
                                %\fi
-                               \processormsg{}%
+                               \writermsg{}%
                                }%
                            \hfill\\
                            \ifx\@empty\@prephone\relax
@@ -3239,13 +3438,13 @@ auf bekannte Fehler hingewiesen.
                              \@prephone{}
                            \fi
                            \@phone
-                           \ifx\@empty\@processor\relax
+                           \ifx\@empty\@writer\relax
                            \else
                              \ifx\@empty\@phone\relax
                              \else
                              ,\ % insert comma and blank only if both
                              \fi% are nonempty
-                             \@processor
+                             \@writer
                            \fi
                            \hbox{}\hss}%
     \parbox[b]{\@fordate}{{\ka@db@fontsize{7}{9pt}\ka@db@selectfont

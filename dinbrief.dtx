@@ -1,9 +1,13 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.13 1994/12/09 14:26:08 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.14 1994/12/09 14:56:53 Gussmann Exp $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.14  1994/12/09 14:56:53  Gussmann
+% 10pt option removed from files dinbrief.tex and test10.tex
+% in the \cmd\documentstyle-command.
+%
 % Revision 1.13  1994/12/09 14:26:08  Gussmann
 % Documentation changed (only some little layout questions).
 % Layout of documenation file dinbrief.tex is still unsatisfied.
@@ -102,13 +106,13 @@
 % \maketitle
 %
 % \begin{abstract}
-%   This document describs the usage and the documentation of a new
-%   \LaTeX-Style or a \LaTeXe-Class. This class/style implements
+%   This document serves as User's Guide and as documentation of the new
+%   \LaTeX-Style or a \LaTeXe-Class.  This class/style implements
 %   a new document layout for writing letters, according to the rules
 %   of DIN (Deutsches Institut f\"ur Normung, German standardization
-%   institute). Therefore the rules how to write such letters
-%   are in German, because we think there is less interest outside
-%   of Germany. Of course most of the macros are explained in English.
+%   institute). The User's Guide is written in German, since we assume
+%   the style is of minor interest outside Germany.  Of course, most of
+%   the macros are explained in English.
 % \end{abstract}
 %
 % \tableofcontents
@@ -170,6 +174,7 @@ Copyright (C) 1993, 94\\ by Klaus Dieter Braune, Richard Gussmann
 \fi
 %
 \newcommand{\env}[2]{\cmd{#1}{\protect\tt\char`\{#2\char`\}}}
+\newcommand{\envname}[1]{{\protect\tt#1}}
 %
 \germanTeX
 %
@@ -210,8 +215,8 @@ Copyright (C) 1993, 94\\ by Klaus Dieter Braune, Richard Gussmann
 % ^^A\subsection{Briefe}\index{Briefe}
 
 Mit \LaTeX\ k"onnen (nat"urlich) auch Briefe geschrieben werden.
-F"ur englische Briefe gibt es die Dokumentklasse \cs{letter}.
-Deutsche Briefe k"onnen mit dem Stil \cs{dinbrief}
+F"ur englische Briefe gibt es die Dokumentklasse \envname{letter}.
+Deutsche Briefe k"onnen mit dem Stil \envname{dinbrief}
 geschrieben werden.
 
 In den Briefen k"onnen u.a.\ Formeln,
@@ -220,17 +225,17 @@ In einem Dokument k"onnen mehrere Briefe geschrieben werden.
 Die Gliederung in Abs"atze erfolgt durch Einf"ugen einer
 Leerzeile (wie in \LaTeX\ "ublich).
 
-\sect{Befehle in der \protect\cs{dinbrief}-Klasse}
-\index{Briefe!DIN 676}\index{DIN-Brief}\index{Briefe!dinbrief@\cs{dinbrief}}
+\sect{Befehle in der \protect\envname{dinbrief}-Klasse}
+\index{Briefe!DIN 676}\index{DIN-Brief}\index{Briefe!dinbrief@\envname{dinbrief}}
 
 Bereits vor \env\begin{document} kann man Angaben machen, die f"ur
 alle Briefe g"ultig sind, z.B.\ {\bf Absender\/} (\cs{address}
-bzw.\ (\cs{backaddress}), {\bf Absendeort\/} (\cs{place}),
+bzw.\ \cs{backaddress}), {\bf Absendeort\/} (\cs{place}),
 {\bf Telefon\/} (\cs{phone}) und {\bf Unterschrift\/} (\cs{signature}).
 
-\ssect{Aus der \protect\cs{letter}-Klasse "ubernommene Befehle}
+\ssect{Aus der \protect\envname{letter}-Klasse "ubernommene Befehle}
 
-Jeder Brief steht in einer eigenen \cs{letter}-Umgebung.
+Jeder Brief steht in einer eigenen \envname{letter}-Umgebung.
 Der Empf"anger wird als Argument des
 \env\begin{letter}-Befehls angegeben
 (\env\begin{letter}\arg{Anschrift}).
@@ -247,9 +252,9 @@ gesetzt. Dieser Befehl f"ugt auch die maschinenschriftliche
 Wiederholung der Unterschrift an, wie sie mit dem
 \cs{signature}-Befehl festgelegt wurde.
 
-Im Anschlu"s an die Gru"sformel werden {\bf Anlagen-\/} \cmd\encl\arg{Anlage},
-{\bf Verteilvermerke\/} \cmd\cc\arg{Verteiler} und das {\bf Postscriptum\/}
-\cmd\ps\arg{Postscriptum} an den
+Im Anschlu"s an die Gru"sformel werden {\bf Anlagen-\/} (\cmd\encl\arg{Anlage}),
+{\bf Verteilvermerke\/} (\cmd\cc\arg{Verteiler}) und das {\bf Postscriptum\/}
+(\cmd\ps\arg{Postscriptum}) an den
 Brief angef"ugt.
 
 Mit dem Befehl \cs{makelabels} (vor \env\begin{document})
@@ -257,7 +262,7 @@ werden zus"atzlich {\bf Adre"s-Etiketten\/} erzeugt.
 
 Dar"uberhinaus wurden die oben erw"ahnten Befehle
 \cs{address}, \cs{place} und \cs{signature} aus
-der \cs{letter}-Klasse "ubernommen.
+der \envname{letter}-Klasse "ubernommen.
  
 \begin{figure}[p]
 \begin{center}
@@ -318,7 +323,7 @@ Der {\bf Bezug\/} auf einen empfangenen Brief ist m"oglich
 mit Hilfe des Befehls
 \cmd\yourmail\arg{Ihre Zeichen, Ihre Nachricht vom}.
 
-Mit dem Befehl \cmd\sign\arg{Unsere Zeichen, unsere Nachricht vom}.
+Mit dem Befehl \cmd\sign\arg{Unsere Zeichen, unsere Nachricht vom}
 kann eine {\bf eigene Kennzeichnung\/} des Briefes angegeben werden.
 
 Mit dem Befehl \cmd\writer\arg{Sachbearbeiter} kann
@@ -342,7 +347,7 @@ kann dem Beispiel entnommen werden.
 F"ur alle, denen das "`Fenster"' um die Adresse nicht gef"allt,
 besteht die M"oglichkeit, durch Angabe von
 \cmd\nowindowrules\index{nowindowrules@\verb+\nowindowrules+}
-vor dem Befehl \cmd\opening dieses abzuschalten.
+vor dem Befehl \cmd\opening\ dieses abzuschalten.
 Durch \cmd\windowrules\index{windowrules@\verb+\windowrules+} l"a"st es
 sich wieder aktivieren.
  
@@ -427,16 +432,14 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
         vertikal zentriert.
 
   \item[\cmd\normaladdress] \hfil\break
-        Die Empf"angeranschrift wird nicht im Feld f"ur das
-        Brief\kern 0pt fenster
-        vertikal zentriert ausgerichtet. Die Anschrift wird
-        im Anschriftenfeld unten gesetzt.
+        Die Empf"angeranschrift wird im Anschriftenfeld unten gesetzt.
 
   \item[\cmd\opening\arg{{Anrede}}] \hfil\break
         Dieser Befehl vereinbart die Anrede des Empf"angers und setzt
         den Briefkopf, die Empf"angerangaben, eine eventuell vorhandene
         Bezugszeichenzeile, den Betreff und die Anrede des Empf"angers.
-        Dieser Befehl darf nicht fehlen!
+
+        {\bf Dieser Befehl darf nicht fehlen!}
 
   \item[\cmd\closing\arg{{Gru"sformel}}] \hfil\break
         Der Befehl \cmd\closing{} setzt die Gru"sformel und nach
@@ -758,7 +761,7 @@ direkt mit
 \verb+\end{letter}+ enth"alt) und mit \verb+\closing{...}+ bzw.
 \verb+\ps{...}+ abschlie"st.
  
-Ein Beispiel f"ur die Datei {\tt brftext.tex} befindet sich in
+Ein Beispiel f"ur die Datei {\tt brftext.tex} finden Sie in
 Abbildung~\ref{brftext}.
  
 \begin{figure}[p]
@@ -978,8 +981,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1994/12/09 14:26:08 $}
-\def\RCSrevision{$Revision: 1.13 $}
+\def\RCSdate{$Date: 1994/12/09 14:56:53 $}
+\def\RCSrevision{$Revision: 1.14 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -1006,7 +1009,7 @@ auf bekannte Fehler hingewiesen.
 %
 % This is |DINBRIEF.STY| in text format, as of 1994/11/16,
 % by K.~Braune and R.~Gussmann
-%    (Rechenzentrum der Universitaet Karlsruhe).
+%    (Rechenzentrum der Universit\"at Karlsruhe).
 %
 % It is based on |DLETTER.STY| in text format, as of December 16, 1987,
 % by D.~Heinrich (TH Karlsruhe).
@@ -1061,7 +1064,7 @@ auf bekannte Fehler hingewiesen.
 \ka@db@nfsstwofalse
 %    \end{macrocode}
 %
-% Then we check what is present on this system.
+% Then we check what is present on the system.
 %
 %    \begin{macrocode}
 \expandafter\ifx\csname documentclass\endcsname\relax\else
@@ -1122,9 +1125,12 @@ auf bekannte Fehler hingewiesen.
 %    is one of 0, 1 or 2.
 %
 %    To be compatible with the old `dinbrief', pointsize 3 is used to
+% \iffalse
 %    switch to special size having $\frac{1}{6}$ in as |\baselineskip|.
+% \fi
+%    switch to a special size setting exactly 6 lines per inch.
 %    (\dots\ it's used to feature some other size following the rules
-%    of old stupid typewriters.
+%    of old stupid typewriters).
 %
 %    The type size options are handled by defining |\@ptsize| to contain
 %    the last digit of the size in question and branching on |\ifcase|
@@ -1132,7 +1138,7 @@ auf bekannte Fehler hingewiesen.
 %    with other packages that use the |\@ptsize| variable to select
 %    special actions.
 %
-%    To follow the programming convertions of \LaTeXe\ we split the
+%    To follow the programming conventions of \LaTeXe, we split the
 %    definition of the macros into two parts. One for the old \LaTeX\
 %    and one for \LaTeXe.
 %
@@ -1242,7 +1248,7 @@ auf bekannte Fehler hingewiesen.
 \fi
 %    \end{macrocode}
 %
-%  \subsection{Defining intern font selection commands}
+%  \subsection{Defining internal font selection commands}
 %
 %  To be compatible to all font selection schemes we define our own
 %  font selection commands |\ka@db@fontshape| (1), |\ka@db@fontseries| (1),
@@ -1392,13 +1398,14 @@ auf bekannte Fehler hingewiesen.
 %  \textit{and} in math mode. They are provided for compatibility, but one
 %  should start using the |\text...| and |\math...| commands instead.
 %  These commands are redefined using |\@renewfontswitch|, a command
-%  with three arguments: the user command to be defined; \LaTeX\ commands
-%  to execute in text mode and \LaTeX\ commands to execute in math mode.
+%  with three arguments: the user command to be defined, \LaTeX's command
+%  to be executed in text mode, and \LaTeX's command to be executed in math
+%  mode.
 %
 %  \begin{macro}{\rm}
 %  \begin{macro}{\sf}
 %  \begin{macro}{\tt}
-%  The commands to change the family
+%  The commands to change the family:
 %    \begin{macrocode}
 \DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
 \DeclareOldFontCommand{\sf}{\normalfont\sffamily}{\mathsf}
@@ -1437,8 +1444,8 @@ auf bekannte Fehler hingewiesen.
 %  \begin{macro}{\mit}
 %  The commands |\cal| and |\mit| should only be used in math mode, outside
 %  math mode they have no effect. Currently, the New Font Selection Scheme
-%  defines these commands to generate warning messages. Terefore we have
-%  to define them `by hand'.
+%  defines these commands to generate warning messages. Therefore, we have
+%  to define them manually.
 %
 %    \begin{macrocode}
 \renewcommand{\cal}{\protect\pcal}
@@ -1632,10 +1639,10 @@ auf bekannte Fehler hingewiesen.
 % \end{macro}
 %
 %  \begin{macro}{\normalsize}
-%  We are doing here something different as in the classes files of
-%  \LaTeXe. This may be necessary for backward compatibility. Maybe not!
+%  We are doing here something different from the class files of
+%  \LaTeXe. This may be necessary for backward compatibility.
 %
-%  If we are in \LaTeXe\ then we have to define the
+%  If we are in \LaTeXe, then we have to define the
 %  controlsequence |\normalsize|.
 %
 %    \begin{macrocode}
@@ -1693,7 +1700,7 @@ auf bekannte Fehler hingewiesen.
 % here such a funny coding because \LaTeX's |\thispagestyle|-mechanism
 % is not flexible enough. (This code may not complete yet!)
 %
-% We use this to move the start of the first page of the letters
+% We use this to move the start of the first page of a letter
 % 12 mm up.
 %
 %    \begin{macrocode}
@@ -1884,7 +1891,7 @@ auf bekannte Fehler hingewiesen.
  \ifdim\ht\@@bottomtext>0pt
 %    \end{macrocode}
 % \noindent Remark KDB 02/08/94\hfil\break
-% |\@@bottomtext| shold be set within a |\vbox to 0pt{\vss ...}|
+% |\@@bottomtext| should be set within a |\vbox to 0pt{\vss ...}|
 %    \begin{macrocode}
     \vbox to 0pt{%
       \rule{0pt}{243.5truemm}%
@@ -2010,7 +2017,7 @@ auf bekannte Fehler hingewiesen.
 %    \end{macrocode}
 %  \end{macro}
 %
-% \subsection{Initialisation}
+% \subsection{Initialization}
 %
 % \subsubsection{Words}
 %
@@ -3291,7 +3298,7 @@ auf bekannte Fehler hingewiesen.
 %    The footnote mechanism of \LaTeX{} calls the macro |\@makefntext|
 %    to produce the actual footnote. The macro gets the text of the
 %    footnote as its argument and should use |\@thefnmark| as the mark
-%    of the footnote. The macro |\@makefntext|is called when
+%    of the footnote. The macro |\@makefntext| is called when
 %    effectively inside a |\parbox| of width |\columnwidth| (i.e.,
 %    with |\hsize| = |\columnwidth|).
 %
@@ -3313,7 +3320,7 @@ auf bekannte Fehler hingewiesen.
 %    desired value for `10pt' (in both places) or `1em'.  The mark is
 %    flushright against the footnote.
 %
-%    In these document classes we use a simpler macro, in which the
+%    In this document class we use a simpler macro, in which the
 %    footnote text is set like an ordinary text paragraph, with no
 %    indentation except on the first line of a paragraph, and the
 %    first line of the footnote. Thus, all the macro must do is set
@@ -3514,7 +3521,7 @@ auf bekannte Fehler hingewiesen.
 %  \end{macro}
 %  \end{macro}
 %
-% \subsection{More Initialisations}
+% \subsection{More Initializations}
 %
 % We initially choose the normalsize font.
 % This code has to be executed following the definition of |\baselinestretch|
@@ -3642,11 +3649,10 @@ auf bekannte Fehler hingewiesen.
 \begin{document}
 
 \bottomtext{%
-  \begin{center}
-    \small\sf
-   Bankverbindung $\cdot$ Kreissparkasse Gralsburg %
+  \makebox[\textwidth][c]{\small\sf
+   Bankverbindung $\cdot$ Kreissparkasse Gralsruhe %
    (BLZ~999~500~00) 98~765~4
-  \end{center}
+  }
 }
 
 \date{9.~Juli 1999}
@@ -3938,7 +3944,7 @@ Postfach 3322\\[\medskipamount]
 \bottomtext{%
   \begin{center}
     \small\sf
-   Bankverbindung $\cdot$ Kreissparkasse Gralsburg %
+   Bankverbindung $\cdot$ Kreissparkasse Gralsruhe %
    (BLZ~999~500~00) 98~765~4
   \end{center}
 }

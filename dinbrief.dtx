@@ -1,9 +1,13 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.23 1995/01/19 02:28:36 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.24 1995/01/19 02:43:30 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.24  1995/01/19 02:43:30  Gussmann
+% \cmd\letter sequence \let\\=\relax added to avaid error message
+% in LaTeX209.
+%
 % Revision 1.23  1995/01/19 02:28:36  Gussmann
 % * lots of changes, not all mentioned here!
 % * layout incomplete (some positions differ up to 6mm from norm position)!
@@ -1040,8 +1044,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/01/19 02:28:36 $}
-\def\RCSrevision{$Revision: 1.23 $}
+\def\RCSdate{$Date: 1995/01/19 02:43:30 $}
+\def\RCSrevision{$Revision: 1.24 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -2323,12 +2327,14 @@ auf bekannte Fehler hingewiesen.
       \vskip 2.5truemm
       \vss
       \hbox to 0pt{\hspace*{-4truemm}%
-      \vbox{%
-        \hbox to 85truemm{\hfill
-                          {\ka@db@fontsize{8}{9pt}
-                           \ka@db@selectfont \@backaddress}\hfill}%
-        \hrule width 85truemm}\hss}%
-      \vss}\nointerlineskip
+        \vbox{%
+          \hbox to 85truemm{\hfill
+                            {\ka@db@fontsize{8}{9pt}
+                             \ka@db@selectfont \@backaddress}\hfill}%
+          \hrule width 85truemm}\hss}%
+      % \vss
+    }%
+    \nointerlineskip
   \fi
 %    \end{macrocode}
 %    \begin{macrocode}
@@ -2373,7 +2379,7 @@ auf bekannte Fehler hingewiesen.
 %    \begin{macrocode}
 \def\ka@db@tsrefline{%
   \if@norefline\else
-    \vbox{\vskip 6truemm
+%   \vbox{\vskip 6truemm
       \vbox{%
         \if@refline
           \@answerto
@@ -2387,7 +2393,7 @@ auf bekannte Fehler hingewiesen.
           \fi
         \fi
       }%
-    }%
+%   }%
     \nointerlineskip
     \par
     \bigskip
@@ -2444,7 +2450,9 @@ auf bekannte Fehler hingewiesen.
 \def\ka@db@placetoaddress{%
   \vskip 18.6truemm % old value 13.1truemm
   %   \vbox to 50truemm{\vss\ka@db@tstoaddress\vss}\nointerlineskip
-  \vbox to 50truemm{\ka@db@tstoaddress}\nointerlineskip
+  %   \vbox to 50truemm{\ka@db@tstoaddress}\nointerlineskip
+  \vbox to 50truemm{\ka@db@tstoaddress\vss}\nointerlineskip
+  \vskip 6truemm
 }%
 \def\ka@db@placerefline{%
   \vbox{\ka@db@tsrefline}\nointerlineskip
@@ -2684,17 +2692,29 @@ auf bekannte Fehler hingewiesen.
         \@tempdima=\textwidth
         \@tempdimb=4in
         \advance\@tempdima by \@tempdimb
-        \hbox to 0pt{%
-          \hskip4in\relax
-          \parbox[t]{\@tempdima}{\ka@db@tsenclcc}%
-          \hss
+%        \hbox to 0pt{%
+%          \hskip\@tempdimb\relax
+%          \parbox[t]{\@tempdima}{%\parskip .7em
+%                                 \ka@db@tsenclcc}%
+%          \hss
+%        }%
+        \parbox[t]{\@tempdimb}{%\parskip .7em%
+          \ignorespaces #1\\[3\baselineskip]
+          \ifx\@empty\@fromsig
+          \else \@fromsig
+          \fi\strut
+        }%
+        \parbox[t]{\@tempdima}{%\parskip .7em%
+          \ka@db@tsenclcc
         }%
       \egroup
+    \else
+      \ignorespaces #1\\[3\baselineskip]
+      \ifx\@empty\@fromsig
+      \else \@fromsig
+      \fi\strut
     \fi
-    \ignorespaces #1\\[6\parskip]
-    \ifx\@empty\@fromsig
-    \else \@fromsig
-    \fi\strut}
+  }%
   \par\medskip
   \ifka@db@enclright
   \else
@@ -2710,8 +2730,8 @@ auf bekannte Fehler hingewiesen.
 %  \begin{macro}{\ka@db@tsenclcc}
 %    \begin{macrocode}
 \def\ka@db@tsenclcc{%
-  \ka@db@ifemptyvarlocal{encl}{}{\ka@db@usevarlocal{encl}\par}%
-  \ka@db@ifemptyvarlocal{cc}{}{\ka@db@usevarlocal{cc}\par}
+  \ka@db@ifemptyvarlocal{encl}{}{\ka@db@usevarlocal{encl}\\[\baselineskip]}%
+  \ka@db@ifemptyvarlocal{cc}{}{\ka@db@usevarlocal{cc}\\[\baselineskip]}%
 }
 %    \end{macrocode}
 %  \end{macro}
@@ -4426,7 +4446,7 @@ auf bekannte Fehler hingewiesen.
   \address{%
     \vspace*{7truemm}
     \leavevmode
-    \hbox to 0pt{\hbox to \textwidth{\hfil\today}\hss}%
+    \hbox to 0pt{\hbox to \textwidth{\hfil\@date}\hss}%
     \parbox[t]{\textwidth}{\ka@db@fromadrone\ka@db@fromadrtwo}%
   }%
   \@noreflinetrue
@@ -4453,6 +4473,7 @@ auf bekannte Fehler hingewiesen.
 %  \begin{macro}{\Retouradresse}
 %    \begin{macrocode}
 \def\Retouradresse#1{%
+  \@warning{Use \string\backaddress\space instead of \string\Retouradresse}%
   \backaddress{#1}%
 }
 %    \end{macrocode}
@@ -4461,6 +4482,7 @@ auf bekannte Fehler hingewiesen.
 %  \begin{macro}{\Betreff}
 %    \begin{macrocode}
 \def\Betreff#1{%
+  \@warning{Use \string\concern\space instead of \string\Betreff}%
   \concern{#1}%
 }
 %    \end{macrocode}
@@ -4510,7 +4532,6 @@ auf bekannte Fehler hingewiesen.
 %  formula.
 %    \begin{macrocode}
 \def\anlagenrechts{%
-  \@warning{\string\anlagenrechts\space not yet implemented.}%
   \ka@db@enclrighttrue
 }
 %    \end{macrocode}

@@ -1,9 +1,12 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.16 1994/12/14 18:25:36 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.17 1994/12/14 19:25:07 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.17  1994/12/14 19:25:07  Gussmann
+% \cs\envname can't used in headlines.
+%
 % Revision 1.16  1994/12/14 18:25:36  Gussmann
 % * Errors removed: - Definition of \concern contains \newbox command!
 %                     \newbox moved outside.
@@ -986,8 +989,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1994/12/14 18:25:36 $}
-\def\RCSrevision{$Revision: 1.16 $}
+\def\RCSdate{$Date: 1994/12/14 19:25:07 $}
+\def\RCSrevision{$Revision: 1.17 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -1911,17 +1914,7 @@ auf bekannte Fehler hingewiesen.
 %                             inserted into every first page of letters.}
 %    \begin{macrocode}
       \unhcopy\@@bottomtext
-      \vss}%
-  \else
-%    \end{macrocode}
-% Remark KDB 02/08/94 \hfil\break
-% Is it here really neccessary to typeset a |\vbox| of height 0 ?
-% Remark RG 02/14/94 \hfil\break
-% Maybe for consistency?
-%    \begin{macrocode}
-    \vbox to 0pt{%
-      \rule{0pt}{243.5truemm}%
-      \vss}%
+      \vss}\nointerlineskip%
   \fi
 %    \end{macrocode}
 %    \begin{macrocode}
@@ -2784,6 +2777,14 @@ auf bekannte Fehler hingewiesen.
       \psfirstpagehook
     \fi
 }
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\psfirstpagehook}
+%    \begin{macrocode}
+\def\psfirstpagehook{%
+  \def\@oddfoot{}
+  \def\@evenfoot{}}
 %    \end{macrocode}
 %  \end{macro}
 %

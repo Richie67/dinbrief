@@ -1,11 +1,11 @@
 %%
-%% $Id: dinbrief.i%v 1.2 1994/11/16 22:02:36 Gussmann Exp $
+%% $Id: dinbrief.i%v 1.3 1994/11/16 22:07:57 Gussmann Exp $
 %%
 %% $Author: Gussmann $
 %%
-%% $Date: 1994/11/16 22:02:36 $
+%% $Date: 1994/11/16 22:07:57 $
 %%
-%% $Header: E:/DINBRF\RCS\dinbrief.i%v 1.2 1994/11/16 22:02:36 Gussmann Exp $
+%% $Header: E:/DINBRF\RCS\dinbrief.i%v 1.3 1994/11/16 22:07:57 Gussmann Exp $
 %%
 %% $Locker:  $
 %%
@@ -13,13 +13,17 @@
 %%
 %% $RCSfile: dinbrief.i%v $
 %%
-%% $Revision: 1.2 $
+%% $Revision: 1.3 $
 %%
 %% $Source: E:/DINBRF\RCS\dinbrief.i%v $
 %%
 %% $State: Exp $
 %%
 %% $Log: dinbrief.i%v $
+%% Revision 1.3  1994/11/16  22:07:57  Gussmann
+%% Generates now output files for test cases in the pt-sizes
+%% 10, 11, 12 and norm.
+%%
 %% Revision 1.2  1994/11/16  22:02:36  Gussmann
 %% *** empty log message ***
 %%
@@ -144,6 +148,13 @@ etc.
 \generateFile{example.tex}{t}{%
     \from{dinbrief.dtx}{example}
   }
+\generateFile{brfbody.tex}{t}{%
+    \from{dinbrief.dtx}{brfbody}
+  }
+\generateFile{test10.tex}{t}{\from{dinbrief.dtx}{test,10pt}}
+\generateFile{test11.tex}{t}{\from{dinbrief.dtx}{test,11pt}}
+\generateFile{test12.tex}{t}{\from{dinbrief.dtx}{test,12pt}}
+\generateFile{testnorm.tex}{t}{\from{dinbrief.dtx}{test,norm}}
 
 %%%%%%%%%%%%%%%%% DOCUMENTATION FILES
 

@@ -1,9 +1,13 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.11 1994/12/08 12:42:15 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.12 1994/12/09 13:24:53 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.12  1994/12/09 13:24:53  Gussmann
+% I've forgotten to include description of \cmd\closing{}.
+% I deleted some doubbled explanations.
+%
 % Revision 1.11  1994/12/08 12:42:15  Gussmann
 % Documentation finished.
 % First public release.
@@ -349,7 +353,7 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
 %  ^^A\item[\env\end{document}] \hfil\break
   \item[\env\begin{letter}\arg{{Anschrift}} \dots\ \env\end{letter}] \hfil\break
         Diese Befehle rahmen jeden einzelnen Brief ein. Die
-        Anschrift des Empf"angers wird als Argument des Befehls
+        Anschrift des Em\-pf"an\-gers wird als Argument des Befehls
         \env\begin{letter}\arg{Anschrift} angegeben.
         Die einzelnen Zeilen in der Anschrift werden durch
         \cmd\\ getrennt.
@@ -454,7 +458,7 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
 
   \item[\cmd\ps\arg{{Postscriptum}}] \hfil\break
         Gesch"aftsbriefe enthalten kein Postskriptum.
-        Es wurde trotzdem die M"oglichkeit geschaffen,
+        Es wurde trotzdem die M"og\-lich\-keit geschaffen,
         ein solches zu verwenden. Mit dem Befehl
         \cmd\ps{} wird ein Postskriptum gesetzt.
 
@@ -469,6 +473,9 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
         Adress-Etiketten. Es gibt Drucker, die in der
         Lage sind, Briefumschl"age zu bedrucken. Mit diesem
         Befehl legt man die Form der Briefumschl"age fest.
+
+        {\sl Zur Zeit steht nur das Layout \env\labelstyle{plain}
+        zur Verf"ugung.\/}
 
   \item[\cmd\bottomtext\arg{{Feld f\"ur Kapitalgesellschaften}}] \hfil\break
         Am Fu"s der ersten Briefseite werden Gesch"aftsangaben und
@@ -708,9 +715,8 @@ folgenden Format:
 \end{center}
  
 Die Briefe k"onnen nun mit einer Umgebung wie der in Abbildung~\ref{serie}
-ausgedruckt werden. Dabei ist allerdings in der Zeile \verb|\input{#address}|
-der Platzhalter \verb|#address| durch den Namen der Datei zu ersetzen,
-die die Adressaten in obigem Format enth"alt.
+ausgedruckt werden. In der Zeile \verb|\input{#address}| ist der
+Platzhalter \verb|#address| durch den Dateinamen zu ersetzen.
 
 \begin{figure}[p]
 \begin{center}
@@ -968,8 +974,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1994/12/08 12:42:15 $}
-\def\RCSrevision{$Revision: 1.11 $}
+\def\RCSdate{$Date: 1994/12/09 13:24:53 $}
+\def\RCSrevision{$Revision: 1.12 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}

@@ -1,7 +1,7 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.dtx 1.67 1998/09/03 00:22:05 Gussmann Exp $
+% $Id: dinbrief.dtx 1.68 2000/01/03 20:42:40 Gussmann Exp Gussmann $
 %
 %<*styleinfo>
 =======================================================================
@@ -9,8 +9,8 @@
 shortpackagename = {dinbrief},
 longpackagename  = {dinbrief},
 baseformats      = {\LaTeX\ 2.09 and \LaTeXe},
-version          = {$Revision: 1.67 $},
-date             = {$Date: 1998/09/03 00:22:05 $},
+version          = {$Revision: 1.68 $},
+date             = {$Date: 2000/01/03 20:42:40 $},
 author           = {K.D. Braune, R. Gussmann,
                    Klaus.Braune@rz.uni-karlsruhe.de
                    richard@gussmann.de
@@ -37,6 +37,11 @@ incompatibilities = {not full compatible to R. Sengerlings dinbrief}}
 %</styleinfo>
 %
 % $Log: dinbrief.dtx $
+% Revision 1.68  2000/01/03 20:42:40  Gussmann
+% - Fixed Y2K-bug in \@znumber.
+% - Changed the license conditions to the LaTeX Project Public
+%   License (LPPL).
+%
 % Revision 1.67  1998/09/03 00:22:05  Gussmann
 % - Added some changes lost in elder versions.
 %
@@ -1645,8 +1650,8 @@ der Stil "`{\tt german}"' geladen werden.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1998/09/03 00:22:05 $}
-\def\RCSrevision{$Revision: 1.67 $}
+\def\RCSdate{$Date: 2000/01/03 20:42:40 $}
+\def\RCSrevision{$Revision: 1.68 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -3059,7 +3064,7 @@ der Stil "`{\tt german}"' geladen werden.
 %  and |\\[\medskipamount]!|. All four forms produce the expected
 %  output!
 %
-%  \changes{1.63.0}{1995/05/21}{Two \cmd\expandafters inserted as
+%  \changes{1.63.0}{1995/05/21}{Two \cmd\expandafter s inserted as
 %                               suggested by B.~Raichle}
 %
 %    \begin{macrocode}
@@ -5575,6 +5580,7 @@ der Stil "`{\tt german}"' geladen werden.
 % \begin{macro}{\@znumber}
 % \begin{macro}{\ntoday}
 % \begin{macro}{\@ntoday}
+% \changes{1.68.0}{2000/01/03}{(RG) Y2K-bug in \cmd\@znumber\space fixed.}
 % The following code is not Y2K ready. It has to be replaced by
 % the code suggested by Heiko Oberdiek (below).
 %    \begin{macrocode}

@@ -1,9 +1,13 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.12 1994/12/09 13:24:53 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.13 1994/12/09 14:26:08 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.13  1994/12/09 14:26:08  Gussmann
+% Documentation changed (only some little layout questions).
+% Layout of documenation file dinbrief.tex is still unsatisfied.
+%
 % Revision 1.12  1994/12/09 13:24:53  Gussmann
 % I've forgotten to include description of \cmd\closing{}.
 % I deleted some doubbled explanations.
@@ -117,7 +121,7 @@
 %
 % \iffalse
 \expandafter\ifx\csname documentclass\endcsname\relax
-    \documentstyle[10pt,german]{article}
+    \documentstyle[german]{article}
     \typeout{Using the commando \string\documentstyle.}
   \else
     \documentclass[10pt]{article}
@@ -974,8 +978,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1994/12/09 13:24:53 $}
-\def\RCSrevision{$Revision: 1.12 $}
+\def\RCSdate{$Date: 1994/12/09 14:26:08 $}
+\def\RCSrevision{$Revision: 1.13 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -3622,7 +3626,7 @@ auf bekannte Fehler hingewiesen.
 %    \begin{macrocode}
 
 \expandafter\ifx\csname documentclass\endcsname\relax
-    \documentstyle[10pt,german]{dinbrief}
+    \documentstyle[german]{dinbrief}
   \else
     \documentclass[10pt]{dinbrief}
     \usepackage{german}

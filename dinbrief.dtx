@@ -1,0 +1,3232 @@
+%
+% \iffalse meta-comment
+%
+% $Id$
+%
+% $Author$
+%
+% $Date$
+%
+% $Header$
+%
+% $Locker$
+%
+% $Name$
+%
+% $RCSfile$
+%
+% $Revision$
+%
+% $Source$
+%
+% $State$
+%
+% $Log$
+%
+% =======================================================================
+%
+% Copyright (C) 1993 by University of Karlsruhe (Computing Center).
+% All rights reserved.
+% For additional copyright information see further down in this file.
+% 
+% This file is part of the DINBRIEF package (PRELIMINARY TEST RELEASE)
+% ------------------------------------------------------------------
+% 
+%  This system is distributed in the hope that it will be useful,
+%  but WITHOUT ANY WARRANTY; without even the implied warranty of
+%  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+% 
+% 
+% IMPORTANT NOTICE:
+% 
+% For error reports in case of UNCHANGED versions see readme files.
+% 
+% Please do not request updates from us directly.  Distribution is
+% done through Mail-Servers and TeX organizations.
+% 
+% You are not allowed to change this file.
+% 
+% You are allowed to distribute this file under the condition that
+% it is distributed together with all files mentioned in 00readme.din.
+% 
+% If you receive only some of these files from someone, complain!
+% 
+% You are NOT ALLOWED to distribute this file alone.  You are NOT
+% ALLOWED to take money for the distribution or use of either this
+% file or a changed version, except for a nominal charge for copying
+% etc.
+% \fi
+%
+% \setcounter{StandardModuleDepth}{1}
+% \newcommand\Lopt[1]{\textsf {#1}}
+% \newcommand\file[1]{\texttt {#1}}
+% \newcommand\Lcount[1]{\textsl {\small#1}}
+% \newcommand\pstyle[1]{\textsl {#1}}
+%
+%
+% \title{Standard Document Class `dinbrief' for \LaTeX{} version 2e
+%        Standard Document Style `dinbrief' for \LaTeX{} version 2.09}
+%
+% \author{%
+% Copyright (C) 1993, 94 by Klaus Dieter Braune, Richard Gussmann
+% }
+%
+% \maketitle
+% \tableofcontents
+%
+%
+% \section{Identification}
+%
+%    We store the date, version and name of this file in six control
+%    sequences, for future use.
+%    \begin{macrocode}
+\def\fileversion{0.94.1}
+\def\filedate{1994/08/15}
+\def\filename{dinbrief.dtx}
+\def\docdate {1994/08/15}
+%    \end{macrocode}
+%
+%    Announce the Class name and its version:
+%    \begin{macrocode}
+%<*article>
+\ProvidesClass{article}[\filedate\space Standard LaTeX2e document class]
+%</article>
+%    \end{macrocode}
+%
+%
+% \section{Initial Code}
+%
+%    In this part we define a few commands that are used later on.
+%
+% \begin{macro}{\@ptsize}
+%    This control sequence is used to store the second digit of the
+%    pointsize we are typesetting in. So, normally, it's value is one
+%    of 0, 1 or 2.
+%    \begin{macrocode}
+%<*article|report|book>
+\newcommand\@ptsize{}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\if@restonecol}
+%    When the document has to printed in two columns, we sometimes
+%    have to temporarily switch to one column. This switch is used to
+%    remember to switch back.
+%    \begin{macrocode}
+\newif\if@restonecol
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \section{Declaration of Options}
+%
+%
+% \subsection{Setting Paper Sizes}
+%
+%    The variables |\paperwidth| and |\paperheight| should reflect the
+%    physical paper size after trimming. For desk printer output this
+%    is usually the real paper size since there is no post-processing.
+%    Classes for real book production will probably add other paper
+%    sizes and additionally the production of crop marks for trimming.
+% \changes{1.0.7}{1993/12/09}{Removed typo, A4 is not 279 mm high}
+%    \begin{macrocode}
+\DeclareOption{a4paper}
+   {\setlength\paperheight {297mm}%
+    \setlength\paperwidth  {210mm}}
+%
+\NeedsTeXFormat{LaTeX2e}
+%
+%</article|report|book>
+%    \end{macrocode}
+%
+
+% \section{The style file `dinbrief'}
+%
+% This is |DINBRIEF.STY| in text format, as of February 27, 1992,
+% by K. Braune, R. Gussmann and K. Dilper
+%    (Rechenzentrum der Universitaet Karlsruhe).
+%
+% It is based on |DLETTER.STY| in text format, as of December 16, 1987,
+% by D. Heinrich (TH Karlsruhe).
+%
+% It is based on |A4LETTER.STY| in text format, as of June 16, 1987.
+% letter.sty 17-Jan-86 with modifications
+% for DIN-A4 paper + window envelopes, by H.Partl (Wien)
+%
+% Changelog:
+% \changes{0.0.0}{1991/09/09}{(KB) Inserted blank space behind "P.S.:"}
+% \changes{0.0.0}{1991/10/02}{(KB) Changed "P.S.:" to "PS\cmd\newline"
+%                                  Diminished space before \cmd\ps, \cmd\cc
+%                                  and \cmd\encl.
+%                                  Inserted code to generate labels using
+%                                  a 12pt font and changed references
+%                                  to \cmd\scriptsize to \cmd{\size{9}{11pt}}}
+% \changes{0.0.0}{1991/10/31}{(KB) Changes to allow \cmd\place not set}
+% \changes{0.0.0}{1991/11/15}{(RG) Moved \cmd\newlength from inside
+%                                  \cmd\@answerto outside to allow
+%                                  multiple letters within a single document.
+%                                  Changed command sequences}
+% \changes{0.0.0}{1991/11/19}{(KB) Replaced \cmd\rm by code for the
+%                                  new fontselection scheme}
+% \changes{0.0.0}{1991/11/19}{(KB) Changed first page to use pagestyle
+%                                  firstpage}
+% \changes{0.0.0}{1992/02/05}{(KB) Changes of R.~Gussmann inserted}
+% \changes{0.0.0}{1992/02/27}{(KB) Page offsets corrected}
+% \changes{0.0.0}{1994/02/08}{(RG) Changes of K.~D.~Braune inserted}
+% \changes{0.92.20}{1994/02/23}{(RG) some more Comments added}
+% \changes{0.93.0}{1994/06/07}{(RG) some more Comments added\hfil\break
+%                                   styles for labels added}
+%
+%    \begin{macrocode}
+%<*class|style>
+%    \end{macrocode}
+%
+% \section{Check the environment this style is running on}
+%
+% \subsection{Get system information}
+% First we use three conditions to identify whether or not this file
+% is running on LaTeX 2.09 or \LaTeXe and what for a font selection
+% scheme is present.
+%
+% |\ifka@db@ltxtwoe| is true if and only if this style is running in
+% an \LaTeXe-environment. |\ifka@db@nfss| is true if we are using an
+% NFSS 1 andd |\ifka@db@nfsstwo| is true if we are using the NFSS 2.
+%
+%    \begin{macrocode}
+\newif\ifka@db@ltxtwoe
+\ka@db@ltxtwoefalse
+\newif\ifka@db@nfss
+\ka@db@nfssfalse
+\newif\ifka@db@nfsstwo
+\ka@db@nfsstwofalse
+%    \end{macrocode}
+%
+% Then we check what is present on this system
+%
+%    \begin{macrocode}
+\expandafter\ifx\csname documentclass\endcsname\relax\else
+    \ka@db@ltxtwoetrue
+  \fi
+\expandafter\ifx\csname size\endcsname\relax\else
+    \ka@db@nfsstrue
+  \fi
+\expandafter\ifx\csname fontsize\endcsname\relax\else
+    \ka@db@nfsstwotrue
+  \fi
+%    \end{macrocode}
+%
+%
+% \section{Print informations about this style}
+%
+% \subsection{Print the banner}
+%
+%    \begin{macrocode}
+\typeout{}
+\typeout{Document Style 'dinbrief' - Preliminary Version \fileversion}
+\typeout{University of Karlsruhe - \filedate}
+\typeout{This is a premiliary test release, and was}
+\typeout{last modified by Richard R. Gussmann}
+\typeout{}
+%    \end{macrocode}
+%
+% \subsection{Print system information}
+%    \begin{macrocode}
+\ifka@db@ltxtwoe
+    \typeout{*** dinbrief: Running in LaTeX 2e mode!}
+  \else
+    \typeout{*** dinbrief: Running in LaTeX 2.09 mode!}
+  \fi
+\ifka@db@nfss
+    \typeout{*** dinbrief: NFSS!}
+  \else
+    \ifka@db@nfsstwo
+      \typeout{*** dinbrief: NFSS 2!}
+    \else
+      \typeout{*** dinbrief: original LaTeX 2.09 font selection mechanism found!!!}
+    \fi
+  \fi
+%    \end{macrocode}
+%
+% \section{Initial Code}
+%
+%    In this part we define a few comands that are used later on.
+%
+% \subsection{Choosing the type size}
+%
+% \begin{macro}{\@ptsize}
+% \begin{macro}{\ds@12pt}
+% \begin{macro}{\ds@11pt}
+% \begin{macro}{\ds@10pt}
+%    This control sequence is used to store the second digit of the
+%    pointsize we are typesetting in. So, normally, it's value is one
+%    of 0, 1 or 2.
+%
+%    The type size options are handled by defining |\@ptsize| to contain
+%    the last digit of the size in question and branching on |\ifcase|
+%    statements. This is done for historical reasons to stay compatible
+%    with other packages that use the |\@ptsize| variable to select
+%    special actions. It makes the declarations of size options less
+%    than 10pt difficult, although one can probably use \texttt{9}
+%    and \texttt{8} assuming that a class wont define both
+%    \Lopt{8pt} and \Lopt{18pt} options.
+%
+%    To follow the programming convertions of \LaTeXe\ we split the
+%    definition of the macros into two parts. One for the old \LaTeX\
+%    and one for \LaTeX2.
+%
+%    \begin{macrocode}
+\ifka@db@ltxtwoe
+  \newcommand\@ptsize{}
+  \DeclareOption{10pt}{\renewcommand\@ptsize{0}}
+  \DeclareOption{11pt}{\renewcommand\@ptsize{1}}
+  \DeclareOption{12pt}{\renewcommand\@ptsize{2}}
+\else
+  \def\@ptsize{0}
+  \@namedef{ds@10pt}{\def\@ptsize{0}}
+  \@namedef{ds@11pt}{\def\@ptsize{1}}
+  \@namedef{ds@12pt}{\def\@ptsize{2}}
+\fi
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\jobname@aux}
+%    This control sequence is used to store the name of the aux-file.
+%    Therefore we give temporally to the character |_| the catcode 12.
+%
+%    \begin{macrocode}
+{\catcode`\_=12 \gdef\jobname@aux{\jobname.aux}} % .aux or _aux or ...
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Setting Paper Sizes}
+%
+%    The variables |\paperwidth| and |\paperheight| should reflect the
+%    physical paper size after trimming. For desk printer output this
+%    is usually the real paper size since there is no post-processing.
+%    Classes for real book production will probably add other paper
+%    sizes and additionally the production of crop marks for trimming.
+%    \begin{macrocode}
+\ifka@db@ltxtwoe
+  \DeclareOption{a4paper}
+     {\setlength\paperheight {297mm}%
+      \setlength\paperwidth  {210mm}}
+  \DeclareOption{a5paper}
+     {\setlength\paperheight {210mm}%
+      \setlength\paperwidth  {148mm}}
+  \DeclareOption{b5paper}
+     {\setlength\paperheight {250mm}%
+      \setlength\paperwidth  {176mm}}
+  \DeclareOption{letterpaper}
+     {\setlength\paperheight {11in}%
+      \setlength\paperwidth  {8.5in}}
+  \DeclareOption{legalpaper}
+     {\setlength\paperheight {14in}%
+      \setlength\paperwidth  {8.5in}}
+  \DeclareOption{executivepaper}
+     {\setlength\paperheight {10.5in}%
+      \setlength\paperwidth  {7.25in}}
+\fi
+%    \end{macrocode}
+%
+%  \subsection{Two-side or one-side printing}
+%
+%    Two-sided printing is not supported.
+%    \begin{macrocode}
+\ifka@db@ltxtwoe
+  \DeclareOption{twoside}{\@latexerr{No 'twoside' layout for letters}%
+                                     \@eha}
+\fi
+\@twosidefalse
+%    \end{macrocode}
+%
+%  \subsection{Draft option}
+%
+%    If the user requests \Lopt{draft} we show any overfull boxes.
+%    We could probably add some more interesting stuff to this option.
+%    \begin{macrocode}
+\def\ds@draft{\overfullrule 5pt}
+\def\ds@final{\overfullrule 0pt}
+%    \end{macrocode}
+%
+%  \subsection{Twocolumn printing}
+%
+%    Two-column and one-column printing is again realized via a switch.
+%
+%    This makes no sense in letters following the rules of DIN. But
+%    maybe it is sometimes usefull.
+%
+%    Some labels use twocolumn output.
+%    \begin{macrocode}
+\ifka@db@ltxtwoe
+  \DeclareOption{onecolumn}{\@twocolumnfalse}
+  \DeclareOption{twocolumn}{\@twocolumntrue}
+\fi
+%    \end{macrocode}
+%
+%  \section{Defining intern font selection commands}
+%
+%  To be compatible to all font selection scheme we define our own
+%  font selection commands |\ka@db@fontshape| (1), |\ka@db@fontseries| (1),
+%  |ka@db@fontsize| (2), |\ka@db@selectfont| (0).
+%
+% Note: In the definition of the original \LaTeX\ 2.09 font selection system
+%       the command |\rm| is used. This causes no error because |\rm| is
+%       well defined in this \LaTeX.
+%
+% Note: The code for the font selection with the original mechanism
+%       had been written by K.~Braune.
+%
+%    \begin{macrocode}
+\ifka@db@nfss
+    \let\ka@db@selectfont\selectfont
+    \let\ka@db@fontseries\series
+    \let\ka@db@fontshape\shape
+    \let\ka@db@fontsize\size
+  \else
+    \ifka@db@nfsstwo
+        \let\ka@db@selectfont\selectfont
+        \let\ka@db@fontseries\fontseries
+        \let\ka@db@fontshape\fontshape
+        \let\ka@db@fontsize\fontsize
+      \else
+        \def\ka@db@selectfont{\relax}
+        \def\ka@db@fontseries#1{\relax}
+        \def\ka@db@fontshape#1{\ifx#1n\rm\else\relax\fi}
+        \def\ka@db@fontsize#1#2{\expandafter
+            \ifnum#1=12
+                \@setsize\normalsize{15pt}\xiipt\@xiipt
+                \abovedisplayskip 12pt plus3pt minus7pt
+                \belowdisplayskip \abovedisplayskip
+                \abovedisplayshortskip \z@ plus3pt
+                \belowdisplayshortskip 6.5pt plus3.5pt minus3pt
+              \else
+                \ifnum#1=8
+                    \@setsize\scriptsize{8pt}\viipt\@viipt
+                  \else
+                    \@setsize\scriptsize{9.5pt}\viiipt\@viiipt
+                  \fi
+              \fi}
+      \fi
+  \fi
+%    \end{macrocode}
+%
+% \section{Executing Options}
+%
+%    Here we execute the default options to initialize certain
+%    variables.
+%    \begin{macrocode}
+\ifka@db@ltxtwoe
+  \ExecuteOptions{a4paper,10pt,onecolumn,final}
+\fi
+%    \end{macrocode}
+%
+%    The |\ProcessOptions| command causes the execution of the code
+%    for every option \Lopt{FOO}
+%    which is declared and for which the user typed
+%    the \Lopt{FOO} option in his
+%    |\documentclass| command.  For every option \Lopt{BAR} he typed,
+%    which is not declared, the option is assumed to be a global option.
+%    All options will be passed as document options to any
+%    |\usepackage| command in the document preamble.
+%
+%    In the old \LaTeX\ the user starts his file with the command
+%       |\documentstyle [OPTION1, ... ,OPTIONk]{STYLE}|
+%    which saves the |OPTION|'s and |\input|'s the file |STYLE.STY|.
+%    When the |STYLE.STY| file issues the command |\@options|, the
+%    following happens for each i:
+%
+%    If the control sequence |\ds@OPTIONi| is defined then
+%    execute this option |\ds@OPTIONi|. In the other case
+%    save OPTIONi on a list of unprocessed options.
+%
+%    After |STYLE.STY| has been executed, the file |OPTIONi.STY| is read for
+%    each |OPTIONi| on the list of unprocessed options.
+%
+%    \begin{macrocode}
+\ifka@db@ltxtwoe
+    \ProcessOptions
+  \else
+    \@options
+  \fi
+%    \end{macrocode}
+%
+%  \section{Loading Packages}
+%
+%  The `dinbrief' class/style file does not load additional packages.
+%
+%  \section{Old style font attribute changing}
+%
+%  Therefore we define a waring message for the use of this forbidden
+%  commands.
+%  \begin{macro}{\ka@db@warning}
+%    \begin{macrocode}
+\ifka@db@ltxtwoe
+  \def\ka@db@warning#1{%
+    \@@warning{The control sequence \string#1\space should %
+               not be used in LaTeX 2e}%
+  }
+\fi
+%    \end{macrocode}
+%  \end{macro}
+%
+%  We support the old commands |\rm|, |\sf| and so on in \LaTeX~2e.
+%  But we print a waring message if the user has the commands in his
+%  file.
+%
+%
+%  \subsection{Font changing}
+%  \changes{0.92.20}{1994/02/20}{The font changing has to
+%                                be redefined in \LaTeXe.
+%                                Code copied from letter class.}
+%  \changes{0.94.0}{1994/08/15}{\cmd\@rewnewfontswitch renamed to
+%                               \cmd\DeclareOldFontCommand}
+%
+%  Defining the font change commands for \LaTeXe.
+%
+%  The following commands are only available in \LaTeXe. In older
+%  \LaTeX\ the commands are defined in |lfonts.???| (I think so).
+%
+%    \begin{macrocode}
+\ifka@db@ltxtwoe
+%    \end{macrocode}
+%  Here we supply the declarative font changing commands that were common
+%  in \LaTeX\ version 2.09 and earlier. These commands work in text mode
+%  \textit{and} in math mode. They are provided for compatibility, but one
+%  should start using the |\text...| and |\math...| commands instead.
+%  These commands are redefined using |\@renewfontswitch|, a command
+%  wiith three arguments: the user command to be defined; \LaTeX\ commands
+%  to execute in text mode and \LaTeX\ commands to execute in math mode.
+%
+%  \begin{macro}{\rm}
+%  \begin{macro}{\sf}
+%  \begin{macro}{\tt}
+%  The commands to change the family
+%    \begin{macrocode}
+\DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
+\DeclareOldFontCommand{\sf}{\normalfont\sffamily}{\mathsf}
+\DeclareOldFontCommand{\tt}{\normalfont\ttfamily}{\mathtt}
+%    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%
+%  \begin{macro}{\bf}
+%  The command to change to the bold series. One should |\mdseries| to
+%  explicitly switch back to medium series.
+%    \begin{macrocode}
+\DeclareOldFontCommand{\bf}{\normalfont\bfseries}{\mathbf}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\it}
+%  \begin{macro}{\sl}
+%  \begin{macro}{\sc}
+%  And the commands to change the shape of the font. The slanted and
+%  samll caps shapes are not available by default as math alphabets, so
+%  those changes do nothing in math mode. One should use |\upshape|
+%  to explicitly change back to the upright shape.
+%
+%    \begin{macrocode}
+\DeclareOldFontCommand{\it}{\normalfont\itshape}{\mathit}
+\DeclareOldFontCommand{\sl}{\normalfont\slshape}{\@nomath\sl}
+\DeclareOldFontCommand{\sc}{\normalfont\scshape}{\@nomath\sc}
+%    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%
+%  \begin{macro}{\cal}
+%  \begin{macro}{\mit}
+%  The commands |\cal| and |\mit| should only be used in math mode, outside
+%  math mode they have no effect. Currently the New Font Selection Scheme
+%  defines these commands to generate warning messages. Terefore we have
+%  to define them `by hand'.
+%
+%    \begin{macrocode}
+\renewcommand{\cal}{\protect\pcal}
+\newcommand{\pcal}{\@fontswitch{\relax}{\mathcal}}
+\renewcommand{\mit}{\protect\pmit}
+\newcommand{\pmit}{\@fontswitch{\relax}{\mathnormal}}
+%    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
+%
+%  The end of the conditional code for the font changing commands for
+%  \LaTeXe.
+%    \begin{macrocode}
+\fi
+%    \end{macrocode}
+%
+% \section{Error messages in this class/style}
+%
+%  \begin{macro}{\ka@db@error}
+%    \begin{macrocode}
+\def\ka@db@error#1{%
+   \@latexerr{%
+      Document style/class `dinbrief' error^^J%
+      #1%
+   }{%
+      No help is available for this error message.^^J%
+      Please check your input file!
+   }%
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+% \section{Fonts --- The size the style is desired in}
+%
+%    \begin{macrocode}
+\ifcase \@ptsize\relax
+ \def\@normalsize{\@setsize\normalsize{12pt}\xpt\@xpt
+  \abovedisplayskip 10pt plus2pt minus5pt
+  \belowdisplayskip \abovedisplayskip
+  \abovedisplayshortskip \z@ plus3pt
+  \belowdisplayshortskip 6pt plus3pt minus3pt}
+ \def\small{\@setsize\small{11pt}\ixpt\@ixpt
+  \abovedisplayskip 8.5pt plus 3pt minus 4pt
+  \belowdisplayskip \abovedisplayskip
+  \abovedisplayshortskip \z@ plus2pt
+  \belowdisplayshortskip 4pt plus2pt minus 2pt}
+ \def\footnotesize{\@setsize\footnotesize{9.5pt}\viiipt\@viiipt
+  \abovedisplayskip 6pt plus 2pt minus 4pt
+  \belowdisplayskip \abovedisplayskip
+  \abovedisplayshortskip \z@ plus 1pt
+  \belowdisplayshortskip 3pt plus 1pt minus 2pt}
+ \def\scriptsize{\@setsize\scriptsize{8pt}\viipt\@viipt}
+ \def\tiny{\@setsize\tiny{6pt}\vpt\@vpt}
+ \def\large{\@setsize\large{14pt}\xiipt\@xiipt}
+ \def\Large{\@setsize\Large{18pt}\xivpt\@xivpt}
+ \def\LARGE{\@setsize\LARGE{22pt}\xviipt\@xviipt}
+ \def\huge{\@setsize\huge{25pt}\xxpt\@xxpt}
+ \def\Huge{\@setsize\Huge{30pt}\xxvpt\@xxvpt}
+\or
+ \def\@normalsize{\@setsize\normalsize{13.6pt}\xipt\@xipt
+  \abovedisplayskip 11pt plus3pt minus6pt
+  \belowdisplayskip \abovedisplayskip
+  \abovedisplayshortskip \z@ plus3pt
+  \belowdisplayshortskip 6.5pt plus3.5pt minus3pt}
+ \def\small{\@setsize\small{12pt}\xpt\@xpt
+  \abovedisplayskip 10pt plus2pt minus5pt
+  \belowdisplayskip \abovedisplayskip
+  \abovedisplayshortskip \z@ plus3pt
+  \belowdisplayshortskip 6pt plus3pt minus3pt}
+ \def\footnotesize{\@setsize\footnotesize{11pt}\ixpt\@ixpt
+  \abovedisplayskip 8pt plus 2pt minus 4pt
+  \belowdisplayskip \abovedisplayskip
+  \abovedisplayshortskip \z@ plus 1pt
+  \belowdisplayshortskip 4pt plus 2pt minus 2pt}
+ \def\scriptsize{\@setsize\scriptsize{9.5pt}\viiipt\@viiipt}
+ \def\tiny{\@setsize\tiny{7pt}\vipt\@vipt}
+ \def\large{\@setsize\large{14pt}\xiipt\@xiipt}
+ \def\Large{\@setsize\Large{18pt}\xivpt\@xivpt}
+ \def\LARGE{\@setsize\LARGE{22pt}\xviipt\@xviipt}
+ \def\huge{\@setsize\huge{25pt}\xxpt\@xxpt}
+ \def\Huge{\@setsize\Huge{30pt}\xxvpt\@xxvpt}
+\or
+ \def\@normalsize{\@setsize\normalsize{15pt}\xiipt\@xiipt
+  \abovedisplayskip 12pt plus3pt minus7pt
+  \belowdisplayskip \abovedisplayskip
+  \abovedisplayshortskip \z@ plus3pt
+  \belowdisplayshortskip 6.5pt plus3.5pt minus3pt}
+ \def\small{\@setsize\small{13.6pt}\xipt\@xipt
+  \abovedisplayskip 11pt plus3pt minus6pt
+  \belowdisplayskip \abovedisplayskip
+  \abovedisplayshortskip \z@ plus3pt
+  \belowdisplayshortskip 6.5pt plus3.5pt minus3pt}
+ \def\footnotesize{\@setsize\footnotesize{12pt}\xpt\@xpt
+  \abovedisplayskip 10pt plus2pt minus5pt
+  \belowdisplayskip \abovedisplayskip
+  \abovedisplayshortskip \z@ plus3pt
+  \belowdisplayshortskip 6pt plus3pt minus3pt}
+ \def\scriptsize{\@setsize\scriptsize{9.5pt}\viiipt\@viiipt}
+ \def\tiny{\@setsize\tiny{7pt}\vipt\@vipt}
+ \def\large{\@setsize\large{18pt}\xivpt\@xivpt}
+ \def\Large{\@setsize\Large{22pt}\xviipt\@xviipt}
+ \def\LARGE{\@setsize\LARGE{25pt}\xxpt\@xxpt}
+ \def\huge{\@setsize\huge{30pt}\xxvpt\@xxvpt}
+ \let\Huge=\huge
+\fi
+%    \end{macrocode}
+%
+%  \begin{macro}{\normalsize}
+%  We are doing here something different as in the classes files of
+%  \LaTeXe. This may necessary for backward compatibility. Maybe not!
+%
+%  If we are in \LaTeXe\ then we have to define the cs |\normalsize|.
+%
+%    \begin{macrocode}
+\ifka@db@ltxtwoe
+\let\normalsize\@normalsize
+\fi
+%    \end{macrocode}
+%  \end{macro}
+%
+% We initially choose the normalsize font.
+% This code has to be executed behind the definition of |\baselinestretch|,
+% if we are running without NFSS2. (This may be true also for NFSS1.)
+% \changes{0.92.13}{1994/01/04}{Commented out and moved to the end of the file}
+% \changes{0.92.14}{1994/01/04}{Included as conditional code}
+%    \begin{macrocode}
+\ifka@db@nfss
+    \normalsize
+  \else
+    \ifka@db@nfsstwo
+      \normalsize
+    \fi
+  \fi
+%    \end{macrocode}
+%
+% \section{Document Layout}
+% \label{sec:maincode}
+%
+%  In this section we are finally dealing with the nasty typographical
+%  details.
+%
+%
+%
+%    \begin{macrocode}
+\addtolength\voffset{0.8truemm}
+\addtolength\hoffset{-1.4truemm}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\oddsidemargin 0in
+\evensidemargin 0in
+\marginparwidth .08in
+\marginparsep .01in
+\marginparpush 5pt
+\topmargin -15pt
+%    \end{macrocode}
+%
+%
+%    \begin{macrocode}
+\newdimen\ltf@headheight
+\newdimen\lts@headheight
+\newdimen\ltf@headsep
+\newdimen\lts@headsep
+\newdimen\ltf@textheight
+\newdimen\lts@textheight
+\ltf@headheight 4.2truemm %
+\lts@headheight 0truemm %
+\ltf@headsep 8.8truemm %
+\lts@headsep 0truemm %
+%    \end{macrocode}
+%
+%  \begin{macro}{\footheight}
+%    \LaTeXe has no dimen-register |\footheight|, because it is in
+%    all \LaTeX-versions not defined.
+%    \begin{macrocode}
+\ifka@db@ltxtwoe
+    \relax
+  \else
+    \footheight 4.2truemm
+  \fi
+%    \end{macrocode}
+%  \end{macro}
+%
+%    \begin{macrocode}
+\footskip 8.8truemm
+\textheight 260truemm
+%    \end{macrocode}
+%
+% RG 29.11.93 printer can't output the last line
+% \changes{0.0.0}{1993/11/29}{(RG) printer can't output the last line}
+%
+%    \begin{macrocode}
+\textheight 254truemm
+\textwidth 165truemm
+\columnsep 10pt
+\columnseprule 0pt
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\raggedbottom
+%    \end{macrocode}
+%
+%  \begin{macro}{\footnotesep}
+%  \begin{macro}{\footins}
+%    \begin{macrocode}
+\footnotesep 4.2truemm
+\skip\footins 10pt plus 2pt minus 4pt
+%    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
+%
+%    \begin{macrocode}
+\floatsep 12pt plus 2pt minus 2pt
+\textfloatsep 20pt plus 2pt minus 4pt
+\intextsep 12pt plus 2pt minus 2pt
+\dblfloatsep 12pt plus 2pt minus 2pt
+\dbltextfloatsep 20pt plus 2pt minus 4pt
+\ifka@db@ltxtwoe
+    \relax
+  \else
+    \@maxsep 20pt
+    \@dblmaxsep 20pt
+  \fi
+\@fptop 0pt plus 1fil
+\@fpsep 8pt plus 2fil
+\@fpbot 0pt plus 1fil
+\@dblfptop 0pt plus 1fil
+\@dblfpsep 8pt plus 2fil
+\@dblfpbot 0pt plus 1fil
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\def\@windowrules#1{\gdef\@@windowrules{#1}}
+\def\windowrules{\@windowrules{yes}}
+\def\nowindowrules{\@windowrules{}}
+\windowrules
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\def\@windowtics#1{\gdef\@@windowtics{#1}}
+\def\windowtics{\@windowtics{yes}}
+\def\nowindowtics{\@windowtics{}}
+\windowtics
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\def\backaddress#1{\gdef\@backaddress{#1}}
+\backaddress{}
+%    \end{macrocode}
+%
+%  \begin{macro}{\opening}
+%    \begin{macrocode}
+\def\opening#1{\thispagestyle{first@page}
+%    \end{macrocode}
+% KDB 02/08/94
+% Macros |\@gbsphack| and |\@gesphack| used by |\@enlargethispage| are unknown:
+% \changes{0.0.0}{1994/02/08}{}
+%    \begin{macrocode}
+ \let\@gbsphack=\relax
+ \let\@gesphack=\relax
+%    \end{macrocode}
+% Actually enlarge the first page by the negative height of the footer:
+%    \begin{macrocode}
+  \ifka@db@ltxtwoe
+     \enlargethispage{-\ht\@@bottomtext}
+  \fi
+%    \end{macrocode}
+%    \begin{macrocode}
+ \ifx\@empty\@fromaddress
+    \vbox to 0pt{\vss}\nointerlineskip
+  \else
+     \vbox to 0pt{\vskip -19.4truemm\raggedright\@fromaddress\vss}%
+  \fi
+ \vskip 13.1truemm
+%
+ \ifx\@empty\@@windowtics
+    \vbox to 0pt{\rule{0pt}{62.5truemm}%
+     \hbox to 0pt{\vbox{\hrule width 0pt}\hss}%
+     \vss}\nointerlineskip
+    \vbox to 0pt{\rule{0pt}{106.0truemm}%
+     \hbox to 0pt{\vbox{\hrule width 0pt}\hss}%
+     \vss}\nointerlineskip
+    \vbox to 0pt{\rule{0pt}{167.5truemm}%
+     \hbox to 0pt{\vbox{\hrule width 0pt}\hss}%
+     \vss}\nointerlineskip
+  \else
+    \vbox to 0pt{%
+     \rule{0pt}{62.5truemm}%
+     \hbox to 0pt{\hspace*{-24truemm}\vbox{\hrule width 7truemm}\hss}%
+     \vss}\nointerlineskip
+    \vbox to 0pt{%
+     \rule{0pt}{106.0truemm}%
+     \hbox to 0pt{\hspace*{-18truemm}\vbox{\hrule width 6truemm}\hss}%
+     \vss}\nointerlineskip
+    \vbox to 0pt{%
+     \rule{0pt}{167.5truemm}%
+     \hbox to 0pt{\hspace*{-24truemm}\vbox{\hrule width 7truemm}\hss}%
+     \vss}\nointerlineskip
+  \fi
+%    \end{macrocode}
+% KDB 02/08/94
+% Changed to check the height of the footer (|\@@bottomtext| now dimen, no
+% longer command)
+%    \begin{macrocode}
+ \ifdim\ht\@@bottomtext>0pt
+%    \end{macrocode}
+% Remarke KDB 02/08/94
+% |\@@bottomtext| shold be set within a |\vbox to 0pt{\vss ...}|
+%    \begin{macrocode}
+    \vbox to 0pt{%
+      \rule{0pt}{243.5truemm}%
+%    \end{macrocode}
+% KDB 02/08/94
+% |\hbox{ ... }| moved to box |\@@bottomtext|
+%    \begin{macrocode}
+%      \hbox to 0pt{\hskip0pt minus 4truemm%
+%        \vbox{\raggedright \@@bottomtext%
+%        }%
+%        \hss}%
+%      \@@bottomtext
+%    \end{macrocode}
+%    \begin{macrocode}
+      \unhbox\@@bottomtext%
+      \vss}%
+  \else
+%    \end{macrocode}
+% Remark KDB 02/08/94 \hfil\break
+% Is it here really neccessary to typeset a |\vbox| of height 0 ?
+% Remark RG 02/14/94 \hfil\break
+% Maybe for consistency?
+%    \begin{macrocode}
+    \vbox to 0pt{%
+      \rule{0pt}{243.5truemm}%
+      \vss}%
+  \fi
+%    \end{macrocode}
+%    \begin{macrocode}
+ \vbox to 0pt{\vss%
+  \ifx\@empty\@@windowrules
+     \hbox to 0pt{\hss}%
+   \else
+     \hbox to 0pt{\hspace*{-4truemm}\vbox{\hrule width 85truemm}\hss}%
+   \fi
+  \vss}\nointerlineskip
+%
+ \ifx\@empty\@backaddress
+    \vbox to 7.5truemm{
+     \vfill
+     }\nointerlineskip
+  \else
+    \vbox to 7.5truemm{
+     \vskip 2.5truemm
+     \vss
+     \hbox to 0pt{\hspace*{-4truemm}\vbox{%
+      \hbox to 85truemm{\hfill
+                        {\ka@db@fontsize{8}{9pt}
+                         \ka@db@selectfont \@backaddress}\hfill}%
+      \hrule width 85truemm}\hss}%
+     \vss}\nointerlineskip
+  \fi
+%
+ \vbox to 40truemm{%
+  \vss
+  \hbox to 0pt{\hskip0pt minus 4truemm%
+   \vbox{%
+         \if@letterform
+             \relax
+           \else
+             \raggedright \toname \\ \toaddress%
+             \if@toadrcenter\relax\else\vskip 2.5truemm minus 2.5truemm\fi
+           \fi
+        }%
+   \hss}
+  \if@toadrcenter
+    \vss
+  \fi
+  }\nointerlineskip
+ \vskip 2.5truemm
+%
+ \vbox to 0pt{\vss%
+  \ifx\@empty\@@windowrules
+     \hbox to 0pt{\hss}%
+   \else
+     \hbox to 0pt{\hspace*{-4truemm}\vbox{\hrule width 85truemm}\hss}%
+   \fi
+  \vss}\nointerlineskip
+%
+ \vbox{\vskip 6truemm
+  \vbox{%
+   \if@refline
+      \@answerto
+    \else
+      \if@letterform\relax\else
+        \ifx\@empty\@place
+           \raggedleft \@date
+         \else
+           \raggedleft \@place,\space\@date
+         \fi
+       \fi
+    \fi}}\nointerlineskip
+ \par
+ \bigskip
+ \ifx\@empty\@concern \else
+   \if@letterform\relax\else
+      \@concern \par
+      \bigskip
+    \fi
+  \fi
+ \ifx\@empty\@footer \else
+  \fi
+ \vspace{0pt plus 10truemm}
+ \if@letterform\relax\else
+   #1\par
+  \fi
+  \nobreak}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\closing}
+%    \begin{macrocode}
+\long\def\closing#1{\par\nobreak\vspace{\parskip}
+ \stopbreaks
+ {\raggedright
+  \ignorespaces #1\\[6\parskip]
+  \ifx\@empty\@fromsig
+  \else \@fromsig \fi\strut}
+  \par\medskip}
+%    \end{macrocode}
+%  \end{macro}
+%
+% \section{Initialisation}
+%
+% \subsection{Words}
+%
+% \begin{macro}{\ccname}
+% \begin{macro}{\enclname}
+% \begin{macro}{\psname}
+% This document style/class is for documents prepared in the German language.
+% To prepare a version for another language, various German words must
+% be replaced.  All the German words that require replacement are
+% defined below in command names.
+%
+%    \begin{macrocode}
+\def\ccname{Verteiler}
+\def\enclname{Anlage(n)}
+\def\psname{PS}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \subsection{\"Uberbleibsel aus alter Zeit?}
+% This is stuff from elder times and it is maybe used or not.
+%
+% \begin{macro}{\headtoname}
+% \begin{macro}{\pagename}
+%    \begin{macrocode}
+\def\headtoname{An}
+\def\pagename{Seite}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+%
+% \section{More letter macros}
+%  \begin{macro}{\cc}
+%  \begin{macro}{\encl}
+%  \begin{macro}{\ps}
+%    \begin{macrocode}
+\def\cc#1{\par\noindent{\ccname \\
+          \ignorespaces #1\strut}\par}
+\def\encl#1{\par\noindent{\enclname \\
+          \ignorespaces #1\strut}\par}
+\def\ps#1{\par\noindent{\psname \\
+          \ignorespaces #1\strut}\par}
+%    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%
+% \begin{macro}{\stopletter}
+%    |\stopletter| ist a hook to execute own commands at the end
+%    of a given letter.
+%    \begin{macrocode}
+\def\stopletter{}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{styles for the labels}
+% 06.02.93
+% labels got some styles (R.G.)
+%
+% \begin{macro}{\labelstyle}
+%   |\labelstyle| is a command to define the layout of the labels.
+%   Normally we print labels on a special paper but some printers
+%   are able to print on envelopes. Therefore we define some styles
+%   for printing labels on envelops:
+%   \begin{tabular}{clcl}
+%     \hline
+%       \multicolumn{2}{c}{Briefh"ullenformat} &
+%         \multicolumn{2}{c}{Gebr"auchliches}\\
+%       \multicolumn{2}{c}{} &
+%         \multicolumn{2}{c}{Einlagenformat}\\
+%       \multicolumn{1}{c}{Kurz-} &
+%         \multicolumn{1}{c}{Au"senma"se} &
+%         \multicolumn{1}{c}{Kurz-} &
+%         \multicolumn{1}{c}{Ma"se}\\
+%       \multicolumn{1}{c}{zeichen}&
+%         \multicolumn{1}{c}{mm $\pm$ 1{,}5}&
+%         \multicolumn{1}{c}{zeichen}&
+%         \multicolumn{1}{c}{mm}\\
+%     \hline
+%       C6    & 114 $\times$ 162 & A6   & 105 $\times$ 148 \\
+%       DL    & 110 $\times$ 220 & ---  & 105 $\times$ 210 \\
+%       C6/C5 & 114 $\times$ 229 & ---  & 105 $\times$ 210 \\
+%     \hline
+%   \end{tabular}
+%   Das Einlagenformat 105 mm $\times$ 210 mm ergibt sich
+%   durch Faltung nach DIN~676.
+%
+% \begin{macro}{\@labelstyle}
+%    Labelstyle holds the current value.
+%    \begin{macrocode}
+\def\labelstyle#1{\def\@labelstyle{#1}}
+\labelstyle{plain}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\label@plain}
+%    \begin{macrocode}
+\def\label@plain#1#2{\setbox0\vbox{\parbox[b]{3.6in}{
+ \strut\ignorespaces #2}}
+ \vbox to 50.8truemm{\vss \box0 \vss}
+ \ifnum\labelcount=4 \labelcount=0
+   \else \advance\labelcount by 1\nointerlineskip
+   \fi}
+%    \end{macrocode}
+% \end{macro}
+%
+%  \begin{macro}{\label@C6}
+%  \begin{macro}{\label@DL}
+%  \begin{macro}{\label@C6/C5}
+%  \begin{macro}{\label@deskjet}
+%    \begin{macrocode}
+\def\label@deskjet#1#2{\setbox0\vbox{\parbox[b]{3.6in}{
+    \vbox to 0pt{\vss%
+      \ifx\@empty\@@windowrules
+        \hbox to 0pt{\hss}%
+      \else
+        \hbox to 0pt{\hspace*{-4truemm}\vbox{\hrule width 85truemm}\hss}%
+      \fi
+      \vss}\nointerlineskip
+%
+    \vbox to 7.5truemm{
+      \vskip 2.5truemm
+      \vss
+      \hbox to 0pt{\hspace*{-4truemm}\vbox{%
+        \hbox to 85truemm{\hfill{\ka@db@fontsize{8}{9pt}
+                                 \ka@db@selectfont #1}\hfill}
+        \hrule width 85truemm}\hss}%
+        \vss}\nointerlineskip
+%
+    \vbox to 40truemm{%
+      \vss
+      \hbox to 0pt{\hskip0pt minus 4truemm%
+        \vbox{\raggedright #2%
+          \if@toadrcenter\relax\else\vskip 2.5truemm minus 2.5truemm\fi}%
+        \hss}
+      \if@toadrcenter
+        \vss
+      \fi
+    }\nointerlineskip
+    \vskip 2.5truemm
+%
+    \vbox to 0pt{\vss%
+      \ifx\@empty\@@windowrules
+        \hbox to 0pt{\hss}%
+      \else
+        \hbox to 0pt{\hspace*{-4truemm}\vbox{\hrule width 85truemm}\hss}%
+      \fi
+      \vss}\nointerlineskip
+    }}
+  \vbox to 0pt{\vss}
+  \vskip 18.0truemm
+  \vbox to 50.8truemm{\vss \box0 \vss}
+  \ifnum\labelcount=4 \labelcount=0
+    \else \advance\labelcount by 1\nointerlineskip
+    \fi
+  \vfill
+  \newpage
+}
+\expandafter\let\csname label@C6\endcsname    =\label@deskjet
+\expandafter\let\csname label@DL\endcsname    =\label@deskjet
+\expandafter\let\csname label@C6/C5\endcsname =\label@deskjet
+%    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%
+%  \begin{macro}{\mlabel}
+%    |\mlabel| typesets one label.
+%    \begin{macrocode}
+\def\mlabel#1#2{\@nameuse{label@\@labelstyle}{#1}{#2}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\lstyle@plain}
+%    \begin{macrocode}
+\def\lstyle@plain{
+  \topmargin -17.6truemm
+  \headsep 0pt
+  \oddsidemargin -12.3truemm
+  \evensidemargin -12.3truemm
+  \textheight 25.4truecm
+  \advance\textheight by .0001truemm
+  \@colht\textheight \@colroom\textheight \vsize\textheight
+  \textwidth 193.3truemm
+  \columnsep 25pt
+  \ka@db@fontsize{12}{14.4pt}\ka@db@selectfont
+  \boxmaxdepth=0pt
+  \twocolumn\relax
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\lstyle@deskjet}
+%    \begin{macrocode}
+\def\lstyle@deskjet{
+%  \topmargin -17.6truemm
+%  \headsep 0pt
+%  \oddsidemargin -12.3truemm
+%  \evensidemargin -12.3truemm
+  \textheight 25.4truecm
+  \advance\textheight by .0001truemm
+%  \@colht\textheight \@colroom\textheight \vsize\textheight
+  \textwidth 193.3truemm
+  \columnsep 25pt
+%  \ka@db@fontsize{12}{14.4pt}\ka@db@selectfont
+%  \boxmaxdepth=0pt
+%  \twocolumn
+ \relax
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\startlabels}
+%    \begin{macrocode}
+\def\startlabels{%
+  \nointerlineskip
+  \labelcount=0
+  \pagestyle{empty}
+  \let\@texttop=\relax
+% \topmargin -17.6truemm
+% \headsep 0pt
+% \oddsidemargin -12.3truemm
+% \evensidemargin -12.3truemm
+% \textheight 25.4truecm
+% \advance\textheight by .0001truemm
+% \@colht\textheight \@colroom\textheight \vsize\textheight
+% \textwidth 193.3truemm
+% \columnsep 25pt
+% \ka@db@fontsize{12}{14.4pt}\ka@db@selectfont
+% \boxmaxdepth=0pt
+% \twocolumn\relax
+  \@nameuse{lstyle@\@labelstyle}
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Processing of one letter}
+%
+% This boolean variable is only true if we are inside a letter.
+%
+%    \begin{macrocode}
+\newif\ifka@db@inletter
+\ka@db@inletterfalse
+%    \end{macrocode}
+%
+% \begin{macro}{\letter}
+%    \begin{macrocode}
+\long\def\letter#1{%
+  \ifka@db@inletter
+    \ka@db@error{%
+      Nested \string\begin \space \string letter are not allowed.
+    }
+  \fi
+  \clearpage
+  \c@page\@ne
+  \interlinepenalty=200
+  \@processto{#1}%
+  \ka@db@inlettertrue
+  }
+%   \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\endletter}
+%    \begin{macrocode}
+\def\endletter{%
+%    \end{macrocode}
+% KDB 02/09/94
+% Switch for last page added
+%    \begin{macrocode}
+  \ka@db@lastpagetrue
+%    \end{macrocode}
+% \cmd\stopletter\ is a hook to insert commands in the \cmd\endletter.
+%    \begin{macrocode}
+  \stopletter
+  \@@par
+  \pagebreak
+  \@@par
+  \gdef\@yourmail{}
+  \gdef\@mymail{}
+  \global\@reflinefalse
+  \if@filesw
+    \begingroup
+      \def\protect{\string}
+      \let\\=\relax
+      \def\protect##1{\string##1\space}
+      \immediate\write\@auxout{\string\mlabel{\@backaddress}{\toname
+      \\\toaddress}}
+    \endgroup
+  \fi
+  \ka@db@inletterfalse
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@processto}
+%    \begin{macrocode}
+\long\def\@processto#1{%
+  \@xproc #1\\@@@%
+  \ifx\toaddress\@empty
+  \else
+    \@yproc #1@@@%
+  \fi}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@xproc}
+%    \begin{macrocode}
+\long\def\@xproc #1\\#2@@@{\def\toname{#1}\def\toaddress{#2}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@yproc}
+%    \begin{macrocode}
+\long\def\@yproc #1\\#2@@@{\def\toaddress{#2}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\stopbreaks}
+%    \begin{macrocode}
+\def\stopbreaks{\interlinepenalty \@M
+ \def\par{\@@par\nobreak}\let\\=\@nobreakcr
+ \let\vspace\@nobreakvspace}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@nobreakvspace}
+%    \begin{macrocode}
+\def\@nobreakvspace{\@ifstar{\@nobreakvspacex}{\@nobreakvspacex}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@nobreakvspacex}
+%    \begin{macrocode}
+\def\@nobreakvspacex#1{\ifvmode\nobreak\vskip #1\relax\else
+ \@bsphack\vadjust{\nobreak\vskip #1}\@esphack\fi}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@nobreakcr}
+%    \begin{macrocode}
+\def\@nobreakcr{\vadjust{\penalty\@M}\@ifstar{\@xnewline}{\@xnewline}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\startbreaks}
+%    \begin{macrocode}
+\def\startbreaks{\let\\=\@normalcr
+ \interlinepenalty 200\def\par{\@@par\penalty 200}}
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
+\newcount\labelcount
+%
+\newif\if@refline
+\@reflinefalse
+\newif\if@toadrcenter
+\@toadrcenterfalse
+\newif\if@letterform
+\@letterformfalse
+\def\letterform{\@letterformtrue}
+\def\noletterform{\@letterformfalse}
+%    \end{macrocode}
+%
+% \begin{macro}{\centeraddress}
+%    \begin{macrocode}
+\def\centeraddress{\@toadrcentertrue}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\normaladdress}
+%    \begin{macrocode}
+\def\normaladdress{\@toadrcenterfalse}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\signature}
+%    \begin{macrocode}
+\def\signature#1{\def\@fromsig{#1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@fromsig}
+%    \begin{macrocode}
+\def\@fromsig{}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\address}
+%    \begin{macrocode}
+\long\def\address#1{\def\@fromaddress{#1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@fromaddress}
+%    \begin{macrocode}
+\def\@fromaddress{}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\footer}
+%    \begin{macrocode}
+\long\def\footer#1{\def\@footer{#1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@footer}
+%    \begin{macrocode}
+\def\@footer{}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\returnaddress}
+%    \begin{macrocode}
+\def\returnaddress{}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\place}
+%    \begin{macrocode}
+\def\place#1{\gdef\@place{#1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@place}
+%    \begin{macrocode}
+\def\@place{}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\phone}
+% \begin{macro}{\@prephone}
+% \begin{macro}{\@phone}
+% \begin{macro}{\@telephonenum}
+%    \begin{macrocode}
+\def\phone#1#2{\gdef\@prephone{#1}\gdef\@phone{#2}\gdef\@telephonenum{#1#2}}
+\def\@prephone{}
+\def\@phone{}
+\def\@telephonenum{}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\phonemsg}
+%    \begin{macrocode}
+\def\phonemsg{Telefon}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\date}
+%    \begin{macrocode}
+\def\date#1{\gdef\@date{#1}\gdef\@ntoday{#1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@date}
+%    \begin{macrocode}
+\def\@date{\today}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\sign}
+%    \begin{macrocode}
+\def\sign#1{\gdef\@mymail{#1}\@reflinetrue}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@mymail}
+%    \begin{macrocode}
+\def\@mymail{}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\signmsg}
+%    \begin{macrocode}
+\def\signmsg{Unsere Zeichen}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\yourmail}
+%    \begin{macrocode}
+\def\yourmail#1{\gdef\@yourmail{#1}\@reflinetrue}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@yourmail}
+%    \begin{macrocode}
+\def\@yourmail{}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\yourmailmsg}
+%    \begin{macrocode}
+\def\yourmailmsg{Ihre Zeichen, Ihre Nachricht vom}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@concern}
+%    \begin{macrocode}
+\def\@concern{}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\bottomtext}
+% Defines the text which is printed on the bottom of the first page.
+% This is used to include special informations such as the
+% number of the giroconto, or the name of the chairman of a corporation.
+%
+% KDB 02/08/94 \hfil\break
+% Defining macro |\bottomtext| putting the specified
+% text into box |\@@bottomtext|
+% to get the height of the footer and store it in |\@@bottomht|
+%    \begin{macrocode}
+\newbox\@@bottomtext
+\setbox\@@bottomtext=\vbox to 0pt{}
+\long\def\bottomtext#1{%
+  \ifka@db@ltxtwoe \relax \else
+    \def\ka@db@warning#1{%
+      \@@warning{\string\bottomtext \space is reserving space for typesetting
+                 its argument only in case of LaTeX 2e.
+                 With other LaTeX formats you will have to place a
+                 \string\clearpage-command at the appropriate position}%
+    }
+  \fi
+  \setbox\@@bottomtext=\hbox to 0pt{\hskip0pt minus 4truemm%
+       \vbox{\raggedright #1}%
+       \hss}%
+%  \@@bottomht \ht\@@bottomtext}
+  }
+%    \end{macrocode}
+%    \begin{macrocode}
+% \long\def\bottomtext#1{\def\@@bottomtext{#1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@bottomtext}
+%    \begin{macrocode}
+% \def\@@bottomtext{}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\document}
+%    \begin{macrocode}
+\def\document{%
+  \endgroup
+  \@colht\textheight
+  \@colroom\textheight
+  \vsize\textheight
+  \columnwidth\textwidth
+  \@clubpenalty\clubpenalty
+  \if@twocolumn
+    \advance\columnwidth -\columnsep
+    \divide\columnwidth\tw@
+    \hsize\columnwidth
+    \@firstcolumntrue
+  \fi
+  \hsize\columnwidth
+  \linewidth\hsize
+  \begingroup
+    \@floatplacement
+    \@dblfloatplacement
+  \endgroup
+  \if@filesw
+    \immediate\openout\@mainaux=\jobname@aux
+    \immediate\write\@mainaux{\string\startlabels\string\@startlabels}%
+  \fi
+  \def\do##1{\let ##1\@notprerr}
+  \@preamblecmds
+  \let\do\noexpand
+  \@normalsize\everypar{}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\enddocument}
+%    \begin{macrocode}
+\def\enddocument{%
+  \@checkend{document}
+  \newpage
+  \begingroup
+    \if@filesw
+      \immediate\closeout\@mainaux
+      \makeatletter
+      \input \jobname@aux
+      \clearpage
+    \fi
+  \endgroup
+  \deadcycles\z@
+  \@@end}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\makelabels}
+%    \begin{macrocode}
+\def\makelabels{\@fileswtrue}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@startlabels}
+%    \begin{macrocode}
+\def\@startlabels{}
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
+\let\@texttop=\relax
+%    \end{macrocode}
+%
+% KDB 02/09/94\hfil\break
+% Switch for detecting last page introduced (used bye pagestyle contheadings
+%    \begin{macrocode}
+\newif\ifka@db@lastpage
+\ka@db@lastpagefalse
+%    \end{macrocode}
+%
+%  \begin{macro}{\ps@headings}
+%    \begin{macrocode}
+\def\ps@headings{
+  \headheight=\ltf@headheight
+  \headsep=\ltf@headsep
+  \ifka@db@ltxtwoe
+      \relax
+    \else
+      \footheight 0truemm
+    \fi
+  \footskip 0truemm
+  \def\@oddhead{%
+    \sl \headtoname\
+    \ignorespaces\toname \hfil \@date
+    \hfil \pagename{} \thepage}
+  \def\@oddfoot{}
+  \def\@evenhead{%
+    \sl \headtoname\
+    \ignorespaces\toname \hfil \@date
+    \hfil \pagename{} \thepage}
+  \def\@evenfoot{}}
+%    \end{macrocode}
+% \end{macro}
+%
+%  \begin{macro}{\ps@empty}
+%    \begin{macrocode}
+\def\ps@empty{%
+  \headheight=\lts@headheight
+  \headsep=\lts@headsep
+  \ifka@db@ltxtwoe
+      \relax
+    \else
+      \footheight 0truemm
+    \fi
+  \footskip 0truemm
+  \def\@oddhead{}
+  \def\@oddfoot{}
+  \def\@evenhead{}
+  \def\@evenfoot{}}
+%
+\def\ps@first@page{%
+  \headheight=\lts@headheight
+  \headsep=\lts@headsep
+  \ifka@db@ltxtwoe
+      \relax
+    \else
+      \footheight 4.2truemm
+    \fi
+  \footskip 8.8truemm
+%%   \ifx\@empty\@footer
+%%       \def\@oddfoot{\global\@colht=\textwidth}
+%%    \else
+%%       \def\@oddfoot{\hbox to \textwidth{\hspace*{35.15truemm}%
+%% %                    \xpt\@place \hfill
+%% %                    \fontsize{}{}
+%% %
+%%                     \@telephonenum}\hss}
+%%    \fi
+%%   \def\@evenfoot{\global\@colht=\textwidth}
+  \def\@oddhead{}
+  \def\@evenhead{}
+}
+%
+\def\ps@plain{%
+  \headheight=\lts@headheight
+  \headsep=\lts@headsep
+  \ifka@db@ltxtwoe
+      \relax
+    \else
+      \footheight 4.2truemm
+    \fi
+  \footskip 8.8truemm
+  \def\@oddhead{}
+  \def\@oddfoot{\hfil{\ka@db@fontshape{n}%
+                      \ka@db@fontseries{m}\ka@db@selectfont\thepage}
+                      \hfil}%
+  \def\@evenhead{}
+  \def\@evenfoot{}}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{ps@myheadings}
+%    \begin{macrocode}
+\def\ps@myheadings{%\let\@mkboth\@gobbletwo
+  \headheight=\ltf@headheight
+  \headsep=\ltf@headsep
+  \ifka@db@ltxtwoe
+      \relax
+    \else
+      \footheight 0truemm
+    \fi
+  \footskip 0truemm
+  \def\@oddhead{{\sl \rightmark}}%
+  \def\@oddfoot{}
+  \def\@evenhead{{\sl \leftmark}}%
+  \def\@evenfoot{}}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{ps@contheadings}
+%  KDB 02/09/94\hfil\break
+%  Pagestyle 'headings' with pagenumber in top line and number of following
+%  page in bottom line
+%
+%  Remark KDB 02/10/94\hfil\break
+%  Problem to be solved before this pagestyle can be introduced:
+%    There must be found a method to detect the last page is typesetted
+%    (endletter is not sufficient, since there may be another pagebreak when
+%    TeX has seen the command - due to an overfull page)
+%    \begin{macrocode}
+\def\ps@contheadings{%\let\@mkboth\@gobbletwo
+  \headheight=\ltf@headheight
+  \headsep=\ltf@headsep
+  \ifka@db@ltxtwoe
+      \relax
+    \else
+      \footheight 0truemm
+    \fi
+  \footskip 8.8truemm
+  \def\@oddhead{{\sl \headtoname\ \ignorespaces\toname \hfil \@date
+                \hfil\pagename{} \thepage}}%
+  \def\@oddfoot{\ifka@db@lastpage \relax \else
+                  \addtocounter{page}{1}%
+                  \hfil--- \thepage{} ---\hfil%
+                  \addtocounter{page}{-1}
+                \fi}
+  \def\@evenhead{{\sl \headtoname\ \ignorespaces\toname \hfil \@date
+                \hfil\pagename{} \thepage}}%
+  \def\@evenfoot{\ifka@db@lastpage \relax \else
+                  \addtocounter{page}{1}%
+                  ~\hfil--- \thepage{} ---~%
+                  \addtocounter{page}{-1}
+                \fi}}
+%    \end{macrocode}
+%  \end{macro}
+%
+% \subsection{Fonts --- Paragraphing}
+% These parameters controls \TeX's behaviour when two lines tend
+% to come too close together.
+%
+%    \begin{macrocode}
+\lineskip 1pt
+\normallineskip 1pt
+%    \end{macrocode}
+% \begin{macro}{\baselinestretch}
+% This is used as a multiplier for |\baselineskip|. The default is
+% {\em not\/} to stretch the baselines.
+%    \begin{macrocode}
+\def\baselinestretch{1}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\parskip}
+%  \begin{macro}{\parindent}
+%  |\parskip| gives extra vertical space between paragraphs and |\parindent|
+%  is the width of the paragraph indentation.
+%    \begin{macrocode}
+\parskip .7em
+\parindent 0pt
+%    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
+%    \begin{macrocode}
+\topsep .4em
+\partopsep 0pt
+\itemsep .4em
+%    \end{macrocode}
+%
+%  \begin{macro}{\@lowpenalty}
+%  \begin{macro}{\@medpenalty}
+%  \begin{macro}{\@highpenalty}
+%  The commands |\nopagebreak| and |\nolinebreak| put in penalties to
+%  discourage these breaks at the point they are put in. They use
+%  |\@lowpenalty|, |\@medpenalty| or |\@highpenalty|, dependant on their
+%  argument.
+%    \begin{macrocode}
+\@lowpenalty 51
+\@medpenalty 151
+\@highpenalty 301
+%    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%    \begin{macrocode}
+\@beginparpenalty -\@lowpenalty
+\@endparpenalty -\@lowpenalty
+\@itempenalty -\@lowpenalty
+%    \end{macrocode}
+%
+% \subsection{Lists}
+%
+% \subsubsection{General List Parameters}
+%
+% The following commands are used to set the default values for the list
+% environment's parameters. See the \LaTeX{} manual for an explanation
+% of the meanings of the parameters.  Defaults for the list
+% environment are set as follows.  First, |\rightmargin|,
+% |\listparindent| and |\itemindent| are set to 0pt.  Then, for a Kth
+% level list, the command |\@listK| is called, where `K' denotes `i',
+% '`i', ... , `vi'.  (I.e., |\@listiii| is called for a third-level
+% list.)  By convention, |\@listK| should set |\leftmargin| to
+% |\leftmarginK|.
+%
+% \begin{macro}{\leftmargin}
+% \begin{macro}{\leftmargini}
+% \begin{macro}{\leftmarginii}
+% \begin{macro}{\leftmarginiii}
+% \begin{macro}{\leftmarginiv}
+% \begin{macro}{\leftmarginv}
+% \begin{macro}{\leftmarginvi}
+% For efficiency, level-one list's values are defined at top level, and
+% |\@listi| is defined to set only |\leftmargin|.
+%
+%    \begin{macrocode}
+\leftmargini 2.5em
+\leftmarginii 2.2em
+\leftmarginiii 1.87em
+\leftmarginiv 1.7em
+\leftmarginv 1em
+\leftmarginvi 1em
+%    \end{macrocode}
+%    Here we set the top level leftmargin.
+%    \begin{macrocode}
+\leftmargin\leftmargini
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\labelsep}
+% \begin{macro}{\labelwidth}
+%    |\labelsep| is the distance between the label and the text of an
+%    item; |\labelwidth| is the width of the label.
+%    \begin{macrocode}
+\labelwidth\leftmargini
+\advance\labelwidth-\labelsep
+\labelsep 5pt
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+%    \begin{macrocode}
+\parsep 0pt
+%    \end{macrocode}
+%
+% \begin{macro}{\@listi}
+%    \begin{macrocode}
+\let\@listi\relax
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@listii}
+% \begin{macro}{\@listiii}
+% \begin{macro}{\@listiv}
+% \begin{macro}{\@listv}
+% \begin{macro}{\@listvi}
+%    Here are the same macros for the higher level lists.
+%    \begin{macrocode}
+\def\@listii{%
+  \leftmargin\leftmarginii
+  \labelwidth\leftmarginii
+  \advance\labelwidth-\labelsep}
+\def\@listiii{%
+  \leftmargin\leftmarginiii
+  \labelwidth\leftmarginiii
+  \advance\labelwidth-\labelsep
+  \topsep .2em
+  \itemsep \topsep}
+\def\@listiv{%
+  \leftmargin\leftmarginiv
+  \labelwidth\leftmarginiv
+  \advance\labelwidth-\labelsep}
+\def\@listv{%
+  \leftmargin\leftmarginv
+  \labelwidth\leftmarginv
+  \advance\labelwidth-\labelsep}
+\def\@listvi{%
+  \leftmargin\leftmarginvi
+  \labelwidth\leftmarginvi
+  \advance\labelwidth-\labelsep}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+%
+% \subsubsection{Enumerate}
+%
+%    The enumerate environment uses  four counters: \Lcount{enumi},
+%    \Lcount{enumii}, \Lcount{enumiii} and \Lcount{enumiv}, where
+%    \Lcount{enumN} controls the numbering of the Nth level
+%    enumeration.
+%
+% \begin{macro}{\theenumi}
+% \begin{macro}{\theenumii}
+% \begin{macro}{\theenumiii}
+% \begin{macro}{\theenumiv}
+%    The counters are already defined in \file{latex.tex}, but their
+%    representation is changed here.
+%
+%    \begin{macrocode}
+\def\theenumi{\arabic{enumi}}
+\def\theenumii{\alph{enumii}}
+\def\theenumiii{\roman{enumiii}}
+\def\theenumiv{\Alph{enumiv}}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\labelenumi}
+% \begin{macro}{\labelenumii}
+% \begin{macro}{\labelenumiii}
+% \begin{macro}{\labelenumiv}
+%    The label for each item is generated by the commands
+%    |\labelenumi| ... |\labelenumiv|.
+%    \begin{macrocode}
+\def\labelenumi{\arabic{enumi}.}
+\def\labelenumii{(\alph{enumii})}
+\def\labelenumiii{\roman{enumiii}.}
+\def\labelenumiv{\Alph{enumiv}.}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\p@enumii}
+% \begin{macro}{\p@enumiii}
+% \begin{macro}{\p@enumiv}
+%    The expansion of |\p@enumN||\theenumN| defines the output of a
+%    |\ref| command when referencing an item of the Nth level of an
+%    enumerated list.
+%    \begin{macrocode}
+\def\p@enumii{\theenumi}
+\def\p@enumiii{\theenumi(\theenumii)}
+\def\p@enumiv{\p@enumiii\theenumiii}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \subsubsection{Itemize}
+%
+% \begin{macro}{\labelitemi}
+% \begin{macro}{\labelitemii}
+% \begin{macro}{\labelitemiii}
+% \begin{macro}{\labelitemiv}
+% Itemization is controlled by four commands: |\labelitemi|,
+% |\labelitemii|, |\labelitemiii|, and |\labelitemiv|, which define
+% the labels of thevarious itemization levels: the symbols used are
+% bullet, bold en-dash, asterisk and centred dot.
+%
+%    \begin{macrocode}
+\def\labelitemi{$\bullet$}
+\def\labelitemii{\bf --}
+\def\labelitemiii{$\ast$}
+\def\labelitemiv{$\cdot$}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \subsubsection{Description}
+%
+% \begin{macro}{\description}
+% \begin{macro}{\descriptionlabel}
+% \begin{macro}{\enddescription}
+%    The description environment is defined here -- while the itemize
+%    and enumerate environments are defined in \file{latex.tex}.
+%
+%    To change the formatting of the label, you must redefine
+%    |\descriptionlabel|.
+%
+%    \begin{macrocode}
+\def\descriptionlabel#1{%
+  \hspace\labelsep \bf #1}
+\def\description{%
+  \list{}{\labelwidth\z@ \itemindent-\leftmargin
+          \let\makelabel\descriptionlabel}}
+\let\enddescription\endlist
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \subsubsection{Verse}
+%
+% \begin{macro}{\verse}
+% \begin{macro}{\endverse}
+%   The verse environment is defined by making clever use of the
+%   list environment's parameters.  The user types |\\| to end a line.
+%   This is implemented by |\let|'ing |\\| equal |\@centercr|.
+%
+%    \begin{macrocode}
+\def\verse{\let\\=\@centercr
+  \list{}{\itemsep\z@
+          \itemindent -15pt
+          \listparindent \itemindent
+          \rightmargin\leftmargin
+          \advance\leftmargin 15pt}\item[]}
+\let\endverse\endlist
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \subsubsection{Quotation}
+%
+% \begin{macro}{\quotation}
+% \begin{macro}{\endquotation}
+%   The quotation environment is also defined by making clever use of
+%   the list environment's parameters. The lines in the environment
+%   are set smaller than |\textwidth|. The first line of a paragraph
+%   inside this environment is indented.
+%
+%    \begin{macrocode}
+\def\quotation{%
+  \list{}{\listparindent 1.5em
+          \itemindent\listparindent
+          \rightmargin\leftmargin}%
+  \item[]}
+\let\endquotation=\endlist
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \subsubsection{Quote}
+%
+% \begin{macro}{\quote}
+% \begin{macro}{\endquote}
+%   The quote environment is like the quotation environment except
+%   that paragraphs are not indented.
+%
+%    \begin{macrocode}
+\def\quote{%
+  \list{}{\rightmargin\leftmargin}%
+  \item[]}
+\let\endquote=\endlist
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+\def\theequation{\arabic{equation}}
+%
+% \subsection{Setting parameters for existing environments}
+%
+% \subsubsection{Array and tabular}
+%
+% \begin{macro}{\arraycolsep}
+%    The columns in an array environment are separated by
+%    2|\arraycolsep|.
+%    \begin{macrocode}
+\arraycolsep 5pt
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\tabcolsep}
+%    The columns in an tabular environment are separated by
+%    2|\tabcolsep|.
+%    \begin{macrocode}
+\tabcolsep 6pt
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\arrayrulewidth}
+%    The width of rules in the array and tabular environments is given
+%    by |\arrayrulewidth|.
+%    \begin{macrocode}
+\arrayrulewidth .4pt
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\doublerulesep}
+%    The space between adjacent rules in the array and tabular
+%    environments is given by |\doublerulesep|.
+%    \begin{macrocode}
+\doublerulesep 2pt
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsection{Tabbing}
+%
+% \begin{macro}{\tabbingsep}
+%    This controls the space that the |\'| command puts in. (See
+%    \LaTeX{} manual for an explanation.)
+%    \begin{macrocode}
+\tabbingsep \labelsep
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsection{Minipage}
+%
+% \begin{macro}{\@minipagerestore}
+%    The macro |\@minipagerestore| is called upon entry to a minipage
+%    environment to set up things that are to be handled differently
+%    inside a minipage environment. In the current styles, it does
+%    nothing.
+% \end{macro}
+%
+% \begin{macro}{\@mpfootins}
+%    Minipages have their own footnotes; |\skip||\@mpfootins| plays
+%    same r\^ole for footnotes in a minipage as |\skip||\footins| does
+%    for ordinary footnotes.
+%
+%    \begin{macrocode}
+\skip\@mpfootins = \skip\footins
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsection{Framed boxes}
+%
+% \begin{macro}{\fboxsep}
+%    The space left by |\fbox| and |\framebox| between the box and the
+%    text in it.
+% \begin{macro}{\fboxrule}
+%    The width of the rules in the box made by |\fbox| and |\framebox|.
+%    \begin{macrocode}
+\fboxsep = 3pt
+\fboxrule = .4pt
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \subsubsection{Equation and eqnarray}
+%
+% \begin{macro}{\theequation}
+%    The equation counter will be reset at beginning of a new chapter
+%    and the equation number will be prefixed by the chapter number.
+%
+%    This code  must follow the |\chapter| definition, or more exactly
+%    the definition of the chapter counter.
+%    \begin{macrocode}
+\def\theequation{\arabic{equation}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\jot}
+%    |\jot| is the extra space added between lines of an eqnarray
+%    environment. The default value is used.
+%    \begin{macrocode}
+% \setlength\jot{3pt}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@eqnnum}
+%    The macro |\@eqnnum| defines how equation numbers are to appear in
+%    equations. Again the default is used.
+%
+%    \begin{macrocode}
+% \def\@eqnnum{(\theequation)}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Footnotes}
+%
+% \begin{macro}{\footnoterule}
+%    Usually, footnotes are separated from the main body of the text
+%    by a small rule. This rule is drawn by the macro |\footnoterule|.
+%    We have to make sure that the rule takes no vertical space (see
+%    \file{plain.tex}) so we compensate for the natural heigth of the
+%    rule of 0.4pt by adding the right amount of vertical skip.
+%
+%    To prevent the rule from colliding with the footnote we first add
+%    a little negative vertical skip, then we put the rule and make
+%    sure we end up at the same point where we begun this operation.
+%    \begin{macrocode}
+\def\footnoterule{%
+  \kern-1\p@
+  \hrule width .4\columnwidth
+  \kern .6\p@}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\c@footnote}
+%    The dinbrief style/class do not use this macro.
+%
+%    (Footnotes are numbered within chapters in the report and book
+%    document styles.)
+% \end{macro}
+%
+% \begin{macro}{\@makefntext}
+%    The footnote mechanism of \LaTeX{} calls the macro |\@makefntext|
+%    to produce the actual footnote. The macro gets the text of the
+%    footnote as its argument and should use |\@thefnmark| as the mark
+%    of the footnote. The macro |\@makefntext|is called when
+%    effectively inside a |\parbox| of width |\columnwidth| (i.e.,
+%    with |\hsize| = |\columnwidth|).
+%
+%   An example of what can be achieved is given by the following piece
+%   of \TeX\ code.
+%    \begin{macrocode}
+%          \long\def\@makefntext#1{%
+%             \@setpar{\@@par
+%                      \@tempdima = \hsize
+%                      \advance\@tempdima-10pt
+%                      \parshape \@ne 10pt \@tempdima}%
+%             \par
+%             \parindent 1em\noindent
+%             \hbox to \z@{\hss$\m@th^{\@thefnmark}$}#1}
+%    \end{macrocode}
+%    The effect of this definition is that all lines of the footnote
+%    are indented by 10pt, while the first line of a new paragraph is
+%    indented by 1em. To change these dimensions, just substitute the
+%    desired value for `10pt' (in both places) or `1em'.  The mark is
+%    flushright against the footnote.
+%
+%    In these document classes we use a simpler macro, in which the
+%    footnote text is set like an ordinary text paragraph, with no
+%    indentation except on the first line of a paragraph, and the
+%    first line of the footnote. Thus, all the macro must do is set
+%    |\parindent| to the appropriate value for succeeding paragraphs
+%    and put the proper indentation before the mark.
+%
+%    \begin{macrocode}
+% \long\def\@makefntext#1{%
+%     \parindent 1em%
+%     \noindent
+%     \hbox to 1.8em{\hss$\m@th^{\@thefnmark}$}#1}
+%    \end{macrocode}
+%  \end{macro}
+%  \begin{macro}{\@makefntext}
+%    \begin{macrocode}
+\long\def\@makefntext#1{%
+  \noindent
+  \hangindent 5pt%
+  \hbox  to 5pt{\hss $^{\@thefnmark}$}#1}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@makefnmark}
+%    The footnote markers that are printed in the text to point to the
+%    footnotes should be produced by the macro |\@makefnmark|. We use
+%    the default definition for it.
+%    \begin{macrocode}
+%\def\@makefnmark{\hbox{$^{\@thefnmark}\m@th$}}
+%    \end{macrocode}
+% \end{macro}
+%    \begin{macrocode}
+\c@topnumber=2
+\def\topfraction{.7}
+\c@bottomnumber=1
+\def\bottomfraction{.3}
+\c@totalnumber=3
+\def\textfraction{.2}
+\def\floatpagefraction{.5}
+\c@dbltopnumber= 2
+\def\dbltopfraction{.7}
+\def\dblfloatpagefraction{.5}
+%    \end{macrocode}
+%
+% \subsection{The current date}
+%
+% \begin{macro}{\today}
+%    \begin{macrocode}
+\def\today{\number\day.\space\ifcase\month\or
+  Januar\or Februar\or M\"arz\or April\or Mai\or Juni\or
+  Juli\or August\or September\or Oktober\or November\or Dezember\fi
+  \space\number\year}
+%    \end{macrocode}
+% \end{macro}
+%    \begin{macrocode}
+\newcount\yearcnt
+\yearcnt=\year
+\advance\yearcnt-\number1900
+\def\@znumber#1{\ifnum\number#1<10 0\number#1\else\number#1\fi}
+\def\@ntoday{\@znumber{\number\day}.\@znumber{\number\month}.\@znumber{\the\yearcnt}}
+%
+\def\up#1{\leavevmode \raise.16ex\hbox{#1}}
+%
+%    \end{macrocode}
+%
+% \begin{macro}{\concern}
+%    \begin{macrocode}
+\long\def\concern#1{\newbox\@betr
+  \setbox\@betr=\hbox{}
+  \def\@concern{\hangindent=\wd\@betr \hangafter=1 \unhbox\@betr #1\par}}
+%    \end{macrocode}
+% \end{macro}
+%
+%  \begin{macro}{\@fordate}
+%  |\@fordate| is the length of the remaining part of the
+%  referline.
+%    \begin{macrocode}
+\newlength{\@fordate}
+\setlength{\@fordate}{\textwidth}
+\addtolength{\@fordate}{-131truemm}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\@answertoold}
+%    The macro \cmd\@answertoold is used to typeset the referline in the
+%    original DIN 676 style.
+%    \begin{macrocode}
+\def\@answertoold{%
+  \setlength{\@fordate}{\textwidth}
+  \addtolength{\@fordate}{-131truemm}
+  % 50.8mm + 50.8mm + 25.4mm + 4mm (why 4mm?)
+  \parbox[b]{50.8truemm}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont
+                          \yourmailmsg{}}%
+                         \hfill\\ \@yourmail\hbox{}\hss}%
+  \parbox[b]{50.8truemm}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont \signmsg{}}%
+                         \hfill\\ \@mymail\hbox{}\hss}%
+  \parbox[b]{25.4truemm}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont \phonemsg{} \@prephone{}}%
+                         \hfill\\ \@phone\hbox{}\hss}%
+  \parbox[b]{\@fordate}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont
+    \ifx\@empty\@place
+       \vphantom{K}\rule{2pt}{0pt}
+     \else
+       \@place{}
+     \fi
+    }\hfill\\ \@ntoday}
+  }
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\@answertonew}
+%  The draft proposal of the new DIN 676 contains an additional
+%  field for the name of a person works currently on this
+%  subject the letter had been wrote for.
+%
+%  The new DIN 676 (draft) has a big disadvantage. The refer line
+%  is larger than the normal \cmd\textwidth. So we have to add some
+%  extra space to this box. This code should be rewritten. Is is only
+%  a hack at the moment.
+%
+%    \begin{macrocode}
+\def\@answertonew{%
+  \hbox to \textwidth{%
+    \setlength{\@fordate}{\textwidth}%
+    \addtolength{\@fordate}{-156.4truemm}%
+    \addtolength{\@fordate}{3cm}% This is a heavens value. Write better code!
+    \parbox[b]{50.8truemm}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont
+                            \yourmailmsg{}}%
+                           \hfill\\ \@yourmail\hbox{}\hss}%
+    \parbox[b]{50.8truemm}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont \signmsg{}}%
+                           \hfill\\ \@mymail\hbox{}\hss}%
+    \parbox[b]{50.8truemm}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont \phonemsg{} \@prephone{}}%
+                           \hfill\\ \@phone\hbox{}\hss}%
+    \parbox[b]{\@fordate}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont
+      \ifx\@empty\@place
+         \vphantom{K}\rule{2pt}{0pt}
+       \else
+         \@place{}
+       \fi
+      }\hfill\\ \@ntoday}
+    \hss}%
+  }
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\enabledraftstandard}
+%  \begin{macro}{\disabledraftstandard}
+%  \begin{macro}{\@answerto}
+%  \changes{0.94.1}{1994/08/14}{\cmd\enabledraftstandard and
+%                               \cmd\disabledraftstandard
+%                               introduced.}
+%  This two macros \cmd\enabledraftstandard and \cmd\disabledraftstandard
+%  are used to switch between the two DIN version 676 (the old one and the
+%  draft one). This is simply done by letting the \cmd\@answerto being the
+%  \cmd\@answertoold oder the \cmd\@answertonew.
+%
+%  By default we use the old and therefore the german standard.
+%
+%    \begin{macrocode}
+\def\enabledraftstandard{%
+  \let\@answerto=\@answertonew
+}
+%
+\def\disabledraftstandard{%
+  \let\@answerto=\@answertoold
+}
+%
+\disabledraftstandard
+\enabledraftstandard
+%    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%
+% \section{More Initialisations}
+%
+% We initially choose the normalsize font.
+% This code has to be executed behind the definition of |\baselinestretch|.
+%    \begin{macrocode}
+\ifka@db@nfss
+  \else
+    \ifka@db@nfsstwo
+      \else
+        \normalsize
+      \fi
+  \fi
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\smallskipamount=.5\parskip
+\medskipamount=\parskip
+\bigskipamount=2\parskip
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\ps@plain
+\pagenumbering{arabic}
+\onecolumn
+\@fileswfalse
+%
+%</class|style>
+%    \end{macrocode}
+%
+% \section{The short class file}
+%   This file inputs only the dinbrief.sty file.
+%
+%    \begin{macrocode}
+%<*shortclass>
+\input dinbrief.sty
+%</shortclass>
+%    \end{macrocode}
+%
+% \section{An example letter}
+%
+%    \begin{macrocode}
+%<*example>
+%    \end{macrocode}
+% Dies wird ein Brief.
+%    \begin{macrocode}
+
+\expandafter\ifx\csname documentclass\endcsname\relax
+    \documentstyle[12pt,german]{dinbrief}
+    \typeout{\string\documentstyle \space}
+  \else
+    \documentclass[12pt]{dinbrief}
+    \usepackage{german}
+    \typeout{\string\documentclass \space}
+  \fi
+
+\input myaddr
+
+\gubriefkopf
+
+% \makelabels
+% \labelstyle{deskjet}
+
+%\addtolength{\textheight}{45pt}
+
+\pagestyle{contheadings}
+
+\begin{document}
+
+\bottomtext{%
+  \begin{center}
+    \small\sf
+   Bankverbindung $\cdot$ Kreissparkasse Heilbronn (BLZ~620~500~00) 58~224~3
+  \end{center}
+}
+
+\begin{letter}{%
+Frau\\
+Annette K"uhner\\
+Pater-Kolbe-Stra"se 21\\[\medskipamount]
+{\bf 74078 Heilbronn}%
+}
+
+\centeraddress
+
+
+%\yourmail{07.12.93}
+
+\concern{%
+Der Herr der Ringe
+}%
+
+\opening{%
+Sehr geehrte Damen und Herren,}
+
+mit diesem Brief m"ochte ich Sie auf ein Buch, besser auf eine
+Trilogie, aufmerksam machen, die mir beim Lesen sehr viel Freude
+gemacht hat.
+
+\textsf{Das Dritte Zeitalter}
+
+\begin{flushright}
+"<La"s uns von Frodo und\\
+dem Ring h"oren.">
+\end{flushright}
+
+"<Hier">, sagte Elrond und wandte sich an Gandalf, "<ist Boromir,
+ein Mensch aus dem S"uden. Er traf heute vor Tau und Tag ein und
+fragt um Rat. Ich habe ihn gebeten, an unserer Besprechung
+teilzunehmen, denn hier werden seine Fragen beantwortet werden.">
+
+Nicht alles, was im Rat besprochen und er"ortert wurde,
+braucht hier berichtet werden. Vieles wurde gesagt "uber
+Ereignisse in der Welt drau"sen, besonders im S"uden und in
+den weiten Landen "ostlich des Gebirges. "Uber diese Dinge
+hatte Frodo schon viele Ger"uchte geh"ort; doch die Erz"ahlung
+von Gl\'oin war ihm neu, und als der Zwerg sprach, lauschte er
+aufmerksam. Es zeigte sich, da"s trotz allen Glanzes ihrer
+handwerklichen Arbeit die Herzen von Zwerge vom Einsamen Berg
+voll Sorge waren.
+
+"<Es ist jetzt viele Jahre her">, sagte Gl\'oin, "<da"s ein Schatten
+der Unruhe auf unser Volk fiel. Woher er kam, haben wir zuerst
+nicht erkannt. Worte wurden heimlich gefl"ustert: Es
+hie"s, wir seien auf engem Raum eingeschlossen und gr"o"serer
+Reichtum und Glanz w"urde in einer weiteren Welt gefunden
+werden. Manche sprachen von Moria: den gewaltigen Werkst"atten
+unserer V"ater, die in unserer eigenen Sprache Khazad-d\^um
+genannt werden; und sie behaupteten, wir h"atten endlich
+die Macht und seien zahlreich genug, um zur"uckzukehren.">
+
+\iftrue % replace with \iffalse to make shorter letters
+Gl\'oin seufzte. "<Moria! Moria! Das Wunder der N"ordlichen
+Welt! Zu tief gruben wir dort und weckten das namenlose
+Grauen. Lange haben Morias gewaltige Behausungen leer
+gestanden, seit Durins Kinder flohen. Aber jetzt sprachen
+wie wieder voll Sehnsucht davon, und doch voll Furcht; denn
+kein Zwerg hat zu vieler K"onige Lebzeiten gewagt, die Tore
+von Khazad-d\^um zu durchschreiten, mit Ausnahme von
+Thr\'or allein, und er ging zugrunde. Schlie"slich h"orte Balin
+jedoch auf das Gefl"uster und beschlo"s, zu gehen; und obwohl
+D\'ain es nicht gern erlaubte, nahm er Ori und \'Oin und viele
+von unserem Volk mit, und sie machten sich auf nach S"uden.
+
+Das war vor fast drei"sig Jahren. Eine Zeitlang erhielten wir
+Nachrichten, und sie klangen gut: Die Botschaften besagten,
+da"s sie Moria betreten und dort gro"se Arbeiten begonnen
+h"atten. Dann trat Schweigen ein, und kein Wort ist seitdem
+mehr aus Moria gekommen.
+
+Dann erschien vor etwa einem Jahr ein Bote bei D\'ain, aber
+nicht auf Moria --- aus Mordor; ein Reiter in der Nacht, der
+D\'ain an sein Tor rief. Der Herr Sauron der Gro"se, sagte er,
+w"unsche unsere Freundschaft. Ringe w"urde er daf"ur geben,
+wie er sie einst gegeben hatte. Und der Bote bedr"ante uns mit
+Fragen nach {\sl Hobbits\/}, von welcher Art sie seien und wo sie
+wohnten. \flq Denn Sauron wei"s\frq, sagte er, \flq da"s einer von ihnen
+euch einmal bekannt war.\frq
+
+Dar"uber waren wir sehr beunruhigt, und wir gaben keine
+Antwort. Und dann senkte er seine grausame Stimme, und er
+h"atte sie weicher gemacht, wenn er gekonnt h"atte. \flq Als ein
+kleines Zeichen eurer Freundschaft erbittet Sauron folgendes\frq,
+sagte er: \flq da"s ihr den Dieb findet\frq --- das war sein Ausdruck
+--- \flq und ihm, ob er will oder nicht, einen kleinen Ring abnehmt,
+den unbedeutendsten aller Ringe, den er einst gestohlen hat.
+Es ist nur eine Kleinigkeit, die Sauron m"ochte, und ein
+Unterpfand f"ur euren guten Willen. Findet ihn, und drei
+Ringe, die die Zwergenf"ursten einst besa"sen, sollen euch
+zur"uckgegeben werden, und das Reich Moria soll auf immerdar
+euer sein. Besorgt nur Nachrichten "uber den Dieb, ob er noch
+lebt und wo, und ihr werdet reichen Lohn erhalten und die
+dauernde Freundschaft des Gebieters. Weigert ihr euch, dann
+wird es nicht so gut aussehen. Weigert ihr euch?
+
+Als er so gesprochen hatte, war sein Atem wie das Zischen
+einer Schlange, und allen, die in der N"ahe standen, lief es kalt
+"uber den R"ucken, aber D\'ain antwortete: \flq Ich sage weder ja
+noch nein. Ich mu"s "uber diese Botschaft nachdenken und
+"uber das, was sie unter ihrem sch"onen Deckmantel bedeutet.\frq
+
+\flq Denke gut nach, aber nicht zu lange\frq, sagte er.
+
+\flq Es ist meine Sache, wie lange ich nachdenke!\frq antwortete
+D\'ain.
+
+\flq Vorl"aufig\frq, sagte der Bote und ritt in die Dunkelheit.
+
+Bedr"uckt waren die Herzen unserer H"auptlinge seit jener
+Nacht. Es bedurfte nicht der grausamen Stimme des Boten,
+um uns zu warnen, da"s seine Worte sowohl Drohung als
+auch Falschheit enthielten; denn wir wu"sten bereits, da"s sich
+die Macht, die wieder nach Mordor zur"uckgekehrt ist, nicht
+ge"andert hat, und seit alters her hat sie uns get"auscht. Zweimal
+ist der Bote wiedergekommen und ohne Antwort geblieben.
+Das dritte und letzte Mal, so sagt er, wird bald sein, ehe das
+Jahr endet.
+
+Und so bin ich schlie"slich von D\'ain ausgesandt worden,
+um Bilbo zu warnen. da"s er vom Feind gesucht wird, und um
+nach M"oglichkeit zu erfahren, warum ER diesen Ring haben
+will, den unbedeutendsten aller Ringe. Au"serdem erbitten
+wir Elronds Rat. Denn der Schatten w"achst und zieht n"aher.
+Wir erfahren, da"s Boten auch zu K"onig Brand in Thal gekommen
+sind und da"s ihn Angst erf"ullt. Wir bef"urchten, da"s er
+nachgeben k"onnte. Schon droht der Krieg an seiner Ostgrenze.
+Wenn wir keine Antwort geben, kann es sein, da"s der
+Feind Menschen, die unter seiner Herrschaft stehen, veranla"st,
+K"onig Brand und auch D\'ain anzugreifen.
+
+\fi
+
+\dots
+
+\begin{flushright}
+"<Let us see what happend when\\
+Gandalf and the messengers reached\\
+The Bridge of Khazad-d\^um">
+\end{flushright}
+
+`Ai! ai!' wailed Legolas `A Balrog! A Balrog is come!'
+
+Gimli stared with wide eyes. `Durin's Bane!' he cried, and letting
+his axe fall he covered his face.
+
+`A Balrog.' muttered Gandalf. `Now I understand.' He faltered and
+leaned heavily on his staff. `What an evil fortune! And I am already
+weary.'
+
+\dots
+
+`Over the bridge!' cried Gandalf, recalling his strength. `Fly! This
+is a foe beyond any of you. I must hold the narrow way. Fly!' \dots
+
+The Balrog reached the bridge. Gandalf stood in the middle of the span,
+leaning on the staff in his left hand, but in his other hand Glamdring
+gleamed, cold and white. His enemy halted again, facing him,
+and the shadow about it reached out like two vast wings. It raised the
+whip, and the thongs whined and cracked. Fire came from its nostrils.
+But Gandalf stood firm.
+
+`You cannot pass,' he said.
+
+So neugierig geworden, dann viel Spa"s mit der original Lekt"ure.
+
+\closing{Mit freundlichen Gr"u"sen}
+
+\end{letter}
+
+\end{document}
+
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</example>
+%    \end{macrocode}
+%
+% \section{The document style dinbrief}
+%
+%    \begin{macrocode}
+%<*documentation|dintab>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+
+\expandafter\ifx\csname documentclass\endcsname\relax
+    \documentstyle[12pt,german]{article}
+    \typeout{\string\documentstyle \space}
+  \else
+    \documentclass[12pt]{article}
+    \usepackage{german}
+    \typeout{\string\documentclass \space}
+  \fi
+
+%    \end{macrocode}
+%
+%  \section{The list of commands}
+%
+\newenvironment{decl}%
+    {\par\small\addvspace{4.5ex plus 1ex}%
+     \vskip -\parskip
+     \noindent\hspace{-\leftmargini}%
+     \begin{tabular}{|l|}\hline\ignorespaces}%
+    {\\\hline\end{tabular}\par\nopagebreak\addvspace{2.3ex}%
+     \vskip -\parskip}
+
+\newcommand{\declline}[1]{\\\multicolumn1{|r|}{\small#1}}
+
+\newcommand{\m}[1]{\mbox{$\langle$\emph{#1}$\rangle$}}
+
+\renewcommand{\arg}[1]{{\tt\string{}\m{#1}{\tt\string}}}
+\newcommand{\oarg}[1]{{\tt[}\m{#1}{\tt]}}
+
+\expandafter\ifx\csname emph\endcsname\relax
+  \newcommand\emph[1]{{\em#1\/}}}% This is \emph{not} the LaTeX2e
+                                 %  definition!
+\fi
+
+%|\documentstyle[12pt,german]{article}|
+%|\setlength{\parindent}{0pt}|
+
+%|\begin{document}|
+
+%
+%    \begin{macrocode}
+%</documentation|dintab>
+%
+%<*documentation>
+%    \end{macrocode}
+
+\renewcommand{\textfraction}{0.10}
+\renewcommand{\topfraction}{0.65}
+\renewcommand{\bottomfraction}{0.85}
+
+
+\subsection{Briefe}\index{Briefe}
+
+\LaTeX\ erlaubt neben der mathe"-ma"-tisch-wissen"-schaft"-lichen
+Textverarbeitung u.a.\ auch das Erstellen
+von Briefen. F"ur englische Briefe existiert in der Makrosammlung \LaTeX\ die
+Style-Klasse {\tt letter}. Deutsche Briefe k"onnen mit dem Stil {\tt dinbrief}
+geschrieben werden.
+ 
+
+\subsubsection{\LaTeX-Briefe (letter)}\index{Briefe, \LaTeX}
+\index{letter}\index{Briefe!letter}
+ 
+Wird als Dokumentklasse {\tt letter} (oder eine Variante davon) angegeben,
+kann zwischen \verb+\begin{document}+ und \verb+\end{document}+ ein oder
+mehrere Briefe geschrieben werden.
+ 
+Mit \verb+\signature{...}+\index{signature@\verb+\signature+}  und
+\verb+\address{...}+\index{address@\verb+\address+}
+definiert man Name und Adresse des Absenders.
+Das Datum kann durch den Befehl \verb+\date{...}+\index{date@\verb+\date+}
+fest eingesetzt werden (standardm"a"sig ist es auf das aktuelle
+Tagesdatum eingestellt), ebenso wie die Telefonnummer mit
+\verb+\telephone{...}+.\index{telephone@\verb+\telephone+}
+ 
+\verb+\begin{letter}{...}+
+beginnt einen Brief an den im Parameter mit Name und Adresse angegebenen
+Empf"anger. In \verb+{...}+ f"ugt man hierbei die Adresse des
+Adressaten ein. Durch \verb+\encl{...}+\index{encl@\verb+\encl+}
+k"onnen Anlagen eingef"ugt
+werden, \verb+\cc{...}+\index{cc@\verb+\cc+} steht f"ur den Verteiler zur
+Verf"ugung und \verb+\ps{...}+\index{ps@\verb+\ps+} ist f"ur das "ubliche
+P.S. da.
+ 
+\verb+\opening{...}+\index{opening@\verb+\opening+} (mu"s angegeben werden)
+schreibt die Anrede und \verb+\closing{...}+\index{closing@\verb+\closing+}
+den abschlie"senden Gru"s, an den automatisch
+die mit \verb+\signature{...}+\index{signature@\verb+\signature+} vereinbarte
+Unterschrift angef"ugt wird.
+ 
+Die Gliederung in Abs"atze geschieht wie immer in \LaTeX\ durch Einf"ugen
+einer Leerzeile, dadurch l"a"st der Formatierer dann im Dokument ebenfalls
+etwa eine Leerzeile Platz. \verb+\end{letter}+ beendet den jeweiligen Brief.
+ 
+Durch Angabe des Befehls \verb+\makelabels+ vor \verb+\begin{document}+,
+werden au"serdem Adre"s-Etiketten erzeugt.
+ 
+Abb.~\ref{brief} enth"alt ein Beispiel f"ur einen Brief.
+
+\begin{figure}[p]
+\begin{center}
+{\small
+\begin{verbatim}
+\documentclass[12pt]{dinbrief}
+\usepackage{german}
+
+\address{R"udiger Kurz\\
+         Am See 1\\
+         76133 Karlsruhe}
+\backaddress{R. Kurz, Am See 1, 76133 Karslruhe}
+ 
+\signature{R"udiger Kurz}
+\place{Karlsruhe}
+ 
+\begin{document}
+\phone{0721}{222222}
+\begin{letter}{Deutsche Bundespost\\
+               Fernmeldeamt Karlsruhe\\
+               Postfach 7300\\
+               \medskip
+               76131 KARLSRUHE}
+ 
+\yourmail{01.04.93}
+\sign{123456}
+\concern{Betrieb eines Mikrowellensenders}
+ 
+\opening{Sehr geehrte Damen und Herren,}
+ 
+anbei sende ich Ihnen eine Kopie der bisherigen Genehmigung f"ur
+unseren Mikrowellenherd...
+ 
+... Ihre Bem"uhungen im voraus vielen Dank.
+ 
+\closing{Mit freundlichen Gr"u"sen,}
+ 
+\ps{Wir bitten um schnelle Erledigung.}
+\cc{Deutsche Bundespost\\
+    Karlsruher Privatfunk \\
+    S"uddeutscher Rundfunk}
+ 
+\encl{Abschrift der Urkunde}
+ 
+\end{letter}
+\end{document}
+\end{verbatim}}
+\caption{Brief mit \LaTeX.} \label{brief}
+\end{center}
+\end{figure}
+
+
+\subsubsection{Deutsche Briefe (dinbrief)}\index{Briefe, deutsche}
+\index{dinbrief}
+
+Die Dokument Class Option {\tt dinbrief} unterscheidet sich in folgendem vom
+{\tt letter}-Stil:
+
+Neben dem deutschen Layout sind zus"atzliche Befehle verf"ugbar:
+
+\verb+\phone{+{\it Vorwahl}\verb+}{+{\it Rufnummer}\verb+}+
+\index{phone@\verb+\phone+},
+\verb+\concern{..}+\index{concern@\verb+\concern+}, um ein ''Betreff''
+einzuf"ugen, \verb+\yourmail{...}+\index{yourmail@\verb+\yourmail+} f"ur
+{\it Ihre Zeichen, Ihre Nachricht vom} und \verb+\sign{...}+
+\index{sign@\verb+\sign+}, um {\it Unsere Zeichen} anzugeben.
+Au"serdem l"a"st sich mit \verb+\backaddress{...}+
+\index{backaddress@\verb+\backaddress+} die Adresse des
+Absenders im Fenster des Briefkuverts einblenden. Zudem erlaubt es
+\verb+\place{...}+\index{place@\verb+\place+} den Brief au"ser mit dem Datum
+auch mit dem Ort des Schreibens zu versehen.
+
+\paragraph{Fenster}\index{Fenster}
+ 
+F"ur alle, denen das ``Fenster'' um die Adresse nicht gef"allt,
+besteht die M"oglichkeit, durch Angabe von
+\verb+\nowindowrules+\index{nowindowrules@\verb+\nowindowrules+}
+vor dem Befehl \verb+\opening+ dieses abzuschalten.
+Durch \verb+\windowrules+\index{windowrules@\verb+\windowrules+} l"a"st es
+sich wieder aktivieren.
+ 
+\paragraph{Faltmarkierung}\index{Faltmarkierung}
+ 
+Die Faltmarkierung am linken Papierrand wird durch den Befehl
+\verb+\nowindowtics+\index{nowindowtics@\verb+\nowindowtics+} ab- und mit
+\verb+\windowtics+\index{windowtics@\verb+\windowtics+} wieder angeschaltet.
+
+%    \begin{macrocode}
+%</documentation>
+%
+%<*documentation|dintab>
+%    \end{macrocode}
+
+\section{Summery of the Commands}
+
+\begin{center}
+  \begin{tabular}{l}
+    \hline
+      \verb|\begin{document}|                                   \\
+      \verb|\end{document}|                                     \\
+    \hline
+      \verb|\begin{letter}|\arg{{Anschrift}}                    \\
+      \verb|\end{letter}|                                       \\
+    \hline
+      \verb|\signature|\arg{Unterschrift des Absenders}         \\
+      \verb|\address|\arg{{Name und Adresse des Absenders}}     \\
+      \verb|\backaddress|\arg{{Absenderadresse im Brieffenster}}\\
+      \verb|\place|\arg{{Ortsangabe im Brief}}                  \\
+      \verb|\date|\arg{{Briefdatum}}                            \\
+    \hline
+      \verb|\yourmail|\arg{{Ihre Zeichen, Ihre Nachricht vom}}  \\
+      \verb|\sign|\arg{{Unsere Zeichen}}                        \\
+      \verb|\phone|\arg{{Vorwahl/Durchwahl}}\arg{{Rufnummer}}   \\
+    \hline
+      \verb|\concern|\arg{{Betreff}}                            \\
+      \verb|\opening|\arg{{Anrede}}                             \\
+    \hline
+      \verb|\centeraddress|                                     \\
+      \verb|\normaladdress|                                     \\
+    \hline
+      \verb|\encl|\arg{{Anlagen}}                               \\
+      \verb|\ps|\arg{{Postscriptum}}                            \\
+      \verb|\cc|\arg{{Verteiler}}                               \\
+    \hline
+      \verb|\makelabels|                                        \\
+      \verb|\labelstyle|\arg{{Stil der Label}}                  \\
+    \hline
+      \verb|\bottomtext|\arg{{Feld f\"ur Kapitalgesellschaften}}\\
+    \hline
+      \verb|\nowindowrules|                                     \\
+      \verb|\windowrules|                                       \\
+      \verb|\nowindowtics|                                      \\
+      \verb|\windowtics|                                        \\
+    \hline
+  \end{tabular}
+\end{center}
+
+%|\documentclass[12pt]{article}|
+%|\usepackage{german}|
+
+%|\begin{document}|
+
+\begin{table}[h]
+\caption{Zusammenfassung der Dinbrief-Befehle:}\index{dinbrief!Befehle}
+
+\begin{center}
+\begin{tabular}{l}
+ \hline
+  \verb|\begin{document}|                                          \\
+  \verb|\end{document}|                                            \\
+ \hline
+  \verb|\signature|\{$\langle${\em Unterschrift des Absenders\/}$\rangle$\}   \\
+  \verb|\address|\{$\langle${\em Name und Adresse des Absenders\/}$\rangle$\} \\
+  \verb|\backaddress|\{$\langle${\em Absenderadresse im
+  Brieffenster\/}$\rangle$\}                                       \\
+  \verb|\phone|\{$\langle${\em Vorwahl\/$\rangle$}\}\{$\langle${\em
+  Rufnummer\/}$\rangle$\}                                          \\
+  \verb|\place|\{$\langle${\em Ortsangabe im Brief\/}$\rangle$\}   \\
+  \verb|\date|\{$\langle${\em Briefdatum\/}$\rangle$\}             \\
+ \hline
+  \verb|\begin{letter}|\{$\langle${\em Anschrift\/}$\rangle$\}     \\
+  \verb|\end{letter}|                                              \\
+ \hline
+  \verb|\concern|\{$\langle${\em Betreff\/}$\rangle$\}             \\
+  \verb|\opening|\{$\langle${\em Anrede\/}$\rangle$\}              \\
+  \verb|\yourmail|\{$\langle${\em Ihre Zeichen, Ihre Nachricht
+  vom\/}$\rangle$\}                                                \\
+  \verb|\sign|\{$\langle${\em Unsere Zeichen\/}$\rangle$\}         \\
+ \hline
+  \verb|\centeraddress|                                            \\
+  \verb|\normaladdress|                                            \\
+ \hline
+  \verb|\encl|\{$\langle${\em Anlagen\/}$\rangle$\}                \\
+  \verb|\ps|\{$\langle${\em Postscriptum\/}$\rangle$\}             \\
+  \verb|\cc|\{$\langle${\em Verteiler\/}$\rangle$\}                \\
+ \hline
+  \verb|\makelabels|                                               \\
+% \verb|\labelstyle|\{$\langle${\em Stil der Label\/}$\rangle$\}   \\
+ \hline
+  \verb|\bottomtext|\{$\langle${\em Feld f\"ur
+  Kapitalgesellschaften\/}$\rangle$\}                              \\
+ \hline
+  \verb|\nowindowrules|                                            \\
+  \verb|\windowrules|                                              \\
+  \verb|\nowindowtics|                                             \\
+  \verb|\windowtics|                                               \\
+ \hline
+\end{tabular}
+\end{center}
+
+\end{table}
+
+%\clearpage
+
+\begin{table}[h]
+\caption{"Uberschriftvariablen und deren Inhalt}:
+\index{dinbrief!"Uberschriftvariablen}
+
+\begin{center}
+(Voreinstellung entspricht DIN)
+
+\begin{tabular}{l}
+ \hline
+  \verb|\ccname|\{{\tt Verteiler}\}        \\
+  \verb|\enclname|\{{\tt Anlage(n)}\}      \\
+  \verb|\psname|\{{\tt PS}\}               \\
+ \hline
+  \verb|\phonemsg|\{{\tt Telefon}\}        \\
+  \verb|\signmsg|\{{\tt Unsere Zeichen}\}  \\
+  \verb|\yourmailmsg|\{{\tt Ihre Zeichen, Ihre Nachricht vom}\}  \\
+ \hline
+\end{tabular}
+\end{center}
+
+\end{table}
+
+%|\end{document}|
+
+%    \begin{macrocode}
+%</documentation|dintab>
+%
+%<*documentation>
+%    \end{macrocode}
+%
+\subsubsection{Briefkopf}\index{Briefkopf}
+%
+Bei h"aufigem Briefeschreiben kommt sicher bald der
+Wunsch nach einem eigenen Briefkopf auf; auch dies ist
+mit \LaTeX\ zu verwirklichen.
+Am besten er"offnet man sich in seiner Briefdatei (die man
+sicher fr"uher oder sp"ater anlegen wird) ein File mit dem
+Namen {\tt brfkopf.tex}. In dieses kann man z.B. den Briefkopf
+in Abb. \ref{briefkopf} aufnehmen:
+
+\renewcommand{\textfraction}{0.35}
+
+\begin{figure}[p]
+\begin{center}
+\begin{verbatim}
+\newlength{\UKAwd}
+\newlength{\ADDRwd}
+%
+\def\briefkopf{
+ \font\fa=cmcsc10  scaled 1440
+ \font\fb=cmss12   scaled 1095
+ \font\fc=cmss10   scaled 1000
+ \settowidth{\UKAwd}{\fa Institut f"ur Verpackungen}
+ \settowidth{\ADDRwd}{\fc EARN/BITNET: yx99 at dkauni2}
+%
+ \vspace*{7truemm}
+ \raisebox{-11.7mm}{\unilogo{15}}
+ {\fc\hspace{.7em}}
+ \parbox[t]{\UKAwd}{
+        \centering{\fa Universit\"at Karlsruhe} \\
+        \centering{\fa Institut f"ur Verpackungen} \\[.5ex]
+        \centering{\fb Prof.\ Dr.\ Fritz Schreiber}
+        }
+ \hfill
+ \parbox[t]{\ADDRwd}{
+        \fc Engesserstr.\ 9 $\cdot$ Postfach 6980 \\
+        \fc 76128 Karlsruhe\\
+        \fc Telefon: (0721) 608-9790 \\
+        }  }
+%
+\signature{Prof.\ Dr.\ Fritz Schreiber}
+\place{Karlsruhe}
+\address{\briefkopf}
+\phone{(0721)}{608-9790}
+\def\FS{Prof.\,F.\,Schreiber, Univ.\,Karlsruhe,
+        Postf.\,6980, 76128\,Karlsruhe\rule[-1ex]{0pt}{0pt}}
+\end{verbatim}
+\caption{Definition eines Briefkopfs}\label{briefkopf}
+\end{center}
+\end{figure}
+
+Am Anfang des Briefes sollte nun der Befehl \verb+\input{brfkopf}+
+aufgenommen werden gefolgt von \verb+\address{\myaddress}+
+\index{myaddress@\verb+\myaddress+}. Dies sorgt
+f"ur die gew"unschte Ausgabe des Briefkopfes am Beginn des Briefes.
+Nat"urlich lassen sich auch andere als die hier verwendeten Schriftarten
+verwenden.
+ 
+\paragraph{Kopfzeilen}\index{Kopfzeilen}
+ 
+Es stehen verschiedene Kopfzeilen zur Verf"ugung die "uber die
+Option \verb+\pagestyle{...}+\index{pagestyle@\verb+\pagestyle+}
+ausgew"ahlt werden k"onnen.
+Bei \verb+plain+\index{plain} wird eine Seitennumerierung bei mehrseitigen
+Briefen in der Fu"szeile eingeblendet, die Kopfzeile bleibt leer.
+Durch \verb+headings+\index{headings} wird die Kopfzeile mit einer
+Anrede und der Seitenzahl bei mehrseitigen Briefen gesetzt.
+ 
+\paragraph{Briefe in englischer oder franz"osischer Sprache}
+ 
+Wer Briefe in anderen Sprachen schreiben m"ochte, kann f"ur Englisch und
+Franz"osisch die Trennung (abh"angig von der Installation) und Befehle f"ur
+Buchstaben mit Akzenten mit dem Befehl
+\verb+\selectlanguage{+{\itshape Sprache\/}\verb+}+
+\index{selectlanguage@\verb+\selectlanguage+} umschalten.
+Das Umsetzen von Bezeichnungen z.B.\ f"ur Anlage \dots{} mu"s explizit durch
+Befehle erfolgen, die in der Dokumentation zum {\tt dinbrief} beschrieben sind.
+
+ 
+\subsubsection{Serienbriefe}\index{Serienbriefe}
+ 
+Mit \LaTeX\ lassen sich auch Serienbriefe schreiben. Man ben"otigt dazu
+nur ein kleines Makro wie z.B. das folgende:
+ 
+\begin{verbatim}
+\def\mailto#1{
+  \begin{letter}{#1}
+  \input{brftext}
+  \end{letter}}
+\end{verbatim}
+ 
+\clearpage
+
+Mit dem Befehl \verb+\input{brftext}+ wird die Datei geladen, die den Text f"ur
+den Serienbrief enth"alt. In einer weiteren Datei stehen unsere Adressaten im
+folgenden Format:
+ 
+\begin{verbatim}
+\mailto{Karle Huber\\
+        Lichtensteinstr. 45\\
+        \medskip
+        77777 Hintertupfingen}
+\mailto{Anna H"aberle\\
+        Wallstra"se 7\\
+        \medskip
+        88888 L"andle}
+\end{verbatim}
+ 
+Die Briefe k"onnen nun mit einer Umgebung wie der in Abbildung~\ref{serie}
+ausgedruckt werden.
+
+\begin{figure}[p]
+\begin{center}
+\begin{verbatim}
+\documentclass[12pt]{dinbrief}
+\usepackage{german}
+ 
+\input{brfkopf}
+\address{\myaddress}
+\backaddress{R. Kurz, Am See 1, 76139 Karlsruhe}
+ 
+\signature{R. Kurz}
+\place{76139 Karlsruhe}
+ 
+\def\mailto#1{                % zum ausdrucken von
+                              % Serienbriefen
+  \begin{letter}{#1}
+  \input{brftext}             % Datei, die den Text enthaelt
+  \end{letter}}
+ 
+\begin{document}
+ 
+\input{#address}              % Adress-Datei
+ 
+\end{document}
+\end{verbatim}
+\caption{Erstellen von Serienbriefen}
+\label{serie}
+\end{center}
+\end{figure}
+
+Beachten sollte man, da"s dann der Text in der Datei {\tt brftext.tex}
+direkt mit
+\verb+\opening{...}+ beginnt (also kein \verb+\begin{letter}+ und
+\verb+\end{letter}+ enth"alt) und mit \verb+\closing{...}+ bzw.
+\verb+\ps{...}+ abschlie"st.
+ 
+Ein Beispiel f"ur die Datei {\tt brftext.tex} befindet sich in
+Abbildung~\ref{brftext}.
+ 
+\begin{figure}[p]
+\begin{center}
+\begin{verbatim}
+\opening{Betrieb eines Mikrowellensenders}
+ 
+Sehr geehrte Damen und Herren,
+ 
+anbei sende ich Ihnen eine Kopie der bisherigen Genehmigung f"ur
+unseren Mikrowellenherd...
+ 
+... Ihre Bem"uhungen im voraus vielen Dank.
+ 
+\closing{Mit freundlichen Gr"u"sen,}
+ 
+\ps{Wir bitten um schnelle Erledigung.}
+\cc{Deutsche Bundespost\\
+    Karlsruher Privatfunk\\
+    S"uddeutscher Rundfunk}
+ 
+\encl{Abschrift der Urkunde}
+\end{verbatim}
+\caption{Rumpf eines Serienbriefes}
+\label{brftext}
+\end{center}
+\end{figure}
+
+\clearpage
+%    \begin{macrocode}
+%</documentation>
+%
+%<*documentation|dintab>
+%    \end{macrocode}
+%|\end{document}|
+%
+%    \begin{macrocode}
+%</documentation|dintab>
+%    \end{macrocode}
+%
+%
+% \section{The documentation driver file}
+%
+%    We have our own document class to format the \LaTeXe
+%    documentation.
+% \changes{1.0.6}{1993/12/07}{Use class ltxdoc document class}
+%    \begin{macrocode}
+%<*driver>
+\documentclass{ltxdoc}
+%    \end{macrocode}
+%
+%    We don't want everything to appear in the index
+%    \begin{macrocode}
+\DoNotIndex{\',\.,\@M,\@@input,\@addtoreset,\@arabic,\@badmath}
+\DoNotIndex{\@centercr,\@cite}
+\DoNotIndex{\@dotsep,\@empty,\@float,\@gobble,\@gobbletwo,\@ignoretrue}
+\DoNotIndex{\@input,\@ixpt,\@m}
+\DoNotIndex{\@minus,\@mkboth,\@ne,\@nil,\@nomath,\@plus,\@set@topoint}
+\DoNotIndex{\@tempboxa,\@tempcnta,\@tempdima,\@tempdimb}
+\DoNotIndex{\@tempswafalse,\@tempswatrue,\@viipt,\@viiipt,\@vipt}
+\DoNotIndex{\@vpt,\@warning,\@xiipt,\@xipt,\@xivpt,\@xpt,\@xviipt}
+\DoNotIndex{\@xxpt,\@xxvpt,\\,\ ,\addpenalty,\addtolength,\addvspace}
+\DoNotIndex{\advance,\Alph,\alph}
+\DoNotIndex{\arabic,\ast,\begin,\begingroup,\bfseries,\bgroup,\box}
+\DoNotIndex{\bullet}
+\DoNotIndex{\cdot,\cite,\CodelineIndex,\cr,\day,\DeclareOption}
+\DoNotIndex{\def,\DisableCrossrefs,\divide,\DocInput,\documentclass}
+\DoNotIndex{\DoNotIndex,\egroup,\else,\em,\endtrivlist}
+\DoNotIndex{\EnableCrossrefs,\end,\end@dblfloat,\end@float,\endgroup}
+\DoNotIndex{\endlist,\everycr,\everypar,\ExecuteOptions,\expandafter}
+\DoNotIndex{\fbox,\fi}
+\DoNotIndex{\filedate,\filename,\fileversion,\fontsize,\framebox,\gdef}
+\DoNotIndex{\global,\halign,\hangindent,\hbox,\hfil,\hfill,\hrule}
+\DoNotIndex{\hsize,\hskip\hspace,\hss,\if@tempswa,\ifcase,\ifdim}
+\DoNotIndex{\ifhmode,\ifvmode,\ifnum,\iftrue,\ifx,\input}
+\DoNotIndex{\jobname,\kern,\leavevmode,\let,\leftmark}
+\DoNotIndex{\list,\llap,\long,\m@ne,\m@th,\mark,\markboth,\markright}
+\DoNotIndex{\month,\newcommand,\newcounter,\newenvironment,\newif}
+\DoNotIndex{\NeedsTeXFormat,\newdimen}
+\DoNotIndex{\newlength,\newpage,\nobreak,\noindent,\null,\number}
+\DoNotIndex{\numberline,\OldMakeindex,\OnlyDescription,\or,\p@}
+\DoNotIndex{\pagestyle,\par,\paragraph,\paragraphmark,\parfillskip}
+\DoNotIndex{\penalty,\PrintChanges,\PrintIndex,\ProcessOptions}
+\DoNotIndex{\protect,\ProvidesClass,\raggedbottom,\raggedright}
+\DoNotIndex{\refstepcounter,\relax,\renewcommand,\reset@font}
+\DoNotIndex{\rightmargin,\rightmark,\rightskip,\rlap,\rmfamily,\roman}
+\DoNotIndex{\roman,\secdef,\selectfont,\setbox,\setcounter,\setlength}
+\DoNotIndex{\settowidth,\sfcode,\skip,\sloppy,\slshape,\space}
+\DoNotIndex{\symbol,\the,\trivlist,\typeout,\tw@,\undefined,\uppercase}
+\DoNotIndex{\usecounter,\usefont,\usepackage,\vfil,\vfill,\viiipt}
+\DoNotIndex{\viipt,\vipt,\vskip,\vspace}
+\DoNotIndex{\wd,\xiipt,\year,\z@}
+%    \end{macrocode}
+%    We do want an index, using linenumbers
+%    \begin{macrocode}
+\EnableCrossrefs
+%    \end{macrocode}
+%    We also want the full details.
+%    \begin{macrocode}
+\begin{document}
+\DocInput{dinbrief.dtx}
+\PrintIndex
+% ^^A\PrintChanges
+\end{document}
+%</driver>
+%    \end{macrocode}
+%
+%    End each file with |\endinput|.
+%    \begin{macrocode}
+\endinput
+%    \end{macrocode}
+%
+\endinput
+# Local Variables:
+# mode: latex
+# End:

@@ -1,7 +1,7 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.53 1995/07/06 01:37:11 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.54 1995/07/06 02:35:55 Gussmann Exp Gussmann $
 %
 %<*styleinfo>
 =======================================================================
@@ -9,8 +9,8 @@
 shortpackagename = {dinbrief},
 longpackagename  = {dinbrief},
 baseformats      = {\LaTeX\ 2.09 and \LaTeXe},
-version          = {$Revision: 1.53 $},
-date             = {$Date: 1995/07/06 01:37:11 $},
+version          = {$Revision: 1.54 $},
+date             = {$Date: 1995/07/06 02:35:55 $},
 author           = {K.D. Braune, R. Gussmann,
                    rz32@dkauni2.bitnet
                    braune@rz.uni-karlsruhe.de
@@ -39,6 +39,10 @@ incompatibilities = {not full compatible to R. Sengerlings dinbrief}}
 %</styleinfo>
 %
 % $Log: dinbrief.d%v $
+% Revision 1.54  1995/07/06 02:35:55  Gussmann
+% - Code for the readme-file removed. It can now be found in dbaddon.dtx.
+% - Code for tracing removed. It can now be found in dbaddon.dtx.
+%
 % Revision 1.53  1995/07/06 01:37:11  Gussmann
 % - Readme-file added.
 % - structure of dinbrief.dtx changed.
@@ -1552,8 +1556,8 @@ der Stil "`{\tt german}"' geladen werden.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/07/06 01:37:11 $}
-\def\RCSrevision{$Revision: 1.53 $}
+\def\RCSdate{$Date: 1995/07/06 02:35:55 $}
+\def\RCSrevision{$Revision: 1.54 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -3825,7 +3829,7 @@ der Stil "`{\tt german}"' geladen werden.
 % \begin{macro}{\label@plain}
 %    \begin{macrocode}
 \long\def\label@plain#1#2{\setbox0\vbox{\hsize\dlabelwidth
- \strut\ignorespaces #2}%}%
+ \strut\ignorespaces #2}%{}%
  %\vbox to 50.8truemm{\vss \box0 \vss}%
  \vbox to\dlabelheight{%
    \if@kadb@tracelabels
@@ -3962,6 +3966,8 @@ der Stil "`{\tt german}"' geladen werden.
 %    \vbox{\rule{4pt}{\cspare\dlabelheight}}%
     \nointerlineskip
     \nobreak
+  \else
+    \nointerlineskip
   \fi
 }
 %    \end{macrocode}
@@ -4489,8 +4495,11 @@ der Stil "`{\tt german}"' geladen werden.
     \@input{\jobname@aux}%
   \endgroup
   \if@filesw
-    \immediate\openout\@mainlbl=\jobname@lbl
-    \immediate\write\@mainlbl{\string\startlabels\string\@startlabels}%
+    \ifnum\c@labelgen>0
+      \immediate\openout\@mainlbl=\jobname@lbl
+      \immediate\write\@mainlbl{\string\relax}%
+      \immediate\write\@mainlbl{\string\startlabels\string\@startlabels}%
+    \fi
     \immediate\openout\@mainaux=\jobname@aux
     \immediate\write\@mainaux{\string\relax}%
   \fi
@@ -4539,11 +4548,13 @@ der Stil "`{\tt german}"' geladen werden.
   \newpage
   \begingroup
     \if@filesw
-      \immediate\closeout\@mainlbl
-      \makeatletter
-      \input \jobname@lbl
+      \ifnum\c@labelgen>0
+        \immediate\closeout\@mainlbl
+        \makeatletter
+        \input \jobname@lbl\relax
+        \clearpage
+      \fi
       \immediate\closeout\@mainaux
-      \clearpage
     \fi
   \endgroup
   \deadcycles\z@
@@ -5392,6 +5403,7 @@ der Stil "`{\tt german}"' geladen werden.
 %    \end{macrocode}
 %
 % \begin{macro}{\concern}
+% \begin{macro}{\subject}
 % \changes{}{1994/12/14}{(RG) \cmd\newbox\cmd\@betr being moved outside of
 %                        \cmd\concern}
 %    \begin{macrocode}
@@ -5401,7 +5413,11 @@ der Stil "`{\tt german}"' geladen werden.
   \def\@concern{\hangindent=\wd\@betr
                 \hangafter=1
                 \unhbox\@betr #1\par}}
+\long\def\subject#1{%
+  \concern{#1}%
+}
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 %
 %  \begin{macro}{\@fordate}

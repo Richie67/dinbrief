@@ -1,7 +1,7 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.45 1995/06/01 00:42:51 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.46 1995/06/12 23:03:54 Gussmann Exp Gussmann $
 %
 % =======================================================================
 % @stylefile{Ltall
@@ -38,6 +38,11 @@
 % =======================================================================
 %
 % $Log: dinbrief.d%v $
+% Revision 1.46  1995/06/12 23:03:54  Gussmann
+% - Documentation updated.
+% - Some test messages removed.
+% - Some macros changed.
+%
 % Revision 1.45  1995/06/01 00:42:51  Gussmann
 % Documentation has been updated und completed (not complete yet).
 %
@@ -1502,8 +1507,8 @@ der Stil "`{\tt german}"' geladen werden.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/06/01 00:42:51 $}
-\def\RCSrevision{$Revision: 1.45 $}
+\def\RCSdate{$Date: 1995/06/12 23:03:54 $}
+\def\RCSrevision{$Revision: 1.46 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -2928,25 +2933,25 @@ der Stil "`{\tt german}"' geladen werden.
 \def\ka@db@tswindowtics{%
   \ifka@db@windowtics
     \vbox to 0pt{%
-     \rule{0pt}{80.0truemm}% 62.5truemm
+     \rule{0pt}{81.1truemm}% 62.5truemm > 80.0truemm
      \hbox to 0pt{\hspace*{-24truemm}\vbox{\hrule width 7truemm}\hss}%
      \vss}\nointerlineskip
     \vbox to 0pt{%
-     \rule{0pt}{123.5truemm}% 106.0truemm
+     \rule{0pt}{124.6truemm}% 106.0truemm > 123.5truemm
      \hbox to 0pt{\hspace*{-18truemm}\vbox{\hrule width 6truemm}\hss}%
      \vss}\nointerlineskip
     \vbox to 0pt{%
-     \rule{0pt}{185.0truemm}% 167.5truemm
+     \rule{0pt}{186.1truemm}% 167.5truemm > 185.0truemm
      \hbox to 0pt{\hspace*{-24truemm}\vbox{\hrule width 7truemm}\hss}%
      \vss}\nointerlineskip
   \else
-    \vbox to 0pt{\rule{0pt}{80.0truemm}%
+    \vbox to 0pt{\rule{0pt}{81.1truemm}%
      \hbox to 0pt{\vbox{\hrule width 0pt}\hss}%
      \vss}\nointerlineskip
-    \vbox to 0pt{\rule{0pt}{123.5truemm}%
+    \vbox to 0pt{\rule{0pt}{124.6truemm}%
      \hbox to 0pt{\vbox{\hrule width 0pt}\hss}%
      \vss}\nointerlineskip
-    \vbox to 0pt{\rule{0pt}{185.0truemm}%
+    \vbox to 0pt{\rule{0pt}{186.1truemm}%
      \hbox to 0pt{\vbox{\hrule width 0pt}\hss}%
      \vss}\nointerlineskip
   \fi

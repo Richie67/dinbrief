@@ -1,7 +1,7 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.dtx%v 1.66 1996/10/29 20:50:05 Gussmann Exp Gussmann $
+% $Id: dinbrief.dtx 1.67 1998/09/03 00:22:05 Gussmann Exp $
 %
 %<*styleinfo>
 =======================================================================
@@ -9,11 +9,11 @@
 shortpackagename = {dinbrief},
 longpackagename  = {dinbrief},
 baseformats      = {\LaTeX\ 2.09 and \LaTeXe},
-version          = {$Revision: 1.66 $},
-date             = {$Date: 1996/10/29 20:50:05 $},
+version          = {$Revision: 1.67 $},
+date             = {$Date: 1998/09/03 00:22:05 $},
 author           = {K.D. Braune, R. Gussmann,
-                   braune@rz.uni-karlsruhe.de
-                   rgussman@fiducia.de
+                   Klaus.Braune@rz.uni-karlsruhe.de
+                   richard@gussmann.de
                    Universit\"at Karlsruhe
                    Rechenzentrum
                    Postfach 6980
@@ -36,7 +36,10 @@ incompatibilities = {not full compatible to R. Sengerlings dinbrief}}
 =======================================================================
 %</styleinfo>
 %
-% $Log: dinbrief.dtx%v $
+% $Log: dinbrief.dtx $
+% Revision 1.67  1998/09/03 00:22:05  Gussmann
+% - Added some changes lost in elder versions.
+%
 % Revision 1.66  1996/10/29 20:50:05  Gussmann
 % - lots of minor changes.
 %
@@ -354,37 +357,33 @@ incompatibilities = {not full compatible to R. Sengerlings dinbrief}}
 % =======================================================================
 %
 % Copyright (C) 1993, 96, 97 by University of Karlsruhe (Computing Center).
-% Copyright (C) 1998         by University of Karlsruhe (Computing Center)
-%                           and Richard Gussmann.
+% Copyright (C) 1998, 2000   by University of Karlsruhe (Computing Center)
+%                            and Richard Gussmann.
 % All rights reserved.
 % For additional copyright information see further down in this file.
 %
 % This file is part of the DINBRIEF package
 % -----------------------------------------------------------------------
 % 
-%  This system is distributed in the hope that it will be useful,
-%  but WITHOUT ANY WARRANTY; without even the implied warranty of
-%  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-% 
-% 
-% IMPORTANT NOTICE:
+% It may be distributed under the terms of the LaTeX Project Public
+% License (LPPL), as described in lppl.txt in the base LaTeX distribution.
+% Either version 1.1 or, at your option, any later version.
+%
+% The latest version of this license is in
+%
+%       http://www.latex-project.org/lppl.txt
+%
+% LPPL Version 1.1 or later is part of all distributions of LaTeX
+% version 1999/06/01 or later.
+%
 % 
 % For error reports in case of UNCHANGED versions see readme files.
 % 
 % Please do not request updates from us directly.  Distribution is
-% done through Mail-Servers and TeX organizations.
-% 
-% You are not allowed to change this file.
-% 
-% You are allowed to distribute this file under the condition that
-% it is distributed together with all files mentioned in 00readme.din.
+% done through Mail-Servers, TeX organizations and others.
 % 
 % If you receive only some of these files from someone, complain!
 % 
-% You are NOT ALLOWED to distribute this file alone.  You are NOT
-% ALLOWED to take money for the distribution or use of either this
-% file or a changed version, except for a nominal charge for copying
-% etc.
 % \fi
 %
 % \CheckSum{4858}
@@ -416,7 +415,7 @@ incompatibilities = {not full compatible to R. Sengerlings dinbrief}}
 %        Standard Document Style `dinbrief'\\ for \LaTeX{} version 2.09}
 %
 % \author{%
-% Copyright \copyright\ 1993,\ 94,\ 95,\ 96,\ 98\\
+% Copyright \copyright\ 1993,\ 94,\ 95,\ 96,\ 98,\ 2000\\
 % by Klaus Dieter Braune, Richard Gussmann
 % }
 %
@@ -1646,8 +1645,8 @@ der Stil "`{\tt german}"' geladen werden.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1996/10/29 20:50:05 $}
-\def\RCSrevision{$Revision: 1.66 $}
+\def\RCSdate{$Date: 1998/09/03 00:22:05 $}
+\def\RCSrevision{$Revision: 1.67 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -5576,11 +5575,31 @@ der Stil "`{\tt german}"' geladen werden.
 % \begin{macro}{\@znumber}
 % \begin{macro}{\ntoday}
 % \begin{macro}{\@ntoday}
+% The following code is not Y2K ready. It has to be replaced by
+% the code suggested by Heiko Oberdiek (below).
+%    \begin{macrocode}
+%\yearcnt\year
+%\advance\yearcnt-\number1900
+%    \end{macrocode}
+% New we cut off only the first the numbers. This should work from
+% the year 1000 up to 9999. This means Y3K, Y4K and so on ready.
 %    \begin{macrocode}
 \newcount\yearcnt
-\yearcnt=\year
-\advance\yearcnt-\number1900
-\def\@znumber#1{\ifnum\number#1<10 0\number#1\else\number#1\fi}
+\yearcnt=\expandafter\@gobbletwo\the\year
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+% \def\@znumber#1{\ifnum\number#1<10 0\number#1\else\number#1\fi}
+%    \end{macrocode}
+% This makes the use of |\@znumber| more save. Thanks to
+% Heiko Oberdiek for this suggestion.
+%    \begin{macrocode}
+\def\@znumber#1{%
+  \ifnum\number#1<10 0\fi
+  \expandafter\@firstofone\expandafter{\number#1}%
+}
+%    \end{macrocode}
+%    \begin{macrocode}
 \def\ntoday{\@znumber{\number\day}.%
             \@znumber{\number\month}.%
             \@znumber{\the\yearcnt}}

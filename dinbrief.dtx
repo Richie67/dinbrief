@@ -1,27 +1,30 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.1 1994/11/16 23:37:01 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.2 1994/11/16 19:08:08 Gussmann Exp Gussmann $
 %
 % $Author: Gussmann $
 %
-% $Date: 1994/11/16 23:37:01 $
+% $Date: 1994/11/16 19:08:08 $
 %
-% $Header: E:/DINBRF\RCS\dinbrief.d%v 1.1 1994/11/16 23:37:01 Gussmann Exp Gussmann $
+% $Header: E:/DINBRF/RCS/dinbrief.d%v 1.2 1994/11/16 19:08:08 Gussmann Exp Gussmann $
 %
 % $Locker: Gussmann $
 %
-% $Name$
+% $Name:  $
 %
 % $RCSfile: dinbrief.d%v $
 %
-% $Revision: 1.1 $
+% $Revision: 1.2 $
 %
-% $Source: E:/DINBRF\RCS\dinbrief.d%v $
+% $Source: E:/DINBRF/RCS/dinbrief.d%v $
 %
 % $State: Exp $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.2  1994/11/16 19:08:08  Gussmann
+% *** empty log message ***
+%
 % Revision 1.1  1994/11/16  23:37:01  Gussmann
 % Initial revision
 %
@@ -1479,6 +1482,28 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\processor}
+%   This macro takes as an argument the name of the processor (Sachbearbeiter)
+%   and stores it in |\@processor|. It also toggles the the
+%   |\@reflinetrue|-switch to get an referline and further
+%   enables the layout of the new DIN draft standard 676 from May 1991.
+%    \begin{macrocode}
+\def\processor#1{\gdef\@processor{#1}\@reflinetrue\enabledraftstandard}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@processor}
+%    \begin{macrocode}
+\def\@processor{}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\processormsg}
+%    \begin{macrocode}
+\def\processormsg{,\ Bearbeiter}
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\@concern}
 %    \begin{macrocode}
 \def\@concern{}
@@ -2340,7 +2365,13 @@
                            \hfill\\ \@yourmail\hbox{}\hss}%
     \parbox[b]{50.8truemm}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont \signmsg{}}%
                            \hfill\\ \@mymail\hbox{}\hss}%
-    \parbox[b]{50.8truemm}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont \phonemsg{} \@prephone{}}%
+    \parbox[b]{50.8truemm}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont \phonemsg{}%
+                               \ifx\@empty\@prephone\relax
+                               \else
+                                 \ \@prephone{}%
+                               \fi
+                               \processormsg{}%
+                               }%
                            \hfill\\ \@phone\hbox{}\hss}%
     \parbox[b]{\@fordate}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont
       \ifx\@empty\@place

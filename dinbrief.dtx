@@ -1,9 +1,46 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.44 1995/05/31 18:17:45 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.45 1995/06/01 00:42:51 Gussmann Exp Gussmann $
+%
+% =======================================================================
+% @stylefile{Ltall
+% shortpackagename = {dinbrief},
+% longpackagename  = {dinbrief},
+% baseformats      = {\LaTeX\ 2.09 and \LaTeXe},
+% version          = {1.45(46)},
+% date             = {08.06.1995},
+% author           = {K.D. Braune, R. Gussmann,
+%                    rz32@dkauni2.bitnet
+%                    braune@rz.uni-karlsruhe.de
+%                    ry46@dkauni2.bitnet
+%                    gussmann@rz.uni-karlsruhe.de
+%                    Universit\"at Karlsruhe
+%                    Rechenzentrum
+%                    Postfach 6980
+%                    76128 Karlsruhe
+%                    +49 721 608-40 31},
+%
+% abstract         = {This document serves as User's Guide
+%                    and as documentation of the new \LaTeX-Style
+%                    or a \LaTeXe-Class.  This class/style implements
+%                    a new document layout for writing letters,
+%                    according to the rules of DIN (Deutsches
+%                    Institut f\"ur Normung, German standardization
+%                    institute). The User's Guide is written in
+%                    German, since we assume the class/style is of
+%                    minor interest outside Germany.  Of course,
+%                    most of the macros are explained in English.},
+% support          = {yes},
+% comments         = {},
+% requirements     = {},
+% incompatibilities = {not full compatible to R. Sengerlings dinbrief}}
+% =======================================================================
 %
 % $Log: dinbrief.d%v $
+% Revision 1.45  1995/06/01 00:42:51  Gussmann
+% Documentation has been updated und completed (not complete yet).
+%
 % Revision 1.44  1995/05/31 18:17:45  Gussmann
 % - \cmd\labelnumber\ changed to \cmd\setlabelnumber
 % - \cmd\labelheight\ changed to \cmd\setlabelheight
@@ -255,7 +292,7 @@
 % etc.
 % \fi
 %
-% \CheckSum{4784}
+% \CheckSum{4625}
 %%
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -284,7 +321,8 @@
 %        Standard Document Style `dinbrief'\\ for \LaTeX{} version 2.09}
 %
 % \author{%
-% Copyright \copyright\ 1993,\ 94 by Klaus Dieter Braune, Richard Gussmann
+% Copyright \copyright\ 1993,\ 94,\ 95\\
+% by Klaus Dieter Braune, Richard Gussmann
 % }
 %
 % \maketitle
@@ -396,8 +434,19 @@ Copyright \copyright\ 1993,\ 94\\ by Klaus Dieter Braune, Richard Gussmann
 
 Mit \LaTeX\ k"onnen (nat"urlich) auch Briefe geschrieben werden.
 F"ur englische Briefe gibt es die Dokumentklasse \envname{letter}.
-Deutsche Briefe k"onnen mit dem Stil \envname{dinbrief}
+Deutsche Briefe k"onnen mit der Klasse \envname{dinbrief}
 geschrieben werden.
+
+Die vorliegende Klasse \envname{dinbrief} basiert auf dem
+\envname{dinbrief}-Stil der Universit"at Karlsruhe. Dieser
+Stil wurde aus \envname{dletter.sty} entwickelt, welcher
+von D.~Heinrich abgefa"st wurde. Seinerseits geht dieser
+zur"uck auf den Stil \envname{a4letter} von H.~Partl, welcher
+seinen Ursprung im urspr"unglichen \envname{letter}-Stil
+von L.~Lamport hatte. Zus"atzlich wurden aus den \envname{dinbrief.sty}
+von R.~Sengerling der Befehlsvorrat und die Option \verb|norm|
+"ubernommen. Ferner enth"alt diese Klasse Tips und Anregungen von
+B.~Raichle.
 
 In den Briefen k"onnen u.a.\ Formeln,
 Tabellen und beliebige Listen verwendet werden.
@@ -535,6 +584,37 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
 \cmd\nowindowtics\index{nowindowtics@\verb+\nowindowtics+} ab- und mit
 \cmd\windowtics\index{windowtics@\verb+\windowtics+} wieder angeschaltet.
 
+% \iffalse
+% Die Gr"o"se und Form von Adre"s-Etiketten kann mit den Befehlen
+% \cmd\setlabelwidth\arg{Breite}\ und \cmd\setlabelheight\arg{H"ohe}\
+% festgelegt werden. Die Anzahl der Labels in einer Spalte wird durch
+% \cmd\setlabelnumber{Anzahl} angegeben. Der obere Rand kann mit dem
+% Befehl \cmd\setlabeltopmargin{H"ohe} eingestellt werden. Mit
+% \cmd\spare{Anzahl} k"onnen am Anfang {\sl Anzahl\/} Labels frei
+% gelassen werden.
+% \fi
+Ausf"uhrungen und Erl"auterungen zum Erstellen von Adre"s-Etiketten
+finden Sie in einem eigenen Abschnitt weiter hinten in diesem Dokument.
+Die Befehlsreferenz enth"alt ebenfalls kurze Beschreibungen der
+Befehle zu den Adre"s-Etiketten.
+
+Eine einfache Absenderanschrift in der auf Schreibmaschinen "ublichen
+Form (DIN~5008) wird durch den Befehl \cmd\stdaddress\arg{Absenderanschrift}
+anstelle von \cmd\address{} erreicht. Die einzelnen Zeilen sind durch
+\verb.\\. zu trennen. Das Datum wird ebenfalls oben ausgegeben.
+Die Bezugszeichenzeile entf"allt.
+
+Mit dem Befehl \cmd\postremark\ kann ein Postvermerk gesetzt werden.
+Dieser Vermerk erscheint im Anschriftenfeld oben, von den "ubrigen
+im Argument des Befehls \env\begin{letter}\arg{Anschrift} durch eine
+Leerzeile getrennt. Der Behandlungsvermerk wird durch den
+Befehl \cmd\handling\arg{Text}\ vereinbart.
+
+Die Anlagen- und Verteilvermerke k"onnen mit dem Befehl \cmd\enclright\
+rechts auf Grad~50 anstelle nach der Gru"sformel ausgegeben werden.
+Die Befehle \cmd\encl\ und \cmd\cc\ sind dazu vor dem \cmd\closing-Befehl
+anzugeben.
+
 \ssect{Befehlsreferenz}
 
 \begin{description}
@@ -631,8 +711,9 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
         durch \cmd\\{} getrennt werden.
 
         Die Reihenfolge der Verwendung der Befehle
-        \cmd\encl, \cmd\cc{} und \cmd\ps{} ist
-        beliebig. Die Norm empfiehlt allerdings
+        \cmd\encl, \cmd\cc{} und \cmd\ps{} ist beliebig,
+        falls die Befehle nach dem \cmd\closing-Befehl
+        angegeben werden. Die Norm empfiehlt allerdings
         den Anlagenvermerk vor dem Verteilvermerk
         anzubringen.
 
@@ -640,6 +721,11 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
         Der Vermerk "uber weitere Empf"anger dieses Briefes wird
         mit dem Befehl \cmd\cc{} gesetzt. Die einzelnen Eintragungen
         k"onnen durch \cmd\\ getrennt werden.
+
+        Die Befehle \cmd\encl{} und \cmd\cc{} k"onnen sowohl
+        vor wie auch nach dem \cmd\closing-Befehl stehen. Wird
+        der Befehl \cmd\enclright{} verwendet, m"ussen die beiden
+        Befehle vor dem \cmd\closing-Befehl stehen.
 
   \item[\cmd\ps\arg{{Postscriptum}}] \hfil\break
         Gesch"aftsbriefe enthalten kein Postskriptum.
@@ -700,6 +786,11 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
         Dieser Befehl legt die Breite eines Labels fest.
         Als Argument erwartet dieser Befehl eine L"angenangabe.
 
+        {\sl Die Labelbreite ist in der vorliegenden Version
+        auf 105~$mm$ festgelegt worden und sollte nicht
+        ge"andert werden. Dieser Befehl ist f"ur sp"atere
+        Erweiterungen reserviert.\/}
+
   \item[\cmd\setlabelheight\arg{H"ohe eines Labels}] \hfil\break
         Der Befehl \cmd\setlabelheight{} vereinbart die im
         Argument angegebene L"ange als Labelh"ohe.
@@ -707,8 +798,8 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
   \item[\cmd\setlabeltopmargin\arg{oberer Rand}] \hfil\break
         Bevor die beiden obersten Label (bei beiden Spalten)
         ausgegeben werden, wird oben ein Rand gelassen, dessen
-        Breite mit dem Befehl \cmd\setlabeltopmargin{}
-        angegeben wird. Es wird eine L"angenangabe erwartet.
+        H"ohe mit \cmd\setlabeltopmargin{} angegeben wird.
+        Es wird eine L"angenangabe erwartet.
 
   \item[\cmd\setlabelnumber\arg{Labelanzahl pro Spalte}] \hfil\break
         Dieser Befehl bestimmt die Zahl der Labels in einer Spalte.
@@ -716,7 +807,8 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
   \item[\cmd\spare\arg{Anzahl leerer Labels}] \hfil\break
         Es werden die im Argument des Befehls angegebene
         Anzahl von Label freigelassen, bevor das erste
-        Adre"s--Etikett ausgegeben wird.
+        Adre"s--Etikett ausgegeben wird. Die Label werden
+        spaltenweise durchgez"ahlt.
 
 % \iffalse
   \item[\cmd\offlabels] \hfil\break
@@ -726,7 +818,7 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
   \item[\cmd\stdaddress\arg{Adresse des Absenders}] \hfil\break
         Dieser Befehl setzt die Absenderanschrift in der
         auf Schreibmaschinen "ublichen Form (DIN 5008).
-        Mit diesem Befehl der Briefkopf nicht frei gestaltet
+        Mit diesem Befehl kann der Briefkopf nicht frei gestaltet
         werden.
 
   \item[\env\begin{dinquote} \dots\ \env\end{dinquote}] \hfil\break
@@ -741,13 +833,15 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
   \item[\cmd\postremark\arg{Postvermerk}] \hfil\break
         Der Postvermerk wird mit dem Befehl \cmd\postremark{}
         vereinbart. Der Postvermerk geht der Empf"angeranschrift
-        mit einer Leerzeile voraus.
+        mit einer Leerzeile voraus. Dieser Befehl mu"s zwischen
+        \env\begin{letter} und dem Befehl \cmd\opening\ stehen.
 
   \item[\cmd\handling\arg{Behandlungsvermerk}] \hfil\break
         Der Behandlungsvermerk wird rechts neben der
         Empf"angeranschrift auf Grad 50 (bei einer 10er Teilung)
         in H"ohe der letzten Zeile der Empf"angeranschrift
-        ausgegeben.
+        ausgegeben. Dieser Befehl mu"s zwischen
+        \env\begin{letter} und dem Befehl \cmd\opening\ stehen.
 \end{description}
 
 % \iffalse
@@ -1227,8 +1321,8 @@ Die Anzahl der Labels in einer Spalte wird durch den Befehl
 Verwendung eines Etikettenblatts wird durch den Befehl
 \verb|\spare|\arg{Anzahl} m"oglich. Dieser Befehl r"uckt
 den Druckbeginn um {\em Anzahl\/} Positionen vor.
-
 Die Ausgabe der Adre"s--Etiketten erfolgt spaltenweise.
+
 In vielen Druckern bleiben die Etikettenbl"atter h"angen,
 wenn die Tr"agerfolie in beiden Spalten freiliegt. Drucker,
 die alternativ einen ebenen Papiertransport besitzen, sollten
@@ -1249,6 +1343,13 @@ gef"uhrt hat. Wegen der unterschiedlichen Befehle der beiden
 Stile haben uns viele Anfragen erreicht. Die jetzt vorliegende
 Fassung stellt beide Befehlss"atze zur Verf"ugung und f"uhrt die
 bisher unabh"anigen Briefstile zusammen.
+
+Gegenw"artig wird die Klassenoption \verb|german| nicht ausgewertet
+und f"uhrt zu einer Warnung. Alternativ mu"s mit dem Befehl
+\begin{quote}
+  \verb|\usepackage{german}|\\
+\end{quote}
+der Stil "`{\tt german}"' geladen werden.
 
 \begin{description}
 
@@ -1304,7 +1405,7 @@ bisher unabh"anigen Briefstile zusammen.
 
         Dieser Befehl wird korrekt unterst"utzt. Da aber
         der Befehl \cmd\Retourlabel\ nicht implementiert
-        wurde hat die Aufteilung im Moment praktisch keine
+        wurde, hat die Aufteilung im Moment praktisch keine
         Bedeutung; sie kann aber in sp"ateren Versionen
         wieder notwendig sein.
 
@@ -1401,8 +1502,8 @@ bisher unabh"anigen Briefstile zusammen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/05/31 18:17:45 $}
-\def\RCSrevision{$Revision: 1.44 $}
+\def\RCSdate{$Date: 1995/06/01 00:42:51 $}
+\def\RCSrevision{$Revision: 1.45 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -1505,7 +1606,7 @@ bisher unabh"anigen Briefstile zusammen.
 %    \begin{macrocode}
 \typeout{}
 \typeout{Document Class/Style 'dinbrief' - %
-         Preliminary Version \fileversion}
+         (Preliminary) Version \fileversion}
 \typeout{University of Karlsruhe - \filedate}
 \typeout{}
 %    \end{macrocode}
@@ -1533,7 +1634,7 @@ bisher unabh"anigen Briefstile zusammen.
 %
 %    \begin{macrocode}
 \ifka@db@ltxtwoe
-  \NeedsTeXFormat{LaTeX2e}[2000/01/01]
+  \NeedsTeXFormat{LaTeX2e}[1994/06/01]
   \ProvidesClass{dinbrief}[1995/05/08 LaTeX2e class]
 \fi
 %    \end{macrocode}
@@ -1848,11 +1949,23 @@ bisher unabh"anigen Briefstile zusammen.
 % \subsection{Defining the jobname}
 %
 % \begin{macro}{\jobname@aux}
+% \begin{macro}{\jobname@lbl}
 %    This control sequence is used to store the name of the aux-file.
 %    Therefore character |_| temporally is given catcode 12.
 %
 %    \begin{macrocode}
-{\catcode`\_=12 \gdef\jobname@aux{\jobname.aux}} % .aux or _aux or ...
+{%
+  \catcode`\_=12
+  \gdef\jobname@aux{\jobname.aux}% .aux or _aux or ...
+  \gdef\jobname@lbl{\jobname.lbl}%
+}%
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\@mainlbl}
+%    \begin{macrocode}
+\newwrite\@mainlbl
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3645,15 +3758,9 @@ bisher unabh"anigen Briefstile zusammen.
      \hrule
    \fi
  }%
- \message{\string\label@plain: counter %
-          \string\labelcount\space\the\labelcount}%
- \message{\string\label@plain: counter %
-          \string\clabelnumber\space\the\clabelnumber}%
  \advance\labelcount by 1\nointerlineskip
  \ifnum\labelcount<\clabelnumber
-   % \advance\labelcount by 1\nointerlineskip
  \else
-   \message{newpage in force!}%
    \vfill\newpage
    \labelcount=0
  \fi}
@@ -3742,11 +3849,8 @@ bisher unabh"anigen Briefstile zusammen.
   \topskip\z@
   \oddsidemargin -12.9truemm
   \evensidemargin -12.9truemm
-  %\textheight 25.4truecm
   \textheight=\clabelnumber\dlabelheight
-  \message{dimen \string\textheight\space\the\textheight}%
   \advance\textheight by .0001truemm
-  \message{dimen \string\textheight\space\the\textheight}%
   \@colht\textheight \@colroom\textheight \vsize\textheight
   \columnsep 25mm
   \textwidth2\dlabelwidth
@@ -3756,25 +3860,12 @@ bisher unabh"anigen Briefstile zusammen.
   \parindent\z@
   \parskip\z@skip
   \twocolumn\relax
-  \message{counter \string\cspare\space\the\cspare}%
-  \message{counter \string\clabelnumber\space\the\clabelnumber}%
   \ifnum\cspare>\z@
-    \message{\string\cspare\space is greater than zero}%
     \ifnum\cspare<\clabelnumber\else
-      \message{\string\cspace\space is greater than %
-               or equal \string\clabelnumber}
       \mbox{}%
       \newpage
       \advance\cspare -\clabelnumber
     \fi
-    \message{after processing: counter \string\cspare\space\the\cspare}%
-    \message{after processing: counter %
-             \string\clabelnumber\space\the\clabelnumber}%
-    %\vspace*{\cspare\dlabelheight}%
-    \message{length of \string\vspace\space %
-             \the\cspare\space\the\dlabelheight}%
-    % \par
-    % \vskip \cspare\dlabelheight % <- didn't work
     \advance\labelcount by\cspare
     \nointerlineskip
     \vbox to \cspare\dlabelheight{\vfill}%
@@ -3932,10 +4023,10 @@ bisher unabh"anigen Briefstile zusammen.
         %  \@addresslist
         %}}%
         \ka@db@ifemptyvarlocal{postremark}{% then
-          \immediate\write\@auxout{\string\mlabel{\@backaddress}{%
+          \immediate\write\@mainlbl{\string\mlabel{\@backaddress}{%
           \@addresslist}}%
         }{% else
-          \immediate\write\@auxout{\string\mlabel{\@backaddress}{%
+          \immediate\write\@mainlbl{\string\mlabel{\@backaddress}{%
           \pka@db@usevarlocal{postremark}\\[\string\medskipamount]%
           \@addresslist}}%
         }% endif
@@ -4297,10 +4388,13 @@ bisher unabh"anigen Briefstile zusammen.
   \begingroup
     \@floatplacement
     \@dblfloatplacement
+    \@input{\jobname@aux}%
   \endgroup
   \if@filesw
+    \immediate\openout\@mainlbl=\jobname@lbl
+    \immediate\write\@mainlbl{\string\startlabels\string\@startlabels}%
     \immediate\openout\@mainaux=\jobname@aux
-    \immediate\write\@mainaux{\string\startlabels\string\@startlabels}%
+    \immediate\write\@mainaux{\string\relax}%
   \fi
   \ifka@db@ltxtwoe
     \process@table
@@ -4347,9 +4441,10 @@ bisher unabh"anigen Briefstile zusammen.
   \newpage
   \begingroup
     \if@filesw
-      \immediate\closeout\@mainaux
+      \immediate\closeout\@mainlbl
       \makeatletter
-      \input \jobname@aux
+      \input \jobname@lbl
+      \immediate\closeout\@mainaux
       \clearpage
     \fi
   \endgroup
@@ -6012,12 +6107,11 @@ Postfach 3322\\[\medskipamount]
  % to adapt the file to \LaTeXe.
  %
 \expandafter\ifx\csname documentclass\endcsname\relax
-    \documentstyle[german,trace]{dinbrief}
+    \documentstyle[german]{dinbrief}
     \typeout{Using the command \string\documentstyle.}
   \else
     \documentclass[10pt]{dinbrief}
     \usepackage{german}
-    \usepackage{trace}
     \typeout{Using the command \string\documentclass.}
   \fi
 

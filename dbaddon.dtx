@@ -1,8 +1,11 @@
 %
 % \iffalse meta-comment
-% $Id: dbaddon.d%v 1.2 1995/07/06 02:40:55 Gussmann Exp Gussmann $
+% $Id: dbaddon.d%v 1.3 1995/07/06 02:43:41 Gussmann Exp Gussmann $
 %
 % $Log: dbaddon.d%v $
+% Revision 1.3  1995/07/06 02:43:41  Gussmann
+% Umlauts changed.
+%
 % Revision 1.2  1995/07/06 02:40:55  Gussmann
 % *** empty log message ***
 %
@@ -620,6 +623,96 @@ special layout, etc.
 %
 %    \begin{macrocode}
 %</dbtrace>
+%    \end{macrocode}
+%
+% \section{The upload message}
+%
+%    \begin{macrocode}
+%<*upload>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+
+Hallo,
+
+ich habe soeben in das CTAN incomming Verzeichnis
+eine aktualisierte Version der dinbrief Klasse eingespielt.
+
+Sie bedindet sich bald in dem Verzeichnis
+  /pub/tex/macros/latex/contrib/supported/dinbrief
+Sie traegt die Versionsnummer 1.54 und ist ab der
+LaTeX2e-Version vom 01.12.94 lauffaehig oder eben unter
+LaTeX209.
+
+Anmerkungen und Fehlerreports bitte an
+    Richard Gussmann
+    EMAIL: Internet: gussmann@rz.uni-karlsruhe.de
+           BITNET:   ry46@dkauni2.bitnet
+  oder an
+    Dr. Klaus Braune
+    EMAIL: Internet: braune@rz.uni-karlsruhe.de
+           BITNET:   rz32@dkauni2.bitnet
+
+1) Aenderungen
+   1.1 Einige Fehlerchen wurden beseitigt.
+   1.2 Form und Anzahl der Labels kann nun angegeben werden.
+   1.3 Die Information ueber die Adress-Labels wird in eine
+       Datei <mainfile>.lbl geschrieben. Die Datei <mainfile>.aux
+       hat die gleiche Aufgabe wie in den article, report und
+       book Klassen.
+   1.4 Neben den bisherigen Befehlen werden nun auch fast alle
+       Befehle aus Rainer Sengerlings dinbrief unterstuetzt.
+   1.5 Die Befehle \Anlagen und \Verteiler verhalten sich jetzt
+       genau so wie in R. Sengerlings dinbrief.
+   1.6 Die Befehle \encl und \cc haben ein optionales Argument
+       bekommen. Damit kann die Default-Ueberschrift fuer einzelne
+       Briefe geaendert werden. Ist das optionale Argument leer,
+       so unterbleibt die Ausgabe der Ueberschriftenzeile.
+       Form: \encl[andere Ueberschrift]{Anlagentexte}
+             \cc[andere Ueberschrift]{Verteilvermerke}
+       Beispiel: \encl[Anlagen]{Zeugnis\\Lebenslauf\\Lichbild}
+                 \encl[]{Anlagen}
+                 \cc[]{800 verteilte Handzettel}
+
+2) Installation
+   2.1 Kopiere die Dateien dinbrief.ins und dinbrief.dtx in ein beliebiges
+       Verzeichnis.
+   2.2 tex -i dinbrief.ins (DOS/OS/2 emTeX) oder
+       initex dinbrief.ins oder
+       latex  dinbrief.ins
+       (Die notwendigen Umgebungsvariablen muessen natuerlich gesetzt sein.)
+   2.3 Kopiere die Dateien dinbrief.cls und dinbrief.sty in ein
+       Verzeichnis, das die TeX und LaTeX macros enthaelt
+       z.B. c:\emtex\texinput oder
+            c:\emtex\texinput\latex2e  (fuer den betatest).
+   2.4 dinbrief.tex ist die Anleitung zum dinbrief.
+       dinbrief.drv ist die Treiberdatei fuer Dokumentation und Anleitung.
+       example.tex  ist ein Beispiel.
+       brfkopf.tex  ist ein Beispiel fuer einen Briefkopf
+                    (wird von example.tex benoetigt)
+       dbold.tex    ist Rainer Sengerlings Beispiel zu seinen
+                    dinbrief-Befehlen.
+
+3) Abweichungen zu Rainer Sengerlings dinbrief
+   3.1 Der Stil `german' muss mit einem
+         \usepackage{german}
+       geladen werden. Die Angabe \documentclass[12pt,german]{dinbrief}
+       fuehrt NICHT zur gewuenschten Ausgabe.
+   3.2 Der Befehl \heute wird nicht unterstuetzt.
+   3.3 Die Befehle \Retourlabel und \Fenster erzeugen nur eine Warnung
+       und aendern das Layout des Briefes NICHT bzw. erzeugen kein
+       weiteres Label. (Dies kann sich in einer der naechsten
+       Versionen aendern.)
+
+4) Bekannte Fehler
+   4.1) Der Stil `longtable' funktioniert nicht.
+   4.2) Der Pagestyle contheadins arbeitet nicht in allen Faellen korrekt.
+
+
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</upload>
 %    \end{macrocode}
 %
 % \section{The documentation driver file}

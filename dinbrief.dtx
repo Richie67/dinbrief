@@ -1,9 +1,13 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.38 1995/04/27 23:46:43 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.39 1995/04/28 01:26:27 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.39  1995/04/28 01:26:27  Gussmann
+% - New commands: \cmd\offlabels, \cmd\onlabels and \cmd\nolabels.
+% - fixed bug in typesetting the labels.
+%
 % Revision 1.38  1995/04/27 23:46:43  Gussmann
 % - Generation of labels with different sizes work now.
 % - \cmd\spare works also now.
@@ -1104,8 +1108,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/04/27 23:46:43 $}
-\def\RCSrevision{$Revision: 1.38 $}
+\def\RCSdate{$Date: 1995/04/28 01:26:27 $}
+\def\RCSrevision{$Revision: 1.39 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -3521,12 +3525,26 @@ auf bekannte Fehler hingewiesen.
         \def\protect##1{\string##1\space}
         %\immediate\write\@auxout{\string\mlabel{\@backaddress}{\toname
         %\\\toaddress}}
-        \immediate\write\@auxout{\string\mlabel{\@backaddress}{\@addresslist}}%
+        %\immediate\write\@auxout{\string\mlabel{\@backaddress}{\@addresslist}}%
+        %\immediate\write\@auxout{\string\mlabel{\@backaddress}{%
+        %  \ka@db@ifemptyvarlocal{postremark}{}{%
+        %    \ka@db@usevarlocal{postremark}\\[\string\medskipamount]%
+        %  }%
+        %  \@addresslist
+        %}}%
+        \ka@db@ifemptyvarlocal{postremark}{% then
+          \immediate\write\@auxout{\string\mlabel{\@backaddress}{%
+          \@addresslist}}%
+        }{% else
+          \immediate\write\@auxout{\string\mlabel{\@backaddress}{%
+          \pka@db@usevarlocal{postremark}\\[\string\medskipamount]%
+          \@addresslist}}%
+        }% endif
       \endgroup
     \fi
-    \ifnum\c@labelgen=1
-      \onlabels
-    \fi
+    %\ifnum\c@labelgen=1
+    %  \onlabels
+    %\fi
   \fi
   \ka@db@atendletter
   }

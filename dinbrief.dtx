@@ -1,13 +1,13 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.7 1994/11/16 22:03:58 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.8 1994/11/17 02:44:47 Gussmann Exp Gussmann $
 %
 % $Author: Gussmann $
 %
-% $Date: 1994/11/16 22:03:58 $
+% $Date: 1994/11/17 02:44:47 $
 %
-% $Header: E:/DINBRF/RCS/dinbrief.d%v 1.7 1994/11/16 22:03:58 Gussmann Exp Gussmann $
+% $Header: E:/DINBRF/RCS/dinbrief.d%v 1.8 1994/11/17 02:44:47 Gussmann Exp Gussmann $
 %
 % $Locker: Gussmann $
 %
@@ -15,13 +15,21 @@
 %
 % $RCSfile: dinbrief.d%v $
 %
-% $Revision: 1.7 $
+% $Revision: 1.8 $
 %
 % $Source: E:/DINBRF/RCS/dinbrief.d%v $
 %
 % $State: Exp $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.8  1994/11/17 02:44:47  Gussmann
+% - More documentation added.
+% - Errors corrected:
+%   * \verb|\bottomtext| works only with the first letter in a
+%     file. Fixed. \verb|\unhbox| changed to \verb|\unhcopy|.
+%   * Fixed some errors in the documentation.
+% - Test suite extended.
+%
 % Revision 1.7  1994/11/16 22:03:58  Gussmann
 % Documentation has been updated and corrected.
 %
@@ -612,7 +620,7 @@ auf bekannte Fehler hingewiesen.
         darf nur ein \verb|\\| stehen. Direkte
         L"angenangaben (z.B.\ \verb|\\[\medskipamount]|)
         sind nicht zul"assig und verursachen einen Fehler.
-        Die Fehler kann umgangen werden falls eine
+        Der Fehler kann umgangen werden falls eine
         Konstruktion der Form
         \m{Versendungsform}\verb|\\~\\|%
         \m{Empf"angerbezeichnung} usw.\
@@ -747,8 +755,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1994/11/16 22:03:58 $}
-\def\RCSrevision{$Revision: 1.7 $}
+\def\RCSdate{$Date: 1994/11/17 02:44:47 $}
+\def\RCSrevision{$Revision: 1.8 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}

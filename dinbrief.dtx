@@ -1,9 +1,16 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.43 1995/05/11 02:45:55 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.44 1995/05/31 18:17:45 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.44  1995/05/31 18:17:45  Gussmann
+% - \cmd\labelnumber\ changed to \cmd\setlabelnumber
+% - \cmd\labelheight\ changed to \cmd\setlabelheight
+% - \cmd\labeltopmargin\ changed to \cmd\setlabeltopmargin
+% - Reason: One of the commands above is also used inside the list
+%           environment.
+%
 % Revision 1.43  1995/05/11 02:45:55  Gussmann
 % - Thousends of overfull hboxes removed.
 % - Character table added.
@@ -248,7 +255,7 @@
 % etc.
 % \fi
 %
-% \CheckSum{4779}
+% \CheckSum{4784}
 %%
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -688,6 +695,59 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
         Der Brief wird entsprechend den
         Vorschriften des Entwurfs der Norm DIN~676 vom
         Mai~1991 auf dem Briefbogen ausgegeben.
+
+  \item[\cmd\setlabelwidth\arg{Breite eines Labels}] \hfil\break
+        Dieser Befehl legt die Breite eines Labels fest.
+        Als Argument erwartet dieser Befehl eine L"angenangabe.
+
+  \item[\cmd\setlabelheight\arg{H"ohe eines Labels}] \hfil\break
+        Der Befehl \cmd\setlabelheight{} vereinbart die im
+        Argument angegebene L"ange als Labelh"ohe.
+
+  \item[\cmd\setlabeltopmargin\arg{oberer Rand}] \hfil\break
+        Bevor die beiden obersten Label (bei beiden Spalten)
+        ausgegeben werden, wird oben ein Rand gelassen, dessen
+        Breite mit dem Befehl \cmd\setlabeltopmargin{}
+        angegeben wird. Es wird eine L"angenangabe erwartet.
+
+  \item[\cmd\setlabelnumber\arg{Labelanzahl pro Spalte}] \hfil\break
+        Dieser Befehl bestimmt die Zahl der Labels in einer Spalte.
+
+  \item[\cmd\spare\arg{Anzahl leerer Labels}] \hfil\break
+        Es werden die im Argument des Befehls angegebene
+        Anzahl von Label freigelassen, bevor das erste
+        Adre"s--Etikett ausgegeben wird.
+
+% \iffalse
+  \item[\cmd\offlabels] \hfil\break
+  \item[\cmd\onlabels] \hfil\break
+  \item[\cmd\nolabels] \hfil\break
+% \fi
+  \item[\cmd\stdaddress\arg{Adresse des Absenders}] \hfil\break
+        Dieser Befehl setzt die Absenderanschrift in der
+        auf Schreibmaschinen "ublichen Form (DIN 5008).
+        Mit diesem Befehl der Briefkopf nicht frei gestaltet
+        werden.
+
+  \item[\env\begin{dinquote} \dots\ \env\end{dinquote}] \hfil\break
+        Diese Umgebung r"uckt den Text auf der linken Seite um
+        ein Inch ein. Rechts folgt keine Einr"uckung.
+
+  \item[\cmd\enclright] \hfil\break
+        Die Anlagen- und Verteilvermerke beginnen, falls sie vor
+        den \cmd\closing-Befehl angegeben wurden, rechts
+        neben der Gru"sformel.
+
+  \item[\cmd\postremark\arg{Postvermerk}] \hfil\break
+        Der Postvermerk wird mit dem Befehl \cmd\postremark{}
+        vereinbart. Der Postvermerk geht der Empf"angeranschrift
+        mit einer Leerzeile voraus.
+
+  \item[\cmd\handling\arg{Behandlungsvermerk}] \hfil\break
+        Der Behandlungsvermerk wird rechts neben der
+        Empf"angeranschrift auf Grad 50 (bei einer 10er Teilung)
+        in H"ohe der letzten Zeile der Empf"angeranschrift
+        ausgegeben.
 \end{description}
 
 % \iffalse
@@ -697,7 +757,7 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
 %<*documentation|dintab>
 % \fi
 
-\begin{table}[ht]
+\begin{table}[htp]
 \caption{Zusammenfassung der Dinbrief-Befehle:}\index{dinbrief!Befehle}
 
 \begin{center}
@@ -743,6 +803,19 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
   \hline
     \verb|\disabledraftstandard|                              \\
     \verb|\enabledraftstandard|                               \\
+  \hline
+    \verb|\setlabelwidth|\arg{Breite eines Labels}            \\
+    \verb|\setlabelheight|\arg{H"ohe eines Labels}            \\
+    \verb|\setlabeltopmargin|\arg{oberer Rand}                \\
+    \verb|\setlabelnumber|\arg{Labelanzahl pro Spalte}        \\
+    \verb|\spare|\arg{Anzahl leerer Labels}                   \\
+  \hline
+    \verb|\stdaddress|\arg{Adresse des Absenders}             \\
+    \verb|\begin{dinquote}|                                   \\
+    \verb|\end{dinquote}|                                     \\
+    \verb|\enclright|                                         \\
+    \verb|\postremark|\arg{Postvermerk}                       \\
+    \verb|\handling|\arg{Behandlungsvermerk}                  \\
   \hline
 \end{tabular}
 \end{center}
@@ -806,7 +879,15 @@ in Abb.~\ref{briefkopf} aufnehmen.
  \settowidth{\ADDRwd}{\fc EARN/BITNET: yx99 at dkauni2}
 %
  \vspace*{7truemm}
- \raisebox{-11.7mm}{\unilogo{15}}
+ \raisebox{-11.3mm}{%
+   \setlength{\unitlength}{1truemm}
+   \begin{picture}(15,15)(0,0)
+     \thicklines
+     \put(7.5,7.5){\circle{15}}
+     \put(7.5,7.5){\circle{10}}
+     \put(7.5,7.5){\circle{ 5}}
+   \end{picture}%
+ }
  {\fc\hspace{.7em}}
  \parbox[t]{\UKAwd}{
         \centering{\fa Universit\"at Gralsruhe} \\
@@ -1007,6 +1088,7 @@ auf bekannte Fehler hingewiesen.
         der Postleitzahl --- durch einen Bindestrich
         getrennt --- vorangestellt wird.
 
+% \iffalse
         Nach dem ersten Eintrag im Anschriftenfeld
         darf nur ein \verb|\\| stehen. Direkte
         L"angenangaben (z.B.\ \verb|\\[\medskipamount]|)
@@ -1016,6 +1098,7 @@ auf bekannte Fehler hingewiesen.
         \m{Versendungsform}\verb|\\~\\|%
         \m{Empf"angerbezeichnung} usw.\
         verwendet wird.
+% \fi
 
   \item {\bf Bezugszeichen und Tagangabe}
 
@@ -1029,22 +1112,23 @@ auf bekannte Fehler hingewiesen.
         ganzen Brief, Teilbetreffe beziehen sich auf
         Briefteile.
 
-% \iffalse
         Der {\em Wortlauf des Betreffs\/} wird ohne
         Schlu"spunkt geschrieben.
-
+% \iffalse
         Der {\em Teilbetreff\/} beginnt an der Fluchtlinie
         (linker Rand), schlie"st mit einem Punkt und wird
         unterstrichen. Wir empfehlen diesen Text besser
         durch eine andere Schriftart (z.B.\ fett)
         hervorzuheben. Der Text wird unmittelbar angef"ugt.
-
+% \fi
   \item {\bf Behandlungsvermerke}
 
-        Behandlungsvermerke (z.B.\ eilt) werden \dots,
-        oder im Anschlu"s an die Betreffangabe
-        geschrieben; sie k"onnen hervorgehoben werden.
-% \fi
+        Behandlungsvermerke (z.B.\ eilt) werden
+        neben das Anschriftenfeld, beginnend auf
+        Grad 50 (bei einer 10er Teilung), oder im
+        Anschlu"s an die Betreffangabe geschrieben;
+        sie k"onnen hervorgehoben werden.
+
   \item {\bf Anlagen- und Verteilvermerke}
 
         Anlagen- und Verteilvermerke beginnen an der
@@ -1129,7 +1213,28 @@ auf bekannte Fehler hingewiesen.
         der Firma angegeben werden.
 \end{enumerate}
 
-\ssect{Die Befehle aus Rainer Sengerlings `dinbrief'}
+\ssect{Adre"s--Etiketten}
+Das Ausdrucken von Adre"s-Etiketten ist w"unschenswert, wenn
+keine Fensterbriefh"ullen verwendet werden. Damit das Bedrucken
+von verschiedenen Etiketts"atzen m"oglich wird, kann die Breite
+und H"ohe der einzelnen Etiketten mit den Befehlen
+\verb|\setlabelwidth|\arg{Breite} und
+\verb|\setlabelheight|\arg{H"ohe} eingestellt
+werden. Der obere Rand kann mit dem Befehl
+\verb|\setlabeltopmargin|\arg{oberer Rand} festgelegt werden.
+Die Anzahl der Labels in einer Spalte wird durch den Befehl
+\verb|\setlabelnumber|\arg{Anzahl} angegeben. Die mehrfache
+Verwendung eines Etikettenblatts wird durch den Befehl
+\verb|\spare|\arg{Anzahl} m"oglich. Dieser Befehl r"uckt
+den Druckbeginn um {\em Anzahl\/} Positionen vor.
+
+Die Ausgabe der Adre"s--Etiketten erfolgt spaltenweise.
+In vielen Druckern bleiben die Etikettenbl"atter h"angen,
+wenn die Tr"agerfolie in beiden Spalten freiliegt. Drucker,
+die alternativ einen ebenen Papiertransport besitzen, sollten
+zur Ausgabe von Etiketten auf diesen umgeschaltet werden.
+
+\ssect{Kompatibilit"at zu Rainer Sengerlings `dinbrief'}
 Im Jahr 1992 wurde an der Universit"at Karlsruhe ein Briefstil
 entwickelt, dem der Namen `dinbrief' gegeben wurde. Im gleichen
 Jahr ver"offentlichte Rainer Sengerling einen Briefstil unter
@@ -1138,48 +1243,57 @@ dem gleichen Namen.
 Rainer Sengerling hat darauf verzichtet seinen Briefstil
 an \LaTeXe\ anzupassen. Daraufhin haben wir den Briefstil
 `dinbrief' im Dezember 1994 als \LaTeXe-Klasse ver"offentlicht.
-Wegen der unterschiedlichen Befehle der beiden Stile haben
-uns viele Anfragen erreicht. Die jetzt vorliegende Fassung
-stellt beide Befehlss"atze zur Verf"ugung und f"uhrt die
+Die beiden Briefstile haben unterschiedliche Befehlss"atze,
+was bei vielen Benutzern zu Verwirrung und Irritationen
+gef"uhrt hat. Wegen der unterschiedlichen Befehle der beiden
+Stile haben uns viele Anfragen erreicht. Die jetzt vorliegende
+Fassung stellt beide Befehlss"atze zur Verf"ugung und f"uhrt die
 bisher unabh"anigen Briefstile zusammen.
 
 \begin{description}
+
   \item[\cmd\Retouradresse\arg{{Absenderadresse im Brief\kern 0pt fenster}}]
         Der Befehl legt die Anschrift des Absenders oben im
         Anschriftenfeld des Briefs fest.
+
   \item[\cmd\Retourlabel] \hfil\break
         Dieser Befehl erzeugt Absenderadre"s-Etiketten, falls
         die Erzeugung der Etiketten aktiviert wurde.
 
         Ferner wird die Ausgabe der \cmd\Retouradresse\ unterdr"uckt.
 
-        Dieser Befehl wird gegenw"artig nicht unterst"utzt und
-        erzeugt eine Warnung.
+        {\bf Dieser Befehl wird gegenw"artig nicht unterst"utzt und
+        erzeugt eine Warnung.\/}
+
   \item[\cmd\Fenster] \hfil\break
         Bei der Verwendung von Fensterbriefh"ullen wird die mit
-        \cmd\Retouradresse\ vereinbarte einzeile R"ucksendeadresse
+        \cmd\Retouradresse\ vereinbarte einzeilige R"ucksendeadresse
         (Absenderadresse) oben im Anschriftenfeld eingeblendet,
         falls der Befehl \cmd\Fenster\ angegeben wurde. Ferner
         werden die Faltmarken am linken Rand ausgegeben.
 
         Daf"ur wird die Ausgabe der Etiketten unterdr"uckt.
 
-        Dieser Befehl wird gegenw"artig nicht unterst"utzt und
-        erzeugt eine Warnung.
+        {\bf Dieser Befehl wird gegenw"artig nicht unterst"utzt und
+        erzeugt eine Warnung.\/}
+
   \item[\cmd\Postvermerk\arg{Postvermerk}] \hfil\break
         Dieser Befehl vereinbart Vermerke f"ur den
         Postversand wie z.B.\ Einschreiben.
+
   \item[\cmd\Behandlungsvermerk\arg{Behandlungsvermerk}] \hfil\break
         Der Befehl \cmd\Behandlungsvermerk\ dient zur
-        Angabe von (man wirds kaum glauben) Behandlungsvermerke
+        Angabe von (man wirds kaum glauben) Behandlungsvermerken
         wie z.B.\ Eilt, pers"onlich oder "`F"ur die unterste
         Schublade"'.
+
   \item[\cmd\Absender\arg{Name und Adresse des Absenders}] \hfil\break
         Die Adresse des Absenders wird vereinbart.
         Dieser Befehl gilt f"ur den laufenden und alle
         weiteren Briefe; er gilt solange, bis ein
         weiterer \cmd\Absender- oder \cmd\address-Befehl
         angegeben wird.
+
   \item[\cmd\Absender\arg{Teil 1::Teil 2}] \hfil\break
         Dies ist eine Sonderform des \cmd\Absender-Befehls.
         Der durch \verb|::| abgetrennte {\em Teil2\/}
@@ -1187,25 +1301,38 @@ bisher unabh"anigen Briefstile zusammen.
         Absenderetikett, falls ein solches mit dem
         Befehl \cmd\Retourlabel\ angefordert
         wurde.
+
+        Dieser Befehl wird korrekt unterst"utzt. Da aber
+        der Befehl \cmd\Retourlabel\ nicht implementiert
+        wurde hat die Aufteilung im Moment praktisch keine
+        Bedeutung; sie kann aber in sp"ateren Versionen
+        wieder notwendig sein.
+
   \item[\cmd\Datum\arg{Briefdatum}] \hfil\break
         Soll als Absendedatum {\sl nicht\/} das aktuelle
         Tagesdatum (des Rechners) eingesetzt werden, kann
         mit diesem Befehl das Datum explizit angegeben werden.
+
+        Der Befehl \cmd\heute\ wird nicht unterst"utzt.
+
   \item[\cmd\Betreff\arg{{Betreff}}] \hfil\break
         Mit diesem Befehl wird der Betreff gesetzt, der den
         Empf"anger "uber den Gegenstand des Briefes
         informiert. Der Betreff kann ein oder mehrzeilig sein.
+
   \item[\cmd\Einrueckung\arg{Text}] \hfil\break
         Der Text wird um $1 in$ einger"uckt und geht bis zum
         rechten Rand. Der Text darf Abs"atze enthalten.
+
   \item[\cmd\anlagenrechts] \hfil\break
         Die Anlagen- und Verteilvermerke beginnen {\sl rechts\/}
         neben der Gru"sformel auf Grad 50. Mit diesem Befehl
-        kann Platz gespart werden, falls sie Seite fast voll
+        kann Platz gespart werden, falls die Seite fast voll
         ist, und kein neues Blatt begonnen werden soll.
         Dieser Befehl mu"s vor \cmd\closing\ stehen.
         Die Anlagen- und Verteilvermerke m"ussen in diesem
         Fall ebenfalls vor dem \cmd\closing-Befehl stehen.
+
   \item[\cmd\Anlagen\arg{Anlagenvermerk}] \hfil\break
         Mit diesem Befehl werden eventuelle Anlagenvermerke
         vereinbart oder gesetzt. Dieser Befehl darf sowohl
@@ -1215,20 +1342,24 @@ bisher unabh"anigen Briefstile zusammen.
         Der Anlagenvermerk wird sofort ausgegeben und gesetzt,
         falls der Befehl nach dem \cmd\closing-Befehl angegeben
         wird.
+
   \item[\cmd\Verteiler\arg{Verteilvermerk}] \hfil\break
         Dieser Befehl vereinbart oder setzt Verteilvermerke.
         Die Ausf"uhrungen zum \cmd\Anlagen-Befehl gelten
         auch f"ur diesen Befehl.
+
   \item[\cmd\Etihoehe\arg{H"ohe eines Adressetiketts}] \hfil\break
         Verschiedene Herstelle vertreiben Adressetiketten,
         die alle ein bischen anders sind. Um den Briefstil
         an unterschiedlich hohe Adre"setiketten anzupassen,
         kann mit dem Befehl \cmd\Etihoehe\ die H"ohe eines
         Etiketts angegeben werden.
+
   \item[\cmd\Etirand\arg{oberer Rand}] \hfil\break
         Die B"ogen mit den Adre"setiketten haben oft einen
         Versatz oder oberen Rand. Mit dem Befehl \cmd\Etirand\
         kann dieser Versatz eingestellt werden.
+
   \item[\cmd\Etizahl\arg{Zahl der Etiketten}] \hfil\break
         Auf ein Blatt mit Adre"setiketten passen leider
         nicht beliebig viele sondern nur eine begrenzte
@@ -1237,35 +1368,13 @@ bisher unabh"anigen Briefstile zusammen.
         sind. Die Zahl der Etiketten, die in eine Spalte
         passen werden durch den Befehl \cmd\Etizahl\
         angegeben.
+
   \item[\cmd\spare\arg{{n}}] \hfil\break
         Das Bedrucken der Adre"setiketten beginnt nach {\em n\/}
         leeren Adre"slabeln. Die Label werden spaltenweise
         durchgez"ahlt.
-  \item[\env\begin{letter}\arg{{Anschrift}} \dots\ \env\end{letter}] \hfil\break
-        Diese Befehle rahmen jeden einzelnen Brief ein. Die
-        Anschrift des Em\-pf"an\-gers wird als Argument des Befehls
-        \env\begin{letter}\arg{Anschrift} angegeben.
-        Die einzelnen Zeilen in der Anschrift werden durch
-        \cmd\\ getrennt.
-        Es d"urfen weitere Briefe folgen.
-  \item[\cmd\opening\arg{{Anrede}}] \hfil\break
-        Dieser Befehl vereinbart die Anrede des Empf"angers und setzt
-        den Briefkopf, die Empf"angerangaben, eine eventuell vorhandene
-        Bezugszeichenzeile, den Betreff und die Anrede des Empf"angers.
 
-        {\bf Dieser Befehl darf nicht fehlen!\/}
-
-  \item[\cmd\closing\arg{{Gru"sformel}}] \hfil\break
-        Der Befehl \cmd\closing{} setzt die Gru"sformel und nach
-        drei Leerzeilen die maschinenschrifliche Wiederholung
-        der Unterschrift.
-  \item[\cmd\makelabels] \hfil\break
-        Dieser Befehl mu"s in der Pr"aambel stehen; also
-        zwischen \cmd\documentstyle{} oder \cmd\documentclass{}
-        und dem \env\begin{document}-Befehl.
-        Er aktiviert das Ausdrucken von Adress-Etiketten.
 \end{description}
-
 
 \clearpage
 % \iffalse
@@ -1292,8 +1401,8 @@ bisher unabh"anigen Briefstile zusammen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/05/11 02:45:55 $}
-\def\RCSrevision{$Revision: 1.43 $}
+\def\RCSdate{$Date: 1995/05/31 18:17:45 $}
+\def\RCSrevision{$Revision: 1.44 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -1436,7 +1545,7 @@ bisher unabh"anigen Briefstile zusammen.
 % \subsubsection{temporary variables}
 %
 %  \begin{macro}{\ka@db@tmpdima}
-%  Unfortunately we have to define out own temporary dimen
+%  Unfortunately we have to define our own temporary dimen
 %  variable, because inside a parbox \cmd\@tempdima\ and
 %  \cmd\@tempdimb\ are used. \cmd\@tempdimc\ ist used maybe
 %  in fontswitch commands.
@@ -1624,22 +1733,6 @@ bisher unabh"anigen Briefstile zusammen.
 \long\def\ka@db@ifemptyvarlocal#1#2#3{%
   \ka@db@ifemptydynvar{\pka@db@usevarlocal}{#1}{#2}{#3}%
 }
-% \long\def\ka@db@ifemptyvarlocal#1#2#3{%
-%   \bgroup
-%     \def\protect{\noexpand\protect\noexpand}%
-%     \let\\=a% because characters are not expanded
-%     \edef\tmpa{\pka@db@usevarlocal{#1}}%
-%     \typeout{ifempty: varlocal #1 = \meaning\pka@db@usevarlocal{#1}}%
-%     \typeout{ifempty: varlocal #1 = \meaning\tmpa}%
-%     \expandafter\egroup
-%     \ifx\tmpa\@empty
-%       \message{var is empty!}%
-%       #2
-%     \else
-%       \message{var is not empty!}%
-%       #3
-%     \fi
-% }
 %    \end{macrocode}
 %  \end{macro}
 %
@@ -1649,23 +1742,6 @@ bisher unabh"anigen Briefstile zusammen.
 \long\def\ka@db@ifemptyvarglobal#1#2#3{%
   \ka@db@ifemptydynvar{\pka@db@usevarglobal}{#1}{#2}{#3}%
 }
-% \long\def\ka@db@ifemptyvarglobal#1#2#3{%
-%   \bgroup
-%     \def\protect{\noexpand\protect\noexpand}%
-%     \let\\=a% because characters are not expanded
-%     \edef\tmpa{\pka@db@usevarglobal{#1}}%
-%     \typeout{ifempty: varglobal org cs #1 = %
-%       \meaning\pka@db@usevarglobal{#1}}%
-%     \typeout{ifempty: varglobal #1 = \meaning\tmpa}%
-%     \expandafter\egroup
-%     \ifx\tmpa\@empty
-%       \message{var is empty!}%
-%       #2
-%     \else
-%       \message{var is not empty!}%
-%       #3
-%     \fi
-% }
 %    \end{macrocode}
 %  \end{macro}
 %
@@ -1679,35 +1755,6 @@ bisher unabh"anigen Briefstile zusammen.
     \ka@db@ifemptyvarglobal{#1}{#2}{#3}%
     }{#3}%
 }
-% \long\def\ka@db@ifemptyvar#1#2#3{%
-%   \bgroup
-%     \def\protect{\noexpand\protect\noexpand}%
-%     \let\\=a% because characters are not expanded
-%     \edef\tmpa{\pka@db@usevarlocal{#1}}%
-%     \typeout{ifempty: varlocal #1 = \meaning\pka@db@usevarlocal{#1}}%
-%     \typeout{ifempty: varlocal #1 = \meaning\tmpa}%
-%     \expandafter\egroup
-%     \ifx\tmpa\@empty
-%       \bgroup
-%         \def\protect{\noexpand\protect\noexpand}%
-%         \let\\=a% because characters are not expanded
-%         \edef\tmpa{\pka@db@usevarglobal{#1}}%
-%         \typeout{ifempty: varglobal org cs #1 = %
-%           \meaning\pka@db@usevarglobal{#1}}%
-%         \typeout{ifempty: varglobal #1 = \meaning\tmpa}%
-%         \expandafter\egroup
-%         \ifx\tmpa\@empty
-%           \message{var #1 is empty!}%
-%           #2
-%         \else
-%           \message{var #1 is not empty!}%
-%           #3
-%         \fi
-%     \else
-%       \message{var #1 is not empty!}%
-%       #3
-%     \fi
-% }
 %    \end{macrocode}
 %  \end{macro}
 %
@@ -2110,19 +2157,11 @@ bisher unabh"anigen Briefstile zusammen.
 %
 % \subsection{Fontsizes und other parameters}
 %
-% \begin{macro}{\@normalsize}
-% \begin{macro}{\small}
-% \begin{macro}{\footnotesize}
-% \begin{macro}{\scriptsize}
-% \begin{macro}{\tiny}
-% \begin{macro}{\large}
-% \begin{macro}{\Large}
-% \begin{macro}{\LARGE}
-% \begin{macro}{\huge}
-% \begin{macro}{\Huge}
-%
 %    \begin{macrocode}
 \ifcase \@ptsize\relax
+%    \end{macrocode}
+% \begin{macro}{\@normalsize}
+%    \begin{macrocode}
  \def\@normalsize{\@setsize\normalsize{12pt}\xpt\@xpt
   \abovedisplayskip 10\p@ plus2\p@ minus5\p@
   \belowdisplayskip \abovedisplayskip
@@ -2130,6 +2169,10 @@ bisher unabh"anigen Briefstile zusammen.
   \belowdisplayshortskip 6\p@ plus3\p@ minus3\p@
   \let\@listi\@listI
   }%
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\small}
+%    \begin{macrocode}
  \def\small{\@setsize\small{11pt}\ixpt\@ixpt
   \abovedisplayskip 8.5\p@ plus 3\p@ minus 4\p@
   \belowdisplayskip \abovedisplayskip
@@ -2140,6 +2183,10 @@ bisher unabh"anigen Briefstile zusammen.
               \parsep 2\p@ \@plus\p@ \@minus\p@
                \itemsep \parsep}%
   }%
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\footnotesize}
+%    \begin{macrocode}
  \def\footnotesize{\@setsize\footnotesize{9.5pt}\viiipt\@viiipt
   \abovedisplayskip 6\p@ plus 2\p@ minus 4\p@
   \belowdisplayskip \abovedisplayskip
@@ -2150,6 +2197,16 @@ bisher unabh"anigen Briefstile zusammen.
               \parsep 2\p@ \@plus\p@ \@minus\p@
               \itemsep \parsep}%
   }%
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\scriptsize}
+% \begin{macro}{\tiny}
+% \begin{macro}{\large}
+% \begin{macro}{\Large}
+% \begin{macro}{\LARGE}
+% \begin{macro}{\huge}
+% \begin{macro}{\Huge}
+%    \begin{macrocode}
  \def\scriptsize{\@setsize\scriptsize{8pt}\viipt\@viipt}
  \def\tiny{\@setsize\tiny{6pt}\vpt\@vpt}
  \def\large{\@setsize\large{14pt}\xiipt\@xiipt}
@@ -2158,9 +2215,17 @@ bisher unabh"anigen Briefstile zusammen.
  \def\huge{\@setsize\huge{25pt}\xxpt\@xxpt}
  \def\Huge{\@setsize\Huge{30pt}\xxvpt\@xxvpt}
 %    \end{macrocode}
+% \end{macro}^^A \Huge
+% \end{macro}^^A \huge
+% \end{macro}^^A \LARGE
+% \end{macro}^^A \Large
+% \end{macro}^^A \large
+% \end{macro}^^A \tiny
+% \end{macro}^^A \scriptsize
 %    \begin{macrocode}
 \or % 11 pt option
 %    \end{macrocode}
+% \begin{macro}{\@normalsize}
 %    \begin{macrocode}
  \def\@normalsize{\@setsize\normalsize{13.6pt}\xipt\@xipt
   \abovedisplayskip 11\p@ plus3\p@ minus6\p@
@@ -2169,6 +2234,10 @@ bisher unabh"anigen Briefstile zusammen.
   \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@
   \let\@listi\@listI
   }%
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\small}
+%    \begin{macrocode}
  \def\small{\@setsize\small{12pt}\xpt\@xpt
   \abovedisplayskip 10\p@ plus2\p@ minus5\p@
   \belowdisplayskip \abovedisplayskip
@@ -2179,6 +2248,10 @@ bisher unabh"anigen Briefstile zusammen.
               \parsep 3\p@ \@plus2\p@ \@minus\p@
               \itemsep \parsep}%
   }%
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\footnotesize}
+%    \begin{macrocode}
  \def\footnotesize{\@setsize\footnotesize{11pt}\ixpt\@ixpt
   \abovedisplayskip 8\p@ plus 2\p@ minus 4\p@
   \belowdisplayskip \abovedisplayskip
@@ -2189,6 +2262,16 @@ bisher unabh"anigen Briefstile zusammen.
               \parsep 2\p@ \@plus\p@ \@minus\p@
               \itemsep \parsep}%
   }%
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\scriptsize}
+% \begin{macro}{\tiny}
+% \begin{macro}{\large}
+% \begin{macro}{\Large}
+% \begin{macro}{\LARGE}
+% \begin{macro}{\huge}
+% \begin{macro}{\Huge}
+%    \begin{macrocode}
  \def\scriptsize{\@setsize\scriptsize{9.5pt}\viiipt\@viiipt}
  \def\tiny{\@setsize\tiny{7pt}\vipt\@vipt}
  \def\large{\@setsize\large{14pt}\xiipt\@xiipt}
@@ -2197,9 +2280,17 @@ bisher unabh"anigen Briefstile zusammen.
  \def\huge{\@setsize\huge{25pt}\xxpt\@xxpt}
  \def\Huge{\@setsize\Huge{30pt}\xxvpt\@xxvpt}
 %    \end{macrocode}
+% \end{macro}^^A \Huge
+% \end{macro}^^A \huge
+% \end{macro}^^A \LARGE
+% \end{macro}^^A \Large
+% \end{macro}^^A \large
+% \end{macro}^^A \tiny
+% \end{macro}^^A \scriptsize
 %    \begin{macrocode}
 \or % 12pt option
 %    \end{macrocode}
+% \begin{macro}{\@normalsize}
 %    \begin{macrocode}
  \def\@normalsize{\@setsize\normalsize{15pt}\xiipt\@xiipt
   \abovedisplayskip 12\p@ plus3\p@ minus7\p@
@@ -2208,6 +2299,10 @@ bisher unabh"anigen Briefstile zusammen.
   \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@
   \let\listi\listI
   }%
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\small}
+%    \begin{macrocode}
  \def\small{\@setsize\small{13.6pt}\xipt\@xipt
   \abovedisplayskip 11\p@ plus3\p@ minus6\p@
   \belowdisplayskip \abovedisplayskip
@@ -2218,6 +2313,10 @@ bisher unabh"anigen Briefstile zusammen.
               \parsep 4.5\p@ \@plus2\p@ \@minus\p@
               \itemsep \parsep}%
   }%
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\footnotesize}
+%    \begin{macrocode}
  \def\footnotesize{\@setsize\footnotesize{12pt}\xpt\@xpt
   \abovedisplayskip 10\p@ plus2\p@ minus5\p@
   \belowdisplayskip \abovedisplayskip
@@ -2228,6 +2327,16 @@ bisher unabh"anigen Briefstile zusammen.
               \parsep 3\p@ \@plus2\p@ \@minus\p@
               \itemsep \parsep}%
   }%
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\scriptsize}
+% \begin{macro}{\tiny}
+% \begin{macro}{\large}
+% \begin{macro}{\Large}
+% \begin{macro}{\LARGE}
+% \begin{macro}{\huge}
+% \begin{macro}{\Huge}
+%    \begin{macrocode}
  \def\scriptsize{\@setsize\scriptsize{9.5pt}\viiipt\@viiipt}
  \def\tiny{\@setsize\tiny{7pt}\vipt\@vipt}
  \def\large{\@setsize\large{18pt}\xivpt\@xivpt}
@@ -2236,9 +2345,17 @@ bisher unabh"anigen Briefstile zusammen.
  \def\huge{\@setsize\huge{30pt}\xxvpt\@xxvpt}
  \let\Huge=\huge
 %    \end{macrocode}
+% \end{macro}^^A \Huge
+% \end{macro}^^A \huge
+% \end{macro}^^A \LARGE
+% \end{macro}^^A \Large
+% \end{macro}^^A \large
+% \end{macro}^^A \tiny
+% \end{macro}^^A \scriptsize
 %    \begin{macrocode}
 \or  % Norm-Option (DIN 2107, 2142)
 %    \end{macrocode}
+% \begin{macro}{\@normalsize}
 %    \begin{macrocode}
  \def\@normalsize{\@setsize\normalsize{\GZA}\xipt\@xipt
   \abovedisplayskip 11\p@ plus3\p@ minus6\p@
@@ -2247,6 +2364,10 @@ bisher unabh"anigen Briefstile zusammen.
   \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@
   \let\@listi\@listI
   }% Setting of \@listi added 22 Dec 87
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\small}
+%    \begin{macrocode}
  \def\small{\@setsize\small{11pt}\xpt\@xpt
   \abovedisplayskip 10\p@ plus2\p@ minus5\p@
   \belowdisplayskip \abovedisplayskip
@@ -2257,6 +2378,10 @@ bisher unabh"anigen Briefstile zusammen.
               \parsep 3\p@ plus2\p@ minus\p@
               \itemsep \parsep}%
   }%
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\footnotesize}
+%    \begin{macrocode}
  \def\footnotesize{\@setsize\footnotesize{11pt}\ixpt\@ixpt
   \abovedisplayskip 8\p@ plus2\p@ minus4\p@
   \belowdisplayskip \abovedisplayskip
@@ -2267,6 +2392,16 @@ bisher unabh"anigen Briefstile zusammen.
               \parsep 2\p@ plus\p@ minus\p@
               \itemsep \parsep}%
   }%
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\scriptsize}
+% \begin{macro}{\tiny}
+% \begin{macro}{\large}
+% \begin{macro}{\Large}
+% \begin{macro}{\LARGE}
+% \begin{macro}{\huge}
+% \begin{macro}{\Huge}
+%    \begin{macrocode}
  \def\scriptsize{\@setsize\scriptsize{9.5pt}\viiipt\@viiipt}
  \def\tiny{\@setsize\tiny{7pt}\vipt\@vipt}
  \def\large{\@setsize\large{14pt}\xiipt\@xiipt}
@@ -2274,18 +2409,17 @@ bisher unabh"anigen Briefstile zusammen.
  \def\LARGE{\@setsize\LARGE{22pt}\xviipt\@xviipt}
  \def\huge{\@setsize\huge{25pt}\xxpt\@xxpt}
  \def\Huge{\@setsize\Huge{30pt}\xxvpt\@xxvpt}
+%    \end{macrocode}
+% \end{macro}^^A \Huge
+% \end{macro}^^A \huge
+% \end{macro}^^A \LARGE
+% \end{macro}^^A \Large
+% \end{macro}^^A \large
+% \end{macro}^^A \tiny
+% \end{macro}^^A \scriptsize
+%    \begin{macrocode}
 \fi
 %    \end{macrocode}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-% \end{macro}
 %
 %  \begin{macro}{\normalsize}
 %  We are doing here something different from the class files of
@@ -3396,6 +3530,8 @@ bisher unabh"anigen Briefstile zusammen.
 %  \end{macro}
 %
 %  \subsubsection{Defining the standard dinbrief labels}
+%  The following parameters are for the a4-label-papers
+%  from Herma (copy-print, No.\ 4452).
 %
 %    \begin{macrocode}
 \setlabelheight{41.15truemm}%
@@ -6071,12 +6207,17 @@ F-58500 CLAMECY}
 %    further. So we can catch all interesting macros.
 %
 %    \begin{macrocode}
-\DoNotIndex{\@empty,\\,\space}
-\DoNotIndex{\begin,\def,\else,\end,\endcsname,\fi,\gdef}
-\DoNotIndex{\hfil,\hfill,\hss,\ifx,\let,\long,\message}
-\DoNotIndex{\originalTeX,\p@,\parbox,\parsep,\relax}
-\DoNotIndex{\space,\string,\strut,\typeout,\verb,\vbox,\vss}
-\DoNotIndex{\xdef}
+\DoNotIndex{\@empty,\\,\space,\@warning}
+\DoNotIndex{\begin,\bfseries,\bgroup,\box,\def,\edef,\egroup}
+\DoNotIndex{\else,\end,\endcsname,\expandafter,\fi,\gdef}
+\DoNotIndex{\hbox}
+\DoNotIndex{\hfil,\hfill,\hss,\ifx,\item,\let,\long,\message}
+\DoNotIndex{\nointerlineskip}
+\DoNotIndex{\originalTeX,\p@,\par,\parbox,\parsep,\relax}
+\DoNotIndex{\setlength}
+\DoNotIndex{\space,\string,\strut,\tmpa,\typeout,\verb}
+\DoNotIndex{\vbox,\vskip,\vspace,\vss}
+\DoNotIndex{\xdef,\z@,\z@skip}
 \DoNotIndex{\LaTeX,\LaTeXe}
 \DoNotIndex{\OnlyDescription,\PrintChanges,\PrintIndex,\RecordChanges}
 %    \end{macrocode}

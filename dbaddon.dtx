@@ -1,8 +1,11 @@
 %
 % \iffalse meta-comment
-% $Id: dbaddon.d%v 1.3 1995/07/06 02:43:41 Gussmann Exp Gussmann $
+% $Id: dbaddon.d%v 1.4 1995/08/15 23:48:12 Gussmann Exp Gussmann $
 %
 % $Log: dbaddon.d%v $
+% Revision 1.4  1995/08/15 23:48:12  Gussmann
+% Upload message added.
+%
 % Revision 1.3  1995/07/06 02:43:41  Gussmann
 % Umlauts changed.
 %
@@ -654,17 +657,18 @@ Anmerkungen und Fehlerreports bitte an
            BITNET:   rz32@dkauni2.bitnet
 
 1) Aenderungen
-   1.1 Einige Fehlerchen wurden beseitigt.
-   1.2 Form und Anzahl der Labels kann nun angegeben werden.
-   1.3 Die Information ueber die Adress-Labels wird in eine
-       Datei <mainfile>.lbl geschrieben. Die Datei <mainfile>.aux
-       hat die gleiche Aufgabe wie in den article, report und
-       book Klassen.
-   1.4 Neben den bisherigen Befehlen werden nun auch fast alle
+   1.1 Der Betreff wird jetzt durch den Befehl \subject
+       vereinbart. \concern steht weiterhin zur Verfuegung.
+   1.2 Die Leerseite am Ende des Dokuments tritt nicht mehr auf.
+   1.3 Die faelschlicherweise generierte Leerspalte bei den
+       Labels wird nun mehr korrekt genutzt.
+
+2) Weitere Hinweise
+   2.1 Neben den bisherigen Befehlen werden nun auch fast alle
        Befehle aus Rainer Sengerlings dinbrief unterstuetzt.
-   1.5 Die Befehle \Anlagen und \Verteiler verhalten sich jetzt
+   2.2 Die Befehle \Anlagen und \Verteiler verhalten sich jetzt
        genau so wie in R. Sengerlings dinbrief.
-   1.6 Die Befehle \encl und \cc haben ein optionales Argument
+   2.3 Die Befehle \encl und \cc haben ein optionales Argument
        bekommen. Damit kann die Default-Ueberschrift fuer einzelne
        Briefe geaendert werden. Ist das optionale Argument leer,
        so unterbleibt die Ausgabe der Ueberschriftenzeile.
@@ -674,18 +678,18 @@ Anmerkungen und Fehlerreports bitte an
                  \encl[]{Anlagen}
                  \cc[]{800 verteilte Handzettel}
 
-2) Installation
-   2.1 Kopiere die Dateien dinbrief.ins und dinbrief.dtx in ein beliebiges
+3) Installation
+   3.1 Kopiere die Dateien dinbrief.ins und dinbrief.dtx in ein beliebiges
        Verzeichnis.
-   2.2 tex -i dinbrief.ins (DOS/OS/2 emTeX) oder
+   3.2 tex -i dinbrief.ins (DOS/OS/2 emTeX) oder
        initex dinbrief.ins oder
        latex  dinbrief.ins
        (Die notwendigen Umgebungsvariablen muessen natuerlich gesetzt sein.)
-   2.3 Kopiere die Dateien dinbrief.cls und dinbrief.sty in ein
+   3.3 Kopiere die Dateien dinbrief.cls und dinbrief.sty in ein
        Verzeichnis, das die TeX und LaTeX macros enthaelt
        z.B. c:\emtex\texinput oder
             c:\emtex\texinput\latex2e  (fuer den betatest).
-   2.4 dinbrief.tex ist die Anleitung zum dinbrief.
+   3.4 dinbrief.tex ist die Anleitung zum dinbrief.
        dinbrief.drv ist die Treiberdatei fuer Dokumentation und Anleitung.
        example.tex  ist ein Beispiel.
        brfkopf.tex  ist ein Beispiel fuer einen Briefkopf
@@ -693,20 +697,20 @@ Anmerkungen und Fehlerreports bitte an
        dbold.tex    ist Rainer Sengerlings Beispiel zu seinen
                     dinbrief-Befehlen.
 
-3) Abweichungen zu Rainer Sengerlings dinbrief
-   3.1 Der Stil `german' muss mit einem
+4) Abweichungen zu Rainer Sengerlings dinbrief
+   4.1 Der Stil `german' muss mit einem
          \usepackage{german}
        geladen werden. Die Angabe \documentclass[12pt,german]{dinbrief}
        fuehrt NICHT zur gewuenschten Ausgabe.
-   3.2 Der Befehl \heute wird nicht unterstuetzt.
-   3.3 Die Befehle \Retourlabel und \Fenster erzeugen nur eine Warnung
+   4.2 Der Befehl \heute wird nicht unterstuetzt.
+   4.3 Die Befehle \Retourlabel und \Fenster erzeugen nur eine Warnung
        und aendern das Layout des Briefes NICHT bzw. erzeugen kein
        weiteres Label. (Dies kann sich in einer der naechsten
        Versionen aendern.)
 
-4) Bekannte Fehler
-   4.1) Der Stil `longtable' funktioniert nicht.
-   4.2) Der Pagestyle contheadins arbeitet nicht in allen Faellen korrekt.
+5) Bekannte Fehler
+   5.1) Der Stil `longtable' funktioniert nicht.
+   5.2) Der Pagestyle contheadins arbeitet nicht in allen Faellen korrekt.
 
 
 %    \end{macrocode}

@@ -1,27 +1,30 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.6 1994/11/16 19:26:52 Gussmann Exp $
+% $Id: dinbrief.d%v 1.7 1994/11/16 22:03:58 Gussmann Exp Gussmann $
 %
 % $Author: Gussmann $
 %
-% $Date: 1994/11/16 19:26:52 $
+% $Date: 1994/11/16 22:03:58 $
 %
-% $Header: E:/DINBRF/RCS/dinbrief.d%v 1.6 1994/11/16 19:26:52 Gussmann Exp $
+% $Header: E:/DINBRF/RCS/dinbrief.d%v 1.7 1994/11/16 22:03:58 Gussmann Exp Gussmann $
 %
-% $Locker:  $
+% $Locker: Gussmann $
 %
 % $Name:  $
 %
 % $RCSfile: dinbrief.d%v $
 %
-% $Revision: 1.6 $
+% $Revision: 1.7 $
 %
 % $Source: E:/DINBRF/RCS/dinbrief.d%v $
 %
 % $State: Exp $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.7  1994/11/16 22:03:58  Gussmann
+% Documentation has been updated and corrected.
+%
 % Revision 1.6  1994/11/16 19:26:52  Gussmann
 % The document starts now with the user guide.
 %
@@ -119,8 +122,6 @@
   \fi
 %    \end{macrocode}
 %
-%  \section{Users Guide}
-%
 \newenvironment{decl}%
     {\par\small\addvspace{4.5ex plus 1ex}%
      \vskip -\parskip
@@ -145,6 +146,10 @@
   \newcommand\emph[1]{{\em#1\/}}}% This is \emph{not} the LaTeX2e
                                  %  definition!
 \fi
+
+%    \begin{macrocode}
+\begin{document}
+%    \end{macrocode}
 %
 %    \begin{macrocode}
 %</documentation|dintab>
@@ -156,7 +161,9 @@
 \renewcommand{\textfraction}{0.10}
 \renewcommand{\topfraction}{0.65}
 \renewcommand{\bottomfraction}{0.85}
-
+%
+\section{Users Guide}
+%
 % ^^A\subsection{Briefe}\index{Briefe}
 
 \LaTeX\ erlaubt neben der mathe"-ma"-tisch-wissen"-schaft"-lichen
@@ -166,7 +173,7 @@ F"ur englische Briefe existiert in der Makrosammlung \LaTeX\ die
 Style-Klasse {\tt letter}. Deutsche Briefe k"onnen mit dem Stil {\tt dinbrief}
 geschrieben werden.
  
-\subsubsection{\LaTeX-Briefe (letter)}\index{Briefe, \LaTeX}
+\subsection{\LaTeX-Briefe (letter)}\index{Briefe, \LaTeX}
 \index{letter}\index{Briefe!letter}
  
 Wird als Dokumentklasse {\tt letter} (oder eine Variante davon) angegeben,
@@ -254,7 +261,7 @@ unseren Mikrowellenherd...
 \end{center}
 \end{figure}
 
-\subsubsection{Deutsche Briefe (dinbrief)}\index{Briefe, deutsche}
+\subsection{Deutsche Briefe (dinbrief)}\index{Briefe, deutsche}
 \index{dinbrief}
 
 Die Dokument Class Option {\tt dinbrief} unterscheidet sich in folgendem vom
@@ -274,7 +281,7 @@ Absenders im Fenster des Briefkuverts einblenden. Zudem erlaubt es
 \verb+\place{...}+\index{place@\verb+\place+} den Brief au"ser mit dem Datum
 auch mit dem Ort des Schreibens zu versehen.
 
-\paragraph{Fenster}\index{Fenster}
+\subsubsection{Fenster}\index{Fenster}
  
 F"ur alle, denen das "`Fenster"' um die Adresse nicht gef"allt,
 besteht die M"oglichkeit, durch Angabe von
@@ -283,7 +290,7 @@ vor dem Befehl \verb+\opening+ dieses abzuschalten.
 Durch \verb+\windowrules+\index{windowrules@\verb+\windowrules+} l"a"st es
 sich wieder aktivieren.
  
-\paragraph{Faltmarkierung}\index{Faltmarkierung}
+\subsubsection{Faltmarkierung}\index{Faltmarkierung}
  
 Die Faltmarkierung am linken Papierrand wird durch den Befehl
 \verb+\nowindowtics+\index{nowindowtics@\verb+\nowindowtics+} ab- und mit
@@ -295,33 +302,6 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
 %    \begin{macrocode}
 %<*documentation|dintab>
 %    \end{macrocode}
-
-\section{Summery of the Commands}
-
-\begin{center}
-  \begin{tabular}{l}
-    \hline
-    \hline
-    \hline
-    \hline
-    \hline
-    \hline
-      \verb|\encl|\arg{{Anlagen}}                               \\
-      \verb|\ps|\arg{{Postscriptum}}                            \\
-      \verb|\cc|\arg{{Verteiler}}                               \\
-    \hline
-      \verb|\makelabels|                                        \\
-      \verb|\labelstyle|\arg{{Stil der Label}}                  \\
-    \hline
-      \verb|\bottomtext|\arg{{Feld f\"ur Kapitalgesellschaften}}\\
-    \hline
-      \verb|\nowindowrules|                                     \\
-      \verb|\windowrules|                                       \\
-      \verb|\nowindowtics|                                      \\
-      \verb|\windowtics|                                        \\
-    \hline
-  \end{tabular}
-\end{center}
 
 \begin{table}[h]
 \caption{Zusammenfassung der Dinbrief-Befehle:}\index{dinbrief!Befehle}
@@ -342,7 +322,7 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
     \verb|\place|\arg{{Ortsangabe im Brief}}                    \\
     \verb|\date|\arg{{Briefdatum}}                              \\
     \verb|\yourmail|\arg{{Ihre Zeichen, Ihre Nachricht vom}}    \\
-    \verb|\sign|\arg{{Unsere Zeichen (, Unsere Nachricht vom)}} \\
+    \verb|\sign|\arg{{Unsere Zeichen (, unsere Nachricht vom)}} \\
     \verb|\phone|\arg{{Vorwahl}}\arg{{Rufnummer/Durchwahl}}     \\
     \verb|\processor|\arg{{Sachbearbeiter}}                     \\
   \hline
@@ -374,7 +354,7 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
 \end{table}
 
 \begin{table}[h]
-\caption{"Uberschriftvariablen und deren Inhalt}:
+\caption{"Uberschriftvariablen und deren Inhalt}
 \index{dinbrief!"Uberschriftvariablen}
 
 \begin{center}
@@ -387,7 +367,8 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
   \verb|\psname|\{{\tt PS}\}               \\
  \hline
   \verb|\phonemsg|\{{\tt Telefon}\}        \\
-  \verb|\signmsg|\{{\tt Unsere Zeichen}\}  \\
+  \verb|\signmsgold|\{{\tt Unsere Zeichen}\}  \\
+  \verb|\signmsgnew|\{{\tt Unsere Zeichen, unsere Nachricht vom}\}  \\
   \verb|\yourmailmsg|\{{\tt Ihre Zeichen, Ihre Nachricht vom}\}  \\
  \hline
 \end{tabular}
@@ -420,10 +401,11 @@ in Abb. \ref{briefkopf} aufnehmen:
 \newlength{\UKAwd}
 \newlength{\ADDRwd}
 %
-\def\briefkopf{
  \font\fa=cmcsc10  scaled 1440
  \font\fb=cmss12   scaled 1095
  \font\fc=cmss10   scaled 1000
+%
+\def\briefkopf{
  \settowidth{\UKAwd}{\fa Institut f"ur Verpackungen}
  \settowidth{\ADDRwd}{\fc EARN/BITNET: yx99 at dkauni2}
 %
@@ -463,7 +445,7 @@ verwenden.
 \subsection{Kopfzeilen}\index{Kopfzeilen}
  
 Es stehen verschiedene Kopfzeilen zur Verf"ugung die "uber die
-Option \verb+\pagestyle{...}+\index{pagestyle@\verb+\pagestyle+}
+Option \linebreak[4]\verb+\pagestyle{...}+\index{pagestyle@\verb+\pagestyle+}
 ausgew"ahlt werden k"onnen.
 Bei \verb+plain+\index{plain} wird eine Seitennumerierung bei mehrseitigen
 Briefen in der Fu"szeile eingeblendet, die Kopfzeile bleibt leer.
@@ -486,7 +468,7 @@ Befehle erfolgen, die in der Dokumentation zum {\tt dinbrief} beschrieben sind.
 Mit \LaTeX\ lassen sich auch Serienbriefe schreiben. Man ben"otigt dazu
 nur ein kleines Makro wie z.B. das folgende:
 
-\begin{cemter}
+\begin{center}
 \begin{minipage}{0.75\textwidth}
 \begin{verbatim}
 \def\mailto#1{
@@ -582,6 +564,166 @@ unseren Mikrowellenherd...
 \end{center}
 \end{figure}
 
+\subsection{Einige Regeln f"ur das Briefeschreiben}
+An dieser Stelle zitieren wir einige Passagen aus den
+Normen DIN~5008 (Regeln f"ur das Maschinenschreiben) und
+DIN~676 (Gesch"aftsbrief).
+Dieser Abschnitt erhebt keinen Anspruch auf
+Vollst"andigkeit, soll aber Anf"angern wie auch
+Ge"ubten einen "Uberblick "uber die wichtigsten
+Regeln geben. Ferner werden die Grenzen der
+vorliegenden Version aufgezeigt und es wird
+auf bekannte Fehler hingewiesen.
+
+\begin{enumerate}
+  \item {\bf Zeilenabstand}
+
+        Es wird mit einfachem Grundzeilenabstand geschrieben.
+
+  \item {\bf Anschriftenfeld}
+
+        Die Angaben im Anschriftenfeld werden auf
+        folgende Weise gegliedert:
+        \begin{enumerate}
+          \item Sendungsart, Versendungsform, Vorausverf"ugung
+          \item Leerzeile
+          \item Empf"angerbezeichnung
+          \item Postfach oder Stra"se und Hausnummer
+          \item Leerzeile
+          \item Postleitzahl und Bestimmungsort
+          \item Leerzeile
+          \item Bestimmungsland
+        \end{enumerate}
+
+        Bei Auslandsanschriften ist die Leerzeile zwischen
+        der Zeile mit Postfach oder Stra"se und Hausnummer
+        und der Zeile mit dem Bestimmungsort entbehrlich,
+        wenn das Bestimmungsland unter der entsprechenden
+        Zeile angegeben werden mu"s.
+
+        Im Verkehr mit bestimmten L"andern kann auf die
+        Angabe des Bestimmungslandes verzichtet werden,
+        wenn das Unterscheidungskennzeichen f"ur den
+        grenz"uberschreitenden Kraftfahrzeugverkehr
+        der Postleitzahl --- durch einen Bindestrich
+        getrennt --- vorangestellt wird.
+
+        Nach dem ersten Eintrag im Anschriftenfeld
+        darf nur ein \verb|\\| stehen. Direkte
+        L"angenangaben (z.B.\ \verb|\\[\medskipamount]|)
+        sind nicht zul"assig und verursachen einen Fehler.
+        Die Fehler kann umgangen werden falls eine
+        Konstruktion der Form
+        \m{Versendungsform}\verb|\\~\\|%
+        \m{Empf"angerbezeichnung} usw.\
+        verwendet wird.
+
+  \item {\bf Bezugszeichen und Tagangabe}
+
+        Die Eintragungen in dieser Zeile werden automatisch
+        an der richtigen Stelle plaziert.
+
+  \item {\bf Betreff und Teilbetreff}
+
+        Betreff und Teilbetreff sind stichwortartige
+        Inhaltsangaben. Der Betreff bezieht sich auf den
+        ganzen Brief, Teilbetreffe beziehen sich auf
+        Briefteile.
+
+        Der {\em Wortlauf des Betreffs\/} wird ohne
+        Schlu"spunkt geschrieben.
+
+        Der {\em Teilbetreff\/} beginnt an der Fluchtlinie
+        (linker Rand), schlie"st mit einem Punkt und wird
+        unterstrichen. Wir empfehlen diesen Text besser
+        durch eine andere Schriftart (z.B.\ fett)
+        hervorzuheben. Der Text wird unmittelbar angef"ugt.
+
+  \item {\bf Behandlungsvermerke}
+
+        Behandlungsvermerke (z.B.\ eilt) werden \dots,
+        oder im Anschlu"s an die Betreffangabe
+        geschrieben; sie k"onnen hervorgehoben werden.
+
+  \item {\bf Anlagen- und Verteilvermerke}
+
+        Anlagen- und Verteilvermerke beginnen an der
+        Fluchtlinie oder auf Grad 50 (60 oder 75).
+        Die vorliegende Version des `dinbriefs'
+        unterst"utzt nur Anlagen- und Verteilvermerke
+        auf der Fluchtlinie.
+
+        Der Anlagenvermerk geht dem Verteilvermerk
+        voraus.
+
+  \item {\bf Postscriptum}
+
+        Die DIN Norm 5008 sieht kein Postscriptum vor.
+        Die vorliegende Version des `dinbriefs'
+        unterst"utzt trotzdem ein Postscriptum.
+        Wir empfehlen das Postscriptum unmittelbar
+        nach der Gru"sformel \verb|\closing| oder
+        nach Anlagen- und Verteilvermerken zu setzen.
+
+  \item {\bf Seitennummerierung}
+
+        Die Seiten eines Schriftst"ucks sind von der
+        2.~Seite an oben fortlaufend zu benummern.
+        Die Pagestyles \verb|headings| und
+        \verb|contheadings| unterst"utzen diese
+        Forderung. Das Verfahren ist jedoch noch nicht
+        befriedigend.
+
+  \item {\bf Hinweis auf Folgeseiten}
+
+        Wenn der Text eines Schriftst"ucks eine n"achste
+        Seite beansprucht, wird empfohlen
+        \begin{itemize}
+          \item am Fu"s der bereits beschrifteten Seite,
+          \item nach der letzten Textzeile,
+          \item mit mindestens einer Leerzeile Abstand,
+          \item auf Grad 60 (72 oder 90) beginnend,
+        \end{itemize}
+        als Hinweis auf die folgende Seite drei Punkte
+        zu schreiben.
+
+        Dieses Vorgehen wird zur Zeit nicht unterst"utzt.
+        Der Pagestyle \verb|contheadings| schreibt jedoch
+        an das Ende der laufenden Seite die Seitenzahl
+        der Folgeseite. Sowie ab der zweiten Seite oben
+        die Seitenzahl.
+
+        Bei Verwendung des Befehls \verb|\bottomtext|
+        zum Einblenden einer weiteren Kommunikationszeile
+        am unteren Blattende sowie von gesellschaftlichen Angaben
+        (bei Kapitalgesellschaften) wird die Folgeseitennummer
+        gegebenenfalls von diesen Feldern "uberschrieben.
+
+  \item {\bf Kommunikationszeile am Blattende und
+        gesellschaftsrechtliche Angaben}
+        Eine Kommunikationszeile am Blattende kann die folgenden
+        Angaben enthalten: Gesch"aftsr"aume, Telefon, Telefax,
+        Teletex, Telex, Btx und Kontoverbindungen.
+
+        Bei Kapitalgesellschaften sind die Angaben "uber
+        \begin{itemize}
+          \item die Rechtsform und den Sitz der Gesellschaft,
+          \item das Registergericht des Sitzes der Gesellschaft
+                und die Nummer, unter die die Gesellschaft in
+                das Handelsregister eingetragen ist,
+          \item den Namen des Vorsitzenden des Aufsichtsrates
+                (sofern die Gesellschaft nach gesetzlicher
+                Vorschrift einen Aufsichtsrat zu bilden hat)
+          \item die Namen des Vorsitzenden und aller Mitglieder
+                des Vorstandes (bei Gesellschaften mit
+                beschr"ankter Haftung die Namen der
+                Gesch"aftsf"uhrer),
+        \end{itemize}
+        am Fu"s des Vordrucks aufzuf"uhren.\hfil\break
+        Die Rechtsform kann auch im Briefkopf als Bestandteil
+        der Firma angegeben werden.
+\end{enumerate}
+
 \clearpage
 %    \begin{macrocode}
 %</documentation>
@@ -605,8 +747,8 @@ unseren Mikrowellenherd...
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date$}
-\def\RCSrevision{$Revision$}
+\def\RCSdate{$Date: 1994/11/16 22:03:58 $}
+\def\RCSrevision{$Revision: 1.7 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -631,12 +773,12 @@ unseren Mikrowellenherd...
 %
 % \subsection{The class/style file `dinbrief'}
 %
-% This is |DINBRIEF.STY| in text format, as of \filedate,
-% by K. Braune, R. Gussmann and K. Dilper
+% This is |DINBRIEF.STY| in text format, as of 1994/11/16,
+% by K.~Braune and R.~Gussmann
 %    (Rechenzentrum der Universitaet Karlsruhe).
 %
 % It is based on |DLETTER.STY| in text format, as of December 16, 1987,
-% by D. Heinrich (TH Karlsruhe).
+% by D.~Heinrich (TH Karlsruhe).
 %
 % It is based on |A4LETTER.STY| in text format, as of June 16, 1987.
 % letter.sty 17-Jan-86 with modifications
@@ -676,7 +818,7 @@ unseren Mikrowellenherd...
 %
 % |\ifka@db@ltxtwoe| is true if and only if this style is running in
 % an \LaTeXe-environment. |\ifka@db@nfss| is true if we are using an
-% NFSS 1 and \linebreak[3]
+% NFSS 1 and \linebreak[4]
 % |\ifka@db@nfsstwo| is true if we are using the NFSS 2.
 %
 %    \begin{macrocode}
@@ -708,7 +850,8 @@ unseren Mikrowellenherd...
 %
 %    \begin{macrocode}
 \typeout{}
-\typeout{Document Class/Style 'dinbrief' - Preliminary Version \fileversion}
+\typeout{Document Class/Style 'dinbrief' - %
+         Preliminary Version \fileversion}
 \typeout{University of Karlsruhe - \filedate}
 \typeout{}
 %    \end{macrocode}
@@ -726,8 +869,8 @@ unseren Mikrowellenherd...
     \ifka@db@nfsstwo
       \typeout{*** dinbrief: NFSS 2!}
     \else
-      \typeout{%
-        *** dinbrief: original LaTeX 2.09 font selection mechanism found!!!}
+      \typeout{*** dinbrief: original LaTeX 2.09 font %
+               selection mechanism found!!!}
     \fi
   \fi
 %    \end{macrocode}
@@ -935,7 +1078,7 @@ unseren Mikrowellenherd...
 %    |\usepackage| command in the document preamble.
 %
 %    In the old \LaTeX\ the user starts his file with the command
-%    \linebreak[3]|\documentstyle [OPTION1, ... ,OPTIONk]{STYLE}|
+%    \linebreak[4]|\documentstyle [OPTION1, ... ,OPTIONk]{STYLE}|
 %    which saves the |OPTION|'s and |\input|'s the file |STYLE.STY|.
 %    When the |STYLE.STY| file issues the command |\@options|, the
 %    following happens for each i:
@@ -1509,7 +1652,7 @@ unseren Mikrowellenherd...
 %    \begin{macrocode}
  \ifdim\ht\@@bottomtext>0pt
 %    \end{macrocode}
-% Remarke KDB 02/08/94
+% \noindent Remark KDB 02/08/94\hfil\break
 % |\@@bottomtext| shold be set within a |\vbox to 0pt{\vss ...}|
 %    \begin{macrocode}
     \vbox to 0pt{%
@@ -1525,7 +1668,8 @@ unseren Mikrowellenherd...
 %      \@@bottomtext
 %    \end{macrocode}
 %    \begin{macrocode}
-      \unhbox\@@bottomtext%
+%      \unhbox\@@bottomtext%
+      \unhcopy\@@bottomtext% RG 94/11/17 if we have more than one letter
       \vss}%
   \else
 %    \end{macrocode}
@@ -1572,7 +1716,9 @@ unseren Mikrowellenherd...
              \relax
            \else
              \raggedright \toname \\ \toaddress%
-             \if@toadrcenter\relax\else\vskip 2.5truemm minus 2.5truemm\fi
+             \if@toadrcenter\relax
+              \else\vskip 2.5truemm minus 2.5truemm
+              \fi
            \fi
         }%
    \hss}
@@ -1756,7 +1902,8 @@ unseren Mikrowellenherd...
       \ifx\@empty\@@windowrules
         \hbox to 0pt{\hss}%
       \else
-        \hbox to 0pt{\hspace*{-4truemm}\vbox{\hrule width 85truemm}\hss}%
+        \hbox to 0pt{\hspace*{-4truemm}%
+                     \vbox{\hrule width 85truemm}\hss}%
       \fi
       \vss}\nointerlineskip
 %
@@ -1773,7 +1920,9 @@ unseren Mikrowellenherd...
       \vss
       \hbox to 0pt{\hskip0pt minus 4truemm%
         \vbox{\raggedright #2%
-          \if@toadrcenter\relax\else\vskip 2.5truemm minus 2.5truemm\fi}%
+          \if@toadrcenter
+           \relax\else\vskip 2.5truemm minus 2.5truemm
+           \fi}%
         \hss}
       \if@toadrcenter
         \vss
@@ -1785,7 +1934,8 @@ unseren Mikrowellenherd...
       \ifx\@empty\@@windowrules
         \hbox to 0pt{\hss}%
       \else
-        \hbox to 0pt{\hspace*{-4truemm}\vbox{\hrule width 85truemm}\hss}%
+        \hbox to 0pt{\hspace*{-4truemm}%
+                     \vbox{\hrule width 85truemm}\hss}%
       \fi
       \vss}\nointerlineskip
     }}
@@ -2095,7 +2245,10 @@ unseren Mikrowellenherd...
 % \begin{macro}{\@phone}
 % \begin{macro}{\@telephonenum}
 %    \begin{macrocode}
-\def\phone#1#2{\gdef\@prephone{#1}\gdef\@phone{#2}\gdef\@telephonenum{#1#2}}
+\def\phone#1#2{%
+  \gdef\@prephone{#1}%
+  \gdef\@phone{#2}%
+  \gdef\@telephonenum{#1#2}}
 \def\@prephone{}
 \def\@phone{}
 \def\@telephonenum{}
@@ -2214,8 +2367,8 @@ unseren Mikrowellenherd...
 \long\def\bottomtext#1{%
   \ifka@db@ltxtwoe \relax \else
     \def\ka@db@warning#1{%
-      \@@warning{\string\bottomtext \space is reserving space for typesetting
-                 its argument only in case of LaTeX 2e.
+      \@@warning{\string\bottomtext \space is reserving space for
+                 typesetting its argument only in case of LaTeX 2e.
                  With other LaTeX formats you will have to place a
                  \string\clearpage-command at the appropriate position}%
     }
@@ -2632,7 +2785,7 @@ unseren Mikrowellenherd...
 % \begin{macro}{\labelenumii}
 % \begin{macro}{\labelenumiii}
 % \begin{macro}{\labelenumiv}
-%    The label for each item is generated by the commands
+%    The label for each item is generated by the commands \hfil\break
 %    |\labelenumi| ... |\labelenumiv|.
 %    \begin{macrocode}
 \def\labelenumi{\arabic{enumi}.}
@@ -2785,7 +2938,8 @@ unseren Mikrowellenherd...
 %
 % \begin{macro}{\arrayrulewidth}
 %    The width of rules in the array and tabular environments is given
-%    by |\arrayrulewidth|.
+%    by \hfil\break
+%    |\arrayrulewidth|.
 %    \begin{macrocode}
 \arrayrulewidth .4pt
 %    \end{macrocode}
@@ -2987,17 +3141,20 @@ unseren Mikrowellenherd...
 \yearcnt=\year
 \advance\yearcnt-\number1900
 \def\@znumber#1{\ifnum\number#1<10 0\number#1\else\number#1\fi}
-\def\@ntoday{\@znumber{\number\day}.\@znumber{\number\month}.\@znumber{\the\yearcnt}}
+\def\@ntoday{\@znumber{\number\day}.%
+             \@znumber{\number\month}.%
+             \@znumber{\the\yearcnt}}
 %
 \def\up#1{\leavevmode \raise.16ex\hbox{#1}}
-%
 %    \end{macrocode}
 %
 % \begin{macro}{\concern}
 %    \begin{macrocode}
 \long\def\concern#1{\newbox\@betr
   \setbox\@betr=\hbox{}
-  \def\@concern{\hangindent=\wd\@betr \hangafter=1 \unhbox\@betr #1\par}}
+  \def\@concern{\hangindent=\wd\@betr
+                \hangafter=1
+                \unhbox\@betr #1\par}}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3022,9 +3179,11 @@ unseren Mikrowellenherd...
   \parbox[b]{50.8truemm}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont
                           \yourmailmsg{}}%
                          \hfill\\ \@yourmail\hbox{}\hss}%
-  \parbox[b]{50.8truemm}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont \signmsg{}}%
+  \parbox[b]{50.8truemm}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont
+                          \signmsg{}}%
                          \hfill\\ \@mymail\hbox{}\hss}%
-  \parbox[b]{25.4truemm}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont \phonemsg{} \@prephone{}}%
+  \parbox[b]{25.4truemm}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont
+                          \phonemsg{} \@prephone{}}%
                          \hfill\\ \@phone\hbox{}\hss}%
   \parbox[b]{\@fordate}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont
     \ifx\@empty\@place
@@ -3055,9 +3214,11 @@ unseren Mikrowellenherd...
     \parbox[b]{50.8truemm}{{\ka@db@fontsize{7}{9pt}\ka@db@selectfont
                             \yourmailmsg{}}%
                            \hfill\\ \@yourmail\hbox{}\hss}%
-    \parbox[b]{50.8truemm}{{\ka@db@fontsize{7}{9pt}\ka@db@selectfont \signmsg{}}%
+    \parbox[b]{50.8truemm}{{\ka@db@fontsize{7}{9pt}\ka@db@selectfont
+                            \signmsg{}}%
                            \hfill\\ \@mymail\hbox{}\hss}%
-    \parbox[b]{50.8truemm}{{\ka@db@fontsize{7}{9pt}\ka@db@selectfont \phonemsg{}%
+    \parbox[b]{50.8truemm}{{\ka@db@fontsize{7}{9pt}\ka@db@selectfont
+                            \phonemsg{}%
                                %\ifx\@empty\@prephone\relax
                                %\else
                                %  \ \@prephone{}%
@@ -3252,7 +3413,8 @@ unseren Mikrowellenherd...
 \bottomtext{%
   \begin{center}
     \small\sf
-   Bankverbindung $\cdot$ Kreissparkasse Heilbronn (BLZ~620~500~00) 58~224~3
+   Bankverbindung $\cdot$ Kreissparkasse Gralsburg %
+   (BLZ~999~500~00) 98~765~4
   \end{center}
 }
 
@@ -3271,29 +3433,30 @@ unseren Mikrowellenherd...
 
 \opening{Sehr geehrter Herr Prof.\ Forschegut,}
 
-von Kollegen habe ich erfahren, da"s sich bei Ihnen eine gro"se Anzahl von
-Alka-Seltzer Flaschen mit nur noch einer Tablette angesammelt hat, da eine
-Flasche 25~Tabletten enth"alt, der Beipackzettel aber angibt, da"s stets
-2~Tabletten gleichzeitig einzunehmen sind.
+von Kollegen habe ich erfahren, da"s sich bei Ihnen eine gro"se
+Anzahl von Alka-Seltzer Flaschen mit nur noch einer Tablette
+angesammelt hat, da eine Flasche 25~Tabletten enth"alt, der
+Beipackzettel aber angibt, da"s stets 2~Tabletten gleichzeitig
+einzunehmen sind.
 
-Ich forsche gerade im Bereich m"oglicher Anwendungen einzelner Schmerztabletten.
-Falls Sie so freundlich w"aren, Ihre Alka-Seltzer Sammlung f"ur unser Projekt
-zu stiften, w"urde ich Ihnen gerne Vorabdrucke aller zuk"unftigen
-Forschungsberichte zur Verf"ugung stellen, die wir "uber dieses kritische
-Problem ver"offentlichen.
+Ich forsche gerade im Bereich m"oglicher Anwendungen einzelner
+Schmerztabletten. Falls Sie so freundlich w"aren, Ihre Alka-Seltzer
+Sammlung f"ur unser Projekt zu stiften, w"urde ich Ihnen gerne
+Vorabdrucke aller zuk"unftigen Forschungsberichte zur Verf"ugung
+stellen, die wir "uber dieses kritische Problem ver"offentlichen.
 
 \closing{Mit freundlichen Gr"u"sen}
 
-\ps{Falls Sie es w"unschen, lasse ich "uberpr"ufen, ob Sie Ihre Schenkung
-    in Verbindung mit unserer Forschung von der Steuer absetzen k"onnen.}
+\ps{Falls Sie es w"unschen, lasse ich "uberpr"ufen, ob Sie Ihre
+    Schenkung in Verbindung mit unserer Forschung von der Steuer
+    absetzen k"onnen.}
+\encl{Forschungsbericht Nr.\ 6/99 des IfA}
 \cc{Future Pharma\\
     Bundesministerium zur Unterst"utzung der Pharmaindustrie}
-\encl{Forschungsbericht Nr.\ 6/99 des IfA}
 
 \end{letter}                                                                    
 
 \end{document}
-
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -3311,24 +3474,139 @@ Problem ver"offentlichen.
 
 \opening{Sehr geehrter Herr Prof.\ Forschegut,}
 
-von Kollegen habe ich erfahren, da"s sich bei Ihnen eine gro"se Anzahl von
-Alka-Seltzer Flaschen mit nur noch einer Tablette angesammelt hat, da eine
-Flasche 25~Tabletten enth"alt, der Beipackzettel aber angibt, da"s stets
-2~Tabletten gleichzeitig einzunehmen sind.
+von Kollegen habe ich erfahren, da"s sich bei Ihnen eine gro"se
+Anzahl von Alka-Seltzer Flaschen mit nur noch einer Tablette
+angesammelt hat, da eine Flasche 25~Tabletten enth"alt, der
+Beipackzettel aber angibt, da"s stets 2~Tabletten gleichzeitig
+einzunehmen sind.
 
-Ich forsche gerade im Bereich m"oglicher Anwendungen einzelner Schmerztabletten.
-Falls Sie so freundlich w"aren, Ihre Alka-Seltzer Sammlung f"ur unser Projekt
-zu stiften, w"urde ich Ihnen gerne Vorabdrucke aller zuk"unftigen
-Forschungsberichte zur Verf"ugung stellen, die wir "uber dieses kritische
-Problem ver"offentlichen.
+Ich forsche gerade im Bereich m"oglicher Anwendungen einzelner
+Schmerztabletten. Falls Sie so freundlich w"aren, Ihre Alka-Seltzer
+Sammlung f"ur unser Projekt zu stiften, w"urde ich Ihnen gerne
+Vorabdrucke aller zuk"unftigen Forschungsberichte zur Verf"ugung
+stellen, die wir "uber dieses kritische Problem ver"offentlichen.
+
+{\bf Testing \verb|itemize|}\hfil\break
+\begin{itemize}
+  \item Dies ist ein \verb|\item|.
+        \begin{itemize}
+          \item \verb|\item| in Level 2.
+          \item
+                \begin{itemize}
+                  \item \verb|\item| in Level 3.
+                \end{itemize}
+        \end{itemize}
+  \item Zweites \verb|\item|.
+\end{itemize}
+
+{\bf Testing \verb|enumerate|}\hfil\break
+\begin{enumerate}
+  \item Dies ist ein \verb|\item|.
+        \begin{enumerate}
+          \item \verb|\item| in Level 2.
+          \item
+                \begin{enumerate}
+                  \item \verb|\item| in Level 3.
+                \end{enumerate}
+        \end{enumerate}
+  \item Zweites \verb|\item|.
+\end{enumerate}
+
+{\bf Testing \verb|description|}\hfil\break
+\begin{description}
+  \item[First] Dies ist ein \verb|\item|.
+        \begin{description}
+          \item[Second] \verb|\item| in Level 2.
+          \item[Third]
+                \begin{description}
+                  \item[Fourth] \verb|\item| in Level 3.
+                \end{description}
+        \end{description}
+  \item[Second] Zweites \verb|\item|.
+\end{description}
+
+{\bf Testing Lists}\hfil\break
+\begin{description}
+  \item[First] Dies ist ein \verb|\item|.
+        \begin{itemize}
+          \item \verb|\item| in Level 2.
+          \item
+                \begin{enumerate}
+                  \item[Fourth] \verb|\item| in Level 3.
+                \end{enumerate}
+        \end{itemize}
+  \item[Second] Zweites \verb|\item|.
+  \item[Third]
+        \begin{enumerate}
+          \item Brain damaged \LaTeX.
+          \item Why is there so large distance between the label and
+                the first number?
+        \end{enumerate}
+\end{description}
+
+{\bf Testing \verb|verse|}\hfil\break
+\begin{verse}
+{\bf Die F"u"se im Feuer\/}
+
+Wild zuckt der Blitz,\\
+im fahlen Lichte steht ein Turn,\\
+der Donner rollt,\\
+ein Reiter k"ampft mit seinem Ro"s,\\
+springt ab un pocht ans Tor und l"armt.\\
+Sein Mantel saust im Wind,\\
+und knarrent "offnet jetzt das Tor ein Edelmann.\\
+\dots\\
+Der Reiter tritt in einen dunklen Ahnensaal.
+
+Von eines weiten Herdes Feuer schwach erhellt,\\
+droht hier ein Hugenott im Harnisch,\\
+dort ein Weib, ein stolzes Weib in braunen Ebenbild.\\
+Der Reiter wirft sich in den Sessel vor dem Herd\\
+und starrt in den lebendgen Brand\\
+\dots \\
+Die Flamme zischt, zwei F"u"se zucken in der Glut.
+
+\dots
+\end{verse}
+
+{\bf Testing \verb|quotation|}\hfil\break
+\begin{quotation}
+``Ich finde'', sagte einst Winston Churchill im
+Unterhaus, ``die Art von Kritik, wie ich sie am
+Sonntagmorgen bei meiner Ankunft in den Zeitungen
+fand, erinnert mich immer an die Geschichte von
+dem Matrosen, der in ein Hafenbecken sprang ---
+in Plymouth, glaube ich ---, um einen kleinen
+Jungen vom Ertrinken zu retten.
+
+Dort sprach eine Frau den Matrosen an:\\
+`Sind Sie der Mann, der meinen Sohn neulich
+aus dem Wasser gezogen hat?'\\
+Bescheiden erwiderte der Matrose:\\
+`Ja, das stimmt.'\\
+`Aha', sagte die Frau: `Ich suche Sie schon
+die ganze Zeit \dots\ Wo ist seine M"utze?'{}''
+\end{quotation}
+
+{\bf Testing \verb|quote|}\hfil\break
+\begin{quote}
+Ein {\em klassisches\/} Werk ist ein Buch,\\
+das die Leute loben,\\
+aber nie lesen. \hfill({\em E.\ Hemingway\/})
+\end{quote}
+
+{\bf Testing \verb|tabular|}\hfil\break
+
+{\bf Testing \verb|tabbing|}\hfil\break
 
 \closing{Mit freundlichen Gr"u"sen}
 
-\ps{Falls Sie es w"unschen, lasse ich "uberpr"ufen, ob Sie Ihre Schenkung
-    in Verbindung mit unserer Forschung von der Steuer absetzen k"onnen.}
+\ps{Falls Sie es w"unschen, lasse ich "uberpr"ufen, ob Sie Ihre
+    Schenkung in Verbindung mit unserer Forschung von der Steuer
+    absetzen k"onnen.}
+\encl{Forschungsbericht Nr.\ 6/99 des IfA}
 \cc{Future Pharma\\
     Bundesministerium zur Unterst"utzung der Pharmaindustrie}
-\encl{Forschungsbericht Nr.\ 6/99 des IfA}
 
 %    \end{macrocode}
 %    \begin{macrocode}
@@ -3409,39 +3687,77 @@ Problem ver"offentlichen.
 %    \begin{macrocode}
 \input brfkopf.tex
 
+\newcommand{\oneletter}{%
+\begin{letter}{%
+Herrn Professor\\
+Dr.\ Hans Forschegut\\
+Institut f"ur Abfallbeseitigung\\
+Fachhochschule Waldstadt\\
+Postfach 3322\\[\medskipamount]
+{\bf 1100 Waldstadt}}
+
+\input brfbody.tex
+
+\end{letter}
+
+}
+
 \begin{document}
+
+\bottomtext{%
+  \begin{center}
+    \small\sf
+   Bankverbindung $\cdot$ Kreissparkasse Gralsburg %
+   (BLZ~999~500~00) 98~765~4
+  \end{center}
+}
 
 \backaddress{\FS}
 
+\pagestyle{empty}
+
 \enabledraftstandard
 
-\begin{letter}{%
-Herrn Professor\\
-Dr.\ Hans Forschegut\\
-Institut f"ur Abfallbeseitigung\\
-Fachhochschule Waldstadt\\
-Postfach 3322\\[\medskipamount]
-{\bf 1100 Waldstadt}}
-
-\input brfbody.tex
-
-\end{letter}
+\oneletter
 
 \disabledraftstandard
 
-\begin{letter}{%
-Herrn Professor\\
-Dr.\ Hans Forschegut\\
-Institut f"ur Abfallbeseitigung\\
-Fachhochschule Waldstadt\\
-Postfach 3322\\[\medskipamount]
-{\bf 1100 Waldstadt}}
+\oneletter
 
-\input brfbody.tex
+\pagestyle{plain}
 
-\end{letter}
+\enabledraftstandard
+
+\oneletter
+
+\disabledraftstandard
+
+\oneletter
+
+\pagestyle{headings}
+
+\enabledraftstandard
+
+\oneletter
+
+\disabledraftstandard
+
+\oneletter
+
+\pagestyle{contheadings}
+
+\enabledraftstandard
+
+\oneletter
+
+\disabledraftstandard
+
+\oneletter
+
 %    \end{macrocode}
+%    \begin{macrocode}
 %</test>
+%    \end{macrocode}
 %
 %    \begin{macrocode}
 %<*10pt|11pt|12pt|norm>

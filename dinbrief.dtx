@@ -1,7 +1,7 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.54 1995/07/06 02:35:55 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.55 1995/08/15 22:55:53 Gussmann Exp Gussmann $
 %
 %<*styleinfo>
 =======================================================================
@@ -9,8 +9,8 @@
 shortpackagename = {dinbrief},
 longpackagename  = {dinbrief},
 baseformats      = {\LaTeX\ 2.09 and \LaTeXe},
-version          = {$Revision: 1.54 $},
-date             = {$Date: 1995/07/06 02:35:55 $},
+version          = {$Revision: 1.55 $},
+date             = {$Date: 1995/08/15 22:55:53 $},
 author           = {K.D. Braune, R. Gussmann,
                    rz32@dkauni2.bitnet
                    braune@rz.uni-karlsruhe.de
@@ -39,6 +39,12 @@ incompatibilities = {not full compatible to R. Sengerlings dinbrief}}
 %</styleinfo>
 %
 % $Log: dinbrief.d%v $
+% Revision 1.55  1995/08/15 22:55:53  Gussmann
+% - Empty white page on the very end of the document will not longer shipped
+%   out.
+% - Fixed bug in the generation of labels with style label@plain.
+% - Command \string\subject added. Same behavior as \string\concern.
+%
 % Revision 1.54  1995/07/06 02:35:55  Gussmann
 % - Code for the readme-file removed. It can now be found in dbaddon.dtx.
 % - Code for tracing removed. It can now be found in dbaddon.dtx.
@@ -1556,8 +1562,8 @@ der Stil "`{\tt german}"' geladen werden.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/07/06 02:35:55 $}
-\def\RCSrevision{$Revision: 1.54 $}
+\def\RCSdate{$Date: 1995/08/15 22:55:53 $}
+\def\RCSrevision{$Revision: 1.55 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -5413,9 +5419,7 @@ der Stil "`{\tt german}"' geladen werden.
   \def\@concern{\hangindent=\wd\@betr
                 \hangafter=1
                 \unhbox\@betr #1\par}}
-\long\def\subject#1{%
-  \concern{#1}%
-}
+\let\subject=\concern
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}

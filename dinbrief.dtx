@@ -1,7 +1,7 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.dtx 1.64 1996/05/30 22:36:59 Gussmann Exp Gussmann $
+% $Id: dinbrief.dtx 1.65 1996/08/06 01:17:29 Gussmann Exp Gussmann $
 %
 %<*styleinfo>
 =======================================================================
@@ -9,8 +9,8 @@
 shortpackagename = {dinbrief},
 longpackagename  = {dinbrief},
 baseformats      = {\LaTeX\ 2.09 and \LaTeXe},
-version          = {$Revision: 1.64 $},
-date             = {$Date: 1996/05/30 22:36:59 $},
+version          = {$Revision: 1.65 $},
+date             = {$Date: 1996/08/06 01:17:29 $},
 author           = {K.D. Braune, R. Gussmann,
                    rz32@dkauni2.bitnet
                    braune@rz.uni-karlsruhe.de
@@ -39,6 +39,10 @@ incompatibilities = {not full compatible to R. Sengerlings dinbrief}}
 %</styleinfo>
 %
 % $Log: dinbrief.dtx $
+% Revision 1.65  1996/08/06 01:17:29  Gussmann
+% - \cmd\closing extended.
+% - minor bugs fixed.
+%
 % Revision 1.64  1996/05/30 22:36:59  Gussmann
 % - Fixed a typo.
 %
@@ -380,7 +384,7 @@ incompatibilities = {not full compatible to R. Sengerlings dinbrief}}
 % etc.
 % \fi
 %
-% \CheckSum{4766}
+% \CheckSum{4858}
 %%
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -1037,6 +1041,43 @@ anzugeben.
 \end{table}
 
 %
+\ssect{Bezugszeichenzeile}\index{Bezugszeichenzeile}
+Die vorliegende Version des \envname{dinbrief}s enth"alt
+zwei verschiedene Formen von Bezugszeichenzeilen.
+Die beiden Formen sind in der Norm 676 vom Dezember 1976 und
+im Entwurf zur Norm 676 vom Mai 1991 definiert. Mit den
+Befehlen \cmd\enabledraftstandard\ und \cmd\disabledraftstandard\
+schaltet man auf die Form des Entwurfs oder der geltenden Norm
+um. Die beiden Formen sind zur besseren Unterscheidung in
+Abbildung~\ref{fig:referlines} wiedergegeben.
+
+\begin{figure}[htb]
+\begin{center}
+\unitlength0.65mm
+\begin{picture}(190, 60)
+  \linethickness{0.4pt}
+  \thinlines
+  %
+    \put( 10.0, 49){\parbox[t]{50.8\unitlength}{{\sffamily\tiny Ihre Zeichen, Ihre Nachricht vom}\\{\cmd\yourmail}}}
+    \put( 60.8, 49){\parbox[t]{50.8\unitlength}{{\sffamily\tiny Unsere Zeichen}\\{\cmd\sign}}}
+    \put(111.6, 49){\parbox[t]{25.4\unitlength}{{\sffamily\tiny Telefon}\\{\cmd\phone}}}
+    \put(137.0, 49){\parbox[t]{25.4\unitlength}{{\sffamily\tiny Ortsname\\[-2ex] (Datum)}\\{\cmd\place}\\{\cmd\date}}}
+    \put(  0.0, 56){\makebox(190, 0){Bezugszeichenzeile nach DIN 676 vom Dezember 1976}}
+    \put(  0.0, 30){\framebox(190, 30){}}
+  %
+    \put( 10.0, 16){\parbox[t]{50.8\unitlength}{{\sffamily\tiny Ihr Zeichen, Ihre Nachricht vom}\\{\cmd\yourmail}}}
+    \put( 60.8, 16){\parbox[t]{50.8\unitlength}{{\sffamily\tiny Unser Zeichen, unsere Nachricht vom}\\{\cmd\sign}}}
+    \put(111.6, 16){\parbox[t]{50.8\unitlength}{{\sffamily\tiny Telefon, Bearbeiter}\\{\cmd\phone}\\{\cmd\writer}}}
+    \put(162.4, 16){\parbox[t]{15.0\unitlength}{{\sffamily\tiny Datum}\\{\cmd\place}\\{\cmd\date}}}
+    \put(  0.0, 23){\makebox(190, 0){Bezugszeichenzeile nach DIN 676 vom Mai 1991 (Entwurf)}}
+    \put(  0.0,  1){\framebox(190, 27){}}
+\end{picture}%
+\caption{Formen von Bezugszeichenzeilen}\label{fig:referlines}
+\end{center}
+\end{figure}
+%
+
+%
 \ssect{Briefkopf}\index{Briefkopf}
 %
 Bei h"aufigem Briefeschreiben kommt sicher bald der
@@ -1602,8 +1643,8 @@ der Stil "`{\tt german}"' geladen werden.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1996/05/30 22:36:59 $}
-\def\RCSrevision{$Revision: 1.64 $}
+\def\RCSdate{$Date: 1996/08/06 01:17:29 $}
+\def\RCSrevision{$Revision: 1.65 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -2920,22 +2961,24 @@ der Stil "`{\tt german}"' geladen werden.
 %    \end{macrocode}
 %  \end{macro}
 %
+%  \changes{1.65.0}{1995/10/29}{\cmd\leavevmode\ inserted}
 %  \begin{macro}{\@withmarkcr}
 %    \begin{macrocode}
 \long\def\@withmarkcr!#1\stop{%
   \xdef\@addresslist{%
-    \@addresslist\ifx\@addresslist\empty\else\\\fi{#1}}%
+    \@addresslist\ifx\@addresslist\empty\else\leavevmode\\\fi{#1}}%
   \@ifnextchar[%]
     {\@ignorebrackets}{\@ignorebrackets[]}#1\stop{\@addressname}
 }
 %    \end{macrocode}
 %  \end{macro}
 %
+%  \changes{1.65.0}{1995/10/29}{\cmd\leavevmode\ inserted}
 %  \begin{macro}{\@withoutmarkcr}
 %    \begin{macrocode}
 \long\def\@withoutmarkcr#1\stop{%
   \xdef\@addresslist{%
-    \@addresslist\ifx\@addresslist\empty\else\\\fi{#1}}
+    \@addresslist\ifx\@addresslist\empty\else\leavevmode\\\fi{#1}}
   \ifx\@addressname\relax
     \@ifnextchar[%]
       {\@ignorebrackets}{\@ignorebrackets[]}#1\stop{\@addressname}
@@ -2970,9 +3013,10 @@ der Stil "`{\tt german}"' geladen werden.
 %  \begin{macro}{\@withlbracket}
 %  Adds to the |\@addresslist| in brackets the contents of the
 %  brackts following the |\\|. Looks for a |!|.
+%  \changes{1.65.0}{1995/10/29}{\cmd\leavevmode\ inserted}
 %    \begin{macrocode}
 \long\def\@withlbracket[#1]#2\stop{%
-  \xdef\@addresslist{\@addresslist\ifx\@addresslist\empty\else\\\fi[#1]}
+  \xdef\@addresslist{\@addresslist\ifx\@addresslist\empty\else\leavevmode\\\fi[#1]}
   \@ifnextchar!{\@withmark}{\@withoutmark}#2\stop
 }
 %    \end{macrocode}
@@ -3529,9 +3573,10 @@ der Stil "`{\tt german}"' geladen werden.
 %
 %  \begin{macro}{\closing}
 % \changes{1.64.0}{1996/08/06}{(RG) closing has now an optional argument}
+% \changes{1.65.0}{1995/10/29}{(RG) removed argument hash mark \# (bug)}
 %  \begin{macro}{\ka@db@closinghook}
 %    \begin{macrocode}
-\long\def\closing#1{%
+\long\def\closing{%
   \@ifnextchar[%]
     {\ka@db@closing}{\ka@db@closing[]}%
 }
@@ -3563,7 +3608,7 @@ der Stil "`{\tt german}"' geladen werden.
             \vskip -4\baselineskip\relax
             \hbox to 0pt{\strut#1\hss}%
           \vss}%
-   %          \ifx\@empty\@fromsig
+%          \ifx\@empty\@fromsig
 %          \else \@fromsig
 %          \fi\strut
           \ka@db@ifemptyvar{signature}{}{%
@@ -4526,6 +4571,15 @@ der Stil "`{\tt german}"' geladen werden.
 %    \begin{macrocode}
 \newbox\@@bottomtext
 \setbox\@@bottomtext=\vbox to 0pt{}
+\def\ka@db@bottomtextmsg{}
+\long\def\ka@db@praebottomtext#1{%
+  \gdef\ka@db@bottomtextmsg{#1}%
+}
+\long\def\ka@db@mainbottomtext#1{%
+  \setbox\@@bottomtext=\hbox to 0pt{\hskip0pt minus 4truemm%
+       \vbox{\raggedright #1}%
+       \hss}%
+}
 \long\def\bottomtext#1{%
   \ifka@db@ltxtwoe \relax \else
       \@@warning{\string\bottomtext \space is reserving space for
@@ -4533,11 +4587,27 @@ der Stil "`{\tt german}"' geladen werden.
                  With other LaTeX formats you will have to place a
                  \string\clearpage-command at the appropriate position}%
   \fi
-  \setbox\@@bottomtext=\hbox to 0pt{\hskip0pt minus 4truemm%
-       \vbox{\raggedright #1}%
-       \hss}%
-%  \@@bottomht \ht\@@bottomtext}
+  \ka@db@dobottomtext{#1}%
+  % \gdef\ka@db@bottomtextmsg{#1}%
+  % \setbox\@@bottomtext=\hbox to 0pt{\hskip0pt minus 4truemm%
+  %      \vbox{\raggedright #1}%
+  %      \hss}%
   }
+\long\def\ka@db@dobottomtext#1{\ka@db@praebottomtext{#1}}
+
+
+% \long\def\bottomtext#1{%
+%   \ifka@db@ltxtwoe \relax \else
+%      \@@warning{\string\bottomtext \space is reserving space for
+%                 typesetting its argument only in case of LaTeX 2e.
+%                 With other LaTeX formats you will have to place a
+%                 \string\clearpage-command at the appropriate position}%
+%  \fi
+%  \setbox\@@bottomtext=\hbox to 0pt{\hskip0pt minus 4truemm%
+%       \vbox{\raggedright #1}%
+%       \hss}%
+% %  \@@bottomht \ht\@@bottomtext}
+%  }
 %    \end{macrocode}
 %    \begin{macrocode}
 % \long\def\bottomtext#1{\def\@@bottomtext{#1}}
@@ -4649,6 +4719,11 @@ der Stil "`{\tt german}"' geladen werden.
 %    a few tokens to get rid of the above definition.
 %    \begin{macrocode}
   \global\let\do\noexpand
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+  % \ka@db@assbottomtext{\ka@db@bottomtextmsg}%
+  \long\def\ka@db@dobottomtext##1{\ka@db@mainbottomtext{##1}}
 }
 %    \end{macrocode}
 % \end{macro}

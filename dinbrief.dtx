@@ -1,27 +1,29 @@
 %
 % \iffalse meta-comment
 %
-% $Id$
+% $Id: dinbrief.d%v 1.1 1994/11/16 23:37:01 Gussmann Exp Gussmann $
 %
-% $Author$
+% $Author: Gussmann $
 %
-% $Date$
+% $Date: 1994/11/16 23:37:01 $
 %
-% $Header$
+% $Header: E:/DINBRF\RCS\dinbrief.d%v 1.1 1994/11/16 23:37:01 Gussmann Exp Gussmann $
 %
-% $Locker$
+% $Locker: Gussmann $
 %
 % $Name$
 %
-% $RCSfile$
+% $RCSfile: dinbrief.d%v $
 %
-% $Revision$
+% $Revision: 1.1 $
 %
-% $Source$
+% $Source: E:/DINBRF\RCS\dinbrief.d%v $
 %
-% $State$
+% $State: Exp $
 %
-% $Log$
+% $Log: dinbrief.d%v $
+% Revision 1.1  1994/11/16  23:37:01  Gussmann
+% Initial revision
 %
 % =======================================================================
 %
@@ -1643,16 +1645,16 @@
       \footheight 4.2truemm
     \fi
   \footskip 8.8truemm
-%%   \ifx\@empty\@footer
-%%       \def\@oddfoot{\global\@colht=\textwidth}
-%%    \else
-%%       \def\@oddfoot{\hbox to \textwidth{\hspace*{35.15truemm}%
-%% %                    \xpt\@place \hfill
-%% %                    \fontsize{}{}
-%% %
-%%                     \@telephonenum}\hss}
-%%    \fi
-%%   \def\@evenfoot{\global\@colht=\textwidth}
+%   \ifx\@empty\@footer
+%       \def\@oddfoot{\global\@colht=\textwidth}
+%    \else
+%       \def\@oddfoot{\hbox to \textwidth{\hspace*{35.15truemm}%
+% %                    \xpt\@place \hfill
+% %                    \fontsize{}{}
+% %
+%                     \@telephonenum}\hss}
+%    \fi
+%   \def\@evenfoot{\global\@colht=\textwidth}
   \def\@oddhead{}
   \def\@evenhead{}
 }
@@ -2421,6 +2423,60 @@
 %
 % \section{An example letter}
 %
+% \subsection{The letter head}
+%
+%    \begin{macrocode}
+%<*brfkopf>
+%    \end{macrocode}
+%    \begin{macrocode}
+%
+\newlength{\UKAwd}
+\newlength{\ADDRwd}
+%
+\font\fa=cmcsc10  scaled 1440
+\font\fb=cmss12   scaled 1095
+\font\fc=cmss10   scaled 1000
+%
+\def\briefkopf{
+ \settowidth{\UKAwd}{\fa Institut f"ur Verpackungen}
+ \settowidth{\ADDRwd}{\fc EARN/BITNET: yx99 at dkauni2}
+ \fontsize{12}{14.4pt}\selectfont
+%
+ \raisebox{-11.3mm}{%
+   \setlength{\unitlength}{1truemm}
+   \begin{picture}(15,15)(0,0)
+     \thicklines
+     \put(7.5,7.5){\circle{15}}
+     \put(7.5,7.5){\circle{10}}
+     \put(7.5,7.5){\circle{ 5}}
+   \end{picture}%
+ }
+ \vspace*{7truemm}
+ {\fc\hspace{.2em}}
+ \parbox[t]{\UKAwd}{\centering{\fa Universit\"at Gralsruhe} \\
+                    \centering{\fa Institut f"ur Verpackungen} \\[.5ex]
+                    \centering{\fb Prof.\ Dr.\ Fritz Schreiber} }
+ \hfill
+ \parbox[t]{\ADDRwd}{\fc Im Hinterhof 2 $\cdot$ Postfach 8960 \\
+                     \fc D--76821 Gralsruhe \\
+                     \fc Telefon: (0127) 806-0815 \\
+                     \fc Electronic Mail: \\
+                     \fc EARN/BITNET: yx99 at error2 }
+ }
+%
+\signature{Prof.\ Dr.\ Fritz Schreiber}
+\place{Gralsruhe}
+\address{\briefkopf}
+\phone{(0127)}{806-0815}
+\def\FS{Prof.\,F.\,Schreiber, Uni.\,Gralsruhe,
+        Postf.\,8960, 76821\,Gralsruhe\rule[-1ex]{0pt}{0pt}}
+
+%    \end{macrocode}
+%    \begin{macrocode}
+%</brfkopf>
+%    \end{macrocode}
+%
+% \subsection{The letter}
 %    \begin{macrocode}
 %<*example>
 %    \end{macrocode}
@@ -2429,21 +2485,17 @@
 
 \expandafter\ifx\csname documentclass\endcsname\relax
     \documentstyle[12pt,german]{dinbrief}
-    \typeout{\string\documentstyle \space}
   \else
     \documentclass[12pt]{dinbrief}
     \usepackage{german}
-    \typeout{\string\documentclass \space}
   \fi
 
-\input myaddr
-
-\gubriefkopf
+\input brfkopf
 
 % \makelabels
 % \labelstyle{deskjet}
 
-%\addtolength{\textheight}{45pt}
+\addtolength{\textheight}{45pt}
 
 \pagestyle{contheadings}
 
@@ -2456,178 +2508,41 @@
   \end{center}
 }
 
-\begin{letter}{%
-Frau\\
-Annette K"uhner\\
-Pater-Kolbe-Stra"se 21\\[\medskipamount]
-{\bf 74078 Heilbronn}%
-}
+\date{9.~Juli 1999}
 
-\centeraddress
+\setlength{\topmargin}{-15pt}
+\backaddress{\FS}
 
+\begin{letter}{Prof.\ Dr.\ Hans Forschegut\\
+               Institut f"ur Abfallbeseitigung\\
+               Fachhochschule Waldstadt\\
+               Postfach 3322\\[\medskipamount]
+               1100 Waldstadt}
+\yourmail{\ }
+\concern{Bitte um "Uberlassung einer Sammlung von Alka-Seltzer Flaschen}
 
-%\yourmail{07.12.93}
+\opening{Sehr geehrter Herr Prof.\ Forschegut,}
 
-\concern{%
-Der Herr der Ringe
-}%
+von Kollegen habe ich erfahren, da"s sich bei Ihnen eine gro"se Anzahl von
+Alka-Seltzer Flaschen mit nur noch einer Tablette angesammelt hat, da eine
+Flasche 25~Tabletten enth"alt, der Beipackzettel aber angibt, da"s stets
+2~Tabletten gleichzeitig einzunehmen sind.
 
-\opening{%
-Sehr geehrte Damen und Herren,}
-
-mit diesem Brief m"ochte ich Sie auf ein Buch, besser auf eine
-Trilogie, aufmerksam machen, die mir beim Lesen sehr viel Freude
-gemacht hat.
-
-\textsf{Das Dritte Zeitalter}
-
-\begin{flushright}
-"<La"s uns von Frodo und\\
-dem Ring h"oren.">
-\end{flushright}
-
-"<Hier">, sagte Elrond und wandte sich an Gandalf, "<ist Boromir,
-ein Mensch aus dem S"uden. Er traf heute vor Tau und Tag ein und
-fragt um Rat. Ich habe ihn gebeten, an unserer Besprechung
-teilzunehmen, denn hier werden seine Fragen beantwortet werden.">
-
-Nicht alles, was im Rat besprochen und er"ortert wurde,
-braucht hier berichtet werden. Vieles wurde gesagt "uber
-Ereignisse in der Welt drau"sen, besonders im S"uden und in
-den weiten Landen "ostlich des Gebirges. "Uber diese Dinge
-hatte Frodo schon viele Ger"uchte geh"ort; doch die Erz"ahlung
-von Gl\'oin war ihm neu, und als der Zwerg sprach, lauschte er
-aufmerksam. Es zeigte sich, da"s trotz allen Glanzes ihrer
-handwerklichen Arbeit die Herzen von Zwerge vom Einsamen Berg
-voll Sorge waren.
-
-"<Es ist jetzt viele Jahre her">, sagte Gl\'oin, "<da"s ein Schatten
-der Unruhe auf unser Volk fiel. Woher er kam, haben wir zuerst
-nicht erkannt. Worte wurden heimlich gefl"ustert: Es
-hie"s, wir seien auf engem Raum eingeschlossen und gr"o"serer
-Reichtum und Glanz w"urde in einer weiteren Welt gefunden
-werden. Manche sprachen von Moria: den gewaltigen Werkst"atten
-unserer V"ater, die in unserer eigenen Sprache Khazad-d\^um
-genannt werden; und sie behaupteten, wir h"atten endlich
-die Macht und seien zahlreich genug, um zur"uckzukehren.">
-
-\iftrue % replace with \iffalse to make shorter letters
-Gl\'oin seufzte. "<Moria! Moria! Das Wunder der N"ordlichen
-Welt! Zu tief gruben wir dort und weckten das namenlose
-Grauen. Lange haben Morias gewaltige Behausungen leer
-gestanden, seit Durins Kinder flohen. Aber jetzt sprachen
-wie wieder voll Sehnsucht davon, und doch voll Furcht; denn
-kein Zwerg hat zu vieler K"onige Lebzeiten gewagt, die Tore
-von Khazad-d\^um zu durchschreiten, mit Ausnahme von
-Thr\'or allein, und er ging zugrunde. Schlie"slich h"orte Balin
-jedoch auf das Gefl"uster und beschlo"s, zu gehen; und obwohl
-D\'ain es nicht gern erlaubte, nahm er Ori und \'Oin und viele
-von unserem Volk mit, und sie machten sich auf nach S"uden.
-
-Das war vor fast drei"sig Jahren. Eine Zeitlang erhielten wir
-Nachrichten, und sie klangen gut: Die Botschaften besagten,
-da"s sie Moria betreten und dort gro"se Arbeiten begonnen
-h"atten. Dann trat Schweigen ein, und kein Wort ist seitdem
-mehr aus Moria gekommen.
-
-Dann erschien vor etwa einem Jahr ein Bote bei D\'ain, aber
-nicht auf Moria --- aus Mordor; ein Reiter in der Nacht, der
-D\'ain an sein Tor rief. Der Herr Sauron der Gro"se, sagte er,
-w"unsche unsere Freundschaft. Ringe w"urde er daf"ur geben,
-wie er sie einst gegeben hatte. Und der Bote bedr"ante uns mit
-Fragen nach {\sl Hobbits\/}, von welcher Art sie seien und wo sie
-wohnten. \flq Denn Sauron wei"s\frq, sagte er, \flq da"s einer von ihnen
-euch einmal bekannt war.\frq
-
-Dar"uber waren wir sehr beunruhigt, und wir gaben keine
-Antwort. Und dann senkte er seine grausame Stimme, und er
-h"atte sie weicher gemacht, wenn er gekonnt h"atte. \flq Als ein
-kleines Zeichen eurer Freundschaft erbittet Sauron folgendes\frq,
-sagte er: \flq da"s ihr den Dieb findet\frq --- das war sein Ausdruck
---- \flq und ihm, ob er will oder nicht, einen kleinen Ring abnehmt,
-den unbedeutendsten aller Ringe, den er einst gestohlen hat.
-Es ist nur eine Kleinigkeit, die Sauron m"ochte, und ein
-Unterpfand f"ur euren guten Willen. Findet ihn, und drei
-Ringe, die die Zwergenf"ursten einst besa"sen, sollen euch
-zur"uckgegeben werden, und das Reich Moria soll auf immerdar
-euer sein. Besorgt nur Nachrichten "uber den Dieb, ob er noch
-lebt und wo, und ihr werdet reichen Lohn erhalten und die
-dauernde Freundschaft des Gebieters. Weigert ihr euch, dann
-wird es nicht so gut aussehen. Weigert ihr euch?
-
-Als er so gesprochen hatte, war sein Atem wie das Zischen
-einer Schlange, und allen, die in der N"ahe standen, lief es kalt
-"uber den R"ucken, aber D\'ain antwortete: \flq Ich sage weder ja
-noch nein. Ich mu"s "uber diese Botschaft nachdenken und
-"uber das, was sie unter ihrem sch"onen Deckmantel bedeutet.\frq
-
-\flq Denke gut nach, aber nicht zu lange\frq, sagte er.
-
-\flq Es ist meine Sache, wie lange ich nachdenke!\frq antwortete
-D\'ain.
-
-\flq Vorl"aufig\frq, sagte der Bote und ritt in die Dunkelheit.
-
-Bedr"uckt waren die Herzen unserer H"auptlinge seit jener
-Nacht. Es bedurfte nicht der grausamen Stimme des Boten,
-um uns zu warnen, da"s seine Worte sowohl Drohung als
-auch Falschheit enthielten; denn wir wu"sten bereits, da"s sich
-die Macht, die wieder nach Mordor zur"uckgekehrt ist, nicht
-ge"andert hat, und seit alters her hat sie uns get"auscht. Zweimal
-ist der Bote wiedergekommen und ohne Antwort geblieben.
-Das dritte und letzte Mal, so sagt er, wird bald sein, ehe das
-Jahr endet.
-
-Und so bin ich schlie"slich von D\'ain ausgesandt worden,
-um Bilbo zu warnen. da"s er vom Feind gesucht wird, und um
-nach M"oglichkeit zu erfahren, warum ER diesen Ring haben
-will, den unbedeutendsten aller Ringe. Au"serdem erbitten
-wir Elronds Rat. Denn der Schatten w"achst und zieht n"aher.
-Wir erfahren, da"s Boten auch zu K"onig Brand in Thal gekommen
-sind und da"s ihn Angst erf"ullt. Wir bef"urchten, da"s er
-nachgeben k"onnte. Schon droht der Krieg an seiner Ostgrenze.
-Wenn wir keine Antwort geben, kann es sein, da"s der
-Feind Menschen, die unter seiner Herrschaft stehen, veranla"st,
-K"onig Brand und auch D\'ain anzugreifen.
-
-\fi
-
-\dots
-
-\begin{flushright}
-"<Let us see what happend when\\
-Gandalf and the messengers reached\\
-The Bridge of Khazad-d\^um">
-\end{flushright}
-
-`Ai! ai!' wailed Legolas `A Balrog! A Balrog is come!'
-
-Gimli stared with wide eyes. `Durin's Bane!' he cried, and letting
-his axe fall he covered his face.
-
-`A Balrog.' muttered Gandalf. `Now I understand.' He faltered and
-leaned heavily on his staff. `What an evil fortune! And I am already
-weary.'
-
-\dots
-
-`Over the bridge!' cried Gandalf, recalling his strength. `Fly! This
-is a foe beyond any of you. I must hold the narrow way. Fly!' \dots
-
-The Balrog reached the bridge. Gandalf stood in the middle of the span,
-leaning on the staff in his left hand, but in his other hand Glamdring
-gleamed, cold and white. His enemy halted again, facing him,
-and the shadow about it reached out like two vast wings. It raised the
-whip, and the thongs whined and cracked. Fire came from its nostrils.
-But Gandalf stood firm.
-
-`You cannot pass,' he said.
-
-So neugierig geworden, dann viel Spa"s mit der original Lekt"ure.
+Ich forsche gerade im Bereich m"oglicher Anwendungen einzelner Schmerztabletten.
+Falls Sie so freundlich w"aren, Ihre Alka-Seltzer Sammlung f"ur unser Projekt
+zu stiften, w"urde ich Ihnen gerne Vorabdrucke aller zuk"unftigen
+Forschungsberichte zur Verf"ugung stellen, die wir "uber dieses kritische
+Problem ver"offentlichen.
 
 \closing{Mit freundlichen Gr"u"sen}
 
-\end{letter}
+\ps{Falls Sie es w"unschen, lasse ich "uberpr"ufen, ob Sie Ihre Schenkung
+    in Verbindung mit unserer Forschung von der Steuer absetzen k"onnen.}
+\cc{Future Pharma\\
+    Bundesministerium zur Unterst"utzung der Pharmaindustrie}
+\encl{Forschungsbericht Nr.\ 6/99 des IfA}
+
+\end{letter}                                                                    
 
 \end{document}
 
@@ -2762,9 +2677,8 @@ Abb.~\ref{brief} enth"alt ein Beispiel f"ur einen Brief.
 \phone{0721}{222222}
 \begin{letter}{Deutsche Bundespost\\
                Fernmeldeamt Karlsruhe\\
-               Postfach 7300\\
-               \medskip
-               76131 KARLSRUHE}
+               Postfach 7300\\[\medskipamount]
+               {\bf 76131 Karlsruhe}}
  
 \yourmail{01.04.93}
 \sign{123456}
@@ -2995,7 +2909,7 @@ in Abb. \ref{briefkopf} aufnehmen:
  \raisebox{-11.7mm}{\unilogo{15}}
  {\fc\hspace{.7em}}
  \parbox[t]{\UKAwd}{
-        \centering{\fa Universit\"at Karlsruhe} \\
+        \centering{\fa Universit\"at Gralsruhe} \\
         \centering{\fa Institut f"ur Verpackungen} \\[.5ex]
         \centering{\fb Prof.\ Dr.\ Fritz Schreiber}
         }

@@ -1,7 +1,7 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.61 1995/12/12 20:31:16 Gussmann Exp Gussmann $
+% $Id: dinbrief.dtx 1.62 1996/01/09 19:59:40 Gussmann Exp Gussmann $
 %
 %<*styleinfo>
 =======================================================================
@@ -9,8 +9,8 @@
 shortpackagename = {dinbrief},
 longpackagename  = {dinbrief},
 baseformats      = {\LaTeX\ 2.09 and \LaTeXe},
-version          = {$Revision: 1.61 $},
-date             = {$Date: 1995/12/12 20:31:16 $},
+version          = {$Revision: 1.62 $},
+date             = {$Date: 1996/01/09 19:59:40 $},
 author           = {K.D. Braune, R. Gussmann,
                    rz32@dkauni2.bitnet
                    braune@rz.uni-karlsruhe.de
@@ -38,7 +38,11 @@ incompatibilities = {not full compatible to R. Sengerlings dinbrief}}
 =======================================================================
 %</styleinfo>
 %
-% $Log: dinbrief.d%v $
+% $Log: dinbrief.dtx $
+% Revision 1.62  1996/01/09 19:59:40  Gussmann
+% - \@multiplelabelsfalse is no longer defined in LaTeX2e.
+%   Removed this line from the code.
+%
 % Revision 1.61  1995/12/12 20:31:16  Gussmann
 % - Fixed wrong headline.
 % - Removed \cs\G@refundefined\ from \cs\document\ to work with
@@ -370,7 +374,7 @@ incompatibilities = {not full compatible to R. Sengerlings dinbrief}}
 % etc.
 % \fi
 %
-% \CheckSum{4753}
+% \CheckSum{4755}
 %%
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -1592,8 +1596,8 @@ der Stil "`{\tt german}"' geladen werden.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/12/12 20:31:16 $}
-\def\RCSrevision{$Revision: 1.61 $}
+\def\RCSdate{$Date: 1996/01/09 19:59:40 $}
+\def\RCSrevision{$Revision: 1.62 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -2096,11 +2100,16 @@ der Stil "`{\tt german}"' geladen werden.
 %
 %  \subsection{Two-side or one-side printing}
 %
-%    Two-sided printing is not supported.
+%    Sometimes it's necessary to have two-sided printing. For example
+%    if you have a two-sided printer, and you write two letters the
+%    first one having an odd number of pages. The second then starts
+%    on the backside of the last page of the first letter. To avoid
+%    this problem you can specify the twoside option. Each letters
+%    then starts on a new page on a two-sided printer.
+%
 %    \begin{macrocode}
 \ifka@db@ltxtwoe
-  \DeclareOption{twoside}{\@latexerr{No 'twoside' layout for letters}%
-                                     \@eha}
+  \DeclareOption{twoside}{\@twosidetrue}
 \fi
 \@twosidefalse
 %    \end{macrocode}
@@ -2880,8 +2889,11 @@ der Stil "`{\tt german}"' geladen werden.
 %  The first argument in brackets is ignored. The third argument
 %  is the name of a control sequece. This cs will be defined globally
 %  with the contents of the second argument.
+%
+%  \changes{1.63.0}{1996/05/21}{We made this macro long}
+%
 %    \begin{macrocode}
-\def\@ignorebrackets[#1]#2\stop#3{%
+\long\def\@ignorebrackets[#1]#2\stop#3{%
   \gdef#3{#2}\relax
 }
 %    \end{macrocode}
@@ -4106,6 +4118,8 @@ der Stil "`{\tt german}"' geladen werden.
   % \typeout{\string\ka@db@atletter\space\ka@db@atletter}%
   \ka@db@atletter
   \clearpage
+  \thispagestyle{empty}
+  \cleardoublepage
   \refstepcounter{letter}%
   \c@page\@ne
   \global\ka@db@lastpagefalse

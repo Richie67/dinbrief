@@ -1,0 +1,673 @@
+%
+% \iffalse meta-comment
+% $Id $
+%
+% $Log $
+%
+% \fi
+%
+% \CheckSum{4752}
+%%
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+%%
+%
+%
+%
+%<*begin12pt>
+
+\expandafter\ifx\csname documentclass\endcsname\relax
+    \documentstyle[12pt,dbtrace,german]{dinbrief}
+    \typeout{Using the command \string\documentstyle.}
+  \else
+    \documentclass[12pt]{dinbrief}
+    \usepackage{dbtrace}
+    \usepackage{german}
+    \usepackage[cp850]{inputenc}
+    \typeout{Using the command \string\documentclass.}
+  \fi
+
+%</begin12pt>
+%
+%<*begin209>
+
+    \documentstyle[12pt,dbtrace,german]{dinbrief}
+    \typeout{Using the command \string\documentstyle.}
+
+%</begin209>
+%
+%<*begin11pt>
+
+\expandafter\ifx\csname documentclass\endcsname\relax
+    \documentstyle[11pt,dbtrace,german]{dinbrief}
+    \typeout{Using the command \string\documentstyle.}
+  \else
+    \documentclass[11pt]{dinbrief}
+    \usepackage{dbtrace}
+    \usepackage{german}
+    \usepackage[cp850]{inputenc}
+    \typeout{Using the command \string\documentclass.}
+  \fi
+
+%</begin11pt>
+%
+%<*begin10pt>
+
+\expandafter\ifx\csname documentclass\endcsname\relax
+    \documentstyle[dbtrace,german]{dinbrief}
+    \typeout{Using the command \string\documentstyle.}
+  \else
+    \documentclass[10pt]{dinbrief}
+    \usepackage{dbtrace}
+    \usepackage{german}
+    \usepackage[cp850]{inputenc}
+    \typeout{Using the command \string\documentclass.}
+  \fi
+
+%</begin10pt>
+%
+%<*beginnorm>
+
+\expandafter\ifx\csname documentclass\endcsname\relax
+    \documentstyle[norm,dbtrace,german]{dinbrief}
+    \typeout{Using the command \string\documentstyle.}
+  \else
+    \documentclass[norm]{dinbrief}
+    \usepackage{dbtrace}
+    \usepackage{german}
+    \usepackage[cp850]{inputenc}
+    \typeout{Using the command \string\documentclass.}
+  \fi
+
+%</beginnorm>
+%
+%<*brfpreamble>
+\nofiles
+\makelabels
+
+\newlength{\UKAwd}
+\newlength{\ADDRwd}
+\font\fa=cmcsc10  scaled 1440
+\font\fb=cmss12   scaled 1095
+\font\fc=cmss10   scaled 1000
+\def\briefkopf{
+ \settowidth{\UKAwd}{\fa Institut f"ur Verpackungen}
+ \settowidth{\ADDRwd}{\fc EARN/BITNET: yx99 at dkauni2}
+ \expandafter\ifx\csname fontsize\endcsname\relax\else
+   \fontsize{12}{14.4pt}\selectfont
+ \fi
+ \raisebox{-11.3mm}{%
+   \setlength{\unitlength}{1truemm}
+   \begin{picture}(15,15)(0,0)
+     \thicklines
+     \put(7.5,7.5){\circle{15}}
+     \put(7.5,7.5){\circle{10}}
+     \put(7.5,7.5){\circle{ 5}}
+   \end{picture}%
+ }
+ \vspace*{7truemm}
+ {\fc\hspace{.2em}}
+ \parbox[t]{\UKAwd}{\centering{\fa Universit\"at Gralsruhe} \\
+                    \centering{\fa Institut f"ur Verpackungen} \\[.5ex]
+                    \centering{\fb Prof.\ Dr.\ Fritz Schreiber} }
+ \hfill
+ \parbox[t]{\ADDRwd}{\fc Im Hinterhof 2 $\cdot$ Postfach 8960 \\
+                     \fc D--76821 Gralsruhe \\
+                     \fc Telefon: (0127) 806-0815 \\
+                     \fc Electronic Mail: \\
+                     \fc EARN/BITNET: yx99 at error2 }
+ }
+\signature{Prof.\ Dr.\ Fritz Schreiber}
+\place{Gralsruhe}
+\date{den \today}
+
+\address{\briefkopf}
+\phone{(0127)}{806-0815}
+\def\FS{Prof.\,F.\,Schreiber, Uni.\,Gralsruhe,
+        Postf.\,8960, 76821\,Gralsruhe\rule[-1ex]{0pt}{0pt}}
+\backaddress{\FS}
+
+\pagestyle{contheadings}
+
+\begin{document}
+
+\bottomtext{%
+  \makebox[\textwidth][c]{\small\sf
+   Bankverbindung $\cdot$ Kreissparkasse Gralsruhe %
+   (BLZ~999~500~00) 98~765~4
+  }
+}
+
+%</brfpreamble>
+%
+%<*brief1>
+
+\begin{letter}{%
+  Herrn\\
+  !Richard Gussmann\\
+  Wartbergstra"se 25\\\medskip
+  {\bf 74076 Heilbronn}}
+\centeraddress
+\date{\ntoday}
+\concern{single letter $\cdot$ {\tt\string\centeraddress} is given\hfil\break
+         {\tt\string\pagestyle\{contheadings\}} is given $\cdot$ testing
+         {\tt\string\ntoday}\hfil\break
+         {\tt\string\encl} and {\tt\string\cc} after {\tt\string\closing}}
+\opening{Sehr geehrte Damen und Herren,}
+
+{\bf Testing \verb|verse|}
+\begin{verse}
+{\bf Die F"u"se im Feuer\/}
+
+Wild zuckt der Blitz,\\
+im fahlen Lichte steht ein Turn,\\
+der Donner rollt,\\
+ein Reiter k"ampft mit seinem Ro"s,\\
+springt ab un pocht ans Tor und l"armt.\\
+Sein Mantel saust im Wind,\\
+und knarrent "offnet jetzt das Tor ein Edelmann.\\
+\dots\\
+Der Reiter tritt in einen dunklen Ahnensaal.
+
+Von eines weiten Herdes Feuer schwach erhellt,\\
+droht hier ein Hugenott im Harnisch,\\
+dort ein Weib, ein stolzes Weib in braunen Ebenbild.\\
+Der Reiter wirft sich in den Sessel vor dem Herd\\
+und starrt in den lebendgen Brand\\
+\dots \\
+Die Flamme zischt, zwei F"u"se zucken in der Glut.
+
+\dots
+\end{verse}
+
+{\bf Testing \verb|quotation|}
+
+\begin{quotation}
+``Ich finde'', sagte einst Winston Churchill im
+Unterhaus, ``die Art von Kritik, wie ich sie am
+Sonntagmorgen bei meiner Ankunft in den Zeitungen
+fand, erinnert mich immer an die Geschichte von
+dem Matrosen, der in ein Hafenbecken sprang ---
+in Plymouth, glaube ich ---, um einen kleinen
+Jungen vom Ertrinken zu retten.
+
+Dort sprach eine Frau den Matrosen an:\\
+`Sind Sie der Mann, der meinen Sohn neulich
+aus dem Wasser gezogen hat?'\\
+Bescheiden erwiderte der Matrose:\\
+`Ja, das stimmt.'\\
+`Aha', sagte die Frau: `Ich suche Sie schon
+die ganze Zeit \dots\ Wo ist seine M"utze?'{}''
+\end{quotation}
+
+{\bf Testing \verb|quote|}
+
+\begin{quote}
+Ein {\em klassisches\/} Werk ist ein Buch,\\
+das die Leute loben,\\
+aber nie lesen. \hfill({\em E.\ Hemingway\/})
+\end{quote}
+
+{\bf Filling up this side}
+
+\begin{quotation}
+\noindent{\bf Gl"uck und Ungl"uck}\smallskip
+
+Mitten w"ahrend der Potsdamer Konferenz im
+Sommer 1945 wurde Winston Churchill durch
+den Entscheid der W"ahler als Premierminister
+abberufen.
+
+\flqq Wer wei"s\frqq, tr"ostete ihn seine
+Gattin Clementine,\\
+\flqq vielleicht ist es ein verkapptes Gl"uck.\frqq\\
+\flqq Wenn es ein verkapptes Gl"uck ist\frqq,
+antwortete Churchill, \flqq dann mu"s ich sagen,
+da"s es verdammt gut verkappt ist!\frqq
+\end{quotation}
+
+\begin{quotation}
+\noindent{\bf Wahrheit und L"uge}\smallskip
+
+In besonders guter Laune f"uhrte Mark Twain
+bei einem exklusiven Abendessen die
+Gemahlin des Gouverneurs zu Tisch. Galant
+sagte er: "`Wie sch"on Sie sind, Madame!"'\\
+Geschmeichelt nahm die Dame das
+Kompliment auf, entgegnete aber trotzdem
+boshaft: "`Wie schade, da"s ich von ihnen nicht
+dasselbe sagen kann."'\\
+Mark Twain darauf: "`Machen Sie es doch wie
+ich, gn"adige Frau: l"ugen Sie!"'
+\end{quotation}
+
+\begin{quotation}
+\noindent{\bf Staatsdiener}\smallskip
+
+Churchill hatte der Regierung vorgeworfen,
+sie bestehe nur aus Politikern und habe keine
+Staatsm"anner aufzuweisen.\\
+"`Was ist der Unterschied?"' fragte man ihn.\\
+"`Ein Politiker"', antwortete Churchill, "`denkt
+immer nur an die n"achste Wahl, ein Staatsmann
+denkt an die n"achste Generation."'
+\end{quotation}
+
+\begin{quotation}
+\noindent{\bf Essen und Trinken}\smallskip
+
+Sir Stafford Cripps, einer von Churchills
+langj"ahrigen politischen Gegnern, war als
+Vegetarier bekannt. W"ahrend der
+Fleischknappheit der Nachkriegsjahre
+bemerkte Churchill:\\
+"`Jedermann kennt die hervorragenden
+Talente, die Sir Stafford Cripps
+uneingeschr"ankt seinen Landsleuten dienstbar
+macht. Niemand hat gr"o"sere Anstrengungen
+auf sich genommen als er, um den Kochtopf
+der Nation zu f"ullen, und kaum einer nimmt
+weniger heraus als er.\\
+Ich habe auch meine Fraktionsvegetarier:
+meinen Ehrenwerten Freund Lord Cherwell.
+Diese "atherischen Wesen verf"ugen "uber eine
+qualitativ wie quantitativ be\-acht\-li\-che
+Gedankenproduktionskapazit"at bei
+minimalen Treibstoff- und Wartungskosten."'
+\end{quotation}
+
+\begin{quotation}
+\noindent{\bf Essen und Trinken}\smallskip
+
+Wenn Churchill nicht schrieb, arbeitete er im
+Garten seines Landhauses in Chartwell und
+und besch"aftigte sich mit der Aufzucht von
+Federvieh. Als an einem Sonntag eine
+gebratene Gans serviert wurde, griff er zum
+Tranchierbesteck, z"ogerte aber, legte das
+nieder und sagte zu seiner Frau:\\
+"`Schneid du sie
+an, Clementine. Sie war eine Freundin
+von mir."'
+\end{quotation}
+
+\cc[Durch Handzettel verteilt]{800 Copien}
+\encl[]{Anlagen}
+
+\closing{Mit freundlichen Gr"u"sen}
+
+\ps{Bitte wo gehts hier zum WC? FÅr manche ist das dringend nîtig!}
+
+\end{letter}
+
+%</brief1>
+%
+%<*brief2>
+
+\begin{letter}{%
+  Herrn\\
+  !Richard Gussmann\\
+  Langestra"se 37\\[\medskipamount]
+  {\bf 76199 Karlsruhe}}
+\place{Karlsruhe}
+\date{\today}
+\concern{Einfacher Brief $\cdot$ place and date are redefined\hfil\break
+         standard pagestyle $\cdot$ date and place redefined}
+\opening{Sehr geehrte Damen und Herren,}
+
+\begin{enumerate}
+  \item {\bf Testing font switches\/}
+        \begin{itemize}
+          \item This is {\bf bold\/}.
+          \item This is {\em emphasized and {\em double emphasized\/}}.
+          \item This is {\sl slanted\/}.
+          \item This is {\it italic\/}.
+          \item This is {\sc caps and small caps\/}.
+          \item This is {\sf sans serif\/}.
+          \item This is {\tt typewriter\/}.
+        \end{itemize}
+  \item {\bf Testing math font switches\/}
+        \begin{itemize}
+          \item This is $\cal A $ (A is in {\tt\string\cal\/}).
+          \item This is $\Gamma = {\mit \Gamma}$ (Second {\tt\string\Gamma} is
+                {\it italic}).
+        \end{itemize}
+\end{enumerate}
+
+\enclright
+
+\encl{This is a enclosure}
+
+\cc{This is a carbon copy}
+
+\closing{Mit freundlichen Gr"u"sen}
+
+\ps{This is a postscriptum}
+
+\end{letter}
+
+%</brief2>
+%
+%<*brief3>
+\pagestyle{headings}
+
+\begin{letter}{%
+  Herrn\\
+  !Richard Gussmann\\
+  Wartbergstra"se 25\\\medskip
+  {\bf 74076 Heilbronn}}
+\centeraddress
+\date{\ntoday}
+\concern{single letter $\cdot$ {\tt\string\centeraddress} is given\hfil\break
+         {\tt\string\pagestyle\{headings\}} is given $\cdot$ testing
+         {\tt\string\ntoday}\hfil\break
+         {\tt\string\encl} and {\tt\string\cc} after {\tt\string\closing}}
+\opening{Sehr geehrte Damen und Herren,}
+
+{\bf Testing \verb|verse|}
+\begin{verse}
+{\bf Die F"u"se im Feuer\/}
+
+Wild zuckt der Blitz,\\
+im fahlen Lichte steht ein Turn,\\
+der Donner rollt,\\
+ein Reiter k"ampft mit seinem Ro"s,\\
+springt ab un pocht ans Tor und l"armt.\\
+Sein Mantel saust im Wind,\\
+und knarrent "offnet jetzt das Tor ein Edelmann.\\
+\dots\\
+Der Reiter tritt in einen dunklen Ahnensaal.
+
+Von eines weiten Herdes Feuer schwach erhellt,\\
+droht hier ein Hugenott im Harnisch,\\
+dort ein Weib, ein stolzes Weib in braunen Ebenbild.\\
+Der Reiter wirft sich in den Sessel vor dem Herd\\
+und starrt in den lebendgen Brand\\
+\dots \\
+Die Flamme zischt, zwei F"u"se zucken in der Glut.
+
+\dots
+\end{verse}
+
+\closing{Mit freundlichen Gr"u"sen}
+\ps{Bitte wo gehts hier zum WC?}
+\encl[]{Anlagen}
+\cc[Durch Handzettel verteilt]{800 Copien}
+\end{letter}
+
+%</brief3>
+%
+%<*finale>
+
+\end{document}
+
+%</finale>
+%
+% \section{The \texttt{readme}-file}
+%
+%<*readme>
+
+This file is part of the dinbrief package.
+------------------------------------------
+
+TABLE OF CONTENTS
+=================
+
+1. GENERAL INFORMATION
+2. ERROR REPORTS
+3. FILES IN THIS DISTRIBUTION
+4. INSTALLATION
+
+
+1. GENERAL INFORMATION
+======================
+
+IMPORTANT NOTICE:
+
+You are not allowed to change this readme file.
+
+Distribution of unchanged versions:
+
+  You are NOT ALLOWED to take money for the distribution or use of
+  these files except for a nominal charge for copying etc.
+
+  Redistribution of unchanged files is allowed provided that all files
+  listed in the corresponding package README file are distributed
+  including this readme file.
+
+  If you receive only some of these files from someone, complain!
+
+  However, if these files are distributed by established suppliers as
+  part of a complete TeX distribution, and the structure of the
+  distribution would make it difficult to distribute the whole set of
+  files, *those parties* are allowed to distribute only some of the
+  files provided that it is made clear that the user will get a
+  complete distribution-set upon request to that supplier (not me).
+
+  Notice that this permission is not granted to the end user.
+
+
+Generation and distribution of changed versions:
+
+  The generation of changed versions of the files included in the
+  packages is allowed under the following restrictions:
+
+  - You rename the file before you make any changes to it.
+
+  - You acknowledge the origin of the original version in the file and
+    keep the information that it (or a changed version) has to be
+    distributed under the restrictions mentioned in this file.
+
+  - You change the ERROR REPORT address so that we don't get error
+    reports for files *not* maintained by us.
+
+
+  The distribution of changed versions of the files included in the
+  packages is allowed under the following restrictions:
+
+  - You provide the user with information how to obtain the original
+    package or, even better, distribute it with your files.
+
+  - You make sure that the changed versions contain a notice that
+    prevents others to take money for distribution or use of your
+    files, i.e. they have to be distributed under the restrictions
+    mentioned in this file.
+
+  - You inform us that you created a changed version of the files.
+    This is only necessary if you want to distribute it to others.
+
+
+2. ERROR REPORTS
+================
+
+  Before you report an error please check that
+
+  - the error is not already mentioned in the *.bug file of the
+    distribution. (In this case it is a feature :-)
+
+  - the error isn't caused by obsolete versions of other software;
+    LaTeX from 1986 is a good candidate ...
+
+  - you use an original version of the package.
+
+
+  If you think you found a genuine bug please report it together
+  with the following information:
+
+  - version of the file
+
+  - version (date!) of your LaTeX
+
+  - a short test file showing the behavior with all unnecessary
+    code removed.
+
+  - a transcript (log file) of the session that shows the error.
+
+Please note that it is important to make the file as small as possible
+to allow us to find and fix the error soon.
+
+
+Error reports in case of UNCHANGED versions to
+
+                          K.D. Braune, R. Gussmann
+                          Universit\"at Karlsruhe
+                          Rechenzentrum
+                          Postfach 6980
+                          76128 Karlsruhe
+               Internet:  <braune@rz.uni-karlsruhe.de>
+                          <gussmann@rz.uni-karlsruhe.de>
+               Bitnet:    RZ32@DKAUNI2.BITNET
+                          RY46@DKAUNI2.BITNET
+
+Please send error reports for contributed files to the original authors.
+
+
+3. FILES IN THIS DISTRIBUTION
+=============================
+
+You should get the following files:
+
+  dinbrief.dtx     `dinbrief' class/style for LaTeX in docstrip format.
+
+  readme           This File
+
+  dinbrief.ins     This is the installation script that will produce
+                   the executable files in this package and the driver
+                   files for the documentation when run through LaTeX
+                   or TeX.
+
+
+4. INSTALLATION
+===============
+
+To produce the executable files please run dinbrief.ins through LaTeX or
+TeX, i.e., say
+
+   latex dinbrief.ins
+
+or whatever is necessary to process a file with LaTeX on your
+system.  This will generate all necessary files. If you already have
+older versions of the files, the script will ask whether or not you
+want to overwrite those versions. Note, that the script calls
+docstrip.tex internally which is distributed with LaTeX.
+
+This script will produce the following files:
+
+  dinbrief.cls  The dinbrief class file for LaTeX2e.
+  dinbrief.sty  The dinbrief style file for LaTeX 2.09.
+  dinbrief.drv  The driver file for producing the Users Guide
+                and the documentation.
+  dinbrief.tex  The Users Guide.
+  dintab.tex    A list of available commands.
+
+  example.tex   An example of a letter (needs brfkopf.tex).
+  brfkopf.tex   An example letter head.
+  brfbody.tex   LaTeX input file for the testXXXX.tex files.
+  test10.tex    Files for testing the class/style.
+  test11.tex    "
+  test12.tex    "
+  testnorm.tex  "
+  dbold.tex     letter with R. Sengerlings commands.
+
+
+To produce the documentation run the corresponding driver files
+through LaTeX.  You are allowed to change the driver files to get a
+special layout, etc.
+
+%</readme>
+%
+% \section{Tracing the dinbrief}
+%  Unfortunately \LaTeXe{} switches off all tracing posibilities.
+%  To check the class carefully this little style can be used
+%  to switch the tracing on again.
+%
+%    \begin{macrocode}
+%<*dbtrace>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+ % \tracingcommands\tw@
+ % \tracingstats\tw@
+ % \tracingpages\@ne
+ % \tracingoutput\@ne
+ % \tracinglostchars\@ne
+ % \tracingmacros\tw@
+ % \tracingparagraphs\@ne
+ % \tracingrestores\@ne
+ % \showboxbreadth\maxdimen
+\showboxbreadth15
+ % \showboxdepth\maxdimen
+\showboxdepth15
+\errorstopmode
+\errorcontextlines\maxdimen
+ % \tracingonline\@ne
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</dbtrace>
+%    \end{macrocode}
+%
+% \section{The documentation driver file}
+%
+%    We have our own document class to format the \LaTeXe
+%    documentation.
+%    \begin{macrocode}
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage{german}
+\originalTeX
+%    \end{macrocode}
+%
+%    We don't want everything to appear in the index
+%
+%    We start with a nearly empty list and go then further and
+%    further. So we can catch all interesting macros.
+%
+%    \begin{macrocode}
+\DoNotIndex{\@empty,\\,\space,\@warning}
+\DoNotIndex{\begin,\bfseries,\bgroup,\box,\def,\edef,\egroup}
+\DoNotIndex{\else,\end,\endcsname,\expandafter,\fi,\gdef}
+\DoNotIndex{\hbox}
+\DoNotIndex{\hfil,\hfill,\hss,\ifx,\item,\let,\long,\message}
+\DoNotIndex{\nointerlineskip}
+\DoNotIndex{\originalTeX,\p@,\par,\parbox,\parsep,\relax}
+\DoNotIndex{\setlength}
+\DoNotIndex{\space,\string,\strut,\tmpa,\typeout,\verb}
+\DoNotIndex{\vbox,\vskip,\vspace,\vss}
+\DoNotIndex{\xdef,\z@,\z@skip}
+\DoNotIndex{\LaTeX,\LaTeXe}
+\DoNotIndex{\OnlyDescription,\PrintChanges,\PrintIndex,\RecordChanges}
+%    \end{macrocode}
+%    We do want an index, using linenumbers
+%    \begin{macrocode}
+\EnableCrossrefs
+\CodelineIndex
+ %\DisableCrossrefs
+\RecordChanges
+ %\OnlyDescription
+\typeout{Expect some under- and overfull boxes}
+%    \end{macrocode}
+%    We also want the full details.
+%    \begin{macrocode}
+\begin{document}
+\DocInput{dinbrief.dtx}
+\PrintChanges
+\PrintIndex
+\end{document}
+%</driver>
+%    \end{macrocode}
+%
+\endinput

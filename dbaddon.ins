@@ -1,0 +1,204 @@
+%%
+%% $Id: $
+%%
+%% $Log: $
+%%
+%% =======================================================================
+%%
+%% This docstrip .ins file makes it possible to unpack a docstrip
+%% file using initex. This would enable a doc format LaTeX distribution 
+%% to be bootstrapped just from the web (2c) sources for TeX, and the
+%% LaTeX files. It saves building plain.fmt :-)
+%%
+%%  David Carlisle 1993/10/23
+%%  Richard Gussmann 1995/07/06
+%%
+\catcode`\Z=\catcode`\% 
+\ifnum1=\catcode`\{{\egroup\else
+  \catcode`\Z=9
+Z
+Z  \catcode`\{=1  \catcode`\}=2 
+Z  \catcode`\#=6  \catcode`\^=7
+Z  \catcode`\@=11 \catcode`\^^L=13
+Z  \let\bgroup={  \let\egroup=}
+Z
+Z  \dimendef\z@=10 \z@=0pt \chardef\@ne=1 \countdef\m@ne=22 \m@ne=-1
+Z
+Z  \def\wlog{\immediate\write\m@ne} \def\space{ }
+Z
+Z  \count10=22 % allocates \count registers 23, 24, ...
+Z  \count15=9 % allocates \toks registers 10, 11, ...
+Z  \count16=-1 % allocates input streams 0, 1, ...
+Z  \count17=-1 % allocates output streams 0, 1, ...
+Z
+Z  \def\alloc@#1#2#3{\advance\count1#1\@ne#2#3\count1#1\relax}
+Z
+Z  \def\newcount{\alloc@0\countdef} \def\newtoks{\alloc@5\toksdef}
+Z  \def\newread{\alloc@6\chardef}   \def\newwrite{\alloc@7\chardef}
+Z
+Z  \def\newif#1{%
+Z    \@if\def#1{true}{\let#1\iftrue}\@if\def#1{false}{\let#1\iffalse}%
+Z    \@if\relax#1{false}}
+Z
+Z  \def\@if#1#2#3{%
+Z    \expandafter#1\csname\expandafter\@gobblethree\string#2#3\endcsname}
+Z  \def\@gobblethree#1#2#3{}
+Z
+Z  \def\loop#1\repeat{\def\body{#1}\iterate}
+Z  \def\iterate{\body \let\next\iterate \else\let\next\relax\fi \next}
+Z  \let\repeat\fi
+Z
+Z  \def\empty{}
+Z
+Z  \def\tracingall{\tracingcommands2 \tracingstats2 
+Z    \tracingpages1 \tracingoutput1 \tracinglostchars1 
+Z    \tracingmacros2 \tracingparagraphs1 \tracingrestores1 
+Z    \showboxbreadth 10000 \showboxdepth 10000 \errorstopmode
+Z    \errorcontextlines 10000 \tracingonline1 }
+Z
+Z  \def\space{ }
+Z  \catcode`\~=13
+Z
+\bgroup}\fi\catcode`\Z=11
+
+
+\def\batchfile{dbaddon.ins}
+\input docstrip.tex
+
+\keepsilent
+
+
+\preamble
+
+Copyright (C) 1993, 95 by Richard Gussmann, University of Karlsruhe.
+For additional copyright information see further down in this file.
+
+This file is NOT part of the dinbrief-style.
+--------------------------------------------
+This file is for INTERNAL use only.
+-----------------------------------
+
+ This system is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+IMPORTANT NOTICE:
+
+For error reports in case of UNCHANGED versions see readme files.
+
+Please do not request updates from us directly.  Distribution is
+done through Mail-Servers and TeX organizations.
+
+You are not allowed to change this file.
+
+You are allowed to distribute this file under the condition that
+it is distributed together with all files mentioned in 00readme..
+
+If you receive only some of these files from someone, complain!
+
+You are NOT ALLOWED to distribute this file alone.  You are NOT
+ALLOWED to take money for the distribution or use of either this
+file or a changed version, except for a nominal charge for copying
+etc.
+\endpreamble
+
+\generateFile{dinbrief.cls}{f}{%
+  \from{dinbrief.dtx}{class,debug}
+}
+
+\generateFile{dbtrace.sty}{f}{%
+  \from{dbaddon.dtx}{dbtrace}
+}
+
+\generateFile{testn10.tex}{f}{%
+  \from{dbaddon.dtx}{begin10pt,brfpreamble,brief1,brief2,brief3,finale}
+}
+
+\generateFile{testn11.tex}{f}{%
+  \from{dbaddon.dtx}{begin11pt,brfpreamble,brief1,brief2,brief3,finale}
+}
+
+\generateFile{testn12.tex}{f}{%
+  \from{dbaddon.dtx}{begin12pt,brfpreamble,brief1,brief2,brief3,finale}
+}
+
+\generateFile{testnno.tex}{f}{%
+  \from{dbaddon.dtx}{beginnorm,brfpreamble,brief1,brief2,brief3,finale}
+}
+
+\generateFile{test209.tex}{f}{%
+  \from{dbaddon.dtx}{begin209,brfpreamble,brief1,brief2,brief3,finale}
+}
+
+\generateFile{dbaddon.drv}{f}{%
+  \from{dbaddon.dtx}{driver}
+}
+
+% redifining this macro to avoid getting meta comments in the readme file
+\def\putMetaComment#1\endLine{%
+  \closeOption%
+  %\advance\commentsPassed\@ne
+  %\WriteOut{\inLine}%
+  }
+\gdef\DoubleperCent{}
+
+\def~{\space}
+
+\def\znumber#1{\ifnum\number#1<10 0\number#1\else\number#1\fi}
+
+\preamble
+
+==============================================================================
+This is README~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<\the\year/\znumber{\number\month}/\znumber{\number\day}>
+==============================================================================
+
+\endpreamble
+
+\postamble
+
+==============================================================================
+End of README
+==============================================================================
+\endpostamble
+
+\generateFile{readme.}{f}{%
+  \from{dbaddon.dtx}{readme}
+  \from{dinbrief.dtx}{styleinfo}
+}
+
+%\generateFile{dbtrace.sty}{t}{%
+%  \from{dinbrief.dtx}{dbtrace}
+%}
+
+\ifToplevel{
+\Msg{***********************************************************}
+\Msg{*}
+\Msg{* To finish the installation you have to move the following}
+\Msg{* files into a directory searched by TeX:}
+\Msg{*}
+\Msg{* \space\space dinbrief.}
+\Msg{*}
+\Msg{* To produce the documentation run the files ending with}
+\Msg{* `.drv' through LaTeX.}
+\Msg{*}
+\Msg{* Happy TeXing}
+\Msg{***********************************************************}
+}
+
+\Msg{}
+\Msg{********************************************************}
+\Msg{*}
+\Msg{*  Now run LaTeX 2.09 or LaTeX 2e and enjoy the dinbrief}
+\Msg{*}
+\Msg{********************************************************}
+\Msg{}
+
+
+\endinput
+
+# Local Variables:
+# mode: latex
+# End:
+
+

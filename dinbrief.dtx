@@ -1,13 +1,13 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.2 1994/11/16 19:08:08 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.3 1994/11/16 19:17:38 Gussmann Exp Gussmann $
 %
 % $Author: Gussmann $
 %
-% $Date: 1994/11/16 19:08:08 $
+% $Date: 1994/11/16 19:17:38 $
 %
-% $Header: E:/DINBRF/RCS/dinbrief.d%v 1.2 1994/11/16 19:08:08 Gussmann Exp Gussmann $
+% $Header: E:/DINBRF/RCS/dinbrief.d%v 1.3 1994/11/16 19:17:38 Gussmann Exp Gussmann $
 %
 % $Locker: Gussmann $
 %
@@ -15,13 +15,16 @@
 %
 % $RCSfile: dinbrief.d%v $
 %
-% $Revision: 1.2 $
+% $Revision: 1.3 $
 %
 % $Source: E:/DINBRF/RCS/dinbrief.d%v $
 %
 % $State: Exp $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.3  1994/11/16 19:17:38  Gussmann
+% *** empty log message ***
+%
 % Revision 1.2  1994/11/16 19:08:08  Gussmann
 % *** empty log message ***
 %
@@ -82,7 +85,7 @@
 %
 % \section{Identification}
 %
-%    We store the date, version and name of this file in six control
+%    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
 \def\fileversion{0.94.1}
@@ -91,61 +94,8 @@
 \def\docdate {1994/08/15}
 %    \end{macrocode}
 %
-%    Announce the Class name and its version:
-%    \begin{macrocode}
-%<*article>
-\ProvidesClass{article}[\filedate\space Standard LaTeX2e document class]
-%</article>
-%    \end{macrocode}
 %
-%
-% \section{Initial Code}
-%
-%    In this part we define a few commands that are used later on.
-%
-% \begin{macro}{\@ptsize}
-%    This control sequence is used to store the second digit of the
-%    pointsize we are typesetting in. So, normally, it's value is one
-%    of 0, 1 or 2.
-%    \begin{macrocode}
-%<*article|report|book>
-\newcommand\@ptsize{}
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\if@restonecol}
-%    When the document has to printed in two columns, we sometimes
-%    have to temporarily switch to one column. This switch is used to
-%    remember to switch back.
-%    \begin{macrocode}
-\newif\if@restonecol
-%    \end{macrocode}
-% \end{macro}
-%
-%
-% \section{Declaration of Options}
-%
-%
-% \subsection{Setting Paper Sizes}
-%
-%    The variables |\paperwidth| and |\paperheight| should reflect the
-%    physical paper size after trimming. For desk printer output this
-%    is usually the real paper size since there is no post-processing.
-%    Classes for real book production will probably add other paper
-%    sizes and additionally the production of crop marks for trimming.
-% \changes{1.0.7}{1993/12/09}{Removed typo, A4 is not 279 mm high}
-%    \begin{macrocode}
-\DeclareOption{a4paper}
-   {\setlength\paperheight {297mm}%
-    \setlength\paperwidth  {210mm}}
-%
-\NeedsTeXFormat{LaTeX2e}
-%
-%</article|report|book>
-%    \end{macrocode}
-%
-
-% \section{The style file `dinbrief'}
+% \section{The class/style file `dinbrief'}
 %
 % This is |DINBRIEF.STY| in text format, as of February 27, 1992,
 % by K. Braune, R. Gussmann and K. Dilper
@@ -195,7 +145,7 @@
 %
 % |\ifka@db@ltxtwoe| is true if and only if this style is running in
 % an \LaTeXe-environment. |\ifka@db@nfss| is true if we are using an
-% NFSS 1 andd |\ifka@db@nfsstwo| is true if we are using the NFSS 2.
+% NFSS 1 and |\ifka@db@nfsstwo| is true if we are using the NFSS 2.
 %
 %    \begin{macrocode}
 \newif\ifka@db@ltxtwoe
@@ -227,7 +177,7 @@
 %
 %    \begin{macrocode}
 \typeout{}
-\typeout{Document Style 'dinbrief' - Preliminary Version \fileversion}
+\typeout{Document Class/Style 'dinbrief' - Preliminary Version \fileversion}
 \typeout{University of Karlsruhe - \filedate}
 \typeout{This is a premiliary test release, and was}
 \typeout{last modified by Richard R. Gussmann}
@@ -262,9 +212,15 @@
 % \begin{macro}{\ds@12pt}
 % \begin{macro}{\ds@11pt}
 % \begin{macro}{\ds@10pt}
+% \begin{macro}{\ds@13pt}
 %    This control sequence is used to store the second digit of the
 %    pointsize we are typesetting in. So, normally, it's value is one
 %    of 0, 1 or 2.
+%
+%    To be compatible with the old `dinbrief', we define also the
+%    pointsize 3, which does not mean typeset on 13pt, it's used
+%    to feature some other size following the rules of old stupid
+%    typewriters.
 %
 %    The type size options are handled by defining |\@ptsize| to contain
 %    the last digit of the size in question and branching on |\ifcase|
@@ -285,17 +241,22 @@
   \DeclareOption{10pt}{\renewcommand\@ptsize{0}}
   \DeclareOption{11pt}{\renewcommand\@ptsize{1}}
   \DeclareOption{12pt}{\renewcommand\@ptsize{2}}
+  \DeclareOption{norm}{\renewcommand\@ptsize{3}}
 \else
   \def\@ptsize{0}
   \@namedef{ds@10pt}{\def\@ptsize{0}}
   \@namedef{ds@11pt}{\def\@ptsize{1}}
   \@namedef{ds@12pt}{\def\@ptsize{2}}
+  \@namedef{ds@norm}{\def\@ptsize{3}}
 \fi
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
+% \end{macro}
+%
+% \subsection{Defining the jobname}
 %
 % \begin{macro}{\jobname@aux}
 %    This control sequence is used to store the name of the aux-file.
@@ -305,6 +266,19 @@
 {\catcode`\_=12 \gdef\jobname@aux{\jobname.aux}} % .aux or _aux or ...
 %    \end{macrocode}
 % \end{macro}
+%
+% \subsection{Stuff from original classes}
+%
+% \begin{macro}{\if@restonecol}
+%    When the document has to printed in two columns, we sometimes
+%    have to temporarily switch to one column. This switch is used to
+%    remember to switch back.
+%    \begin{macrocode}
+\newif\if@restonecol
+%    \end{macrocode}
+% \end{macro}
+%
+%
 %
 % \subsection{Setting Paper Sizes}
 %
@@ -371,7 +345,7 @@
 \fi
 %    \end{macrocode}
 %
-%  \section{Defining intern font selection commands}
+%  \subsection{Defining intern font selection commands}
 %
 %  To be compatible to all font selection scheme we define our own
 %  font selection commands |\ka@db@fontshape| (1), |\ka@db@fontseries| (1),
@@ -418,7 +392,7 @@
   \fi
 %    \end{macrocode}
 %
-% \section{Executing Options}
+% \subsection{Executing Options}
 %
 %    Here we execute the default options to initialize certain
 %    variables.
@@ -458,13 +432,31 @@
   \fi
 %    \end{macrocode}
 %
-%  \section{Loading Packages}
+%  \subsection{Loading Packages}
 %
 %  The `dinbrief' class/style file does not load additional packages.
 %
-%  \section{Old style font attribute changing}
+% \section{Error messages in this class/style}
 %
-%  Therefore we define a waring message for the use of this forbidden
+% \subsection{General error message}
+%
+%  \begin{macro}{\ka@db@error}
+%    \begin{macrocode}
+\def\ka@db@error#1{%
+   \@latexerr{%
+      Document style/class `dinbrief' error^^J%
+      #1%
+   }{%
+      No help is available for this error message.^^J%
+      Please check your input file!
+   }%
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \subsection{Warning within \LaTeXe\ for forbidden commands}
+%
+%  Therefore we define a warning message for the use of this forbidden
 %  commands.
 %  \begin{macro}{\ka@db@warning}
 %    \begin{macrocode}
@@ -477,17 +469,16 @@
 %    \end{macrocode}
 %  \end{macro}
 %
-%  We support the old commands |\rm|, |\sf| and so on in \LaTeX~2e.
-%  But we print a waring message if the user has the commands in his
-%  file.
+%  \section{Font changing}
 %
+%  \subsection{Defining old font changing commands for \LaTeXe}
 %
-%  \subsection{Font changing}
 %  \changes{0.92.20}{1994/02/20}{The font changing has to
 %                                be redefined in \LaTeXe.
 %                                Code copied from letter class.}
 %  \changes{0.94.0}{1994/08/15}{\cmd\@rewnewfontswitch renamed to
 %                               \cmd\DeclareOldFontCommand}
+%  \changes{0.95.0}{1994/11/10}{Deleted wrong explanation.}
 %
 %  Defining the font change commands for \LaTeXe.
 %
@@ -565,41 +556,57 @@
 \fi
 %    \end{macrocode}
 %
-% \section{Error messages in this class/style}
-%
-%  \begin{macro}{\ka@db@error}
+% \subsection{A special distance}
+% \begin{macro}{\GZA}
+% Baselinedistance 1/6 in = 4,23 mm (Grundzeilenabstand DIN 2107, 2142)
 %    \begin{macrocode}
-\def\ka@db@error#1{%
-   \@latexerr{%
-      Document style/class `dinbrief' error^^J%
-      #1%
-   }{%
-      No help is available for this error message.^^J%
-      Please check your input file!
-   }%
-}
+\newdimen\GZA
+\GZA=1in \divide\GZA by 6
 %    \end{macrocode}
-%  \end{macro}
+% \end{macro}
 %
-% \section{Fonts --- The size the style is desired in}
+% \section{Fontsizes und other parameters}
+%
+% \begin{macro}{\@normalsize}
+% \begin{macro}{\small}
+% \begin{macro}{\footnotesize}
+% \begin{macro}{\scriptsize}
+% \begin{macro}{\tiny}
+% \begin{macro}{\large}
+% \begin{macro}{\Large}
+% \begin{macro}{\LARGE}
+% \begin{macro}{\huge}
+% \begin{macro}{\Huge}
 %
 %    \begin{macrocode}
 \ifcase \@ptsize\relax
  \def\@normalsize{\@setsize\normalsize{12pt}\xpt\@xpt
-  \abovedisplayskip 10pt plus2pt minus5pt
+  \abovedisplayskip 10\p@ plus2\p@ minus5\p@
   \belowdisplayskip \abovedisplayskip
-  \abovedisplayshortskip \z@ plus3pt
-  \belowdisplayshortskip 6pt plus3pt minus3pt}
+  \abovedisplayshortskip \z@ plus3\p@
+  \belowdisplayshortskip 6\p@ plus3\p@ minus3\p@
+  \let\@listi\@listI
+  }%
  \def\small{\@setsize\small{11pt}\ixpt\@ixpt
-  \abovedisplayskip 8.5pt plus 3pt minus 4pt
+  \abovedisplayskip 8.5\p@ plus 3\p@ minus 4\p@
   \belowdisplayskip \abovedisplayskip
-  \abovedisplayshortskip \z@ plus2pt
-  \belowdisplayshortskip 4pt plus2pt minus 2pt}
+  \abovedisplayshortskip \z@ plus2\p@
+  \belowdisplayshortskip 4\p@ plus2\p@ minus 2\p@
+  \def\@listi{\leftmargin\leftmargini
+              \topsep 4\p@ \@plus2\p@ \@minus2\p@
+              \parsep 2\p@ \@plus\p@ \@minus\p@
+               \itemsep \parsep}%
+  }%
  \def\footnotesize{\@setsize\footnotesize{9.5pt}\viiipt\@viiipt
-  \abovedisplayskip 6pt plus 2pt minus 4pt
+  \abovedisplayskip 6\p@ plus 2\p@ minus 4\p@
   \belowdisplayskip \abovedisplayskip
-  \abovedisplayshortskip \z@ plus 1pt
-  \belowdisplayshortskip 3pt plus 1pt minus 2pt}
+  \abovedisplayshortskip \z@ plus 1\p@
+  \belowdisplayshortskip 3\p@ plus 1\p@ minus 2\p@
+  \def\@listi{\leftmargin\leftmargini
+              \topsep 3\p@ \@plus\p@ \@minus\p@
+              \parsep 2\p@ \@plus\p@ \@minus\p@
+              \itemsep \parsep}%
+  }%
  \def\scriptsize{\@setsize\scriptsize{8pt}\viipt\@viipt}
  \def\tiny{\@setsize\tiny{6pt}\vpt\@vpt}
  \def\large{\@setsize\large{14pt}\xiipt\@xiipt}
@@ -607,22 +614,34 @@
  \def\LARGE{\@setsize\LARGE{22pt}\xviipt\@xviipt}
  \def\huge{\@setsize\huge{25pt}\xxpt\@xxpt}
  \def\Huge{\@setsize\Huge{30pt}\xxvpt\@xxvpt}
-\or
+\or % 11 pt option
  \def\@normalsize{\@setsize\normalsize{13.6pt}\xipt\@xipt
-  \abovedisplayskip 11pt plus3pt minus6pt
+  \abovedisplayskip 11\p@ plus3\p@ minus6\p@
   \belowdisplayskip \abovedisplayskip
-  \abovedisplayshortskip \z@ plus3pt
-  \belowdisplayshortskip 6.5pt plus3.5pt minus3pt}
+  \abovedisplayshortskip \z@ plus3\p@
+  \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@
+  \let\@listi\@listI
+  }%
  \def\small{\@setsize\small{12pt}\xpt\@xpt
-  \abovedisplayskip 10pt plus2pt minus5pt
+  \abovedisplayskip 10\p@ plus2\p@ minus5\p@
   \belowdisplayskip \abovedisplayskip
-  \abovedisplayshortskip \z@ plus3pt
-  \belowdisplayshortskip 6pt plus3pt minus3pt}
+  \abovedisplayshortskip \z@ plus3\p@
+  \belowdisplayshortskip 6\p@ plus3\p@ minus3\p@
+  \def\@listi{\leftmargin\leftmargini
+              \topsep 6\p@ \@plus2\p@ \@minus2\p@
+              \parsep 3\p@ \@plus2\p@ \@minus\p@
+              \itemsep \parsep}%
+  }%
  \def\footnotesize{\@setsize\footnotesize{11pt}\ixpt\@ixpt
-  \abovedisplayskip 8pt plus 2pt minus 4pt
+  \abovedisplayskip 8\p@ plus 2\p@ minus 4\p@
   \belowdisplayskip \abovedisplayskip
-  \abovedisplayshortskip \z@ plus 1pt
-  \belowdisplayshortskip 4pt plus 2pt minus 2pt}
+  \abovedisplayshortskip \z@ plus 1\p@
+  \belowdisplayshortskip 4\p@ plus 2\p@ minus 2\p@
+  \def\@listi{\leftmargin\leftmargini
+              \topsep 4\p@ \@plus2\p@ \@minus2\p@
+              \parsep 2\p@ \@plus\p@ \@minus\p@
+              \itemsep \parsep}%
+  }%
  \def\scriptsize{\@setsize\scriptsize{9.5pt}\viiipt\@viiipt}
  \def\tiny{\@setsize\tiny{7pt}\vipt\@vipt}
  \def\large{\@setsize\large{14pt}\xiipt\@xiipt}
@@ -630,22 +649,34 @@
  \def\LARGE{\@setsize\LARGE{22pt}\xviipt\@xviipt}
  \def\huge{\@setsize\huge{25pt}\xxpt\@xxpt}
  \def\Huge{\@setsize\Huge{30pt}\xxvpt\@xxvpt}
-\or
+\or % 12pt option
  \def\@normalsize{\@setsize\normalsize{15pt}\xiipt\@xiipt
-  \abovedisplayskip 12pt plus3pt minus7pt
+  \abovedisplayskip 12\p@ plus3\p@ minus7\p@
   \belowdisplayskip \abovedisplayskip
-  \abovedisplayshortskip \z@ plus3pt
-  \belowdisplayshortskip 6.5pt plus3.5pt minus3pt}
+  \abovedisplayshortskip \z@ plus3\p@
+  \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@
+  \let\listi\listI
+  }%
  \def\small{\@setsize\small{13.6pt}\xipt\@xipt
-  \abovedisplayskip 11pt plus3pt minus6pt
+  \abovedisplayskip 11\p@ plus3\p@ minus6\p@
   \belowdisplayskip \abovedisplayskip
-  \abovedisplayshortskip \z@ plus3pt
-  \belowdisplayshortskip 6.5pt plus3.5pt minus3pt}
+  \abovedisplayshortskip \z@ plus3\p@
+  \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@
+  \def\@listi{\leftmargin\leftmargini
+              \topsep 9\p@ \@plus3\p@ \@minus5\p@
+              \parsep 4.5\p@ \@plus2\p@ \@minus\p@
+              \itemsep \parsep}%
+  }%
  \def\footnotesize{\@setsize\footnotesize{12pt}\xpt\@xpt
-  \abovedisplayskip 10pt plus2pt minus5pt
+  \abovedisplayskip 10\p@ plus2\p@ minus5\p@
   \belowdisplayskip \abovedisplayskip
-  \abovedisplayshortskip \z@ plus3pt
-  \belowdisplayshortskip 6pt plus3pt minus3pt}
+  \abovedisplayshortskip \z@ plus3\p@
+  \belowdisplayshortskip 6\p@ plus3\p@ minus3\p@
+  \def\@listi{\leftmargin\leftmargini
+              \topsep 6\p@ \@plus2\p@ \@minus2\p@
+              \parsep 3\p@ \@plus2\p@ \@minus\p@
+              \itemsep \parsep}%
+  }%
  \def\scriptsize{\@setsize\scriptsize{9.5pt}\viiipt\@viiipt}
  \def\tiny{\@setsize\tiny{7pt}\vipt\@vipt}
  \def\large{\@setsize\large{18pt}\xivpt\@xivpt}
@@ -653,8 +684,53 @@
  \def\LARGE{\@setsize\LARGE{25pt}\xxpt\@xxpt}
  \def\huge{\@setsize\huge{30pt}\xxvpt\@xxvpt}
  \let\Huge=\huge
+\or  % Norm-Option (DIN 2107, 2142)
+ \def\@normalsize{\@setsize\normalsize{\GZA}\xipt\@xipt
+  \abovedisplayskip 11\p@ plus3\p@ minus6\p@
+  \belowdisplayskip \abovedisplayskip
+  \abovedisplayshortskip \z@ plus3\p@
+  \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@
+  \let\@listi\@listI
+  }% Setting of \@listi added 22 Dec 87
+ \def\small{\@setsize\small{11pt}\xpt\@xpt
+  \abovedisplayskip 10\p@ plus2\p@ minus5\p@
+  \belowdisplayskip \abovedisplayskip
+  \abovedisplayshortskip  \z@ plus3\p@
+  \belowdisplayshortskip  6\p@ plus3\p@ minus3\p@
+  \def\@listi{\leftmargin\leftmargini %% Def of \@listi added 22 Dec 87
+              \topsep 6\p@ plus2\p@ minus2\p@
+              \parsep 3\p@ plus2\p@ minus\p@
+              \itemsep \parsep}%
+  }%
+ \def\footnotesize{\@setsize\footnotesize{11pt}\ixpt\@ixpt
+  \abovedisplayskip 8\p@ plus2\p@ minus4\p@
+  \belowdisplayskip \abovedisplayskip
+  \abovedisplayshortskip \z@ plus\p@
+  \belowdisplayshortskip 4\p@ plus2\p@ minus2\p@
+  \def\@listi{\leftmargin\leftmargini %% Def of \@listi added 22 Dec 87
+              \topsep 4\p@ plus2\p@ minus2\p@
+              \parsep 2\p@ plus\p@ minus\p@
+              \itemsep \parsep}%
+  }%
+ \def\scriptsize{\@setsize\scriptsize{9.5pt}\viiipt\@viiipt}
+ \def\tiny{\@setsize\tiny{7pt}\vipt\@vipt}
+ \def\large{\@setsize\large{14pt}\xiipt\@xiipt}
+ \def\Large{\@setsize\Large{18pt}\xivpt\@xivpt}
+ \def\LARGE{\@setsize\LARGE{22pt}\xviipt\@xviipt}
+ \def\huge{\@setsize\huge{25pt}\xxpt\@xxpt}
+ \def\Huge{\@setsize\Huge{30pt}\xxvpt\@xxvpt}
 \fi
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 %
 %  \begin{macro}{\normalsize}
 %  We are doing here something different as in the classes files of
@@ -706,6 +782,21 @@
 \topmargin -15pt
 %    \end{macrocode}
 %
+% \begin{macro}{\ltf@headheight}
+% \begin{macro}{\lts@headheight}
+% \begin{macro}{\ltf@headsep}
+% \begin{macro}{\lts@headsep}
+% \begin{macro}{\ltf@textheight}
+% \begin{macro}{\lts@textheight}
+% These dimens are used to store different values for the first page
+% and the following pages. All dimens starting with |ltf@XXX| hold
+% the values for the first page and all dimens starting with |lts@XXX|
+% hold the values for the second and follwing pages. We have to do
+% here such a funny coding becaus \LaTeX-|\thispagestyle|-mechanism
+% is to unflexible. (This code may not complete yet!)
+%
+% We use this to move the start of the first page on the letters
+% 12 mm up.
 %
 %    \begin{macrocode}
 \newdimen\ltf@headheight
@@ -719,6 +810,12 @@
 \ltf@headsep 8.8truemm %
 \lts@headsep 0truemm %
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 %
 %  \begin{macro}{\footheight}
 %    \LaTeXe has no dimen-register |\footheight|, because it is in
@@ -752,12 +849,29 @@
 %    \end{macrocode}
 %
 %  \begin{macro}{\footnotesep}
-%  \begin{macro}{\footins}
+%    |\footnotesep| is the height of the strut placed at the beginning
+%    of every footnote. It equals the  height of a normal
+%    |\footnotesize| strut in this
+%    class, thus no extra space occurs between footnotes.
+%
+%    The class/style `dinbrief' uses only one value for
+%    |\footnotesep| in all pt-sizes.
+%
 %    \begin{macrocode}
 \footnotesep 4.2truemm
-\skip\footins 10pt plus 2pt minus 4pt
 %    \end{macrocode}
 %  \end{macro}
+%
+%  \begin{macro}{\footins}
+%    |\skip\footins| is the space between the last line of the main
+%    text and the top of the first footnote.
+%
+%    The class/style `dinbrief' uses only one value for
+%    |\footins| in all pt-sizes.
+%
+%    \begin{macrocode}
+\skip\footins 10pt plus 2pt minus 4pt
+%    \end{macrocode}
 %  \end{macro}
 %
 %    \begin{macrocode}

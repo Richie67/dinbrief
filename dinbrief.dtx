@@ -1,9 +1,12 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.24 1995/01/19 02:43:30 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.25 1995/01/22 00:27:24 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.25  1995/01/22 00:27:24  Gussmann
+% * layout bug in envelope window detected and fixed.
+%
 % Revision 1.24  1995/01/19 02:43:30  Gussmann
 % \cmd\letter sequence \let\\=\relax added to avaid error message
 % in LaTeX209.
@@ -1044,8 +1047,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/01/19 02:43:30 $}
-\def\RCSrevision{$Revision: 1.24 $}
+\def\RCSdate{$Date: 1995/01/22 00:27:24 $}
+\def\RCSrevision{$Revision: 1.25 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -1208,6 +1211,7 @@ auf bekannte Fehler hingewiesen.
 %        \cmd\@phone       & phone       &           & $\bullet$ & telephone number\\
 %        \cmd\@mymail      & sign        & $\bullet$ & $\bullet$ & my sign\\
 %        \cmd\@yourmail    & yourmail    & $\bullet$ &           & your mail\\
+%        \cmd\@writer      & writer      & $\bullet$ & $\bullet$ & writer, processor\\
 %    \end{tabular}
 %    \MakeShortVerb{\|}
 %
@@ -1217,8 +1221,10 @@ auf bekannte Fehler hingewiesen.
 %  \begin{macro}{\ka@db@assignvarglobal}
 %    Assigns the argument to the global entity of that variable.
 %    \begin{macrocode}
-\long\def\ka@db@assignvarglobal#1#2{%
-  \global\@namedef{ka@db@g@#1}{#2}
+\long\def\ka@db@assignvarglobal#1#2{\protect\pka@db@assignvarglobal{#1}{#2}}%
+\long\def\pka@db@assignvarglobal#1#2{%
+  \message{assignvarglobal: #1 = #2}%
+  \global\@namedef{ka@db@g@#1}{#2}%
 }
 %    \end{macrocode}
 %  \end{macro}
@@ -1226,8 +1232,10 @@ auf bekannte Fehler hingewiesen.
 %  \begin{macro}{\ka@db@assignvarlocal}
 %    Assigns the argument to the local entity of that vairable.
 %    \begin{macrocode}
-\long\def\ka@db@assignvarlocal#1#2{%
-  \global\@namedef{ka@db@l@#1}{#2}
+\long\def\ka@db@assignvarlocal#1#2{\protect\pka@db@assignvarlocal{#1}{#2}}%
+\long\def\pka@db@assignvarlocal#1#2{%
+  \message{assignvarlocal: #1 = #2}%
+  \global\@namedef{ka@db@l@#1}{#2}%
 }
 %    \end{macrocode}
 %  \end{macro}
@@ -1247,12 +1255,16 @@ auf bekannte Fehler hingewiesen.
 %  \begin{macro}{\ka@db@assignvar}
 %    Assigns the given argument either to the local or global entity
 %    depending on the value of the boolean variable |ifka@db@inletter|.
+%    We do the same as in \LaTeX. We define a normal and a protected
+%    version.
 %    \begin{macrocode}
-\long\def\ka@db@assignvar#1#2{%
-  \ifka@db@inletter
-    \ka@db@assignvarlocal{#1}{#2}
+\long\def\ka@db@assignvar#1#2{\protect\pka@db@assignvar{#1}{#2}}%
+\long\def\pka@db@assignvar#1#2{%
+  \message{assignvar: #1 = #2}%
+  \ifnum\c@lt@state>0\relax
+    \pka@db@assignvarlocal{#1}{#2}
   \else
-    \ka@db@assignvarglobal{#1}{#2}
+    \pka@db@assignvarglobal{#1}{#2}
   \fi
 }
 %    \end{macrocode}
@@ -1261,7 +1273,8 @@ auf bekannte Fehler hingewiesen.
 %  \begin{macro}{\ka@db@usevarglobal}
 %    Use the global entity.
 %    \begin{macrocode}
-\def\ka@db@usevarglobal#1{%
+\def\ka@db@usevarglobal#1{\protect\pka@db@usevarglobal{#1}}%
+\def\pka@db@usevarglobal#1{%
   \@nameuse{ka@db@g@#1}%
 }
 %    \end{macrocode}
@@ -1270,7 +1283,8 @@ auf bekannte Fehler hingewiesen.
 %  \begin{macro}{\ka@db@usevarlocal}
 %    Use the local entity.
 %    \begin{macrocode}
-\def\ka@db@usevarlocal#1{%
+\def\ka@db@usevarlocal#1{\protect\pka@db@usevarlocal{#1}}%
+\def\pka@db@usevarlocal#1{%
   \@nameuse{ka@db@l@#1}%
 }
 %    \end{macrocode}
@@ -1284,16 +1298,39 @@ auf bekannte Fehler hingewiesen.
 %    \begin{macrocode}
 \def\ka@db@usevar#1{%
   \bgroup
-    \def\protect{\noexpand\protect\noexpand}
-    \edef\tmpa{\ka@db@usevarlocal{#1}}
+    \def\protect{\noexpand\protect\noexpand}%
+    \let\\=\relax
+    \edef\tmpa{\pka@db@usevarlocal{#1}}%
+    \typeout{usevar: varlocal #1 = \meaning\tmpa}%
+    \expandafter\egroup
     \ifx\tmpa\@empty
       \message{Using global var, because local var is empty!}%
-      \ka@db@usevarglobal{#1}%
+      \pka@db@usevarglobal{#1}%
     \else
       \message{Using local var!}%
-      \ka@db@usevarlocal{#1}%
+      \pka@db@usevarlocal{#1}%
     \fi
-  \egroup
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\ka@db@ifemptydynvar}
+%    \begin{macrocode}
+\long\def\ka@db@ifemptydynvar#1#2#3#4{%
+  \bgroup
+    \def\protect{\noexpand\protect\noexpand}%
+    \let\\=a% because characters are not expanded
+    \edef\tmpa{#1{#2}}%
+    \typeout{ifempty: \string#1\space var #2 = \meaning#1{#2}}%
+    \typeout{ifempty: \string#1\space var #2 = \meaning\tmpa}%
+    \expandafter\egroup
+    \ifx\tmpa\@empty
+      \message{var is empty!}%
+      #3
+    \else
+      \message{var is not empty!}%
+      #4
+    \fi
 }
 %    \end{macrocode}
 %  \end{macro}
@@ -1301,24 +1338,86 @@ auf bekannte Fehler hingewiesen.
 %  \begin{macro}{\ka@db@ifemptyvarlocal}
 %    \begin{macrocode}
 \long\def\ka@db@ifemptyvarlocal#1#2#3{%
-  \bgroup
-    \def\protect{\noexpand\protect\noexpand}
-    \let\\=a% because characters are not expanded
-    \edef\tmpa{\ka@db@usevarlocal{#1}}
-    \expandafter\egroup
-    \ifx\tmpa\@empty
-      \message{var is empty!}%
-      #2
-    \else
-      \message{var is not empty!}%
-      #3
-    \fi
+  \ka@db@ifemptydynvar{\pka@db@usevarlocal}{#1}{#2}{#3}%
 }
+% \long\def\ka@db@ifemptyvarlocal#1#2#3{%
+%   \bgroup
+%     \def\protect{\noexpand\protect\noexpand}%
+%     \let\\=a% because characters are not expanded
+%     \edef\tmpa{\pka@db@usevarlocal{#1}}%
+%     \typeout{ifempty: varlocal #1 = \meaning\pka@db@usevarlocal{#1}}%
+%     \typeout{ifempty: varlocal #1 = \meaning\tmpa}%
+%     \expandafter\egroup
+%     \ifx\tmpa\@empty
+%       \message{var is empty!}%
+%       #2
+%     \else
+%       \message{var is not empty!}%
+%       #3
+%     \fi
+% }
 %    \end{macrocode}
 %  \end{macro}
 %
 %  \begin{macro}{\ka@db@ifemptyvarglobal}
 %    \begin{macrocode}
+\long\def\ka@db@ifemptyvarglobal#1#2#3{%
+  \ka@db@ifemptydynvar{\pka@db@usevarglobal}{#1}{#2}{#3}%
+}
+% \long\def\ka@db@ifemptyvarglobal#1#2#3{%
+%   \bgroup
+%     \def\protect{\noexpand\protect\noexpand}%
+%     \let\\=a% because characters are not expanded
+%     \edef\tmpa{\pka@db@usevarglobal{#1}}%
+%     \typeout{ifempty: varglobal org cs #1 = \meaning\pka@db@usevarglobal{#1}}%
+%     \typeout{ifempty: varglobal #1 = \meaning\tmpa}%
+%     \expandafter\egroup
+%     \ifx\tmpa\@empty
+%       \message{var is empty!}%
+%       #2
+%     \else
+%       \message{var is not empty!}%
+%       #3
+%     \fi
+% }
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\ka@db@ifemptyvar}
+%    \begin{macrocode}
+\long\def\ka@db@ifemptyvar#1#2#3{%
+  \ka@db@ifemptyvarlocal{#1}{% then
+    \ka@db@ifemptyvarglobal{#1}{#2}{#3}%
+    }{#3}%
+}
+% \long\def\ka@db@ifemptyvar#1#2#3{%
+%   \bgroup
+%     \def\protect{\noexpand\protect\noexpand}%
+%     \let\\=a% because characters are not expanded
+%     \edef\tmpa{\pka@db@usevarlocal{#1}}%
+%     \typeout{ifempty: varlocal #1 = \meaning\pka@db@usevarlocal{#1}}%
+%     \typeout{ifempty: varlocal #1 = \meaning\tmpa}%
+%     \expandafter\egroup
+%     \ifx\tmpa\@empty
+%       \bgroup
+%         \def\protect{\noexpand\protect\noexpand}%
+%         \let\\=a% because characters are not expanded
+%         \edef\tmpa{\pka@db@usevarglobal{#1}}%
+%         \typeout{ifempty: varglobal org cs #1 = \meaning\pka@db@usevarglobal{#1}}%
+%         \typeout{ifempty: varglobal #1 = \meaning\tmpa}%
+%         \expandafter\egroup
+%         \ifx\tmpa\@empty
+%           \message{var #1 is empty!}%
+%           #2
+%         \else
+%           \message{var #1 is not empty!}%
+%           #3
+%         \fi
+%     \else
+%       \message{var #1 is not empty!}%
+%       #3
+%     \fi
+% }
 %    \end{macrocode}
 %  \end{macro}
 %
@@ -1330,6 +1429,7 @@ auf bekannte Fehler hingewiesen.
 %    \begin{macrocode}
 \def\ka@db@execatletter#1{%
   \bgroup
+    \let\\=\relax
     \def\protect{\noexpand\protect\noexpand}%
     \xdef\ka@db@atletter{\ka@db@atletter #1}
   \egroup
@@ -1344,6 +1444,7 @@ auf bekannte Fehler hingewiesen.
 %    \begin{macrocode}
 \def\ka@db@execatendletter#1{%
   \bgroup
+    \let\\=\relax
     \def\protect{\noexpand\protect\noexpand}%
     \xdef\ka@db@atendletter{\ka@db@atendletter #1}
   \egroup
@@ -2219,9 +2320,9 @@ auf bekannte Fehler hingewiesen.
   \def\@addresslist{}
   \@splitoncr{\@addressbase}{\@checkformark}%
   \gdef\toname{\@addressname}
-  \typeout{Addresslist: \@addresslist}
-  \typeout{Addressname: \@addressname}
-  \typeout{\string\toname: \toname}
+  \typeout{Addresslist: \@addresslist}%
+  \typeout{Addressname: \@addressname}%
+  \typeout{\string\toname: \toname}%
 %  \noindent Anschrift: \fbox{\parbox{5cm}{\parskip6pt\addresslist}} \par
 %  \noindent An: \addressname \par \vskip 3cm\relax
 }
@@ -2346,6 +2447,10 @@ auf bekannte Fehler hingewiesen.
           \relax
         \else
           \typeout{Start dumping \string\@addresslist}%
+          \leavevmode
+          \ka@db@ifemptyvarlocal{postremark}{}{%
+            \ka@db@usevarlocal{postremark}\\[\medskipamount]
+          }%
           \raggedright \@addresslist %\toname \\ \toaddress%
           \typeout{End dumping \string\@addresslist}%
           \if@toadrcenter\relax
@@ -2793,6 +2898,7 @@ auf bekannte Fehler hingewiesen.
     \ka@db@assignvarlocal{cc}{#1}%
   \fi
 }
+\ka@db@execatletter{\ka@db@assignvarlocal{cc}{}}%
 \def\encl#1{%
   \ifnum\c@lt@state=3\relax
     \par
@@ -2803,6 +2909,7 @@ auf bekannte Fehler hingewiesen.
     \ka@db@assignvarlocal{encl}{#1}%
   \fi
 }
+\ka@db@execatletter{\ka@db@assignvarlocal{encl}{}}%
 %    \end{macrocode}
 %  \end{macro}
 %  \end{macro}
@@ -3009,14 +3116,6 @@ auf bekannte Fehler hingewiesen.
 %
 % \subsection{Processing of a single letter}
 %
-%  \begin{macro}{\ifka@db@inletter}
-% This boolean variable is only true if we are inside a letter.
-%    \begin{macrocode}
-\newif\ifka@db@inletter
-\ka@db@inletterfalse
-%    \end{macrocode}
-%  \end{macro}
-%
 %  \begin{macro}{lt@state}
 %  The counter |c@lt@state| holds values from 0 to 3. These
 %  values indicate different states inside the letter.
@@ -3056,6 +3155,8 @@ auf bekannte Fehler hingewiesen.
 %    \end{macrocode}
 % \changes{1.22.0}{1995/01/19}{(RG) State counter added to \cmd\letter.
 %                              Check for nested letter envs changed.}
+% \changes{1.25.0}{1995/01/21}{(RG) \cmd\ka@db@atletter-hook added and
+%                              use of |\if@ka@dbinletter| deleted.}
 %    \begin{macrocode}
   \ifnum\c@lt@state>0
     \ka@db@error{%
@@ -3063,25 +3164,21 @@ auf bekannte Fehler hingewiesen.
       \string\begin{letter}-environment found.
     }
   \fi
-  \setcounter{lt@state}{1}
-  \ifka@db@inletter
-    \ka@db@error{%
-      Nested \string\begin \space \string letter are not allowed.
-    }
-  \fi
+  \setcounter{lt@state}{1}%
+  \typeout{\string\ka@db@atletter\space\ka@db@atletter}%
+  \ka@db@atletter
   \clearpage
-  \refstepcounter{letter}
+  \refstepcounter{letter}%
   \c@page\@ne
   \interlinepenalty=200
   % \@processto{#1}%
-  \message{Starting \string\@splitaddress}
+  \message{Starting \string\@splitaddress}%
   \bgroup
-    \def\protect{\noexpand\protect\noexpand}
+    \def\protect{\noexpand\protect\noexpand}%
     \let\\=\relax
     \@splitaddress{#1}
   \egroup
-  \message{Ending \string\@splitaddress}
-  \ka@db@inlettertrue
+  \message{Ending \string\@splitaddress}%
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3117,7 +3214,7 @@ auf bekannte Fehler hingewiesen.
       \immediate\write\@auxout{\string\mlabel{\@backaddress}{\@addresslist}}%
     \endgroup
   \fi
-  \ka@db@inletterfalse
+  \ka@db@atendletter
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3372,17 +3469,13 @@ auf bekannte Fehler hingewiesen.
 %
 % \begin{macro}{\writer}
 %   This macro takes as argument the name of the writer (Sachbearbeiter)
-%   and stores it in |\@writer|. It also toggles the the
+%   and stores it in the var {\sf writer\/}. It also toggles the the
 %   |\@reflinetrue|-switch to get an referline and further
 %   enables the layout of the new DIN draft standard 676 from May 1991.
 %    \begin{macrocode}
-\def\writer#1{\gdef\@writer{#1}\@reflinetrue\enabledraftstandard}
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@writer}
-%    \begin{macrocode}
-\def\@writer{}
+\def\writer#1{\ka@db@assignvar{writer}{#1}\@reflinetrue\enabledraftstandard}
+\ka@db@execatletter{\ka@db@assignvarlocal{writer}{}}%
+\ka@db@assignvarglobal{writer}{}%
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4346,14 +4439,23 @@ auf bekannte Fehler hingewiesen.
                              \@prephone{}
                            \fi
                            \@phone
-                           \ifx\@empty\@writer\relax
-                           \else
-                             \ifx\@empty\@phone\relax
-                             \else
-                             ,\ % insert comma and blank only if both
-                             \fi% are nonempty
-                             \@writer
-                           \fi
+                           \ka@db@ifemptyvar{writer}%
+                             {}% true
+                             {% false
+                               \ifx\@empty\@phone\relax
+                               \else
+                                 ,\ % insert comma and blank only if both
+                               \fi%   are nonempty
+                               \ka@db@usevar{writer}%
+                             }%
+%                           \ifx\@empty\@writer\relax
+%                           \else
+%                             \ifx\@empty\@phone\relax
+%                             \else
+%                             ,\ % insert comma and blank only if both
+%                             \fi% are nonempty
+%                             \@writer
+%                           \fi
                            \hbox{}\hss}%
     \parbox[b]{\@fordate}{{\ka@db@fontsize{7}{9pt}\ka@db@selectfont
       \datemsg
@@ -4403,11 +4505,21 @@ auf bekannte Fehler hingewiesen.
 %    \end{macrocode}
 %  \end{macro}
 %
+%  \begin{macro}{\postremark}
+%    \begin{macrocode}
+\def\postremark#1{%
+  \@warning{\string\postremark\space not yet implemented.}%
+  \ka@db@assignvarlocal{postremark}{#1}%
+}
+\ka@db@execatletter{\ka@db@assignvarlocal{postremark}{}}%
+%    \end{macrocode}
+%  \end{macro}
+%
 %  \begin{macro}{\Postvermerk}
 %    \begin{macrocode}
 \def\Postvermerk#1{%
-  \def\@mailnote{#1}
-  \@warning{\string\Postvermerk\space not yet implemented.}%
+  \@warning{Use \string\postremark\space instead of \string\Postvermerk}%
+  \postremark{#1}%
 }
 %    \end{macrocode}
 %  \end{macro}
@@ -4581,6 +4693,7 @@ auf bekannte Fehler hingewiesen.
 \pagenumbering{arabic}
 \onecolumn
 \@fileswfalse
+\errorcontextlines=10
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -5093,7 +5206,7 @@ Postfach 28 17\par
 3400 G"ottingen
 }
 \Postvermerk{Einschreiben}
-%% \Behandlungsvermerk{E\ i\ l\ t} % <- command not preset
+ % \Behandlungsvermerk{E\ i\ l\ t} % <- command not preset
 \Datum{G"ottingen, 29.04.86}
 \Absender{Klaus Waldmann\\B"urgerstra"se 135\\3400 G"ottingen\\::Tel.\
 (05 51) 9 34 56}
@@ -5273,9 +5386,9 @@ F-58500 CLAMECY}
 %    \begin{macrocode}
 \EnableCrossrefs
 \CodelineIndex
-%%\DisableCrossrefs
+ %\DisableCrossrefs
 \RecordChanges
-%%\OnlyDescription
+ %\OnlyDescription
 \typeout{Expect some under- and overfull boxes}
 %    \end{macrocode}
 %    We also want the full details.

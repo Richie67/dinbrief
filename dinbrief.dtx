@@ -1,7 +1,7 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.dtx 1.68 2000/01/03 20:42:40 Gussmann Exp Gussmann $
+% $Id: dinbrief.dtx 1.69 2000/01/03 21:10:25 Gussmann Exp Gussmann $
 %
 %<*styleinfo>
 =======================================================================
@@ -9,8 +9,8 @@
 shortpackagename = {dinbrief},
 longpackagename  = {dinbrief},
 baseformats      = {\LaTeX\ 2.09 and \LaTeXe},
-version          = {$Revision: 1.68 $},
-date             = {$Date: 2000/01/03 20:42:40 $},
+version          = {$Revision: 1.69 $},
+date             = {$Date: 2000/01/03 21:10:25 $},
 author           = {K.D. Braune, R. Gussmann,
                    Klaus.Braune@rz.uni-karlsruhe.de
                    richard@gussmann.de
@@ -37,6 +37,11 @@ incompatibilities = {not full compatible to R. Sengerlings dinbrief}}
 %</styleinfo>
 %
 % $Log: dinbrief.dtx $
+% Revision 1.69  2000/01/03 21:10:25  Gussmann
+% - The checksum must also corrected (a long time ago you changed a
+%   dtx-file, Richard).
+% - Added entry to the change history.
+%
 % Revision 1.68  2000/01/03 20:42:40  Gussmann
 % - Fixed Y2K-bug in \@znumber.
 % - Changed the license conditions to the LaTeX Project Public
@@ -579,6 +584,9 @@ Danach folgt der eigentliche Brieftext. Die abschlie"sende
 gesetzt. Dieser Befehl f"ugt auch die maschinenschriftliche
 Wiederholung der Unterschrift an, wie sie mit dem
 \cs{signature}-Befehl festgelegt wurde.
+Die erweiterte Form \cmd\closing\oarg{Unterschrift}\arg{Gru"sformel}
+erm"oglicht es, die Unterschrift unter den Brief als Text oder Graphik
+einzubinden.
 
 Im Anschlu"s an die Gru"sformel werden {\bf Anlagen-\/}
 (\cmd\encl\arg{Anlage}), {\bf Verteilvermerke\/}
@@ -803,7 +811,8 @@ anzugeben.
   \item[\cmd\closing\arg{{Gru"sformel}}] \hfil\break
         Der Befehl \cmd\closing{} setzt die Gru"sformel und nach
         drei Leerzeilen die maschinenschrifliche Wiederholung
-        der Unterschrift.
+        der Unterschrift. Die erweiterte Form des Befehls
+        lautet: \cmd\closing\oarg{Unterschrift}\arg{Gru"sformel}.
 
   \item[\cmd\encl\arg{{Anlagen}}] \hfil\break
         Der Vermerk "uber dem Brief beigef"ugte Anlagen
@@ -978,7 +987,7 @@ anzugeben.
     \verb|\subject|\arg{{Betreff}}                              \\
     \verb|\concern|\arg{{Betreff}}                              \\
     \verb|\opening|\arg{{Anrede}}                               \\
-    \verb|\closing|\arg{{Gru"sformel}}                          \\
+    \verb|\closing|\oarg{Unterschrift}\arg{{Gru"sformel}}       \\
   \hline
     \verb|\centeraddress|                                       \\
     \verb|\normaladdress|                                       \\
@@ -1166,7 +1175,25 @@ bei mehrseitigen Briefen in der Fu"szeile eingeblendet, die Kopfzeile
 bleibt leer. Durch \verb+headings+\index{headings@\verb+headings+} wird
 die Kopfzeile mit einer Anrede und der Seitenzahl bei mehrseitigen
 Briefen gesetzt.
- 
+
+\ssect{Einblenden von Unterschriften}
+\cmd\closing\oarg{Unterschrift}\arg{Gru"sformel} erlaubt es,
+die Unterschrift als Graphik einzubinden. F"ur unser Beispiel
+nehmen wir an, da"s die Graphik als encapuslated Postscript-Datei
+im Verzeichnis und mit Namen \verb|graph/sig.eps| vorliegt.
+Die Befehle zum Einbinden von Graphiken stellt das Paket
+{\sc graphics} zur VerfÅgung. In der Pr"aambel des Briefes wird
+ein Befehl zum Setzen der Unterschrift definiert:
+\verb|\newcommand{\setsignature}{\includegraphics{graph/sig.eps}}|
+Die Gru"sformel wird dann in der erweiterten Form gesetzt:
+\verb|\closing[\protect\setsignature]{Mit freundlichen Gr"u"sen}|.
+Gegebenenfalls ist es notwendig, die Unterschrift mit dem
+Befehl \verb+\raisebox+ in die notwendige Position zu schieben.
+Dazu ist die Definition des Macros zum Einbinden der Unterschrift
+wie folgt anzupassen:
+\verb|\newcommand{\setsignature}{\raisebox{-3mm}{\includegraphics{graph/sig.eps}}}|.
+Die L"angenangabe (hier -3mm) ist entsprechend anzupassen.
+
 \ssect{Briefe in englischer oder franz"osischer Sprache}
  
 Wer Briefe in anderen Sprachen schreiben m"ochte, kann f"ur Englisch und
@@ -1650,8 +1677,8 @@ der Stil "`{\tt german}"' geladen werden.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 2000/01/03 20:42:40 $}
-\def\RCSrevision{$Revision: 1.68 $}
+\def\RCSdate{$Date: 2000/01/03 21:10:25 $}
+\def\RCSrevision{$Revision: 1.69 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}

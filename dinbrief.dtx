@@ -1,9 +1,14 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.20 1995/01/12 01:12:12 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.21 1995/01/13 16:27:49 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.21  1995/01/13 16:27:49  Gussmann
+% * \cmd\splitoncr introduced, to split the address of the receiver
+%   in a more user friendly way.
+% * old DINBRIEF API functions added.
+%
 % Revision 1.20  1995/01/12 01:12:12  Gussmann
 % Fixed bug to work correctly with NFSS.
 % PSNFSS gets now the right fonts.
@@ -1002,8 +1007,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/01/12 01:12:12 $}
-\def\RCSrevision{$Revision: 1.20 $}
+\def\RCSdate{$Date: 1995/01/13 16:27:49 $}
+\def\RCSrevision{$Revision: 1.21 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -1133,6 +1138,155 @@ auf bekannte Fehler hingewiesen.
 % \subsection{Initial code}
 %
 %    In this part we define a few comands that are used later on.
+%
+% \subsubsection{{\tt dinbrief\/} programming environment}
+%
+% \changes{1.22.0}{1995/01/15}{(RG) \cmd\section\space programming
+%                              environment added.}
+%
+%    We define a new commands that are used later on.
+%
+%  {\tt dinbrief\/} has many variables to store information about
+%  a letter in it. These informations can be local to one letter
+%  or global to all letters in the file. Here is a table of all
+%  variables, and a mark if they are local, global or both.
+%
+%  \begin{center}
+%    \begin{tabular}{ll|c|c|l}
+%        \multicolumn{1}{c}{\bf\small old name} &
+%          \multicolumn{1}{c}{\bf\small new name}
+%          \multicolumn{1}{c}{\bf\small local} &
+%          \multicolumn{1}{c}{\bf\small global} &
+%          \multicolumn{1}{c}{\bf\small holds}\\
+%      \hline
+%        \cmd\@backaddress & backaddress & $\bullet$ & $\bullet$ & backaddress\\
+%        not used          & cc          & $\bullet$ &           & carbon copy\\
+%        not used          & encl        & $\bullet$ &           & enclosures \\
+%        not used          & ps          & $\bullet$ &           & postscriptum\\
+%        \cmd\@fromsig     & signature   & $\bullet$ & $\bullet$ & sign of author\\
+%        \cmd\@fromaddress & fromaddress & $\bullet$ & $\bullet$ & address of author\\
+%        \cmd\@place       & place       &           & $\bullet$ & place \\
+%        \cmd\@prephone    & prephone    &           & $\bullet$ & dialing code\\
+%        \cmd\@phone       & phone       &           & $\bullet$ & telephone number\\
+%        \cmd\@mymail      & sign        & $\bullet$ & $\bullet$ & my sign\\
+%        \cmd\@yourmail    & yourmail    & $\bullet$ &           & your mail\\
+%    \end{tabular}
+%  \end{center}
+%  Currently the new nameing scheme is only used for |cc|, |encl| and
+%  |ps|. No features of are currently used.
+%
+%  \begin{macro}{\ka@db@assignvarglobal}
+%    Assigns the argument to the global entity of that variable.
+%    \begin{macrocode}
+\def\ka@db@assignvarglobal#1#2{%
+  \global\@namedef{ka@db@g@#1}{#2}
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\ka@db@assignvarlocal}
+%    Assigns the argument to the local entity of that vairable.
+%    \begin{macrocode}
+\def\ka@db@assignvarlocal#1#2{%
+  \global\@namedef{ka@db@l@#1}{#2}
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\ka@db@declvar}
+%    The macro \cmd\ka@db@declvar\arg{NAME} defines two control sequences
+%    with the following names |\kd@db@l@|NAME and |\ka@db@g|NAME.
+%    The control sequences are initialized with |\@empty|.
+%    \begin{macrocode}
+\def\ka@db@declvar#1{%
+  \ka@db@assignvarglobal{#1}{}%
+  \ka@db@assignvarlocal{#1}{}%
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\ka@db@assignvar}
+%    Assigns the given argument either to the local or global entity
+%    depending on the value of the boolean variable |ifka@db@inletter|.
+%    \begin{macrocode}
+\def\ka@db@assignvar#1#2{%
+  \ifka@db@inletter
+    \ka@db@assignvarlocal{#1}{#2}
+  \else
+    \ka@db@assignvarglobal{#1}{#2}
+  \fi
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\ka@db@useglobalvar}
+%    Use the global entity.
+%    \begin{macrocode}
+\def\ka@db@useglobalvar#1{%
+  \@nameuse{ka@db@g@#1}%
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\ka@db@uselocalvar}
+%    Use the local entity.
+%    \begin{macrocode}
+\def\ka@db@uselocalvar#1{%
+  \@nameuse{ka@db@l@#1}%
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\ka@db@usevar}
+%    Use the global or local entity. If the local entity is empty
+%    take the value from the global entity. There is no check if
+%    the local entity holds valid data. |\ka@db@inletter|-Flag is
+%    not used.
+%    \begin{macrocode}
+\def\ka@db@usevar#1{%
+  \bgroup
+    \edef\tmpa{\ka@db@uselocalvar{#1}}
+    \ifx\tmpa\@empty
+      \message{Using global var, because local var is empty!}%
+      \ka@db@useglobalvar{#1}%
+    \else
+      \message{Using local var!}%
+      \ka@db@uselocalvar{#1}%
+    \fi
+  \egroup
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\ka@db@execatletter}
+%  \begin{macro}{\ka@db@atletter}
+%  The macro |\ka@db@execatletter| appends at the end of the macro
+%  |\ka@db@atletter| the stuff added in the argument of
+%  |\ka@db@execatletter|.
+%    \begin{macrocode}
+\def\ka@db@execatletter#1{%
+  \bgroup
+    \def\protect{\noexpand\protect\noexpand}%
+    \xdef\ka@db@atletter{\ka@db@atletter #1}
+  \egroup
+}
+\def\ka@db@atletter{}
+%    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
+%
+%  \begin{macro}{\ka@db@execatendletter}
+%  \begin{macro}{\ka@db@endletter}
+%    \begin{macrocode}
+\def\ka@db@execatendletter#1{%
+  \bgroup
+    \def\protect{\noexpand\protect\noexpand}%
+    \xdef\ka@db@atendletter{\ka@db@atendletter #1}
+  \egroup
+}
+\def\ka@db@atendletter{}
+%    \end{macrocode}
+%  \end{macro}
 %
 % \subsubsection{Choosing the type size}
 %
@@ -1836,26 +1990,26 @@ auf bekannte Fehler hingewiesen.
 \@dblfpbot 0pt plus 1fil
 %    \end{macrocode}
 %
-% \begin{macro}{\@windowrules}
+% \begin{macro}{\ifka@db@windowrules}
 % \begin{macro}{\windowrules}
 % \begin{macro}{\nowindowrules}
 %    \begin{macrocode}
-\def\@windowrules#1{\gdef\@@windowrules{#1}}
-\def\windowrules{\@windowrules{yes}}
-\def\nowindowrules{\@windowrules{}}
+\newif\ifka@db@windowrules
+\def\windowrules{\global\ka@db@windowrulestrue}
+\def\nowindowrules{\global\ka@db@windowrulesfalse}
 \windowrules
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
 % \end{macro}
 %
-% \begin{macro}{\@windowtics}
+% \begin{macro}{\ifka@db@windowtics}
 % \begin{macro}{\windowtics}
 % \begin{macro}{\nowindowtics}
 %    \begin{macrocode}
-\def\@windowtics#1{\gdef\@@windowtics{#1}}
-\def\windowtics{\@windowtics{yes}}
-\def\nowindowtics{\@windowtics{}}
+\newif\ifka@db@windowtics
+\def\windowtics{\global\ka@db@windowticstrue}
+\def\nowindowtics{\global\ka@db@windowticsfalse}
 \windowtics
 %    \end{macrocode}
 % \end{macro}
@@ -1947,9 +2101,290 @@ auf bekannte Fehler hingewiesen.
 }
 %    \end{macrocode}
 %
-%  \begin{macro}{\opening}
+%  \subsubsection{The \cmd\opening-Procedure}
+%  The following macros typeset most static text areas of the letter.
+%
+%  \begin{macro}{\ka@db@tsfromaddress}
 %    \begin{macrocode}
-\def\opening#1{\thispagestyle{first@page}
+\def\ka@db@tsfromaddress{%
+  \ifx\@empty\@fromaddress
+    \vbox to 0pt{\vss}\nointerlineskip
+  \else
+    \vbox to 0pt{\vskip -19.4truemm\raggedright\@fromaddress\vss}\nointerlineskip
+  \fi
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\ka@db@tswindowtics}
+%    \begin{macrocode}
+\def\ka@db@tswindowtics{%
+  \ifka@db@windowtics
+    \vbox to 0pt{%
+     \rule{0pt}{80.0truemm}% 62.5truemm
+     \hbox to 0pt{\hspace*{-24truemm}\vbox{\hrule width 7truemm}\hss}%
+     \vss}\nointerlineskip
+    \vbox to 0pt{%
+     \rule{0pt}{123.5truemm}% 106.0truemm
+     \hbox to 0pt{\hspace*{-18truemm}\vbox{\hrule width 6truemm}\hss}%
+     \vss}\nointerlineskip
+    \vbox to 0pt{%
+     \rule{0pt}{185.0truemm}% 167.5truemm
+     \hbox to 0pt{\hspace*{-24truemm}\vbox{\hrule width 7truemm}\hss}%
+     \vss}\nointerlineskip
+  \else
+    \vbox to 0pt{\rule{0pt}{80.0truemm}%
+     \hbox to 0pt{\vbox{\hrule width 0pt}\hss}%
+     \vss}\nointerlineskip
+    \vbox to 0pt{\rule{0pt}{123.5truemm}%
+     \hbox to 0pt{\vbox{\hrule width 0pt}\hss}%
+     \vss}\nointerlineskip
+    \vbox to 0pt{\rule{0pt}{185.0truemm}%
+     \hbox to 0pt{\vbox{\hrule width 0pt}\hss}%
+     \vss}\nointerlineskip
+  \fi
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\ka@db@tsbottomtext}
+%  \changes{0.0.0}{1994/02/08}{(KDB) Changed to check the height of
+%                              the footer (\cmd\@@bottomtext\ now dimen,
+%                              no longer command)}
+%    \begin{macrocode}
+\def\ka@db@tsbottomtext{%
+  \ifdim\ht\@@bottomtext>0pt
+%    \end{macrocode}
+%  \changes{0.0.0}{1994/02/08}{(KDB) \cmd\@@bottomtext\  should be set
+%                              within a \env{\vbox to 0pt}{\cmd\vss ...}}
+%  \changes{1.22.0}{1995/01/16}{(RG) rule position changed}
+%    \begin{macrocode}
+    \vbox to 0pt{%
+      \rule{0pt}{261.0truemm}% 243.5truemm
+%    \end{macrocode}
+% \changes{0.0.0}{1994/02/08}{(KDB) \cmd\hbox{ ... } moved to box \cmd\@@bottomtext}
+% \changes{0.0.0}{1994/11/17}{(RG) \cmd\unhbox\ changed to \cmd\unhcopy,
+%                             because we can have more than one letter
+%                             in one document. So the bottomline is
+%                             inserted into every first page of letters.}
+%    \begin{macrocode}
+      \unhcopy\@@bottomtext
+      \vss
+    }\nointerlineskip%
+  \fi
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\ka@db@tstoaddress}
+%    \begin{macrocode}
+\def\ka@db@tstoaddress{%
+  \vbox to 0pt{\vss%
+    \ifka@db@windowrules
+      \hbox to 0pt{\hspace*{-4truemm}\vbox{\hrule width 85truemm}\hss}%
+    \else
+      \hbox to 0pt{\hss}%
+    \fi
+    \vss
+  }%
+  \nointerlineskip
+%    \end{macrocode}
+%    \begin{macrocode}
+  \ifx\@empty\@backaddress
+    \vbox to 7.5truemm{%
+      \vfill
+    }%
+    \nointerlineskip
+  \else
+    \vbox to 7.5truemm{%
+      \vskip 2.5truemm
+      \vss
+      \hbox to 0pt{\hspace*{-4truemm}%
+      \vbox{%
+        \hbox to 85truemm{\hfill
+                          {\ka@db@fontsize{8}{9pt}
+                           \ka@db@selectfont \@backaddress}\hfill}%
+        \hrule width 85truemm}\hss}%
+      \vss}\nointerlineskip
+  \fi
+%    \end{macrocode}
+%    \begin{macrocode}
+  \vbox to 40truemm{%
+    \vss
+    \hbox to 0pt{\hskip0pt minus 4truemm%
+      \vbox{%
+        \if@letterform
+          \relax
+        \else
+          \typeout{Start dumping \string\@addresslist}%
+          \raggedright \@addresslist %\toname \\ \toaddress%
+          \typeout{End dumping \string\@addresslist}%
+          \if@toadrcenter\relax
+            \else\vskip 2.5truemm minus 2.5truemm
+          \fi
+        \fi
+      }%
+      \hss
+    }%
+    \if@toadrcenter
+      \vss
+    \fi
+  }\nointerlineskip
+  \vskip 2.5truemm
+%    \end{macrocode}
+%    \begin{macrocode}
+  \vbox to 0pt{\vss%
+    \ifka@db@windowrules
+      \hbox to 0pt{\hspace*{-4truemm}\vbox{\hrule width 85truemm}\hss}%
+    \else
+      \hbox to 0pt{\hss}%
+    \fi
+    \vss
+  }\nointerlineskip
+%
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\ka@db@tsrefline}
+%    \begin{macrocode}
+\def\ka@db@tsrefline{%
+  \if@norefline\else
+    \vbox{\vskip 6truemm
+      \vbox{%
+        \if@refline
+          \@answerto
+        \else
+          \if@letterform\relax\else
+            \ifx\@empty\@place
+              \raggedleft \@date
+            \else
+              \raggedleft \@place,\space\@date
+            \fi
+          \fi
+        \fi
+      }%
+    }%
+    \nointerlineskip
+    \par
+    \bigskip
+  \fi %\if@norefline
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\ka@db@tsconcern}
+%    \begin{macrocode}
+\def\ka@db@tsconcern{%
+  \ifx\@empty\@concern \else
+    \if@letterform\relax\else
+      \@concern \par
+      \bigskip
+    \fi
+  \fi
+  \vspace{0pt plus 10truemm}%
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\ka@db@tsopening}
+%    \begin{macrocode}
+\def\ka@db@tsopening#1{%
+  \if@letterform\relax\else
+   #1\par
+  \fi
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  The following macros just link type above one to the calls.
+%  This makes it more easy to modify parts in one letter or to
+%  modify the layout.
+%
+%  \begin{macro}{\ka@db@placefromaddress}
+%  \begin{macro}{\ka@db@placewindowtics}
+%  \begin{macro}{\ka@db@placebottomtext}
+%  \begin{macro}{\ka@db@placetoaddress}
+%  \begin{macro}{\ka@db@placerefline}
+%  \begin{macro}{\ka@db@placeconcern}
+%  \begin{macro}{\ka@db@placeopening}
+%     \begin{macrocode}
+\def\ka@db@placefromaddress{%
+  \vbox to 0pt{\ka@db@tsfromaddress\vss}\nointerlineskip
+}%
+\def\ka@db@placewindowtics{%
+  \vbox to 0pt{\ka@db@tswindowtics\vss}\nointerlineskip
+}%
+\def\ka@db@placebottomtext{%
+  \vbox to 0pt{\ka@db@tsbottomtext\vss}\nointerlineskip
+}%
+\def\ka@db@placetoaddress{%
+  \vskip 18.6truemm % old value 13.1truemm
+  %   \vbox to 50truemm{\vss\ka@db@tstoaddress\vss}\nointerlineskip
+  \vbox to 50truemm{\ka@db@tstoaddress}\nointerlineskip
+}%
+\def\ka@db@placerefline{%
+  \vbox{\ka@db@tsrefline}\nointerlineskip
+}%
+\def\ka@db@placeconcern{
+  \vbox{\ka@db@tsconcern}\nointerlineskip
+}%
+\def\ka@db@placeopening#1{%
+  \ka@db@tsopening{#1}%
+  \nobreak
+}%
+%    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%
+%  \begin{macro}{\opening}
+%    This macro draws the letter from the top until the concern.
+%    And if available also the bottomtext.
+%
+%    First we switch to a special pagestyle.
+%    \begin{macrocode}
+\def\opening#1{%
+  \thispagestyle{first@page}
+%    \end{macrocode}
+% Actually enlarge the first page by the negative height of the footer:
+%    \begin{macrocode}
+  \ifka@db@ltxtwoe
+     \enlargethispage{-\ht\@@bottomtext}
+  \fi
+%    \end{macrocode}
+%    Then we start printing the parts of the letter.
+%    The following macros expect special positions on the paper to
+%    print their contents on the correct position. |\ka@db@placefromaddress|,
+%    |\ka@db@placewindowtics| and |\ka@db@placebottomtext| start from the
+%    left top corner of the paper. (Maybe not correct: top: 1in +
+%    |\headheight| + |\headsep| + |\topskip|(?) left: ???)
+%    |\ka@db@placetoaddres| starts at the position, mentioned in the
+%    DIN 676. It has to typeset to box containing the address of the
+%    receiver plus the necessary space (normaly two lines).
+%    The other three macros |\ka@db@placerefline|, |\ka@db@placeconcern|
+%    and |\ka@db@placeopening| typeset their contents and the
+%    necessary space. All these macros should typeset boxes.
+%    There should be no |\interlineskip| between each of those boxes.
+%
+%    \begin{macrocode}
+  \ka@db@placefromaddress
+  \ka@db@placewindowtics
+  \ka@db@placebottomtext
+  \ka@db@placetoaddress
+  \ka@db@placerefline
+  \ka@db@placeconcern
+  \ka@db@placeopening{#1}%
+}
+%    \end{macrocode}
+%  \end{macro}
+%  \begin{macro}{\oldopening}
+%    \begin{macrocode}
+\def\oldopening#1{\thispagestyle{first@page}
 %    \end{macrocode}
 % Actually enlarge the first page by the negative height of the footer:
 %    \begin{macrocode}
@@ -3729,14 +4164,34 @@ auf bekannte Fehler hingewiesen.
 %    \end{macrocode}
 %  \end{macro}
 %
+%    \begin{macrocode}
+\long\def\ka@db@splitondblpt#1{%
+  \ka@db@splitdblptx #1::\@st@p@
+  \ifx\ka@db@fromadrtwo\@empty
+  \else
+    \ka@db@splitdblpty #1\@st@p@
+  \fi
+}
+\def\ka@db@fromadrone{}
+\def\ka@db@fromadrtwo{}
+\long\def\ka@db@splitdblptx #1::#2\@st@p@{%
+  \def\ka@db@fromadrone{#1}%
+  \def\ka@db@fromadrtwo{#2}%
+}
+\long\def\ka@db@splitdblpty #1::#2\@st@p@{%
+  \def\ka@db@fromadrtwo{#2}%
+}
+%    \end{macrocode}
+%
 %  \begin{macro}{\Absender}
 %    \begin{macrocode}
-\def\Absender#1{%
+\long\def\Absender#1{%
+  \ka@db@splitondblpt{#1}
   \address{%
     \vspace*{7truemm}
     \leavevmode
     \hbox to 0pt{\hbox to \textwidth{\hfil\today}\hss}%
-    \parbox[t]{\textwidth}{#1}%
+    \parbox[t]{\textwidth}{\ka@db@fromadrone\ka@db@fromadrtwo}%
   }%
 }
 %    \end{macrocode}
@@ -4301,6 +4756,197 @@ Postfach 3322\\[\medskipamount]
 %</10pt|11pt|12pt|norm>
 %    \end{macrocode}
 %
+% \section{Example for using the old {\tt dinbrief\/} API}
+%
+%<*dinbriefold>
+%    \begin{macrocode}
+%%
+%% example letter, example receiver addresses
+%%
+%% Most of the following code has taken from the dinbrief released
+%% at May 11th, 1992. This code is originated by Rainer Sengerling.
+%%
+%% The following example contains all commands of the old dinbrief.sty
+%% API (application programming interface). We recommend to use the
+%% new dinbrief API which is much more powerfull. The outcome may be
+%% quiet unsatisfied if you mix both APIs. We had made a few changes
+%% to adapt the file to \LaTeXe. We also marked the commands not
+%% implemented in the version of May 11th, 1992.
+%%
+\expandafter\ifx\csname documentclass\endcsname\relax
+    \documentstyle[german]{dinbrief}
+    \typeout{Using the command \string\documentstyle.}
+  \else
+    \documentclass[10pt]{dinbrief}
+    \usepackage{german}
+    \typeout{Using the command \string\documentclass.}
+  \fi
+
+%% \Etihoehe{41mm}%  <- command not present
+%% \Etirand{46.3mm}% <- command not present
+%% \Etizahl{6}%      <- command not present
+\makelabels
+\spare{1}
+%%\pagestyle{empty}
+\begin{document}
+%%
+%% Musterbrief -- Anfang
+%% In der vorliegenden Version (beachte Auskommentierungen mit %)
+%% liefert er das Anwendungsbeispiel 4 von DIN 5008
+%%
+\begin{letter}{%
+Stadt G"ottingen\\
+Stadtbauamt\\
+Postfach 28 17\par
+3400 G"ottingen
+}
+\Postvermerk{Einschreiben}
+%% \Behandlungsvermerk{E\ i\ l\ t} % <- command not preset
+\Datum{G"ottingen, 29.04.86}
+\Absender{Klaus Waldmann\\B"urgerstra"se 135\\3400 G"ottingen\\::Tel.\
+(05 51) 9 34 56}
+\Retourlabel
+\Fenster
+\Retouradresse{K. Waldmann $\cdot$ B"urgerstr.\ 135 $\cdot$
+               3400 G"ottingen}
+\Betreff{Mein Bauvorhaben Waldrebenweg 9}
+\signature{K. Waldmann}
+\opening{Sehr geehrte Damen und Herren,}
+den Antrag zur Genehmigung f"ur den Neubau eines Einfamilienhauses auf
+meinem Grund\-st"uck G"ottingen, Waldrebenweg 9, hat der Architekt,
+Herr Dipl.-Ing.\ G. Schwarz, mit allen erforderlichen Unterlagen am
+03.01.86 eingereicht. Die Baugenehmigung habe ich bis heute nicht
+erhaltern.
+
+\Einrueckung{%Der folgende Text wird eingerueckt
+Da ich die Finanzierung des Bauvorhabens ohne die Baugenehmigung nicht
+endg"ultig kl"aren kann und der Beginn der Bauarbeiten nicht verz"ogert
+werden soll, bitte ich dringend, das Genehmigungsverfahren zu
+beschleunigen.
+}  % Ende der Einrueckung
+
+Gleichzeitig bitte ich um Auskunft, ob damit zu rechnen ist, da"s der
+nur geschotterte Waldrebenweg in absehbarer Zeit zu einer "`Stra"se im
+vorl"aufigen Ausbau"' umgestaltet wird.
+
+\anlagenrechts
+\Anlagen{2 Anlagen}
+\Verteiler{Verteiler:\\Landratsamt}
+
+\closing{Mit freundlichen Gr"u"sen}
+\ps{Also bis bald!}
+\end{letter}
+
+%% normgerecht geschriebene Adressen
+
+\begin{letter}{Frau\\Erika Werner\\bei M"uller\\Bahnhofstr.\ 4 -- 6
+
+8580 Bayreuth}
+\end{letter}
+
+\begin{letter}{Frau\\ Annemarie Hartmann\\Vogelsangstr.\ 17 II\par
+2870 Delmenhorst}
+\Postvermerk{Briefdrucksache}
+\end{letter}
+
+\begin{letter}{02694/73\\Herrn Gutsverwalter\\Dipl.-Ldw.\ Otto Winter\\
+Hauptstr.\ 3
+
+8221 Alm Post Neukirchen}
+\Postvermerk{Nicht nachsenden}
+\end{letter}
+
+\begin{letter}{Eheleute\\Erika und Hans M"uller\\Hochstr.\ 4
+
+4709 Bergkamen}
+\Postvermerk{Warensendung}
+\end{letter}
+
+\begin{letter}{Herrn Staatsanwalt\\Dr.\ Ernst Meyer und Frau\\
+Talblick 2
+
+8200 Rosenheim}
+\Postvermerk{Eilzustellung -- auch nachts}
+\end{letter}
+
+\begin{letter}{Herrn Rechtsanwalt\\Dr.\ Otto Freiherr von Bergheim\\
+Leonhard-Eck-Str.\ 7 W 36
+
+8000 M"unchen 19}
+\Postvermerk{Einschreiben -- R"uckschein}
+\end{letter}
+
+\begin{letter}{Herrn Direktor\\Dipl.-Kfm.\ Kurt Gr"aser\\Massivbau AG\\
+Postfach 21 03 14
+
+5600 Wuppertal 21}
+\end{letter}
+
+\begin{letter}{Frau Luise Weber\\Herrn Max Weber\\Rosenstra"se 35
+
+7030 B"oblingen}
+\end{letter}
+
+\begin{letter}{Lack- und Farbwerke\\Dr.\ Hans Sendler \& Co.\\
+Abt.\ FDM 412/10\\Postfach 80 19 36\par
+6230 Frankfurt 80}
+\end{letter}
+
+\begin{letter}{Lehmann \& Krause KG\\z.\ H. Herrn E. Winkelmann\\
+Gartenhaus III r.\\Johannisberger Str.\ 5 a\par 1000 Berlin 31}
+\end{letter}
+
+\begin{letter}{W"aschegro"shandel\\Robert Bergmann\\Venloer
+Stra"se 80 -- 82\par 5000 K"oln 30}
+\end{letter}
+
+\begin{letter}{Firma\\Otto Pfleiderer\\Braunenweiler\\Hauptstr.\ 5\par
+7968 Saulgau 1}
+\Postvermerk{Drucksache}
+\end{letter}
+
+\begin{letter}{Amtsgericht Leer\\Grundbuchamt\\Postfach 11 24\par
+2950 Leer}
+\end{letter}
+
+\begin{letter}{Regierungspr"asident\\Dezernat 44.II.2\\
+Postfach 59 07\par 4400 M"unster}
+\end{letter}
+
+\begin{letter}{Nassauische Heimst"atte GmbH\\
+Abt.\ Landestreuhandstelle\\Postfach 10 29 17\par 6000 Frankfurt 1}
+\end{letter}
+
+\begin{letter}{Volksbank Friedberg\\Hauptzweigstelle Bad Nauheim\\
+Aliceplatz 4\par 6350 Bad Nauheim}
+\end{letter}
+
+\begin{letter}{VEB Ph"onix-Apparatewerk\\
+Absatzabteilung\\Inselstr.\ 14/20
+
+DDR-7021 Leipzig}
+\Postvermerk{Einschreiben}
+\end{letter}
+
+\begin{letter}{Mevrouv J. de Vries\\ Poste restante A. Cuypstraat\\
+Postbus 99730\\1000 NA AMSTERDAM
+
+NIEDERLANDE}
+\end{letter}
+
+\begin{letter}{Monsieur P. Dubois\\Expert en assurances\\
+Escalier 3, b\^atiment C\\4, rue Jean Jaur\`es
+
+F-58500 CLAMECY}
+\end{letter}
+
+\begin{letter}{Mr.\ W. Smith\\514 Kingsbridge Road\\PURLEY, SURREY\\DE
+1\\GROSSBRITANNIEN CRZ 4TH}
+\end{letter}
+
+\end{document}
+%</dinbriefold>
+%
 % \section{The documentation driver file}
 %
 %    We have our own document class to format the \LaTeXe
@@ -4358,6 +5004,11 @@ Postfach 3322\\[\medskipamount]
 %    We do want an index, using linenumbers
 %    \begin{macrocode}
 \EnableCrossrefs
+\CodelineIndex
+%%\DisableCrossrefs
+\RecordChanges
+%%\OnlyDescription
+\typeout{Expect some under- and overfull boxes}
 %    \end{macrocode}
 %    We also want the full details.
 %    \begin{macrocode}

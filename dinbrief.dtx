@@ -1,9 +1,16 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.42 1995/05/11 01:32:40 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.43 1995/05/11 02:45:55 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.43  1995/05/11 02:45:55  Gussmann
+% - Thousends of overfull hboxes removed.
+% - Character table added.
+% - Checksum added.
+% - LaTeX2e version check added.
+%   (but still the wrong date.)
+%
 % Revision 1.42  1995/05/11 01:32:40  Gussmann
 % Section for the commands of the old dinbrief from Rainer Sengerling
 % added.
@@ -1285,8 +1292,8 @@ bisher unabh"anigen Briefstile zusammen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/05/11 01:32:40 $}
-\def\RCSrevision{$Revision: 1.42 $}
+\def\RCSdate{$Date: 1995/05/11 02:45:55 $}
+\def\RCSrevision{$Revision: 1.43 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -2700,6 +2707,13 @@ bisher unabh"anigen Briefstile zusammen.
 %    \end{macrocode}
 %  \end{macro}
 %
+%  \begin{macro}{\dbottomtext}
+%    \begin{macrocode}
+\newdimen\dbottomtext
+\dbottomtext=261.0truemm
+%    \end{macrocode}
+%  \end{macro}
+%
 %  \begin{macro}{\ka@db@tsbottomtext}
 %  \changes{0.0.0}{1994/02/08}{(KDB) Changed to check the height of
 %                              the footer (\cmd\@@bottomtext\ now dimen,
@@ -2711,9 +2725,12 @@ bisher unabh"anigen Briefstile zusammen.
 %  \changes{0.0.0}{1994/02/08}{(KDB) \cmd\@@bottomtext\  should be set
 %                              within a \env{\vbox to 0pt}{\cmd\vss ...}}
 %  \changes{1.22.0}{1995/01/16}{(RG) rule position changed}
+%  \changes{1.43.0}{1995/05/23}{(RG) rule position is now defined in a dimen
+%                               register}
 %    \begin{macrocode}
     \vbox to 0pt{%
-      \rule{0pt}{261.0truemm}% 243.5truemm
+%      \rule{0pt}{261.0truemm}% 243.5truemm
+      \rule{0pt}{\dbottomtext}% 243.5truemm
 %    \end{macrocode}
 % \changes{0.0.0}{1994/02/08}{(KDB) \cmd\hbox{ ... } moved to box \cmd\@@bottomtext}
 % \changes{0.0.0}{1994/11/17}{(RG) \cmd\unhbox\ changed to \cmd\unhcopy,
@@ -3335,17 +3352,17 @@ bisher unabh"anigen Briefstile zusammen.
 %  \end{macro}
 %  \end{macro}
 %
-%  \begin{macro}{\labelheight}
+%  \begin{macro}{\setlabelheight}
 %  \begin{macro}{\setlabelwidth}
-%  \begin{macro}{\labeltopmargin}
-%  \begin{macro}{\labelnumber}
+%  \begin{macro}{\setlabeltopmargin}
+%  \begin{macro}{\setlabelnumber}
 %  These three macros assigns values to the counters defined
 %  above.
 %    \begin{macrocode}
-\def\labelheight#1{\global\dlabelheight=#1\relax}
+\def\setlabelheight#1{\global\dlabelheight=#1\relax}
 \def\setlabelwidth#1{\global\dlabelwidth=#1\relax}
-\def\labeltopmargin#1{\global\dlabeltopmargin=#1\relax}
-\def\labelnumber#1{\global\clabelnumber=#1\relax}
+\def\setlabeltopmargin#1{\global\dlabeltopmargin=#1\relax}
+\def\setlabelnumber#1{\global\clabelnumber=#1\relax}
 %    \end{macrocode}
 %  \end{macro}
 %  \end{macro}
@@ -3359,19 +3376,19 @@ bisher unabh"anigen Briefstile zusammen.
 %  above.
 %    \begin{macrocode}
 \def\Etihoehe#1{%
-  \@warning{Use \string\labelheight\space instead %
+  \@warning{Use \string\setlabelheight\space instead %
             of \string\Etihoehe}%
-  \labelheight{#1}%
+  \setlabelheight{#1}%
   }
 \def\Etirand#1{
-  \@warning{Use \string\labeltopmargin\space instead %
+  \@warning{Use \string\setlabeltopmargin\space instead %
             of \string\Etirand}%
-  \labeltopmargin{#1}%
+  \setlabeltopmargin{#1}%
   }
 \def\Etizahl#1{
-  \@warning{Use \string\labelnumber\space instead %
+  \@warning{Use \string\setlabelnumber\space instead %
             of \string\Etizahl}%
-  \labelnumber{#1}%
+  \setlabelnumber{#1}%
   }
 %    \end{macrocode}
 %  \end{macro}
@@ -3381,10 +3398,10 @@ bisher unabh"anigen Briefstile zusammen.
 %  \subsubsection{Defining the standard dinbrief labels}
 %
 %    \begin{macrocode}
-\labelheight{41.15truemm}%
-\labeltopmargin{8.85truemm}%
+\setlabelheight{41.15truemm}%
+\setlabeltopmargin{8.85truemm}%
 \setlabelwidth{80truemm}%
-\labelnumber{7}%
+\setlabelnumber{7}%
 %    \end{macrocode}
 %
 %  \subsection{Empty labels within labelstyle plain}

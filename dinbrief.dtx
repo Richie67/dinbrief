@@ -1,9 +1,12 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.28 1995/01/22 21:45:47 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.29 1995/02/22 20:07:31 Gussmann Exp $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.29  1995/02/22 20:07:31  Gussmann
+% *** empty log message ***
+%
 % Revision 1.28  1995/01/22 21:45:47  Gussmann
 % * macro \cmd\ka@db@tstoaddress\space changed.
 % * \cmd\postremark\space works.
@@ -1058,8 +1061,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/01/22 21:45:47 $}
-\def\RCSrevision{$Revision: 1.28 $}
+\def\RCSdate{$Date: 1995/02/22 20:07:31 $}
+\def\RCSrevision{$Revision: 1.29 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -3038,6 +3041,99 @@ auf bekannte Fehler hingewiesen.
 % \subsection{Styles for the labels}
 % \changes{0.0.0}{1993/02/06}{(RG) Labels got some styles.}
 %
+%  \subsubsection{Labels with different sizes}
+%
+%  \begin{macro}{\labelheight}
+%  \begin{macro}{\labeltopmargin}
+%  \begin{macro}{\labelnumber}
+%  The size of labels in the labelstyle plain can be modified.
+%  Therefore we define some dimen-register (count-register) holding
+%  the hight, the topmargin and the number of labels.
+%    \begin{macrocode}
+\newdimen\dlabelheight
+\newdimen\dlabeltopmargin
+\newcount\clabelnumber
+%    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%
+%  \begin{macro}{\labelheight}
+%  \begin{macro}{\labeltopmargin}
+%  \begin{macro}{\labelnumber}
+%  These three macros assigns values to the counters defined
+%  above.
+%    \begin{macrocode}
+\def\labelheight#1{\dlabelheight=#1\relax}
+\def\labeltopmargin#1{\dlabeltopmargin=#1\relax}
+\def\labelnumber#1{\clabelnumber=#1\relax}
+%    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%
+%  \begin{macro}{\Etihoehe}
+%  \begin{macro}{\Etirand}
+%  \begin{macro}{\Etizahl}
+%  These three macros assigns values to the counters defined
+%  above.
+%    \begin{macrocode}
+\def\Etihoehe#1{%
+  \@warning{Use \string\labelheight\space instead of \string\Etihoehe}%
+  \labelheight{#1}%
+  }
+\def\Etirand#1{
+  \@warning{Use \string\labeltopmargin\space instead of \string\Etirand}%
+  \labeltopmargin{#1}%
+  }
+\def\Etizahl#1{
+  \@warning{Use \string\labelnumber\space instead of \string\Etizahl}%
+  \labelnumber{#1}%
+  }
+%    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%
+%  \subsubsection{Defining the standard dinbrief labels}
+%
+%    \begin{macrocode}
+\labelheight{41.15truemm}%
+\labeltopmargin{8.85truemm}%
+\labelnumber{7}%
+%    \end{macrocode}
+%
+%  \subsection{Empty labels within labelstyle plain}
+%
+%  \begin{macro}{\cspare}
+%    \begin{macrocode}
+\newcount\cspare
+\cspare=0
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\spare}
+%    \begin{macrocode}
+\def\spare#1{\cspare=#1\relax}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \subsubsection{different labelstyles}
+%  This version of the dinbrief supports different styles for labels.
+%  This allows the generation of papers containing several labels or
+%  printing directly on envelopes. The control sequence |\labelstyle|
+%  allows to change the layout.
+%
+%  For each layout two control sequences |\label@|STYLENAME and
+%  |\lstyle@|STYLENAME have to be defined. |\label@|STYLENAME
+%  is called from |\mlabel| for each label and has to typeset
+%  this label. |\lstyle@|STYLENAME is called from |\startlabels|
+%  and has to do the general setup (for example changing the
+%  page layout).
+%
+%  It is very difficult to say which counters and lengths have
+%  to redefined in this macros.
+%
 % \begin{macro}{\labelstyle}
 %   |\labelstyle| is a command to define the layout of the labels.
 %   Normally, labels are printed on special paper, but some printers
@@ -3165,18 +3261,32 @@ auf bekannte Fehler hingewiesen.
 % \begin{macro}{\lstyle@plain}
 %    \begin{macrocode}
 \def\lstyle@plain{
-  \topmargin -17.6truemm
-  \headsep 0pt
+  \topmargin -17.6truemm%
+  \advance\topmargin\dlabeltopmargin
+  \headsep\z@
+  \headheight\z@
   \oddsidemargin -12.3truemm
   \evensidemargin -12.3truemm
-  \textheight 25.4truecm
+  %\textheight 25.4truecm
+  \textheight=\clabelnumber\dlabelheight
   \advance\textheight by .0001truemm
   \@colht\textheight \@colroom\textheight \vsize\textheight
   \textwidth 193.3truemm
   \columnsep 25pt
   \ka@db@fontsize{12}{14.4pt}\ka@db@selectfont
-  \boxmaxdepth=0pt
+  \boxmaxdepth\z@
+  \parindent\z@
+  \parskip\z@skip
   \twocolumn\relax
+  \ifnum\cspare>\z@
+    \ifnum\cspare<\clabelnumber\else
+      \mbox{}%
+      \newpage
+      \advance\cspare -\clabelnumber
+    \fi
+    \vspace*{\cspare\dlabelheight}%
+    \par
+  \fi
 }
 %    \end{macrocode}
 % \end{macro}
@@ -4607,14 +4717,6 @@ auf bekannte Fehler hingewiesen.
 %
 % \subsection{Old dinbrief commands}
 %
-%  \begin{macro}{\spare}
-%    \begin{macrocode}
-\def\spare#1{%
-  \@warning{\string\spare\space not yet implemented.}%
-}
-%    \end{macrocode}
-%  \end{macro}
-%
 %  \begin{macro}{\Postvermerk}
 %    \begin{macrocode}
 \def\Postvermerk#1{%
@@ -5321,9 +5423,9 @@ Postfach 3322\\[\medskipamount]
     \typeout{Using the command \string\documentclass.}
   \fi
 
- % \Etihoehe{41mm}%
- % \Etirand{46.3mm}%
- % \Etizahl{6}%
+\Etihoehe{41mm}%
+\Etirand{46.3mm}%
+\Etizahl{6}%
 \makelabels
 \spare{1}
  %\pagestyle{empty}

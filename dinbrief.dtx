@@ -1,9 +1,12 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.26 1995/01/22 21:25:59 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.27 1995/01/22 21:28:52 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.27  1995/01/22 21:28:52  Gussmann
+% \cmd\ka@db@ifemptydynvar\space inserts phantom spaces. (Fixed!)
+%
 % Revision 1.26  1995/01/22 21:25:59  Gussmann
 % * many changes (lot of intern commands changed)
 % * \cmd\postremark\space added
@@ -1051,8 +1054,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/01/22 21:25:59 $}
-\def\RCSrevision{$Revision: 1.26 $}
+\def\RCSdate{$Date: 1995/01/22 21:28:52 $}
+\def\RCSrevision{$Revision: 1.27 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -1330,10 +1333,10 @@ auf bekannte Fehler hingewiesen.
     \expandafter\egroup
     \ifx\tmpa\@empty
       \message{var is empty!}%
-      #3%
+      #3% <- otherwise a space is inserted
     \else
       \message{var is not empty!}%
-      #4%
+      #4% <- otherwise a space is inserted
     \fi
 }
 %    \end{macrocode}
@@ -2437,7 +2440,7 @@ auf bekannte Fehler hingewiesen.
                             {\ka@db@fontsize{8}{9pt}
                              \ka@db@selectfont \@backaddress}\hfill}%
           \hrule width 85truemm}\hss}%
-      % \vss
+      % \vss % <- removed to get exact layout
     }%
     \nointerlineskip
   \fi
@@ -2446,7 +2449,7 @@ auf bekannte Fehler hingewiesen.
   \vbox to 40truemm{%
     \vss
     \hbox to 0pt{\hskip0pt minus 4truemm%
-      \vbox{%
+      \setbox\@tempboxa=\vbox{%
         \if@letterform
           \relax
         \else
@@ -2457,11 +2460,19 @@ auf bekannte Fehler hingewiesen.
           }%
           \raggedright \@addresslist %\toname \\ \toaddress%
           \typeout{End dumping \string\@addresslist}%
+        \fi
+      }%
+      \ifdim\ht\@tempboxa>40mm
+        \@warning{Receivers address is larger than letter window}%
+      \else
+        \setbox\@tempboxa=\vbox{%
+          \unvbox\@tempboxa
           \if@toadrcenter\relax
             \else\vskip 2.5truemm minus 2.5truemm
           \fi
-        \fi
-      }%
+        }%
+      \fi
+      \box\@tempboxa
       \hss
     }%
     \if@toadrcenter
@@ -4512,7 +4523,6 @@ auf bekannte Fehler hingewiesen.
 %  \begin{macro}{\postremark}
 %    \begin{macrocode}
 \def\postremark#1{%
-  \@warning{\string\postremark\space not yet implemented.}%
   \ka@db@assignvarlocal{postremark}{#1}%
 }
 \ka@db@execatletter{\ka@db@assignvarlocal{postremark}{}}%

@@ -1,9 +1,12 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.34 1995/04/25 23:36:01 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.35 1995/04/25 23:51:49 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.35  1995/04/25 23:51:49  Gussmann
+% Only comments added behind some closing braces.
+%
 % Revision 1.34  1995/04/25 23:36:01  Gussmann
 % Changes:
 %   - \newdimen\ka@db@tmpdima\ introduced.
@@ -1085,8 +1088,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/04/25 23:36:01 $}
-\def\RCSrevision{$Revision: 1.34 $}
+\def\RCSdate{$Date: 1995/04/25 23:51:49 $}
+\def\RCSrevision{$Revision: 1.35 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -3081,9 +3084,9 @@ auf bekannte Fehler hingewiesen.
 %
 %  \subsubsection{Labels with different sizes}
 %
-%  \begin{macro}{\labelheight}
-%  \begin{macro}{\labeltopmargin}
-%  \begin{macro}{\labelnumber}
+%  \begin{macro}{\dlabelheight}
+%  \begin{macro}{\dlabeltopmargin}
+%  \begin{macro}{\clabelnumber}
 %  The size of labels in the labelstyle plain can be modified.
 %  Therefore we define some dimen-register (count-register) holding
 %  the hight, the topmargin and the number of labels.
@@ -3102,9 +3105,9 @@ auf bekannte Fehler hingewiesen.
 %  These three macros assigns values to the counters defined
 %  above.
 %    \begin{macrocode}
-\def\labelheight#1{\dlabelheight=#1\relax}
-\def\labeltopmargin#1{\dlabeltopmargin=#1\relax}
-\def\labelnumber#1{\clabelnumber=#1\relax}
+\def\labelheight#1{\global\dlabelheight=#1\relax}
+\def\labeltopmargin#1{\global\dlabeltopmargin=#1\relax}
+\def\labelnumber#1{\global\clabelnumber=#1\relax}
 %    \end{macrocode}
 %  \end{macro}
 %  \end{macro}

@@ -1,9 +1,27 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.21 1995/01/13 16:27:49 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.22 1995/01/15 23:48:40 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.22  1995/01/15 23:48:40  Gussmann
+% Many changes:
+%  * old dinbrief API added (not yet complete).
+%  * dinbrief programming API introduced (not used at the moment).
+%  * \cmd\opening rewritten:
+%    - \cmd\opening is now not longer a large monolitc macro. It
+%      is small and calls several other macros.
+%    - all other macros called by the \cmd\opening introduced.
+%    - new macros causes other base positions of the
+%      normed positions of some letter objects. Final
+%      position of these objects (i.e. the frames and tics)
+%      not checked (+- 2.5mm).
+% * macros \cmd\ifka@db@windowrules and \cmd\ifka@db@windowtics
+%   replace old macros.
+% * new example called: dbold.tex added.
+% * driver changed (generate now also dbold.tex, hopefully and index
+%   and the changelog.
+%
 % Revision 1.21  1995/01/13 16:27:49  Gussmann
 % * \cmd\splitoncr introduced, to split the address of the receiver
 %   in a more user friendly way.
@@ -1007,8 +1025,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/01/13 16:27:49 $}
-\def\RCSrevision{$Revision: 1.21 $}
+\def\RCSdate{$Date: 1995/01/15 23:48:40 $}
+\def\RCSrevision{$Revision: 1.22 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -1144,17 +1162,18 @@ auf bekannte Fehler hingewiesen.
 % \changes{1.22.0}{1995/01/15}{(RG) \cmd\section\space programming
 %                              environment added.}
 %
-%    We define a new commands that are used later on.
+%    We define a few commands that are used later on.
 %
 %  {\tt dinbrief\/} has many variables to store information about
 %  a letter in it. These informations can be local to one letter
 %  or global to all letters in the file. Here is a table of all
 %  variables, and a mark if they are local, global or both.
 %
-%  \begin{center}
+%    \DeleteShortVerb{\|}
 %    \begin{tabular}{ll|c|c|l}
+%      \hline
 %        \multicolumn{1}{c}{\bf\small old name} &
-%          \multicolumn{1}{c}{\bf\small new name}
+%          \multicolumn{1}{c}{\bf\small new name}&
 %          \multicolumn{1}{c}{\bf\small local} &
 %          \multicolumn{1}{c}{\bf\small global} &
 %          \multicolumn{1}{c}{\bf\small holds}\\
@@ -1171,14 +1190,15 @@ auf bekannte Fehler hingewiesen.
 %        \cmd\@mymail      & sign        & $\bullet$ & $\bullet$ & my sign\\
 %        \cmd\@yourmail    & yourmail    & $\bullet$ &           & your mail\\
 %    \end{tabular}
-%  \end{center}
+%    \MakeShortVerb{\|}
+%
 %  Currently the new nameing scheme is only used for |cc|, |encl| and
 %  |ps|. No features of are currently used.
 %
 %  \begin{macro}{\ka@db@assignvarglobal}
 %    Assigns the argument to the global entity of that variable.
 %    \begin{macrocode}
-\def\ka@db@assignvarglobal#1#2{%
+\long\def\ka@db@assignvarglobal#1#2{%
   \global\@namedef{ka@db@g@#1}{#2}
 }
 %    \end{macrocode}
@@ -1187,7 +1207,7 @@ auf bekannte Fehler hingewiesen.
 %  \begin{macro}{\ka@db@assignvarlocal}
 %    Assigns the argument to the local entity of that vairable.
 %    \begin{macrocode}
-\def\ka@db@assignvarlocal#1#2{%
+\long\def\ka@db@assignvarlocal#1#2{%
   \global\@namedef{ka@db@l@#1}{#2}
 }
 %    \end{macrocode}
@@ -1209,7 +1229,7 @@ auf bekannte Fehler hingewiesen.
 %    Assigns the given argument either to the local or global entity
 %    depending on the value of the boolean variable |ifka@db@inletter|.
 %    \begin{macrocode}
-\def\ka@db@assignvar#1#2{%
+\long\def\ka@db@assignvar#1#2{%
   \ifka@db@inletter
     \ka@db@assignvarlocal{#1}{#2}
   \else
@@ -1219,19 +1239,19 @@ auf bekannte Fehler hingewiesen.
 %    \end{macrocode}
 %  \end{macro}
 %
-%  \begin{macro}{\ka@db@useglobalvar}
+%  \begin{macro}{\ka@db@usevarglobal}
 %    Use the global entity.
 %    \begin{macrocode}
-\def\ka@db@useglobalvar#1{%
+\def\ka@db@usevarglobal#1{%
   \@nameuse{ka@db@g@#1}%
 }
 %    \end{macrocode}
 %  \end{macro}
 %
-%  \begin{macro}{\ka@db@uselocalvar}
+%  \begin{macro}{\ka@db@usevarlocal}
 %    Use the local entity.
 %    \begin{macrocode}
-\def\ka@db@uselocalvar#1{%
+\def\ka@db@usevarlocal#1{%
   \@nameuse{ka@db@l@#1}%
 }
 %    \end{macrocode}
@@ -1245,16 +1265,41 @@ auf bekannte Fehler hingewiesen.
 %    \begin{macrocode}
 \def\ka@db@usevar#1{%
   \bgroup
-    \edef\tmpa{\ka@db@uselocalvar{#1}}
+    \def\protect{\noexpand\protect\noexpand}
+    \edef\tmpa{\ka@db@usevarlocal{#1}}
     \ifx\tmpa\@empty
       \message{Using global var, because local var is empty!}%
-      \ka@db@useglobalvar{#1}%
+      \ka@db@usevarglobal{#1}%
     \else
       \message{Using local var!}%
-      \ka@db@uselocalvar{#1}%
+      \ka@db@usevarlocal{#1}%
     \fi
   \egroup
 }
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\ka@db@ifemptyvarlocal}
+%    \begin{macrocode}
+\long\def\ka@db@ifemptyvarlocal#1#2#3{%
+  \bgroup
+    \def\protect{\noexpand\protect\noexpand}
+    \let\\=a% because characters are not expanded
+    \edef\tmpa{\ka@db@usevarlocal{#1}}
+    \expandafter\egroup
+    \ifx\tmpa\@empty
+      \message{var is empty!}%
+      #2
+    \else
+      \message{var is not empty!}%
+      #3
+    \fi
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\ka@db@ifemptyvarglobal}
+%    \begin{macrocode}
 %    \end{macrocode}
 %  \end{macro}
 %
@@ -1286,6 +1331,7 @@ auf bekannte Fehler hingewiesen.
 }
 \def\ka@db@atendletter{}
 %    \end{macrocode}
+%  \end{macro}
 %  \end{macro}
 %
 % \subsubsection{Choosing the type size}
@@ -1990,41 +2036,55 @@ auf bekannte Fehler hingewiesen.
 \@dblfpbot 0pt plus 1fil
 %    \end{macrocode}
 %
-% \begin{macro}{\ifka@db@windowrules}
-% \begin{macro}{\windowrules}
-% \begin{macro}{\nowindowrules}
+%  \subsubsection{Rules above and below the receivers window}
+%
+%  \begin{macro}{\ifka@db@windowrules}
+%  \begin{macro}{\windowrules}
+%  \begin{macro}{\nowindowrules}
 %    \begin{macrocode}
 \newif\ifka@db@windowrules
 \def\windowrules{\global\ka@db@windowrulestrue}
 \def\nowindowrules{\global\ka@db@windowrulesfalse}
 \windowrules
 %    \end{macrocode}
-% \end{macro}
-% \end{macro}
-% \end{macro}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
 %
-% \begin{macro}{\ifka@db@windowtics}
-% \begin{macro}{\windowtics}
-% \begin{macro}{\nowindowtics}
+%  \subsubsection{Lines for splitting letters}
+%
+%  \begin{macro}{\ifka@db@windowtics}
+%  \begin{macro}{\windowtics}
+%  \begin{macro}{\nowindowtics}
 %    \begin{macrocode}
 \newif\ifka@db@windowtics
 \def\windowtics{\global\ka@db@windowticstrue}
 \def\nowindowtics{\global\ka@db@windowticsfalse}
 \windowtics
 %    \end{macrocode}
-% \end{macro}
-% \end{macro}
-% \end{macro}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
 %
-% \begin{macro}{\backaddress}
-% \begin{macro}{\@backaddress}
+%  \subsubsection{\cmd\backaddress\space API function}
+%
+%  \begin{macro}{\backaddress}
+%  \begin{macro}{\@backaddress}
 %    \begin{macrocode}
 \def\backaddress#1{\gdef\@backaddress{#1}}
 \backaddress{}
 %    \end{macrocode}
-% \end{macro}
-% \end{macro}
+%  \end{macro}
+%  \end{macro}
 %
+%  \subsubsection{Macros for spliting the receivers address}
+%
+%  \changes{1.21.0}{1995/01/13}{Macros for splitting the receivers
+%                               address replaced with a more flexible
+%                               and more user friendly method}
+%
+%  \begin{macro}{\@splitoncr}
+%  \begin{macro}{\@splitoncrlist}
 %    \begin{macrocode}
 \long\def\@splitoncr#1#2{{%
   % \tracingmacros=1
@@ -2032,7 +2092,6 @@ auf bekannte Fehler hingewiesen.
   \long\def\@rgjob##1{#2{##1}}%
   \expandafter\@splitoncrlist#1\\\stop \\
 }}
-%
 \long\def\@splitoncrlist#1\\{%
   \ifx#1\stop
     \let\next=\relax
@@ -2044,49 +2103,97 @@ auf bekannte Fehler hingewiesen.
   \fi
   \next
 }
+%    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
 %
+%  \begin{macro}{\@ignorebrackets}
+%    \begin{macrocode}
 \def\@ignorebrackets[#1]#2\stop#3{%
   \gdef#3{#2}\relax
 }
+%    \end{macrocode}
+%  \end{macro}
 %
+%  \begin{macro}{\@withmarkcr}
+%    \begin{macrocode}
 \long\def\@withmarkcr!#1\stop{%
   \xdef\@addresslist{\@addresslist\ifx\@addresslist\empty\else\\\fi#1}
   \@ifnextchar[{\@ignorebrackets}{\@ignorebrackets[]}#1\stop{\@addressname}
 }
+%    \end{macrocode}
+%  \end{macro}
 %
+%  \begin{macro}{\@withoutmarkcr}
+%    \begin{macrocode}
 \long\def\@withoutmarkcr#1\stop{%
   \xdef\@addresslist{\@addresslist\ifx\@addresslist\empty\else\\\fi#1}
   \ifx\@addressname\relax
     \@ifnextchar[{\@ignorebrackets}{\@ignorebrackets[]}#1\stop{\@addressname}
   \fi
 }
+%    \end{macrocode}
+%  \end{macro}
 %
+%  \begin{macro}{\@withmark}
+%    \begin{macrocode}
 \long\def\@withmark!#1\stop{%
   \xdef\@addresslist{\@addresslist #1}
   \@ifnextchar[{\@ignorebrackets}{\@ignorebrackets[]}#1\stop{\@addressname}
 }
+%    \end{macrocode}
+%  \end{macro}
 %
+%  \begin{macro}{\@withoutmark}
+%    \begin{macrocode}
 \long\def\@withoutmark#1\stop{%
   \xdef\@addresslist{\@addresslist #1}
   \ifx\@addressname\relax
     \@ifnextchar[{\@ignorebrackets}{\@ignorebrackets[]}#1\stop{\@addressname}
   \fi
 }
+%    \end{macrocode}
+%  \end{macro}
 %
+%  \begin{macro}{\@withlbracket}
+%    \begin{macrocode}
 \long\def\@withlbracket[#1]#2\stop{%
   \xdef\@addresslist{\@addresslist\ifx\@addresslist\empty\else\\\fi[#1]}
   \@ifnextchar!{\@withmark}{\@withoutmark}#2\stop
 }
+%    \end{macrocode}
+%  \end{macro}
 %
+%  \begin{macro}{\@withoutlbracket}
+%    \begin{macrocode}
 \long\def\@withoutlbracket#1\stop{%
   \@ifnextchar!{\@withmarkcr}{\@withoutmarkcr}#1\stop
 }
+%    \end{macrocode}
+%  \end{macro}
 %
+%  \begin{macro}{\@checkformark}
+%    \begin{macrocode}
 \long\def\@checkformark#1{%
   %\@ifnextchar!{\@withmark}{\@withoutmark}#1\stop
   \@ifnextchar[{\@withlbracket}{\@withoutlbracket}#1\stop
 }
+%    \end{macrocode}
+%  \end{macro}
 %
+%  \begin{macro}{\@splitaddress}
+%  This macro splits the receivers address and extracts the
+%  contents of a line marked with a starting |!|. Lines
+%  in this context are all stuff between two |\\| or the
+%  stuff between the beginning or the ending of the argument
+%  and one |\\|. If no |!| is given, the first line in the
+%  argument is taken (as in the former versions). If more than
+%  one |!| is given (in different lines) the last line containing
+%  a |!| is taken. Valid forms are |\\!|, |\\ !|, |\\![\medskipamount]|
+%  and |\\[\medskipamount]!|. All four forms produce the expected
+%  output!
+%
+%    \begin{macrocode}
 \long\def\@splitaddress#1{%
   \def\@addressbase{#1}
   \let\@addressname=\relax
@@ -2100,6 +2207,7 @@ auf bekannte Fehler hingewiesen.
 %  \noindent An: \addressname \par \vskip 3cm\relax
 }
 %    \end{macrocode}
+%  \end{macro}
 %
 %  \subsubsection{The \cmd\opening-Procedure}
 %  The following macros typeset most static text areas of the letter.
@@ -2349,6 +2457,10 @@ auf bekannte Fehler hingewiesen.
 %    First we switch to a special pagestyle.
 %    \begin{macrocode}
 \def\opening#1{%
+%    \end{macrocode}
+% \changes{1.22.0}{1995/01/19}{(RG) State counter added to \cmd\opening.}
+%    \begin{macrocode}
+  \setcounter{lt@state}{2}
   \thispagestyle{first@page}
 %    \end{macrocode}
 % Actually enlarge the first page by the negative height of the footer:
@@ -2539,14 +2651,53 @@ auf bekannte Fehler hingewiesen.
 %  \end{macro}
 %
 %  \begin{macro}{\closing}
+%  \begin{macro}{\ka@db@closinghook}
 %    \begin{macrocode}
-\long\def\closing#1{\par\nobreak\vspace{\parskip}
- \stopbreaks
- {\raggedright
-  \ignorespaces #1\\[6\parskip]
-  \ifx\@empty\@fromsig
-  \else \@fromsig \fi\strut}
-  \par\medskip}
+\long\def\closing#1{%
+%    \end{macrocode}
+% \changes{1.22.0}{1995/01/19}{(RG) State counter added to \cmd\closing.}
+%    \begin{macrocode}
+  \setcounter{lt@state}{3}
+  \par\nobreak
+  \vspace{\parskip}
+  \stopbreaks
+  {%
+    \raggedright
+    \leavevmode
+    \ifka@db@enclright
+      \bgroup
+        \@tempdima=\textwidth
+        \@tempdimb=4in
+        \advance\@tempdima by \@tempdimb
+        \hbox to 0pt{%
+          \hskip4in\relax
+          \parbox[t]{\@tempdima}{\ka@db@tsenclcc}%
+          \hss
+        }%
+      \egroup
+    \fi
+    \ignorespaces #1\\[6\parskip]
+    \ifx\@empty\@fromsig
+    \else \@fromsig
+    \fi\strut}
+  \par\medskip
+  \ifka@db@enclright
+  \else
+    \ka@db@tsenclcc
+  \fi
+  \ka@db@closinghook
+}
+\def\ka@db@closinghook{}
+%    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
+%
+%  \begin{macro}{\ka@db@tsenclcc}
+%    \begin{macrocode}
+\def\ka@db@tsenclcc{%
+  \ka@db@ifemptyvarlocal{encl}{}{\ka@db@usevarlocal{encl}\par}%
+  \ka@db@ifemptyvarlocal{cc}{}{\ka@db@usevarlocal{cc}\par}
+}
 %    \end{macrocode}
 %  \end{macro}
 %
@@ -2584,20 +2735,48 @@ auf bekannte Fehler hingewiesen.
 % \end{macro}
 %
 %
-% \subsection{More letter macros}
+%  \subsection{More letter macros}
+%
+%  \changes{1.22.0}{1995/01/19}{(RG) \cmd\cc\ and \cmd\encl\ extended.}
 %  \begin{macro}{\cc}
 %  \begin{macro}{\encl}
-%  \begin{macro}{\ps}
+%  The macros \cmd\cc\ and \cmd\encl\ can now be called at every
+%  position inside the {\tt letter}-environment. If they are called
+%  between \cmd\closing\ and \env\end{letter}\ they directly typeset
+%  their arguments. If they are called before \cmd\closing\ is
+%  given they store their arguments in the variables and
+%  \cmd\closing\ also typesets both.
+%
 %    \begin{macrocode}
-\def\cc#1{\par\noindent{\ccname \\
-          \ignorespaces #1\strut}\par}
-\def\encl#1{\par\noindent{\enclname \\
-          \ignorespaces #1\strut}\par}
-\def\ps#1{\par\noindent{\psname \\
-          \ignorespaces #1\strut}\par}
+\def\cc#1{%
+  \ifnum\c@lt@state=3\relax
+    \par
+    \noindent{\ccname \\
+    \ignorespaces #1\strut}%
+    \par
+  \else
+    \ka@db@assignvarlocal{cc}{#1}%
+  \fi
+}
+\def\encl#1{%
+  \ifnum\c@lt@state=3\relax
+    \par
+    \noindent{\enclname \\
+    \ignorespaces #1\strut}%
+    \par
+  \else
+    \ka@db@assignvarlocal{encl}{#1}%
+  \fi
+}
 %    \end{macrocode}
 %  \end{macro}
 %  \end{macro}
+%
+%  \begin{macro}{\ps}
+%    \begin{macrocode}
+\def\ps#1{\par\noindent{\psname \\
+          \ignorespaces #1\strut}\par}
+%    \end{macrocode}
 %  \end{macro}
 %
 % \begin{macro}{\stopletter}
@@ -2803,6 +2982,32 @@ auf bekannte Fehler hingewiesen.
 %    \end{macrocode}
 %  \end{macro}
 %
+%  \begin{macro}{lt@state}
+%  The counter |c@lt@state| holds values from 0 to 3. These
+%  values indicate different states inside the letter.
+%
+%  \smallskip
+%  \begin{tabular}{cl}
+%    0  & We are outside the letter environment.\\
+%    1  & We are between \verb.\begin{letter}. and \verb.\opening.\\
+%    2  & We are between \verb.\opening. and \verb.\closing.\\
+%    3  & We are between \verb.\closing. and \verb.\end{letter}.\\
+%  \end{tabular}
+%  \smallskip
+%
+%  This counter should replace the old boolean flag |\ifka@db@inletter|.
+%  We further use the different states to change the behavior of some
+%  API macros. This is necessary because the {\tt old dinbrief\/}
+%  requests to have \cmd\Anlagen\ and \Verteiler\ beeing in front of
+%  \cmd\closing. And our implementation wants to have \cmd\encl\
+%  and \cmd\cc\ after the \cmd\closing{}-command.
+%
+%    \begin{macrocode}
+\newcounter{lt@state}%
+\setcounter{lt@state}{0}%
+%    \end{macrocode}
+%  \end{macro}
+%
 %  \begin{macro}{letter}
 %    The counter |letter| counts the number of letters.
 %    \begin{macrocode}
@@ -2813,6 +3018,17 @@ auf bekannte Fehler hingewiesen.
 % \begin{macro}{\letter}
 %    \begin{macrocode}
 \long\def\letter#1{%
+%    \end{macrocode}
+% \changes{1.22.0}{1995/01/19}{(RG) State counter added to \cmd\letter.
+%                              Check for nested letter envs changed.}
+%    \begin{macrocode}
+  \ifnum\c@lt@state>0
+    \ka@db@error{%
+      Command \string\begin{letter} inside the
+      \string\begin{letter}-environment found.
+    }
+  \fi
+  \setcounter{lt@state}{1}
   \ifka@db@inletter
     \ka@db@error{%
       Nested \string\begin \space \string letter are not allowed.
@@ -2837,6 +3053,10 @@ auf bekannte Fehler hingewiesen.
 % \begin{macro}{\endletter}
 %    \begin{macrocode}
 \def\endletter{%
+%    \end{macrocode}
+% \changes{1.22.0}{1995/01/19}{(RG) State counter added to \cmd\endletter}
+%    \begin{macrocode}
+  \setcounter{lt@state}{0}%
 %    \end{macrocode}
 % \changes{0.0.0}{1994/02/09}{(KDB) Switch for last page added}
 %    \begin{macrocode}
@@ -2931,10 +3151,10 @@ auf bekannte Fehler hingewiesen.
 %
 % \begin{macro}{\if@refline}
 % \begin{macro}{\if@norefline}
-%  \cmd\if@refline is true if a referline according to the rules of
+%  |\if@refline| is true if a referline according to the rules of
 %  DIN 676 and Draft DIN 676 is typeset. If the user wishes no referline
 %  at all, to print for example place and date on the top of the letter,
-%  you can set \cmd\if@norefline to true.
+%  you can set |\if@norefline| to true.
 %    \begin{macrocode}
 \newif\if@refline
 \@reflinefalse
@@ -4193,6 +4413,7 @@ auf bekannte Fehler hingewiesen.
     \hbox to 0pt{\hbox to \textwidth{\hfil\today}\hss}%
     \parbox[t]{\textwidth}{\ka@db@fromadrone\ka@db@fromadrtwo}%
   }%
+  \@noreflinetrue
 }
 %    \end{macrocode}
 %  \end{macro}
@@ -4229,21 +4450,52 @@ auf bekannte Fehler hingewiesen.
 %    \end{macrocode}
 %  \end{macro}
 %
+% \subsubsection{dinquote}
+%
+% \begin{macro}{\dinquote}
+% \begin{macro}{\enddinquote}
+%   The dinquote environment is like the quote environment except
+%   that the indentation on left side is 1in and there is no
+%   indentation on the right side.
+%
+%    \begin{macrocode}
+\def\dinquote{%
+  \list{}{\leftmargin=1in}%
+  \item[]}
+\let\enddinquote=\endlist
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+%
 %  \begin{macro}{\Einrueckung}
 %    \begin{macrocode}
 \long\def\Einrueckung#1{%
-  \@warning{\string\Einrueckung\space typesets in different layout.}%
-  \begin{quote}
+  \@warning{Use the environment dinquote in future}%
+  \begin{dinquote}%
   #1
-  \end{quote}
+  \end{dinquote}
 }
 %    \end{macrocode}
 %  \end{macro}
 %
+%  \begin{macro}{\ifka@db@enclright}
+%  |\ifka@db@enclright| is true if the enclosures and/or
+%  the carbon copies have to placed on the right side.
+%    \begin{macrocode}
+\newif\ifka@db@enclright
+\ka@db@enclrightfalse
+%    \end{macrocode}
+%  \end{macro}
+%
 %  \begin{macro}{\anlagenrechts}
+%  The enclosures are placed on the right side (at degree 50) 101.6mm
+%  from the left margin. They start at the same line as the closing
+%  formula.
 %    \begin{macrocode}
 \def\anlagenrechts{%
   \@warning{\string\anlagenrechts\space not yet implemented.}%
+  \ka@db@enclrighttrue
 }
 %    \end{macrocode}
 %  \end{macro}
@@ -4251,8 +4503,8 @@ auf bekannte Fehler hingewiesen.
 %  \begin{macro}{\Anlagen}
 %    \begin{macrocode}
 \def\Anlagen#1{%
-  \@warning{\string\Anlagen\space not yet implemented.^^J
-            Use \string\encl\space instead!}%
+  \@warning{Use \string\encl\space instead of \string\Anlagen!}%
+  \encl{#1}%
 }
 %    \end{macrocode}
 %  \end{macro}
@@ -4260,7 +4512,8 @@ auf bekannte Fehler hingewiesen.
 %  \begin{macro}{\Verteiler}
 %    \begin{macrocode}
 \def\Verteiler#1{%
-  \@warning{\string\Verteiler\space not yet implemented.}%
+  \@warning{Use \string\cc\space instead of \string\Verteiler!}%
+  \cc{#1}%
 }
 %    \end{macrocode}
 %  \end{macro}
@@ -4758,21 +5011,23 @@ Postfach 3322\\[\medskipamount]
 %
 % \section{Example for using the old {\tt dinbrief\/} API}
 %
-%<*dinbriefold>
 %    \begin{macrocode}
-%%
-%% example letter, example receiver addresses
-%%
-%% Most of the following code has taken from the dinbrief released
-%% at May 11th, 1992. This code is originated by Rainer Sengerling.
-%%
-%% The following example contains all commands of the old dinbrief.sty
-%% API (application programming interface). We recommend to use the
-%% new dinbrief API which is much more powerfull. The outcome may be
-%% quiet unsatisfied if you mix both APIs. We had made a few changes
-%% to adapt the file to \LaTeXe. We also marked the commands not
-%% implemented in the version of May 11th, 1992.
-%%
+%<*dinbriefold>
+%    \end{macrocode}
+%    \begin{macrocode}
+ %
+ % example letter, example receiver addresses
+ %
+ % Most of the following code has taken from the dinbrief released
+ % at May 11th, 1992. This code is originated by Rainer Sengerling.
+ %
+ % The following example contains all commands of the old dinbrief.sty
+ % API (application programming interface). We recommend to use the
+ % new dinbrief API which is much more powerfull. The outcome may be
+ % quiet unsatisfied if you mix both APIs. We had made a few changes
+ % to adapt the file to \LaTeXe. We also marked the commands not
+ % implemented in the version of May 11th, 1992.
+ %
 \expandafter\ifx\csname documentclass\endcsname\relax
     \documentstyle[german]{dinbrief}
     \typeout{Using the command \string\documentstyle.}
@@ -4782,18 +5037,18 @@ Postfach 3322\\[\medskipamount]
     \typeout{Using the command \string\documentclass.}
   \fi
 
-%% \Etihoehe{41mm}%  <- command not present
-%% \Etirand{46.3mm}% <- command not present
-%% \Etizahl{6}%      <- command not present
+ % \Etihoehe{41mm}%  <- command not present
+ % \Etirand{46.3mm}% <- command not present
+ % \Etizahl{6}%      <- command not present
 \makelabels
 \spare{1}
-%%\pagestyle{empty}
+ %\pagestyle{empty}
 \begin{document}
-%%
-%% Musterbrief -- Anfang
-%% In der vorliegenden Version (beachte Auskommentierungen mit %)
-%% liefert er das Anwendungsbeispiel 4 von DIN 5008
-%%
+ %
+ % Musterbrief -- Anfang
+ % In der vorliegenden Version (beachte Auskommentierungen mit %)
+ % liefert er das Anwendungsbeispiel 4 von DIN 5008
+ %
 \begin{letter}{%
 Stadt G"ottingen\\
 Stadtbauamt\\
@@ -4837,7 +5092,7 @@ vorl"aufigen Ausbau"' umgestaltet wird.
 \ps{Also bis bald!}
 \end{letter}
 
-%% normgerecht geschriebene Adressen
+ % normgerecht geschriebene Adressen
 
 \begin{letter}{Frau\\Erika Werner\\bei M"uller\\Bahnhofstr.\ 4 -- 6
 
@@ -4945,7 +5200,10 @@ F-58500 CLAMECY}
 \end{letter}
 
 \end{document}
+%    \end{macrocode}
+%    \begin{macrocode}
 %</dinbriefold>
+%    \end{macrocode}
 %
 % \section{The documentation driver file}
 %
@@ -4960,46 +5218,19 @@ F-58500 CLAMECY}
 %    \end{macrocode}
 %
 %    We don't want everything to appear in the index
+%
+%    We start with a nearly empty list and go then further and
+%    further. So we can catch all interesting macros.
+%
 %    \begin{macrocode}
-\DoNotIndex{\',\.,\@M,\@@input,\@addtoreset,\@arabic,\@badmath}
-\DoNotIndex{\@centercr,\@cite}
-\DoNotIndex{\@dotsep,\@empty,\@float,\@gobble,\@gobbletwo,\@ignoretrue}
-\DoNotIndex{\@input,\@ixpt,\@m}
-\DoNotIndex{\@minus,\@mkboth,\@ne,\@nil,\@nomath,\@plus,\@set@topoint}
-\DoNotIndex{\@tempboxa,\@tempcnta,\@tempdima,\@tempdimb}
-\DoNotIndex{\@tempswafalse,\@tempswatrue,\@viipt,\@viiipt,\@vipt}
-\DoNotIndex{\@vpt,\@warning,\@xiipt,\@xipt,\@xivpt,\@xpt,\@xviipt}
-\DoNotIndex{\@xxpt,\@xxvpt,\\,\ ,\addpenalty,\addtolength,\addvspace}
-\DoNotIndex{\advance,\Alph,\alph}
-\DoNotIndex{\arabic,\ast,\begin,\begingroup,\bfseries,\bgroup,\box}
-\DoNotIndex{\bullet}
-\DoNotIndex{\cdot,\cite,\CodelineIndex,\cr,\day,\DeclareOption}
-\DoNotIndex{\def,\DisableCrossrefs,\divide,\DocInput,\documentclass}
-\DoNotIndex{\DoNotIndex,\egroup,\else,\em,\endtrivlist}
-\DoNotIndex{\EnableCrossrefs,\end,\end@dblfloat,\end@float,\endgroup}
-\DoNotIndex{\endlist,\everycr,\everypar,\ExecuteOptions,\expandafter}
-\DoNotIndex{\fbox,\fi}
-\DoNotIndex{\filedate,\filename,\fileversion,\fontsize,\framebox,\gdef}
-\DoNotIndex{\global,\halign,\hangindent,\hbox,\hfil,\hfill,\hrule}
-\DoNotIndex{\hsize,\hskip\hspace,\hss,\if@tempswa,\ifcase,\ifdim}
-\DoNotIndex{\ifhmode,\ifvmode,\ifnum,\iftrue,\ifx,\input}
-\DoNotIndex{\jobname,\kern,\leavevmode,\let,\leftmark}
-\DoNotIndex{\list,\llap,\long,\m@ne,\m@th,\mark,\markboth,\markright}
-\DoNotIndex{\month,\newcommand,\newcounter,\newenvironment,\newif}
-\DoNotIndex{\NeedsTeXFormat,\newdimen}
-\DoNotIndex{\newlength,\newpage,\nobreak,\noindent,\null,\number}
-\DoNotIndex{\numberline,\OldMakeindex,\OnlyDescription,\or,\p@}
-\DoNotIndex{\pagestyle,\par,\paragraph,\paragraphmark,\parfillskip}
-\DoNotIndex{\penalty,\PrintChanges,\PrintIndex,\ProcessOptions}
-\DoNotIndex{\protect,\ProvidesClass,\raggedbottom,\raggedright}
-\DoNotIndex{\refstepcounter,\relax,\renewcommand,\reset@font}
-\DoNotIndex{\rightmargin,\rightmark,\rightskip,\rlap,\rmfamily,\roman}
-\DoNotIndex{\roman,\secdef,\selectfont,\setbox,\setcounter,\setlength}
-\DoNotIndex{\settowidth,\sfcode,\skip,\sloppy,\slshape,\space}
-\DoNotIndex{\symbol,\the,\trivlist,\typeout,\tw@,\undefined,\uppercase}
-\DoNotIndex{\usecounter,\usefont,\usepackage,\vfil,\vfill,\viiipt}
-\DoNotIndex{\viipt,\vipt,\vskip,\vspace}
-\DoNotIndex{\wd,\xiipt,\year,\z@}
+\DoNotIndex{\@empty,\\,\space}
+\DoNotIndex{\begin,\def,\else,\end,\endcsname,\fi,\gdef}
+\DoNotIndex{\hfil,\hfill,\hss,\ifx,\let,\long,\message}
+\DoNotIndex{\originalTeX,\p@,\parbox,\parsep,\relax}
+\DoNotIndex{\space,\string,\strut,\typeout,\verb,\vbox,\vss}
+\DoNotIndex{\xdef}
+\DoNotIndex{\LaTeX,\LaTeXe}
+\DoNotIndex{\OnlyDescription,\PrintChanges,\PrintIndex,\RecordChanges}
 %    \end{macrocode}
 %    We do want an index, using linenumbers
 %    \begin{macrocode}
@@ -5014,8 +5245,8 @@ F-58500 CLAMECY}
 %    \begin{macrocode}
 \begin{document}
 \DocInput{dinbrief.dtx}
+\PrintChanges
 \PrintIndex
-% ^^A\PrintChanges
 \end{document}
 %</driver>
 %    \end{macrocode}

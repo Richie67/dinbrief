@@ -1,9 +1,12 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.14 1994/12/09 14:56:53 Gussmann Exp $
+% $Id: dinbrief.d%v 1.15 1994/12/14 14:18:44 Braune Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.15  1994/12/14 14:18:44  Braune
+% *** empty log message ***
+%
 % Revision 1.14  1994/12/09 14:56:53  Gussmann
 % 10pt option removed from files dinbrief.tex and test10.tex
 % in the \cmd\documentstyle-command.
@@ -100,7 +103,7 @@
 %        Standard Document Style `dinbrief'\\ for \LaTeX{} version 2.09}
 %
 % \author{%
-% Copyright (C) 1993, 94 by Klaus Dieter Braune, Richard Gussmann
+% Copyright \copyright\ 1993,\ 94 by Klaus Dieter Braune, Richard Gussmann
 % }
 %
 % \maketitle
@@ -117,27 +120,25 @@
 %
 % \tableofcontents
 %
-% ^^A   \begin{macrocode}
 % \iffalse
 %<*documentation|dintab>
 % \fi
-% ^^A   \end{macrocode}
 %
 % \iffalse
 \expandafter\ifx\csname documentclass\endcsname\relax
     \documentstyle[german]{article}
-    \typeout{Using the commando \string\documentstyle.}
+    \typeout{Using the command \string\documentstyle.}
   \else
     \documentclass[10pt]{article}
     \usepackage{german}
-    \typeout{Using the commando \string\documentclass.}
+    \typeout{Using the command \string\documentclass.}
   \fi
 
 \title{Standard Document Class `dinbrief'\\ for \LaTeX{} version 2e\\
        Standard Document Style `dinbrief'\\ for \LaTeX{} version 2.09}
 
 \author{%
-Copyright (C) 1993, 94\\ by Klaus Dieter Braune, Richard Gussmann
+Copyright \copyright\ 1993,\ 94\\ by Klaus Dieter Braune, Richard Gussmann
 }
 % \fi
 %
@@ -209,10 +210,8 @@ Copyright (C) 1993, 94\\ by Klaus Dieter Braune, Richard Gussmann
   \let\sssect=\subsubsection
 \fi
 %
-% ^^A Title switch
-\section{Benutzerhandbuch (User's Guide)}
+\sect{Benutzerhandbuch (User's Guide)}
 %
-% ^^A\subsection{Briefe}\index{Briefe}
 
 Mit \LaTeX\ k"onnen (nat"urlich) auch Briefe geschrieben werden.
 F"ur englische Briefe gibt es die Dokumentklasse \envname{letter}.
@@ -252,10 +251,10 @@ gesetzt. Dieser Befehl f"ugt auch die maschinenschriftliche
 Wiederholung der Unterschrift an, wie sie mit dem
 \cs{signature}-Befehl festgelegt wurde.
 
-Im Anschlu"s an die Gru"sformel werden {\bf Anlagen-\/} (\cmd\encl\arg{Anlage}),
-{\bf Verteilvermerke\/} (\cmd\cc\arg{Verteiler}) und das {\bf Postscriptum\/}
-(\cmd\ps\arg{Postscriptum}) an den
-Brief angef"ugt.
+Im Anschlu"s an die Gru"sformel werden {\bf Anlagen-\/}
+(\cmd\encl\arg{Anlage}), {\bf Verteilvermerke\/}
+(\cmd\cc\arg{Verteiler}) und das {\bf Postscriptum\/}
+(\cmd\ps\arg{Postscriptum}) an den Brief angef"ugt.
 
 Mit dem Befehl \cs{makelabels} (vor \env\begin{document})
 werden zus"atzlich {\bf Adre"s-Etiketten\/} erzeugt.
@@ -358,8 +357,6 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
 \ssect{Befehlsreferenz}
 
 \begin{description}
-%  ^^A\item[\env\begin{document}] \hfil\break
-%  ^^A\item[\env\end{document}] \hfil\break
   \item[\env\begin{letter}\arg{{Anschrift}} \dots\ \env\end{letter}] \hfil\break
         Diese Befehle rahmen jeden einzelnen Brief ein. Die
         Anschrift des Em\-pf"an\-gers wird als Argument des Befehls
@@ -439,7 +436,7 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
         den Briefkopf, die Empf"angerangaben, eine eventuell vorhandene
         Bezugszeichenzeile, den Betreff und die Anrede des Empf"angers.
 
-        {\bf Dieser Befehl darf nicht fehlen!}
+        {\bf Dieser Befehl darf nicht fehlen!\/}
 
   \item[\cmd\closing\arg{{Gru"sformel}}] \hfil\break
         Der Befehl \cmd\closing{} setzt die Gru"sformel und nach
@@ -981,8 +978,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1994/12/09 14:56:53 $}
-\def\RCSrevision{$Revision: 1.14 $}
+\def\RCSdate{$Date: 1994/12/14 14:18:44 $}
+\def\RCSrevision{$Revision: 1.15 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -1014,9 +1011,9 @@ auf bekannte Fehler hingewiesen.
 % It is based on |DLETTER.STY| in text format, as of December 16, 1987,
 % by D.~Heinrich (TH Karlsruhe).
 %
-% It is based on |A4LETTER.STY| in text format, as of June 16, 1987.
-% letter.sty 17-Jan-86 with modifications
-% for DIN-A4 paper + window envelopes, by H.Partl (Wien)
+% It is based on |A4LETTER.STY| in text format, as of June 16, 1987,
+% and |letter.sty| 17-Jan-86 with modifications
+% for DIN-A4 paper + window envelopes, by H.~Partl (Wien)
 %
 % \changes{0.0.0}{1991/09/09}{(KB) Inserted blank space behind "P.S.:"}
 % \changes{0.0.0}{1991/10/02}{(KB) Changed "P.S.:" to "PS\cmd\newline"
@@ -1109,7 +1106,7 @@ auf bekannte Fehler hingewiesen.
   \fi
 %    \end{macrocode}
 %
-% \subsection{Initial Code}
+% \subsection{Initial code}
 %
 %    In this part we define a few comands that are used later on.
 %
@@ -1185,7 +1182,7 @@ auf bekannte Fehler hingewiesen.
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsection{Setting Paper Sizes}
+% \subsection{Setting paper sizes}
 %
 %    The variables |\paperwidth| and |\paperheight| should reflect the
 %    physical paper size after trimming. For desk printer output this
@@ -1256,10 +1253,12 @@ auf bekannte Fehler hingewiesen.
 %
 % Note: In the definition of the original \LaTeX\ 2.09 font selection system
 %       the command |\rm| is used. This causes no error because |\rm| is
-%       well defined in this \LaTeX.
+%       well defined in this version of \LaTeX.
 %
+% \iffalse
 % Note: The code for the font selection with the original mechanism
 %       had been written by K.~Braune.
+% \fi
 %
 %    \begin{macrocode}
 \ifka@db@nfss
@@ -1295,7 +1294,7 @@ auf bekannte Fehler hingewiesen.
   \fi
 %    \end{macrocode}
 %
-% \subsection{Executing Options}
+% \subsection{Executing options}
 %
 %    Here we execute the default options to initialize certain
 %    variables.
@@ -1667,7 +1666,7 @@ auf bekannte Fehler hingewiesen.
   \fi
 %    \end{macrocode}
 %
-% \subsection{Document Layout}
+% \subsection{Document layout}
 % \label{sec:maincode}
 %
 %  In this section we are finally dealing with the nasty typographical
@@ -1701,7 +1700,7 @@ auf bekannte Fehler hingewiesen.
 % is not flexible enough. (This code may not complete yet!)
 %
 % We use this to move the start of the first page of a letter
-% 12 mm up.
+% 12~mm up.
 %
 %    \begin{macrocode}
 \newdimen\ltf@headheight
@@ -1739,7 +1738,9 @@ auf bekannte Fehler hingewiesen.
 \textheight 260truemm
 %    \end{macrocode}
 %
+% \iffalse
 % RG 29.11.93 printer can't output the last line
+% \fi
 % \changes{0.0.0}{1993/11/29}{(RG) printer can't output the last line}
 %
 %    \begin{macrocode}
@@ -1838,9 +1839,8 @@ auf bekannte Fehler hingewiesen.
 %    \begin{macrocode}
 \def\opening#1{\thispagestyle{first@page}
 %    \end{macrocode}
-% KDB 02/08/94
-% Macros |\@gbsphack| and |\@gesphack| used by |\@enlargethispage| are unknown:
-% \changes{0.0.0}{1994/02/08}{}
+% \changes{0.0.0}{1994/02/08}{(KDB) Macros |\@gbsphack| and |\@gesphack|
+%                             used by |\@enlargethispage| are unknown}
 %    \begin{macrocode}
  \let\@gbsphack=\relax
  \let\@gesphack=\relax
@@ -1884,30 +1884,25 @@ auf bekannte Fehler hingewiesen.
      \vss}\nointerlineskip
   \fi
 %    \end{macrocode}
-% KDB 02/08/94
-% Changed to check the height of the footer (|\@@bottomtext| now dimen, no
-% longer command)
+% \changes{0.0.0}{1994/02/08}{(KDB) Changed to check the height of
+%                             the footer (|\@@bottomtext| now dimen,
+%                             no longer command)}
 %    \begin{macrocode}
  \ifdim\ht\@@bottomtext>0pt
 %    \end{macrocode}
-% \noindent Remark KDB 02/08/94\hfil\break
-% |\@@bottomtext| should be set within a |\vbox to 0pt{\vss ...}|
+% \changes{0.0.0}{1994/02/08}{(KDB) |\@@bottomtext| should be set
+%                             within a |\vbox to 0pt{\vss ...}|}
 %    \begin{macrocode}
     \vbox to 0pt{%
       \rule{0pt}{243.5truemm}%
 %    \end{macrocode}
-% KDB 02/08/94
-% |\hbox{ ... }| moved to box |\@@bottomtext|
+% \changes{0.0.0}{1994/02/08}{(KDB) |\hbox{ ... }| moved to box |\@@bottomtext|}
+% \changes{0.0.0}{1994/11/17}{(RG) |\unhbox| changed to |\unhcopy|,
+%                             because we can have more than one letter
+%                             in one document. So the bottomline is
+%                             inserted into every first page of letters.}
 %    \begin{macrocode}
-%      \hbox to 0pt{\hskip0pt minus 4truemm%
-%        \vbox{\raggedright \@@bottomtext%
-%        }%
-%        \hss}%
-%      \@@bottomtext
-%    \end{macrocode}
-%    \begin{macrocode}
-%      \unhbox\@@bottomtext%
-      \unhcopy\@@bottomtext% RG 94/11/17 if we have more than one letter
+      \unhcopy\@@bottomtext
       \vss}%
   \else
 %    \end{macrocode}
@@ -2024,9 +2019,11 @@ auf bekannte Fehler hingewiesen.
 % \begin{macro}{\ccname}
 % \begin{macro}{\enclname}
 % \begin{macro}{\psname}
-% This document style/class is for documents prepared in the German language.
+% This document style/class is prepared for documents in German.
 % To prepare a version for another language, various German words must
-% be replaced.  All German words that require replacement are
+% be replaced.
+%
+% All German words that require replacement are
 % defined below in command names. (Not all!)
 %
 %    \begin{macrocode}
@@ -2038,12 +2035,9 @@ auf bekannte Fehler hingewiesen.
 % \end{macro}
 % \end{macro}
 %
-% \subsubsection{\"Uberbleibsel aus alter Zeit?}
-% This is stuff from elder times and it is maybe used or not.
-% It is used by a special pagestyle called ?.
-%
 % \begin{macro}{\headtoname}
 % \begin{macro}{\pagename}
+% These two words are used in the pagestyles |headings| and |contheadings|.
 %    \begin{macrocode}
 \def\headtoname{An}
 \def\pagename{Seite}
@@ -2077,8 +2071,7 @@ auf bekannte Fehler hingewiesen.
 % \end{macro}
 %
 % \subsection{Styles for the labels}
-% 06.02.93
-% labels got some styles (R.G.)
+% \changes{0.0.0}{1993/02/06}{(RG) Labels got some styles.}
 %
 % \begin{macro}{\labelstyle}
 %   |\labelstyle| is a command to define the layout of the labels.
@@ -2086,6 +2079,7 @@ auf bekannte Fehler hingewiesen.
 %   are able to print on envelopes. Therefore we define some styles
 %   for printing labels on envelops:
 %
+%   \medskip
 %   \begin{tabular}{clcl}
 %     \hline
 %       \multicolumn{2}{c}{Briefh\"ullenformat} &
@@ -2107,6 +2101,7 @@ auf bekannte Fehler hingewiesen.
 %     \hline
 %   \end{tabular}
 %
+%   \medskip
 %   Das Einlagenformat 105 mm $\times$ 210 mm ergibt sich
 %   durch Faltung nach DIN~676.
 %
@@ -2223,10 +2218,6 @@ auf bekannte Fehler hingewiesen.
 % \begin{macro}{\lstyle@deskjet}
 %    \begin{macrocode}
 \def\lstyle@deskjet{
-%  \topmargin -17.6truemm
-%  \headsep 0pt
-%  \oddsidemargin -12.3truemm
-%  \evensidemargin -12.3truemm
   \textheight 25.4truecm
   \advance\textheight by .0001truemm
 %  \@colht\textheight \@colroom\textheight \vsize\textheight
@@ -2264,14 +2255,22 @@ auf bekannte Fehler hingewiesen.
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsection{Processing of one letter}
+% \subsection{Processing of a single letter}
 %
+%  \begin{macro}{\ifka@db@inletter}
 % This boolean variable is only true if we are inside a letter.
-%
 %    \begin{macrocode}
 \newif\ifka@db@inletter
 \ka@db@inletterfalse
 %    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{letter}
+%    The counter |letter| counts the number of letters.
+%    \begin{macrocode}
+\newcounter{letter}
+%    \end{macrocode}
+%  \end{macro}
 %
 % \begin{macro}{\letter}
 %    \begin{macrocode}
@@ -2282,6 +2281,7 @@ auf bekannte Fehler hingewiesen.
     }
   \fi
   \clearpage
+  \refstepcounter{letter}
   \c@page\@ne
   \interlinepenalty=200
   \@processto{#1}%
@@ -2294,8 +2294,7 @@ auf bekannte Fehler hingewiesen.
 %    \begin{macrocode}
 \def\endletter{%
 %    \end{macrocode}
-% KDB 02/09/94
-% Switch for last page added
+% \changes{0.0.0}{1994/02/09}{(KDB) Switch for last page added}
 %    \begin{macrocode}
   \ka@db@lastpagetrue
 %    \end{macrocode}
@@ -2595,21 +2594,19 @@ auf bekannte Fehler hingewiesen.
 % This is used to include special informations such as the
 % number of the giroconto, or the name of the chairman of a corporation.
 %
-% \noindent KDB 02/08/94 \hfil\break
-% Defining macro |\bottomtext| putting the specified
-% text into box |\@@bottomtext|
-% to get the height of the footer and store it in |\@@bottomht|
+% \changes{0.0.0}{1994/02/08}{(KDB) Defining macro |\bottomtext| putting
+%                             the specified text into box |\@@bottomtext|
+%                             to get the height of the footer and store
+%                             it in |\@@bottomht|}
 %    \begin{macrocode}
 \newbox\@@bottomtext
 \setbox\@@bottomtext=\vbox to 0pt{}
 \long\def\bottomtext#1{%
   \ifka@db@ltxtwoe \relax \else
-    \def\ka@db@warning#1{%
       \@@warning{\string\bottomtext \space is reserving space for
                  typesetting its argument only in case of LaTeX 2e.
                  With other LaTeX formats you will have to place a
                  \string\clearpage-command at the appropriate position}%
-    }
   \fi
   \setbox\@@bottomtext=\hbox to 0pt{\hskip0pt minus 4truemm%
        \vbox{\raggedright #1}%
@@ -2694,13 +2691,15 @@ auf bekannte Fehler hingewiesen.
 \let\@texttop=\relax
 %    \end{macrocode}
 %
-% \noindent KDB 02/09/94\hfil\break
-% Switch for detecting last page introduced (used bye pagestyle contheadings).
+% \changes{}{1994/02/09}{(KDB)}
+%  \begin{macro}{\ifka@db@lastpage}
+%  The following switch is used by pagestyle |contheadings| to detect the
+%  last page.
 %    \begin{macrocode}
 \newif\ifka@db@lastpage
 \ka@db@lastpagefalse
 %    \end{macrocode}
-%
+%  \end{macro}
 %  \begin{macro}{\ps@headings}
 %    \begin{macrocode}
 \def\ps@headings{
@@ -2740,7 +2739,11 @@ auf bekannte Fehler hingewiesen.
   \def\@oddfoot{}
   \def\@evenhead{}
   \def\@evenfoot{}}
+%    \end{macrocode}
+%  \end{macro}
 %
+%  \begin{macro}{\ps@first@page}
+%    \begin{macrocode}
 \def\ps@first@page{%
   \headheight=\lts@headheight
   \headsep=\lts@headsep
@@ -2750,20 +2753,34 @@ auf bekannte Fehler hingewiesen.
       \footheight 4.2truemm
     \fi
   \footskip 8.8truemm
-%   \ifx\@empty\@footer
-%       \def\@oddfoot{\global\@colht=\textwidth}
-%    \else
-%       \def\@oddfoot{\hbox to \textwidth{\hspace*{35.15truemm}%
-% %                    \xpt\@place \hfill
-% %                    \fontsize{}{}
-% %
-%                     \@telephonenum}\hss}
-%    \fi
-%   \def\@evenfoot{\global\@colht=\textwidth}
+%    \end{macrocode}
+%  We do not redefine the macros |\@oddfoot| and |\@evenfoot|.
+%  So the first page gets the same layout in the foot as the
+%  other pages.
+%
+%  We can talk about use of such a half pagestyle. So we provide
+%  here a hook |psfirstpagehook| and the user can complete this
+%  pagestyle (if he wishes) simply by doing:
+%
+%  \begin{quote}
+%    |\def\psfirstpagehook{%|\\
+%    |  \def\@oddfoot{}|\\
+%    |  \def\@evenfoot{}}|
+%  \end{quote}
+%
+%    \begin{macrocode}
   \def\@oddhead{}
   \def\@evenhead{}
+  \expandafter\ifx\csname psfirstpagehook\endcsname\relax
+    \else
+      \psfirstpagehook
+    \fi
 }
+%    \end{macrocode}
+%  \end{macro}
 %
+%  \begin{macro}{\ps@plain}
+%    \begin{macrocode}
 \def\ps@plain{%
   \headheight=\lts@headheight
   \headsep=\lts@headsep
@@ -2801,16 +2818,16 @@ auf bekannte Fehler hingewiesen.
 %  \end{macro}
 %
 %  \begin{macro}{ps@contheadings}
-%  \noindent KDB 02/09/94\hfil\break
-%  Pagestyle 'headings' with pagenumber in top line and number of following
-%  page in bottom line.
+%  \changes{}{1994/02/09}{(KDB)}
+%  Like pagestyle 'headings' with pagenumber in top line and
+%  number of following page in bottom line.
 %
 %  \smallskip
-%  \noindent Remark KDB 02/10/94\hfil\break
+%  \changes{}{1994/02/10}{(KDB)
 %  Problem to be solved before this pagestyle can be introduced:
 %    There must be found a method to detect the last page is typesetted
 %    (endletter is not sufficient, since there may be another pagebreak when
-%    TeX has seen the command - due to an overfull page)
+%    \TeX\ has seen the command - due to an overfull page)
 %    \begin{macrocode}
 \def\ps@contheadings{%\let\@mkboth\@gobbletwo
   \headheight=\ltf@headheight
@@ -2838,7 +2855,7 @@ auf bekannte Fehler hingewiesen.
 %    \end{macrocode}
 %  \end{macro}
 %
-% \subsection{Fonts --- Paragraphing}
+% \subsection{Fonts --- paragraphing}
 % These parameters control \TeX's behaviour when two lines tend
 % to come too close together.
 %
@@ -2893,7 +2910,7 @@ auf bekannte Fehler hingewiesen.
 %
 % \subsection{Lists}
 %
-% \subsubsection{General List Parameters}
+% \subsubsection{General list parameters}
 %
 % The following commands are used to set default values for the list
 % environment's parameters. See the \LaTeX{} manual for an explanation
@@ -3152,8 +3169,6 @@ auf bekannte Fehler hingewiesen.
 % \end{macro}
 % \end{macro}
 %
-\def\theequation{\arabic{equation}}
-%
 % \subsection{Setting parameters for existing environments}
 %
 % \subsubsection{Array and tabular}
@@ -3240,13 +3255,12 @@ auf bekannte Fehler hingewiesen.
 % \subsubsection{Equation and eqnarray}
 %
 % \begin{macro}{\theequation}
-%    The equation counter will be reset at beginning of a new chapter
-%    and the equation number will be prefixed by the chapter number.
+%    The equation counter will be reset at beginning of a new letter.
+%    The equation counter will be typeset using arabic numbers.
 %
-%    This code  must follow the |\chapter| definition, or more exactly
-%    the definition of the chapter counter.
 %    \begin{macrocode}
 \def\theequation{\arabic{equation}}
+\@addtoreset{equation}{letter}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3387,8 +3401,11 @@ auf bekannte Fehler hingewiesen.
 %    \end{macrocode}
 %
 % \begin{macro}{\concern}
+% \changes{}{1994/12/14}{(RG) \cmd\newbox\cmd\@betr being moved outside of
+%                        \cmd\concern}
 %    \begin{macrocode}
-\long\def\concern#1{\newbox\@betr
+\newbox\@betr
+\long\def\concern#1{%
   \setbox\@betr=\hbox{}
   \def\@concern{\hangindent=\wd\@betr
                 \hangafter=1
@@ -3409,11 +3426,16 @@ auf bekannte Fehler hingewiesen.
 %  \begin{macro}{\@answertoold}
 %    The macro \cmd\@answertoold is used to typeset the referline in the
 %    original DIN 676 style.
+%
+%    The length \cmd\@fordate\ is the width of the field for date
+%    and place. This length is being determined by subtracting the
+%    length of the other fields (50,8mm + 50,8mm + 25,4mm + 4mm)
+%    131 mm from \cmd\textwidth. (why 4mm?)
+%
 %    \begin{macrocode}
 \def\@answertoold{%
   \setlength{\@fordate}{\textwidth}
   \addtolength{\@fordate}{-131truemm}
-  % 50.8mm + 50.8mm + 25.4mm + 4mm (why 4mm?)
   \parbox[b]{50.8truemm}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont
                           \yourmailmsg{}}%
                          \hfill\\ \@yourmail\hbox{}\hss}%
@@ -3448,7 +3470,7 @@ auf bekannte Fehler hingewiesen.
   \hbox to \textwidth{%
     \setlength{\@fordate}{\textwidth}%
     \addtolength{\@fordate}{-156.4truemm}%
-    \addtolength{\@fordate}{3cm}% This is a heavens value. Write better code!
+    \addtolength{\@fordate}{3cm}% This is a heavens value.
     \parbox[b]{50.8truemm}{{\ka@db@fontsize{7}{9pt}\ka@db@selectfont
                             \yourmailmsg{}}%
                            \hfill\\ \@yourmail\hbox{}\hss}%
@@ -3457,12 +3479,8 @@ auf bekannte Fehler hingewiesen.
                            \hfill\\ \@mymail\hbox{}\hss}%
     \parbox[b]{50.8truemm}{{\ka@db@fontsize{7}{9pt}\ka@db@selectfont
                             \phonemsg{}%
-                               %\ifx\@empty\@prephone\relax
-                               %\else
-                               %  \ \@prephone{}%
-                               %\fi
-                               \writermsg{}%
-                               }%
+                            \writermsg{}%
+                            }%
                            \hfill\\
                            \ifx\@empty\@prephone\relax
                            \else
@@ -3480,11 +3498,6 @@ auf bekannte Fehler hingewiesen.
                            \hbox{}\hss}%
     \parbox[b]{\@fordate}{{\ka@db@fontsize{7}{9pt}\ka@db@selectfont
       \datemsg
-      %\ifx\@empty\@place
-      %   \vphantom{K}\rule{2pt}{0pt}
-      % \else
-      %   \@place{}
-      % \fi
       }\hfill\\ \@ntoday}
     \hss}%
   }
@@ -3497,12 +3510,12 @@ auf bekannte Fehler hingewiesen.
 %  \changes{0.94.1}{1994/08/14}{\cmd\enabledraftstandard and
 %                               \cmd\disabledraftstandard
 %                               introduced.}
-%  The macros \cmd\enabledraftstandard and \cmd\disabledraftstandard
+%  The macros \cmd\enabledraftstandard\ and \cmd\disabledraftstandard\
 %  are used to switch between the two DIN versions 676 (the old and the
 %  draft one). This is simply done by letting the \cmd\@answerto pointing to
 %  \cmd\@answertoold or \cmd\@answertonew.
 %
-%  By default, we use the old and therefore the german standard.
+%  By default, we use the old version and therefore the german standard.
 %
 %    \begin{macrocode}
 \def\enabledraftstandard{%
@@ -3521,7 +3534,7 @@ auf bekannte Fehler hingewiesen.
 %  \end{macro}
 %  \end{macro}
 %
-% \subsection{More Initializations}
+% \subsection{More initializations}
 %
 % We initially choose the normalsize font.
 % This code has to be executed following the definition of |\baselinestretch|
@@ -3553,7 +3566,7 @@ auf bekannte Fehler hingewiesen.
 %</class|style>
 %    \end{macrocode}
 %
-% \subsection{The short class file/The short style file}
+% \subsection{The short class file/the short style file}
 %   This file only inputs the dinbrief.sty file.
 %
 %    \begin{macrocode}
@@ -3589,7 +3602,9 @@ auf bekannte Fehler hingewiesen.
 \def\briefkopf{
  \settowidth{\UKAwd}{\fa Institut f"ur Verpackungen}
  \settowidth{\ADDRwd}{\fc EARN/BITNET: yx99 at dkauni2}
- \fontsize{12}{14.4pt}\selectfont
+ \expandafter\ifx\csname fontsize\endcsname\relax\else
+   \fontsize{12}{14.4pt}\selectfont
+ \fi
 %
  \raisebox{-11.3mm}{%
    \setlength{\unitlength}{1truemm}
@@ -3700,7 +3715,7 @@ stellen, die wir "uber dieses kritische Problem ver"offentlichen.
 %</example>
 %    \end{macrocode}
 %
-% \section{Testing the Class/Style}
+% \section{Testing the class/style}
 %
 %    \begin{macrocode}
 %<*brfbody>
@@ -3832,6 +3847,11 @@ das die Leute loben,\\
 aber nie lesen. \hfill({\em E.\ Hemingway\/})
 \end{quote}
 
+{\bf Testing \verb|equation|}\hfil\break
+\begin{equation}
+  x^2 = y^2 + z^2
+\end{equation}
+
 {\bf Testing \verb|tabular|}\hfil\break
 
 {\bf Testing \verb|tabbing|}\hfil\break
@@ -3856,11 +3876,11 @@ aber nie lesen. \hfill({\em E.\ Hemingway\/})
 %    \begin{macrocode}
 \expandafter\ifx\csname documentclass\endcsname\relax
     \documentstyle[german]{dinbrief}
-    \typeout{Using the commando \string\documentstyle.}
+    \typeout{Using the command \string\documentstyle.}
   \else
     \documentclass[10pt]{dinbrief}
     \usepackage{german}
-    \typeout{Using the commando \string\documentclass.}
+    \typeout{Using the command \string\documentclass.}
   \fi
 %    \end{macrocode}
 %    \begin{macrocode}
@@ -3873,11 +3893,11 @@ aber nie lesen. \hfill({\em E.\ Hemingway\/})
 %    \begin{macrocode}
 \expandafter\ifx\csname documentclass\endcsname\relax
     \documentstyle[11pt,german]{dinbrief}
-    \typeout{Using the commando \string\documentstyle.}
+    \typeout{Using the command \string\documentstyle.}
   \else
     \documentclass[11pt]{dinbrief}
     \usepackage{german}
-    \typeout{Using the commando \string\documentclass.}
+    \typeout{Using the command \string\documentclass.}
   \fi
 %    \end{macrocode}
 %    \begin{macrocode}
@@ -3890,11 +3910,11 @@ aber nie lesen. \hfill({\em E.\ Hemingway\/})
 %    \begin{macrocode}
 \expandafter\ifx\csname documentclass\endcsname\relax
     \documentstyle[12pt,german]{dinbrief}
-    \typeout{Using the commando \string\documentstyle.}
+    \typeout{Using the command \string\documentstyle.}
   \else
     \documentclass[12pt]{dinbrief}
     \usepackage{german}
-    \typeout{Using the commando \string\documentclass.}
+    \typeout{Using the command \string\documentclass.}
   \fi
 %    \end{macrocode}
 %    \begin{macrocode}
@@ -3907,11 +3927,11 @@ aber nie lesen. \hfill({\em E.\ Hemingway\/})
 %    \begin{macrocode}
 \expandafter\ifx\csname documentclass\endcsname\relax
     \documentstyle[norm,german]{dinbrief}
-    \typeout{Using the commando \string\documentstyle.}
+    \typeout{Using the command \string\documentstyle.}
   \else
     \documentclass[norm]{dinbrief}
     \usepackage{german}
-    \typeout{Using the commando \string\documentclass.}
+    \typeout{Using the command \string\documentclass.}
   \fi
 %    \end{macrocode}
 %    \begin{macrocode}
@@ -3942,11 +3962,10 @@ Postfach 3322\\[\medskipamount]
 \begin{document}
 
 \bottomtext{%
-  \begin{center}
-    \small\sf
+  \makebox[\textwidth][c]{\small\sf
    Bankverbindung $\cdot$ Kreissparkasse Gralsruhe %
    (BLZ~999~500~00) 98~765~4
-  \end{center}
+  }
 }
 
 \backaddress{\FS}
@@ -3963,6 +3982,8 @@ Postfach 3322\\[\medskipamount]
 
 \pagestyle{plain}
 
+\writer{Gussmann}
+
 \enabledraftstandard
 
 \oneletter
@@ -3972,6 +3993,8 @@ Postfach 3322\\[\medskipamount]
 \oneletter
 
 \pagestyle{headings}
+
+\writer{Gussmann}
 
 \enabledraftstandard
 

@@ -1,25 +1,28 @@
 %%
-%% $Id: dinbrief.i%v 1.1 1994/11/16 21:54:35 Gussmann Exp Gussmann $
+%% $Id: dinbrief.i%v 1.2 1994/11/16 22:02:36 Gussmann Exp $
 %%
 %% $Author: Gussmann $
 %%
-%% $Date: 1994/11/16 21:54:35 $
+%% $Date: 1994/11/16 22:02:36 $
 %%
-%% $Header: E:/DINBRF\RCS\dinbrief.i%v 1.1 1994/11/16 21:54:35 Gussmann Exp Gussmann $
+%% $Header: E:/DINBRF\RCS\dinbrief.i%v 1.2 1994/11/16 22:02:36 Gussmann Exp $
 %%
-%% $Locker: Gussmann $
+%% $Locker:  $
 %%
 %% $Name$
 %%
 %% $RCSfile: dinbrief.i%v $
 %%
-%% $Revision: 1.1 $
+%% $Revision: 1.2 $
 %%
 %% $Source: E:/DINBRF\RCS\dinbrief.i%v $
 %%
 %% $State: Exp $
 %%
 %% $Log: dinbrief.i%v $
+%% Revision 1.2  1994/11/16  22:02:36  Gussmann
+%% *** empty log message ***
+%%
 %% Revision 1.1  1994/11/16  21:54:35  Gussmann
 %% Initial revision
 %%
@@ -117,17 +120,18 @@ file or a changed version, except for a nominal charge for copying
 etc.
 \endpreamble
 
-
-
+%\generateFile{dinbrief.sty}{t}{%
+%  \from{dinbrief.dtx}{style}
+%}
 \generateFile{dinbrief.sty}{t}{%
-  \from{dinbrief.dtx}{style}
+  \from{dinbrief.dtx}{shortstyle}
 }
-% \generateFile{dinbrief.cls}{t}{%
-%   \from{dinbrief.dtx}{class}
-% }
 \generateFile{dinbrief.cls}{t}{%
-    \from{dinbrief.dtx}{shortclass}
-  }
+  \from{dinbrief.dtx}{class}
+}
+%\generateFile{dinbrief.cls}{t}{%
+%    \from{dinbrief.dtx}{shortclass}
+%  }
 \generateFile{dinbrief.tex}{t}{%
     \from{dinbrief.dtx}{documentation}
   }

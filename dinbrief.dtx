@@ -1,9 +1,13 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.41 1995/05/09 00:48:54 Gussmann Exp $
+% $Id: dinbrief.d%v 1.42 1995/05/11 01:32:40 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.42  1995/05/11 01:32:40  Gussmann
+% Section for the commands of the old dinbrief from Rainer Sengerling
+% added.
+%
 % Revision 1.41  1995/05/09 00:48:54  Gussmann
 % - Yeah! Labels can now be printed on Herma copy-print 4452 (105mm x 42mm)
 % - \cmd\hoffset will not be changed, therefore \cmd\evensidemargin and
@@ -205,12 +209,12 @@
 %
 % =======================================================================
 %
-% Copyright (C) 1993 by University of Karlsruhe (Computing Center).
+% Copyright (C) 1993, 95 by University of Karlsruhe (Computing Center).
 % All rights reserved.
 % For additional copyright information see further down in this file.
-% 
-% This file is part of the DINBRIEF package (PRELIMINARY TEST RELEASE)
-% ------------------------------------------------------------------
+%
+% This file is part of the DINBRIEF package
+% -----------------------------------------------------------------------
 % 
 %  This system is distributed in the hope that it will be useful,
 %  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -237,6 +241,24 @@
 % etc.
 % \fi
 %
+% \CheckSum{4779}
+%%
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+%%
 % \setcounter{StandardModuleDepth}{1}
 % \newcommand\Lopt[1]{\textsf {#1}}
 % \newcommand\file[1]{\texttt {#1}}
@@ -668,7 +690,7 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
 %<*documentation|dintab>
 % \fi
 
-\begin{table}[h]
+\begin{table}[ht]
 \caption{Zusammenfassung der Dinbrief-Befehle:}\index{dinbrief!Befehle}
 
 \begin{center}
@@ -726,7 +748,7 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
 %<*documentation>
 % \fi
 
-\begin{table}[h]
+\begin{table}[ht]
 \caption{"Uberschriftvariablen und deren Inhalt}
 \index{dinbrief!"Uberschriftvariablen}
 
@@ -1252,6 +1274,8 @@ bisher unabh"anigen Briefstile zusammen.
 %</documentation|dintab>
 % \fi
 %
+% \StopEventually{}
+%
 % \clearpage
 %
 % \originalTeX
@@ -1261,8 +1285,8 @@ bisher unabh"anigen Briefstile zusammen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/05/09 00:48:54 $}
-\def\RCSrevision{$Revision: 1.41 $}
+\def\RCSdate{$Date: 1995/05/11 01:32:40 $}
+\def\RCSrevision{$Revision: 1.42 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -1389,6 +1413,15 @@ bisher unabh"anigen Briefstile zusammen.
   \fi
 %    \end{macrocode}
 %
+% \subsection{\LaTeXe\ version control}
+%
+%    \begin{macrocode}
+\ifka@db@ltxtwoe
+  \NeedsTeXFormat{LaTeX2e}[2000/01/01]
+  \ProvidesClass{dinbrief}[1995/05/08 LaTeX2e class]
+\fi
+%    \end{macrocode}
+%
 % \subsection{Initial code}
 %
 %    In this part we define a few comands that are used later on.
@@ -1447,7 +1480,8 @@ bisher unabh"anigen Briefstile zusammen.
 %  \begin{macro}{\ka@db@assignvarglobal}
 %    Assigns the argument to the global entity of that variable.
 %    \begin{macrocode}
-\long\def\ka@db@assignvarglobal#1#2{\protect\pka@db@assignvarglobal{#1}{#2}}%
+\long\def\ka@db@assignvarglobal#1#2{%
+  \protect\pka@db@assignvarglobal{#1}{#2}}%
 \long\def\pka@db@assignvarglobal#1#2{%
   % \bgroup
   %   \let\\=\relax
@@ -1461,7 +1495,8 @@ bisher unabh"anigen Briefstile zusammen.
 %  \begin{macro}{\ka@db@assignvarlocal}
 %    Assigns the argument to the local entity of that vairable.
 %    \begin{macrocode}
-\long\def\ka@db@assignvarlocal#1#2{\protect\pka@db@assignvarlocal{#1}{#2}}%
+\long\def\ka@db@assignvarlocal#1#2{%
+  \protect\pka@db@assignvarlocal{#1}{#2}}%
 \long\def\pka@db@assignvarlocal#1#2{%
   % \bgroup
   %   \let\\=\relax
@@ -1612,7 +1647,8 @@ bisher unabh"anigen Briefstile zusammen.
 %     \def\protect{\noexpand\protect\noexpand}%
 %     \let\\=a% because characters are not expanded
 %     \edef\tmpa{\pka@db@usevarglobal{#1}}%
-%     \typeout{ifempty: varglobal org cs #1 = \meaning\pka@db@usevarglobal{#1}}%
+%     \typeout{ifempty: varglobal org cs #1 = %
+%       \meaning\pka@db@usevarglobal{#1}}%
 %     \typeout{ifempty: varglobal #1 = \meaning\tmpa}%
 %     \expandafter\egroup
 %     \ifx\tmpa\@empty
@@ -1649,7 +1685,8 @@ bisher unabh"anigen Briefstile zusammen.
 %         \def\protect{\noexpand\protect\noexpand}%
 %         \let\\=a% because characters are not expanded
 %         \edef\tmpa{\pka@db@usevarglobal{#1}}%
-%         \typeout{ifempty: varglobal org cs #1 = \meaning\pka@db@usevarglobal{#1}}%
+%         \typeout{ifempty: varglobal org cs #1 = %
+%           \meaning\pka@db@usevarglobal{#1}}%
 %         \typeout{ifempty: varglobal #1 = \meaning\tmpa}%
 %         \expandafter\egroup
 %         \ifx\tmpa\@empty
@@ -1669,10 +1706,11 @@ bisher unabh"anigen Briefstile zusammen.
 %
 %  \begin{macro}{\ka@db@execatletter}
 %  \begin{macro}{\ka@db@atletter}
-%  The macro |\ka@db@execatletter| appends at the end of the macro
-%  |\ka@db@atletter| the stuff added in the argument of
-%  |\ka@db@execatletter|. The macro |\@ka@db@atletter| will
-%  be executed if the |\begin{letter}|-command is processed.
+%  The macro |\ka@db@execatletter| appends at the end of the
+%  macro \hfil\break |\ka@db@atletter| the stuff added in the
+%  argument of |\ka@db@execatletter|. The macro |\@ka@db@atletter|
+%  will be executed everytime the |\begin{letter}|-command is
+%  processed.
 %    \begin{macrocode}
 \def\ka@db@execatletter#1{%
   \bgroup
@@ -2504,8 +2542,10 @@ bisher unabh"anigen Briefstile zusammen.
 %  \begin{macro}{\@withmarkcr}
 %    \begin{macrocode}
 \long\def\@withmarkcr!#1\stop{%
-  \xdef\@addresslist{\@addresslist\ifx\@addresslist\empty\else\\\fi#1}
-  \@ifnextchar[{\@ignorebrackets}{\@ignorebrackets[]}#1\stop{\@addressname}
+  \xdef\@addresslist{%
+    \@addresslist\ifx\@addresslist\empty\else\\\fi#1}%
+  \@ifnextchar[%]
+    {\@ignorebrackets}{\@ignorebrackets[]}#1\stop{\@addressname}
 }
 %    \end{macrocode}
 %  \end{macro}
@@ -2513,9 +2553,11 @@ bisher unabh"anigen Briefstile zusammen.
 %  \begin{macro}{\@withoutmarkcr}
 %    \begin{macrocode}
 \long\def\@withoutmarkcr#1\stop{%
-  \xdef\@addresslist{\@addresslist\ifx\@addresslist\empty\else\\\fi#1}
+  \xdef\@addresslist{%
+    \@addresslist\ifx\@addresslist\empty\else\\\fi#1}
   \ifx\@addressname\relax
-    \@ifnextchar[{\@ignorebrackets}{\@ignorebrackets[]}#1\stop{\@addressname}
+    \@ifnextchar[%]
+      {\@ignorebrackets}{\@ignorebrackets[]}#1\stop{\@addressname}
   \fi
 }
 %    \end{macrocode}
@@ -2525,7 +2567,8 @@ bisher unabh"anigen Briefstile zusammen.
 %    \begin{macrocode}
 \long\def\@withmark!#1\stop{%
   \xdef\@addresslist{\@addresslist #1}
-  \@ifnextchar[{\@ignorebrackets}{\@ignorebrackets[]}#1\stop{\@addressname}
+  \@ifnextchar[%]
+    {\@ignorebrackets}{\@ignorebrackets[]}#1\stop{\@addressname}%
 }
 %    \end{macrocode}
 %  \end{macro}
@@ -2536,7 +2579,8 @@ bisher unabh"anigen Briefstile zusammen.
 \long\def\@withoutmark#1\stop{%
   \xdef\@addresslist{\@addresslist #1}
   \ifx\@addressname\relax
-    \@ifnextchar[{\@ignorebrackets}{\@ignorebrackets[]}#1\stop{\@addressname}
+    \@ifnextchar[%]
+      {\@ignorebrackets}{\@ignorebrackets[]}#1\stop{\@addressname}
   \fi
 }
 %    \end{macrocode}
@@ -2598,8 +2642,6 @@ bisher unabh"anigen Briefstile zusammen.
   % \typeout{Addresslist: \@addresslist}%
   % \typeout{Addressname: \@addressname}%
   % \typeout{\string\toname: \toname}%
-%  \noindent Anschrift: \fbox{\parbox{5cm}{\parskip6pt\addresslist}} \par
-%  \noindent An: \addressname \par \vskip 3cm\relax
 }
 %    \end{macrocode}
 %  \end{macro}
@@ -2620,7 +2662,8 @@ bisher unabh"anigen Briefstile zusammen.
   \ifx\@empty\@fromaddress
     \vbox to 0pt{\vss}\nointerlineskip
   \else
-    \vbox to 0pt{\vskip -19.4truemm\raggedright\@fromaddress\vss}\nointerlineskip
+    \vbox to 0pt{\vskip -19.4truemm\raggedright\@fromaddress\vss}%
+    \nointerlineskip
   \fi
 }
 %    \end{macrocode}
@@ -2863,8 +2906,10 @@ bisher unabh"anigen Briefstile zusammen.
   \vskip 18.6truemm % old value 13.1truemm
   %   \vbox to 50truemm{\vss\ka@db@tstoaddress\vss}\nointerlineskip
   %   \vbox to 50truemm{\ka@db@tstoaddress}\nointerlineskip
-  % \vbox to 50truemm{\ka@db@tstoaddress\vss}\nointerlineskip% <- org. value
-  \moveright\ka@db@indadr\vbox to 50truemm{\ka@db@tstoaddress\vss}\nointerlineskip
+  % \vbox to 50truemm{\ka@db@tstoaddress\vss}\nointerlineskip
+  % ^- org. value
+  \moveright\ka@db@indadr\vbox to 50truemm{\ka@db@tstoaddress\vss}%
+  \nointerlineskip
   \vskip 6truemm
 }%
 \def\ka@db@placerefline{%
@@ -2908,9 +2953,9 @@ bisher unabh"anigen Briefstile zusammen.
 %    Then we start printing the parts of the letter.
 %    The following macros expect special positions on the paper to
 %    print their contents on the correct position. |\ka@db@placefromaddress|,
-%    |\ka@db@placewindowtics| and |\ka@db@placebottomtext| start from the
-%    left top corner of the paper. (Maybe not correct: top: 1in +
-%    |\headheight| + |\headsep| + |\topskip|(?) left: ???)
+%    |\ka@db@placewindowtics| and \hfil\break |\ka@db@placebottomtext|
+%    start from the left top corner of the paper. (Maybe not correct:
+%    top: 1in + |\headheight| + |\headsep| + |\topskip|(?) left: ???)
 %    |\ka@db@placetoaddres| starts at the position, mentioned in the
 %    DIN 676. It has to typeset to box containing the address of the
 %    receiver plus the necessary space (normaly two lines).
@@ -3153,8 +3198,10 @@ bisher unabh"anigen Briefstile zusammen.
 %  \begin{macro}{\ka@db@tsenclcc}
 %    \begin{macrocode}
 \def\ka@db@tsenclcc{%
-  \ka@db@ifemptyvarlocal{encl}{}{\ka@db@usevarlocal{encl}\\[\baselineskip]}%
-  \ka@db@ifemptyvarlocal{cc}{}{\ka@db@usevarlocal{cc}\\[\baselineskip]}%
+  \ka@db@ifemptyvarlocal{encl}%
+    {}{\ka@db@usevarlocal{encl}\\[\baselineskip]}%
+  \ka@db@ifemptyvarlocal{cc}%
+    {}{\ka@db@usevarlocal{cc}\\[\baselineskip]}%
 }
 %    \end{macrocode}
 %  \end{macro}
@@ -3312,15 +3359,18 @@ bisher unabh"anigen Briefstile zusammen.
 %  above.
 %    \begin{macrocode}
 \def\Etihoehe#1{%
-  \@warning{Use \string\labelheight\space instead of \string\Etihoehe}%
+  \@warning{Use \string\labelheight\space instead %
+            of \string\Etihoehe}%
   \labelheight{#1}%
   }
 \def\Etirand#1{
-  \@warning{Use \string\labeltopmargin\space instead of \string\Etirand}%
+  \@warning{Use \string\labeltopmargin\space instead %
+            of \string\Etirand}%
   \labeltopmargin{#1}%
   }
 \def\Etizahl#1{
-  \@warning{Use \string\labelnumber\space instead of \string\Etizahl}%
+  \@warning{Use \string\labelnumber\space instead %
+            of \string\Etizahl}%
   \labelnumber{#1}%
   }
 %    \end{macrocode}
@@ -3358,7 +3408,7 @@ bisher unabh"anigen Briefstile zusammen.
 %  printing directly on envelopes. The control sequence |\labelstyle|
 %  allows to change the layout.
 %
-%  For each layout two control sequences |\label@|STYLENAME and
+%  For each layout two control sequences |\label@|STYLENAME and \hfil\break
 %  |\lstyle@|STYLENAME have to be defined. |\label@|STYLENAME
 %  is called from |\mlabel| for each label and has to typeset
 %  this label. |\lstyle@|STYLENAME is called from |\startlabels|
@@ -3442,8 +3492,10 @@ bisher unabh"anigen Briefstile zusammen.
      \hrule
    \fi
  }%
- \message{\string\label@plain: counter \string\labelcount\space\the\labelcount}%
- \message{\string\label@plain: counter \string\clabelnumber\space\the\clabelnumber}%
+ \message{\string\label@plain: counter %
+          \string\labelcount\space\the\labelcount}%
+ \message{\string\label@plain: counter %
+          \string\clabelnumber\space\the\clabelnumber}%
  \advance\labelcount by 1\nointerlineskip
  \ifnum\labelcount<\clabelnumber
    % \advance\labelcount by 1\nointerlineskip
@@ -3556,15 +3608,18 @@ bisher unabh"anigen Briefstile zusammen.
   \ifnum\cspare>\z@
     \message{\string\cspare\space is greater than zero}%
     \ifnum\cspare<\clabelnumber\else
-      \message{\string\cspace\space is greater than or equal \string\clabelnumber}
+      \message{\string\cspace\space is greater than %
+               or equal \string\clabelnumber}
       \mbox{}%
       \newpage
       \advance\cspare -\clabelnumber
     \fi
     \message{after processing: counter \string\cspare\space\the\cspare}%
-    \message{after processing: counter \string\clabelnumber\space\the\clabelnumber}%
+    \message{after processing: counter %
+             \string\clabelnumber\space\the\clabelnumber}%
     %\vspace*{\cspare\dlabelheight}%
-    \message{length of \string\vspace\space \the\cspare\space\the\dlabelheight}%
+    \message{length of \string\vspace\space %
+             \the\cspare\space\the\dlabelheight}%
     % \par
     % \vskip \cspare\dlabelheight % <- didn't work
     \advance\labelcount by\cspare
@@ -3715,7 +3770,8 @@ bisher unabh"anigen Briefstile zusammen.
         \def\protect##1{\string##1\space}
         %\immediate\write\@auxout{\string\mlabel{\@backaddress}{\toname
         %\\\toaddress}}
-        %\immediate\write\@auxout{\string\mlabel{\@backaddress}{\@addresslist}}%
+        %\immediate\write\@auxout{%
+        %  \string\mlabel{\@backaddress}{\@addresslist}}%
         %\immediate\write\@auxout{\string\mlabel{\@backaddress}{%
         %  \ka@db@ifemptyvarlocal{postremark}{}{%
         %    \ka@db@usevarlocal{postremark}\\[\string\medskipamount]%
@@ -3999,7 +4055,11 @@ bisher unabh"anigen Briefstile zusammen.
 %   |\@reflinetrue|-switch to get an referline and further
 %   enables the layout of the new DIN draft standard 676 from May 1991.
 %    \begin{macrocode}
-\def\writer#1{\ka@db@assignvar{writer}{#1}\@reflinetrue\enabledraftstandard}
+\def\writer#1{%
+  \ka@db@assignvar{writer}{#1}%
+  \@reflinetrue
+  \enabledraftstandard
+}
 \ka@db@execatletter{\ka@db@assignvarlocal{writer}{}}%
 \ka@db@assignvarglobal{writer}{}%
 %    \end{macrocode}
@@ -4195,7 +4255,8 @@ bisher unabh"anigen Briefstile zusammen.
   \if@filesw
     #3\c@labelgen=#1\relax
   \else
-    \@warning{\string\makelabels\space not given. \string#2\space has no effect}%
+    \@warning{\string\makelabels\space not given. %
+              \string#2\space has no effect}%
   \fi
 }
 %    \end{macrocode}
@@ -5044,8 +5105,8 @@ bisher unabh"anigen Briefstile zusammen.
                              {% false
                                \ifx\@empty\@phone\relax
                                \else
-                                 ,\ % insert comma and blank only if both
-                               \fi%   are nonempty
+                                 ,\ % insert comma and blank only
+                               \fi%   if both are nonempty
                                \ka@db@usevar{writer}%
                              }%
 %                           \ifx\@empty\@writer\relax
@@ -5100,7 +5161,8 @@ bisher unabh"anigen Briefstile zusammen.
 %  \begin{macro}{\Postvermerk}
 %    \begin{macrocode}
 \def\Postvermerk#1{%
-  \@warning{Use \string\postremark\space instead of \string\Postvermerk}%
+  \@warning{Use \string\postremark\space instead %
+            of \string\Postvermerk}%
   \postremark{#1}%
 }
 %    \end{macrocode}
@@ -5109,7 +5171,8 @@ bisher unabh"anigen Briefstile zusammen.
 %  \begin{macro}{\Behandlungsvermerk}
 %    \begin{macrocode}
 \def\Behandlungsvermerk#1{%
-  \@warning{Use \string\handling\space instead of \string\Behandlungsvermerk}%
+  \@warning{Use \string\handling\space instead of %
+            \string\Behandlungsvermerk}%
   \handling{#1}%
 }
 %    \end{macrocode}
@@ -5185,7 +5248,8 @@ bisher unabh"anigen Briefstile zusammen.
 %  \begin{macro}{\Retouradresse}
 %    \begin{macrocode}
 \def\Retouradresse#1{%
-  \@warning{Use \string\backaddress\space instead of \string\Retouradresse}%
+  \@warning{Use \string\backaddress\space instead %
+            of \string\Retouradresse}%
   \backaddress{#1}%
 }
 %    \end{macrocode}
@@ -5542,8 +5606,8 @@ stellen, die wir "uber dieses kritische Problem ver"offentlichen.
   \item[Third]
         \begin{enumerate}
           \item Genius \LaTeX.
-          \item Why has been there so large distance between the label and
-                the first number in elder versions of \LaTeX?
+          \item Why has been there so large distance between the label
+                and the first number in elder versions of \LaTeX?
         \end{enumerate}
 \end{description}
 
@@ -6023,7 +6087,7 @@ F-58500 CLAMECY}
 \endinput
 %    \end{macrocode}
 %
+% \Finale
+%
 \endinput
-# Local Variables:
-# mode: latex
-# End:
+%% End of DINBRIEF.DTX (or CLS, STY, TEX)

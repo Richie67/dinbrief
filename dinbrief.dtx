@@ -1,9 +1,15 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.36 1995/04/25 23:54:35 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.37 1995/04/26 00:49:03 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.37  1995/04/26 00:49:03  Gussmann
+% - Label management not yet complete (Try \Etizahl{4} to get
+%   funny results).
+% - Former authors are still not mentioned. (Some people
+%   will grumble about this!)
+%
 % Revision 1.36  1995/04/25 23:54:35  Gussmann
 % Assignments for \labelnumber, \labelheight and \labelwidth are now
 % global.
@@ -1092,8 +1098,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/04/25 23:54:35 $}
-\def\RCSrevision{$Revision: 1.36 $}
+\def\RCSdate{$Date: 1995/04/26 00:49:03 $}
+\def\RCSrevision{$Revision: 1.37 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -3232,6 +3238,7 @@ auf bekannte Fehler hingewiesen.
  \ifnum\labelcount<\clabelnumber
    % \advance\labelcount by 1\nointerlineskip
  \else
+   \message{newpage in force!}%
    \vfill\newpage
    \labelcount=0
  \fi}
@@ -3317,11 +3324,14 @@ auf bekannte Fehler hingewiesen.
   \advance\topmargin\dlabeltopmargin
   \headsep\z@
   \headheight\z@
+  \topskip\z@
   \oddsidemargin -12.3truemm
   \evensidemargin -12.3truemm
   %\textheight 25.4truecm
   \textheight=\clabelnumber\dlabelheight
+  \message{dimen \string\textheight\space\the\textheight}%
   \advance\textheight by .0001truemm
+  \message{dimen \string\textheight\space\the\textheight}%
   \@colht\textheight \@colroom\textheight \vsize\textheight
   \textwidth 193.3truemm
   \columnsep 25pt
@@ -3342,8 +3352,15 @@ auf bekannte Fehler hingewiesen.
     \fi
     \message{after processing: counter \string\cspare\space\the\cspare}%
     \message{after processing: counter \string\clabelnumber\space\the\clabelnumber}%
-    \vspace*{\cspare\dlabelheight}%
-    \par
+    %\vspace*{\cspare\dlabelheight}%
+    \message{length of \string\vspace\space \the\cspare\space\the\dlabelheight}%
+    % \par
+    % \vskip \cspare\dlabelheight % <- didn't work
+    \advance\labelcount by\cspare
+    \vbox to \cspare\dlabelheight{\vfill}%
+%    \vbox{\rule{4pt}{\cspare\dlabelheight}}%
+    \nointerlineskip
+    \nobreak
   \fi
 }
 %    \end{macrocode}

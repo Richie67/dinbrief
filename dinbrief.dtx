@@ -1,9 +1,13 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.10 1994/12/02 02:59:21 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.11 1994/12/08 12:42:15 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.11  1994/12/08 12:42:15  Gussmann
+% Documentation finished.
+% First public release.
+%
 % Revision 1.10  1994/12/02 02:59:21  Gussmann
 % Documentation completed.
 %
@@ -174,9 +178,9 @@ Copyright (C) 1993, 94\\ by Klaus Dieter Braune, Richard Gussmann
 % \iffalse
 %</documentation|dintab>
 % \fi
-%    \begin{macrocode}
+% \iffalse
 %<*documentation>
-%    \end{macrocode}
+% \fi
 %
 \renewcommand{\textfraction}{0.10}
 \renewcommand{\topfraction}{0.65}
@@ -401,9 +405,9 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
         Sachbearbeiter vor. Mit dem Befehl \cmd\writer{}
         kann ein solcher Sachbearbeiter angegeben werden.
 
-        Die Verwendung dieses Befehls schaltet auf die
+        {\sl Die Verwendung dieses Befehls schaltet auf die
         Darstellung des Briefes nach der Norm
-        DIN~676 vom Mai 1991 um.
+        DIN~676 vom Mai 1991 um.\/}
 
   \item[\cmd\concern\arg{{Betreff}}] \hfil\break
         Mit diesem Befehl wird der Betreff gesetzt, der den
@@ -425,6 +429,11 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
         den Briefkopf, die Empf"angerangaben, eine eventuell vorhandene
         Bezugszeichenzeile, den Betreff und die Anrede des Empf"angers.
         Dieser Befehl darf nicht fehlen!
+
+  \item[\cmd\closing\arg{{Gru"sformel}}] \hfil\break
+        Der Befehl \cmd\closing{} setzt die Gru"sformel und nach
+        drei Leerzeilen die maschinenschrifliche Wiederholung
+        der Unterschrift.
 
   \item[\cmd\encl\arg{{Anlagen}}] \hfil\break
         Der Vermerk "uber dem Brief beigef"ugte Anlagen
@@ -461,13 +470,13 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
         Lage sind, Briefumschl"age zu bedrucken. Mit diesem
         Befehl legt man die Form der Briefumschl"age fest.
 
-  \item[\cmd\bottomtext\arg{{Feld f\"u Kapitalgesellschaften}}] \hfil\break
+  \item[\cmd\bottomtext\arg{{Feld f\"ur Kapitalgesellschaften}}] \hfil\break
         Am Fu"s der ersten Briefseite werden Gesch"aftsangaben und
         zus"atzlich bei Kapitalgesellschaften gesellschaftsrechtliche
         Angaben angegeben. Der Befehl \cmd\bottomtext{} vereinbart
         diese Angaben.
 
-        Dieser Befehl mu"s nach \env\begin{document}{} stehen.
+        {\sl Dieser Befehl mu"s nach \env\begin{document}{} stehen.\/}
 
   \item[\cmd\windowrules] \hfil\break
         Das Anschriftenfeld im Brief wird durch Linien ober-
@@ -486,22 +495,22 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
         ausgedruckt.
 
   \item[\cmd\disabledraftstandard] \hfil\break
-        Die Bestandteile des Briefes werden entsprechend den
+        Der Brief wird entsprechend den
         Vorschriften der Norm DIN~676 vom Dezember 1976 auf
         dem Briefbogen ausgegeben.
 
   \item[\cmd\enabledraftstandard] \hfil\break
-        Die Bestandteile des Briefes werden entsprechend den
+        Der Brief wird entsprechend den
         Vorschriften des Entwurfs der Norm DIN~676 vom
         Mai~1991 auf dem Briefbogen ausgegeben.
 \end{description}
 
-%    \begin{macrocode}
+% \iffalse
 %</documentation>
-%    \end{macrocode}
-%    \begin{macrocode}
+% \fi
+% \iffalse
 %<*documentation|dintab>
-%    \end{macrocode}
+% \fi
 
 \begin{table}[h]
 \caption{Zusammenfassung der Dinbrief-Befehle:}\index{dinbrief!Befehle}
@@ -528,6 +537,7 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
   \hline
     \verb|\concern|\arg{{Betreff}}                              \\
     \verb|\opening|\arg{{Anrede}}                               \\
+    \verb|\closing|\arg{{Gru"sformel}}                          \\
   \hline
     \verb|\centeraddress|                                       \\
     \verb|\normaladdress|                                       \\
@@ -553,6 +563,13 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
 \end{center}
 \end{table}
 
+% \iffalse
+%</documentation|dintab>
+% \fi
+% \iffalse
+%<*documentation>
+% \fi
+
 \begin{table}[h]
 \caption{"Uberschriftvariablen und deren Inhalt}
 \index{dinbrief!"Uberschriftvariablen}
@@ -576,12 +593,6 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
 
 \end{table}
 
-%    \begin{macrocode}
-%</documentation|dintab>
-%    \end{macrocode}
-%    \begin{macrocode}
-%<*documentation>
-%    \end{macrocode}
 %
 \ssect{Briefkopf}\index{Briefkopf}
 %
@@ -697,7 +708,9 @@ folgenden Format:
 \end{center}
  
 Die Briefe k"onnen nun mit einer Umgebung wie der in Abbildung~\ref{serie}
-ausgedruckt werden.
+ausgedruckt werden. Dabei ist allerdings in der Zeile \verb|\input{#address}|
+der Platzhalter \verb|#address| durch den Namen der Datei zu ersetzen,
+die die Adressaten in obigem Format enth"alt.
 
 \begin{figure}[p]
 \begin{center}
@@ -766,7 +779,7 @@ unseren Mikrowellenherd...
 
 \ssect{Einige Regeln f"ur das Briefeschreiben}
 
-Dieser Abschnitt enth"alt einige Passagen aus den
+Dieser Abschnitt enth"alt Passagen aus den
 Normen DIN~5008 (Regeln f"ur das Maschinenschreiben) und
 DIN~676 (Gesch"aftsbrief), erg"anzt um einige
 zus"atzliche Hinweise und Tips.
@@ -906,13 +919,6 @@ auf bekannte Fehler hingewiesen.
         da"s die Seiten- oder Folgeseitennummer
         von diesen Feldern "uberschrieben wird.
 
-        Bei Verwendung des Befehls \verb|\bottomtext|
-        zum Einblenden einer weiteren Kommunikationszeile
-        am unteren Blattende der ersten Seite
-        sowie von gesellschaftsrechtlichen Angaben
-        (bei Kapitalgesellschaften) wird die Folgeseitennummer
-        gegebenenfalls von diesen Feldern "uberschrieben.
-
   \item {\bf Kommunikationszeile am Blattende und
         gesellschaftsrechtliche Angaben}
 
@@ -940,18 +946,18 @@ auf bekannte Fehler hingewiesen.
 \end{enumerate}
 
 \clearpage
-%    \begin{macrocode}
+% \iffalse
 %</documentation>
-%    \end{macrocode}
-%    \begin{macrocode}
+% \fi
+% \iffalse
 %<*documentation|dintab>
-%    \end{macrocode}
-%    \begin{macrocode}
+% \fi
+% \iffalse
 \end{document}
-%    \end{macrocode}
-%    \begin{macrocode}
+% \fi
+% \iffalse
 %</documentation|dintab>
-%    \end{macrocode}
+% \fi
 %
 % \clearpage
 %
@@ -962,8 +968,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1994/12/02 02:59:21 $}
-\def\RCSrevision{$Revision: 1.10 $}
+\def\RCSdate{$Date: 1994/12/08 12:42:15 $}
+\def\RCSrevision{$Revision: 1.11 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}

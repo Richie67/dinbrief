@@ -1,9 +1,24 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.22 1995/01/15 23:48:40 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.23 1995/01/19 02:28:36 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.23  1995/01/19 02:28:36  Gussmann
+% * lots of changes, not all mentioned here!
+% * layout incomplete (some positions differ up to 6mm from norm position)!
+% * commands changed (list incomplete)
+%   - NEW counter \c@lt@state
+%   - \cmd\letter (counter cmds added, old cmds not deletet yet)
+%   - \cmd\opening (counter cmds added)
+%   - \cmd\closing (counter cmds added)
+%   - \cmd\endletter (counter cmds added)
+%   - \cmd\cc changed
+%   - \cmd\encl changed
+%   - \cmd\Anlagen changed
+%   - \cmd\Verteiler changed
+%   - \cmd\signature changed
+%
 % Revision 1.22  1995/01/15 23:48:40  Gussmann
 % Many changes:
 %  * old dinbrief API added (not yet complete).
@@ -1025,8 +1040,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/01/15 23:48:40 $}
-\def\RCSrevision{$Revision: 1.22 $}
+\def\RCSdate{$Date: 1995/01/19 02:28:36 $}
+\def\RCSrevision{$Revision: 1.23 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -3042,6 +3057,7 @@ auf bekannte Fehler hingewiesen.
   \message{Starting \string\@splitaddress}
   \bgroup
     \def\protect{\noexpand\protect\noexpand}
+    \let\\=\relax
     \@splitaddress{#1}
   \egroup
   \message{Ending \string\@splitaddress}

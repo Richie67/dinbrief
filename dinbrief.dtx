@@ -1,9 +1,13 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.39 1995/04/28 01:26:27 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.40 1995/04/28 01:36:09 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.40  1995/04/28 01:36:09  Gussmann
+% - Fixed bug in switch commands for the generation of labels, \cmd\nolabels,.
+% - Fixed bug in typesetting the labels.
+%
 % Revision 1.39  1995/04/28 01:26:27  Gussmann
 % - New commands: \cmd\offlabels, \cmd\onlabels and \cmd\nolabels.
 % - fixed bug in typesetting the labels.
@@ -1108,8 +1112,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/04/28 01:26:27 $}
-\def\RCSrevision{$Revision: 1.39 $}
+\def\RCSdate{$Date: 1995/04/28 01:36:09 $}
+\def\RCSrevision{$Revision: 1.40 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -2125,8 +2129,8 @@ auf bekannte Fehler hingewiesen.
 %  details.
 %
 %    \begin{macrocode}
-\addtolength\voffset{0.8truemm}
-\addtolength\hoffset{-1.4truemm}
+% \addtolength\voffset{0.8truemm}
+% \addtolength\hoffset{-1.4truemm}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -2135,7 +2139,9 @@ auf bekannte Fehler hingewiesen.
 \marginparwidth .08in
 \marginparsep .01in
 \marginparpush 5pt
-\topmargin -15pt
+% \topmargin -15pt
+\topmargin0pt
+\topmargin-5mm
 %    \end{macrocode}
 %
 % \begin{macro}{\ltf@headheight}
@@ -3117,6 +3123,7 @@ auf bekannte Fehler hingewiesen.
 %
 %  \begin{macro}{\dlabelheight}
 %  \begin{macro}{\dlabeltopmargin}
+%  \begin{macro}{\dlabelwidth}
 %  \begin{macro}{\clabelnumber}
 %  The size of labels in the labelstyle plain can be modified.
 %  Therefore we define some dimen-register (count-register) holding
@@ -3124,22 +3131,27 @@ auf bekannte Fehler hingewiesen.
 %    \begin{macrocode}
 \newdimen\dlabelheight
 \newdimen\dlabeltopmargin
+\newdimen\dlabelwidth
 \newcount\clabelnumber
 %    \end{macrocode}
 %  \end{macro}
 %  \end{macro}
 %  \end{macro}
+%  \end{macro}
 %
 %  \begin{macro}{\labelheight}
+%  \begin{macro}{\setlabelwidth}
 %  \begin{macro}{\labeltopmargin}
 %  \begin{macro}{\labelnumber}
 %  These three macros assigns values to the counters defined
 %  above.
 %    \begin{macrocode}
 \def\labelheight#1{\global\dlabelheight=#1\relax}
+\def\setlabelwidth#1{\global\dlabelwidth=#1\relax}
 \def\labeltopmargin#1{\global\dlabeltopmargin=#1\relax}
 \def\labelnumber#1{\global\clabelnumber=#1\relax}
 %    \end{macrocode}
+%  \end{macro}
 %  \end{macro}
 %  \end{macro}
 %  \end{macro}
@@ -3172,6 +3184,7 @@ auf bekannte Fehler hingewiesen.
 %    \begin{macrocode}
 \labelheight{41.15truemm}%
 \labeltopmargin{8.85truemm}%
+\setlabelwidth{80truemm}%
 \labelnumber{7}%
 %    \end{macrocode}
 %
@@ -3247,12 +3260,39 @@ auf bekannte Fehler hingewiesen.
 % \end{macro}
 % \end{macro}
 %
+% \begin{macro}{\if@kadb@tracelabels}
+%    \begin{macrocode}
+\newif\if@kadb@tracelabels
+\@kadb@tracelabelsfalse
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\label@plain}
 %    \begin{macrocode}
-\long\def\label@plain#1#2{\setbox0\vbox{\parbox[b]{3.6in}{%
- \strut\ignorespaces #2}}%
+\long\def\label@plain#1#2{\setbox0\vbox{\hsize\dlabelwidth
+ \strut\ignorespaces #2}%}%
  %\vbox to 50.8truemm{\vss \box0 \vss}%
- \vbox to\dlabelheight{\vss \box0 \vss}%
+ \vbox to\dlabelheight{%
+   \if@kadb@tracelabels
+     \hrule
+   \fi
+   \vss
+   \hbox to \dlabelwidth{%
+     \hss
+     \if@kadb@tracelabels
+       \vrule
+     \fi
+     \vbox to\dlabelheight{\vss \box0 \vss}%
+     \if@kadb@tracelabels
+       \vrule
+     \fi
+     \hss
+   }%
+   \vss
+   \if@kadb@tracelabels
+     \hrule
+   \fi
+ }%
  \message{\string\label@plain: counter \string\labelcount\space\the\labelcount}%
  \message{\string\label@plain: counter \string\clabelnumber\space\the\clabelnumber}%
  \advance\labelcount by 1\nointerlineskip
@@ -3341,21 +3381,22 @@ auf bekannte Fehler hingewiesen.
 % \begin{macro}{\lstyle@plain}
 %    \begin{macrocode}
 \def\lstyle@plain{
-  \topmargin -17.6truemm%
+  \topmargin-25.4truemm%
   \advance\topmargin\dlabeltopmargin
   \headsep\z@
   \headheight\z@
   \topskip\z@
-  \oddsidemargin -12.3truemm
-  \evensidemargin -12.3truemm
+  \oddsidemargin -12.9truemm
+  \evensidemargin -12.9truemm
   %\textheight 25.4truecm
   \textheight=\clabelnumber\dlabelheight
   \message{dimen \string\textheight\space\the\textheight}%
   \advance\textheight by .0001truemm
   \message{dimen \string\textheight\space\the\textheight}%
   \@colht\textheight \@colroom\textheight \vsize\textheight
-  \textwidth 193.3truemm
-  \columnsep 25pt
+  \columnsep 25mm
+  \textwidth2\dlabelwidth
+  \advance\textwidth by\columnsep
   \ka@db@fontsize{12}{14.4pt}\ka@db@selectfont
   \boxmaxdepth\z@
   \parindent\z@

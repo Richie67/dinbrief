@@ -1,25 +1,11 @@
 %%
-%% $Id: dinbrief.i%v 1.4 1994/11/16 18:34:47 Gussmann Exp $
-%%
-%% $Author: Gussmann $
-%%
-%% $Date: 1994/11/16 18:34:47 $
-%%
-%% $Header: E:/DINBRF/RCS/dinbrief.i%v 1.4 1994/11/16 18:34:47 Gussmann Exp $
-%%
-%% $Locker:  $
-%%
-%% $Name:  $
-%%
-%% $RCSfile: dinbrief.i%v $
-%%
-%% $Revision: 1.4 $
-%%
-%% $Source: E:/DINBRF/RCS/dinbrief.i%v $
-%%
-%% $State: Exp $
+%% $Id: dinbrief.i%v 1.5 1994/12/21 23:56:22 Gussmann Exp Gussmann $
 %%
 %% $Log: dinbrief.i%v $
+%% Revision 1.5  1994/12/21 23:56:22  Gussmann
+%% * Global switch to overwrite all files, if there
+%%   exist old ones.
+%%
 %% Revision 1.4  1994/11/16 18:34:47  Gussmann
 %% Test version complete.
 %%
@@ -107,7 +93,7 @@ Z
 
 \preamble
 
-Copyright (C) 1993, 94 by Richard Gussmann.
+Copyright (C) 1993, 95 by Richard Gussmann.
 For additional copyright information see further down in this file.
 
 This file is part of the dinbrief-style.
@@ -169,6 +155,9 @@ etc.
 \generateFile{test11.tex}{t}{\from{dinbrief.dtx}{test,11pt}}
 \generateFile{test12.tex}{t}{\from{dinbrief.dtx}{test,12pt}}
 \generateFile{testnorm.tex}{t}{\from{dinbrief.dtx}{test,norm}}
+\generateFile{dbold.tex}{t}{%
+    \from{dinbrief.dtx}{dinbriefold}
+  }
 
 %%%%%%%%%%%%%%%%% DOCUMENTATION FILES
 

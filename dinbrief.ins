@@ -1,25 +1,28 @@
 %%
-%% $Id: dinbrief.i%v 1.3 1994/11/16 22:07:57 Gussmann Exp $
+%% $Id: dinbrief.i%v 1.4 1994/11/16 18:34:47 Gussmann Exp $
 %%
 %% $Author: Gussmann $
 %%
-%% $Date: 1994/11/16 22:07:57 $
+%% $Date: 1994/11/16 18:34:47 $
 %%
-%% $Header: E:/DINBRF\RCS\dinbrief.i%v 1.3 1994/11/16 22:07:57 Gussmann Exp $
+%% $Header: E:/DINBRF/RCS/dinbrief.i%v 1.4 1994/11/16 18:34:47 Gussmann Exp $
 %%
 %% $Locker:  $
 %%
-%% $Name$
+%% $Name:  $
 %%
 %% $RCSfile: dinbrief.i%v $
 %%
-%% $Revision: 1.3 $
+%% $Revision: 1.4 $
 %%
-%% $Source: E:/DINBRF\RCS\dinbrief.i%v $
+%% $Source: E:/DINBRF/RCS/dinbrief.i%v $
 %%
 %% $State: Exp $
 %%
 %% $Log: dinbrief.i%v $
+%% Revision 1.4  1994/11/16 18:34:47  Gussmann
+%% Test version complete.
+%%
 %% Revision 1.3  1994/11/16  22:07:57  Gussmann
 %% Generates now output files for test cases in the pt-sizes
 %% 10, 11, 12 and norm.
@@ -88,6 +91,17 @@ Z
 \def\batchfile{dinbrief.ins}
 \input docstrip.tex
 
+\let\OriginalAsk=\Ask
+\def\Ask#1#2{%
+  \OriginalAsk{#1}{#2}%
+  \global\let\Ask\OriginalAsk
+  \Ask\noprompt{%
+  By default you will be asked this question for every file.^^J%
+  If you enter `y' now, I will asssume `y' for all future questions^^J%
+  without prompting.}%
+   \ifx\y\noprompt\gdef\Ask##1##2{\def##1{y}}\else
+      \ifx\yes\noprompt\gdef\Ask##1##2{\def##1{y}}\fi\fi}
+           
 \keepsilent
 
 

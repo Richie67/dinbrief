@@ -1,9 +1,16 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.29 1995/02/22 20:07:31 Gussmann Exp $
+% $Id: dinbrief.d%v 1.30 1995/03/01 23:44:04 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.30  1995/03/01 23:44:04  Gussmann
+% * \cmd\spare implemented (still not complete).
+% * \cmd\Etihoehe, \cmd\Etirand and \cmd\Etizahl implemented.
+% * \cmd\labelheight, \cmd\labeltopmargin and \cmd\labelnumber
+%   implemented.
+% * comments in the label section added.
+%
 % Revision 1.29  1995/02/22 20:07:31  Gussmann
 % *** empty log message ***
 %
@@ -1061,8 +1068,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/02/22 20:07:31 $}
-\def\RCSrevision{$Revision: 1.29 $}
+\def\RCSdate{$Date: 1995/03/01 23:44:04 $}
+\def\RCSrevision{$Revision: 1.30 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -1237,10 +1244,10 @@ auf bekannte Fehler hingewiesen.
 %    \begin{macrocode}
 \long\def\ka@db@assignvarglobal#1#2{\protect\pka@db@assignvarglobal{#1}{#2}}%
 \long\def\pka@db@assignvarglobal#1#2{%
-  \bgroup
-    \let\\=\relax
-    \message{assignvarglobal: #1 = #2}%
-  \egroup
+  % \bgroup
+  %   \let\\=\relax
+  %   \message{assignvarglobal: #1 = #2}%
+  % \egroup
   \global\@namedef{ka@db@g@#1}{#2}%
 }
 %    \end{macrocode}
@@ -1251,10 +1258,10 @@ auf bekannte Fehler hingewiesen.
 %    \begin{macrocode}
 \long\def\ka@db@assignvarlocal#1#2{\protect\pka@db@assignvarlocal{#1}{#2}}%
 \long\def\pka@db@assignvarlocal#1#2{%
-  \bgroup
-    \let\\=\relax
-    \message{assignvarlocal: #1 = #2}%
-  \egroup
+  % \bgroup
+  %   \let\\=\relax
+  %   \message{assignvarlocal: #1 = #2}%
+  % \egroup
   \global\@namedef{ka@db@l@#1}{#2}%
 }
 %    \end{macrocode}
@@ -1280,11 +1287,11 @@ auf bekannte Fehler hingewiesen.
 %    \begin{macrocode}
 \long\def\ka@db@assignvar#1#2{\protect\pka@db@assignvar{#1}{#2}}%
 \long\def\pka@db@assignvar#1#2{%
-  \message{assignvar: #1 = #2}%
+  % \message{assignvar: #1 = #2}%
   \ifnum\c@lt@state>0\relax
-    \pka@db@assignvarlocal{#1}{#2}
+    \pka@db@assignvarlocal{#1}{#2}%
   \else
-    \pka@db@assignvarglobal{#1}{#2}
+    \pka@db@assignvarglobal{#1}{#2}%
   \fi
 }
 %    \end{macrocode}
@@ -1321,13 +1328,13 @@ auf bekannte Fehler hingewiesen.
     \def\protect{\noexpand\protect\noexpand}%
     \let\\=\relax
     \edef\tmpa{\pka@db@usevarlocal{#1}}%
-    \typeout{usevar: varlocal #1 = \meaning\tmpa}%
+    % \typeout{usevar: varlocal #1 = \meaning\tmpa}%
     \expandafter\egroup
     \ifx\tmpa\@empty
-      \message{Using global var, because local var is empty!}%
+      % \message{Using global var, because local var is empty!}%
       \pka@db@usevarglobal{#1}%
     \else
-      \message{Using local var!}%
+      % \message{Using local var!}%
       \pka@db@usevarlocal{#1}%
     \fi
 }
@@ -1350,14 +1357,14 @@ auf bekannte Fehler hingewiesen.
     \def\protect{\noexpand\protect\noexpand}%
     \let\\=a% because characters are not expanded
     \edef\tmpa{#1{#2}}%
-    \typeout{ifempty: \string#1\space var #2 = \meaning#1{#2}}%
-    \typeout{ifempty: \string#1\space var #2 = \meaning\tmpa}%
+    % \typeout{ifempty: \string#1\space var #2 = \meaning#1{#2}}%
+    % \typeout{ifempty: \string#1\space var #2 = \meaning\tmpa}%
     \expandafter\egroup
     \ifx\tmpa\@empty
-      \message{var is empty!}%
+      % \message{var is empty!}%
       #3% <- otherwise a space is inserted
     \else
-      \message{var is not empty!}%
+      % \message{var is not empty!}%
       #4% <- otherwise a space is inserted
     \fi
 }
@@ -2264,7 +2271,7 @@ auf bekannte Fehler hingewiesen.
 \long\def\@splitoncrlist#1\\{%
   \ifx#1\stop
     \let\next=\relax
-    \message{Stop encountered}%
+%     \message{Stop encountered}%
   \else
     \@rgjob{#1}%
 %    % \typeout{The sequence: #1}%
@@ -2381,9 +2388,9 @@ auf bekannte Fehler hingewiesen.
   \def\@addresslist{}
   \@splitoncr{\@addressbase}{\@checkformark}%
   \gdef\toname{\@addressname}
-  \typeout{Addresslist: \@addresslist}%
-  \typeout{Addressname: \@addressname}%
-  \typeout{\string\toname: \toname}%
+  % \typeout{Addresslist: \@addresslist}%
+  % \typeout{Addressname: \@addressname}%
+  % \typeout{\string\toname: \toname}%
 %  \noindent Anschrift: \fbox{\parbox{5cm}{\parskip6pt\addresslist}} \par
 %  \noindent An: \addressname \par \vskip 3cm\relax
 }
@@ -2517,13 +2524,13 @@ auf bekannte Fehler hingewiesen.
         \if@letterform
           \relax
         \else
-          \typeout{Start dumping \string\@addresslist}%
+          % \typeout{Start dumping \string\@addresslist}%
           \leavevmode
           \ka@db@ifemptyvarlocal{postremark}{}{%
             \ka@db@usevarlocal{postremark}\\[\medskipamount]
           }%
           \raggedright \@addresslist %\toname \\ \toaddress%
-          \typeout{End dumping \string\@addresslist}%
+          % \typeout{End dumping \string\@addresslist}%
         \fi
       }%
       \ifdim\ht\@tempboxa>40mm
@@ -2802,9 +2809,9 @@ auf bekannte Fehler hingewiesen.
          \if@letterform
              \relax
            \else
-             \typeout{Start dumping \string\@addresslist}%
+             % \typeout{Start dumping \string\@addresslist}%
              \raggedright \@addresslist %\toname \\ \toaddress%
-             \typeout{End dumping \string\@addresslist}%
+             % \typeout{End dumping \string\@addresslist}%
              \if@toadrcenter\relax
               \else\vskip 2.5truemm minus 2.5truemm
               \fi
@@ -3177,12 +3184,15 @@ auf bekannte Fehler hingewiesen.
 %
 % \begin{macro}{\label@plain}
 %    \begin{macrocode}
-\long\def\label@plain#1#2{\setbox0\vbox{\parbox[b]{3.6in}{
- \strut\ignorespaces #2}}
- \vbox to 50.8truemm{\vss \box0 \vss}
- \ifnum\labelcount=4 \labelcount=0
-   \else \advance\labelcount by 1\nointerlineskip
-   \fi}
+\long\def\label@plain#1#2{\setbox0\vbox{\parbox[b]{3.6in}{%
+ \strut\ignorespaces #2}}%
+ %\vbox to 50.8truemm{\vss \box0 \vss}%
+ \vbox to\dlabelheight{\vss \box0 \vss}%
+ \ifnum\labelcount<\clabelnumber
+   \advance\labelcount by 1\nointerlineskip
+ \else
+   \labelcount=0
+ \fi}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3381,20 +3391,20 @@ auf bekannte Fehler hingewiesen.
     }
   \fi
   \setcounter{lt@state}{1}%
-  \typeout{\string\ka@db@atletter\space\ka@db@atletter}%
+  % \typeout{\string\ka@db@atletter\space\ka@db@atletter}%
   \ka@db@atletter
   \clearpage
   \refstepcounter{letter}%
   \c@page\@ne
   \interlinepenalty=200
   % \@processto{#1}%
-  \message{Starting \string\@splitaddress}%
+  % \message{Starting \string\@splitaddress}%
   \bgroup
     \def\protect{\noexpand\protect\noexpand}%
     \let\\=\relax
     \@splitaddress{#1}
   \egroup
-  \message{Ending \string\@splitaddress}%
+  % \message{Ending \string\@splitaddress}%
   }
 %    \end{macrocode}
 % \end{macro}

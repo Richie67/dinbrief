@@ -1,7 +1,7 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.47 1995/06/12 23:43:58 Gussmann Exp $
+% $Id: dinbrief.d%v 1.48 1995/06/28 02:34:32 Gussmann Exp Gussmann $
 %
 % =======================================================================
 % @stylefile{Ltall
@@ -38,6 +38,18 @@
 % =======================================================================
 %
 % $Log: dinbrief.d%v $
+% Revision 1.48  1995/06/28 02:34:32  Gussmann
+% - Fixed bug in redefinition of \cmd\cal\ und \cmd\mit.
+% - Behavior of \cmd\Anlagen\ and \cmd\Verteiler\ changed
+%   to be compatible with old dinbrief.
+% - Commands \cmd\encl\ and \cmd\cc\ changed. Now an
+%   optional argument can replace the predefined strings
+%   or avoid them if an empty optional argument is given.
+%   This will be a feature and not documented.
+% - LaTeX warnings changed to Class dinbrief warnings.
+%   In LaTeX209 mode a new command \cmd\ClassWarning\
+%   defined.
+%
 % Revision 1.47  1995/06/12 23:43:58  Gussmann
 % - Only the position of the windowtics changed (all of them
 %   moved 1.1mm down).
@@ -1511,8 +1523,8 @@ der Stil "`{\tt german}"' geladen werden.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/06/12 23:43:58 $}
-\def\RCSrevision{$Revision: 1.47 $}
+\def\RCSdate{$Date: 1995/06/28 02:34:32 $}
+\def\RCSrevision{$Revision: 1.48 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -3997,6 +4009,10 @@ der Stil "`{\tt german}"' geladen werden.
 %                              Check for nested letter envs changed.}
 % \changes{1.25.0}{1995/01/21}{(RG) \cmd\ka@db@atletter-hook added and
 %                              use of \cs{if@ka@dbinletter} deleted.}
+% \changes{1.49.0}{1995/06/29}{(RG) \cmd\vspace\ is set to \cmd\relax\
+%                              while splitting the receivers address.
+%                              This allows using \cmd\vspace, \cmd\medskip
+%                              and so on.}
 %    \begin{macrocode}
   \ifnum\c@lt@state>0
     \ka@db@error{%
@@ -4016,6 +4032,7 @@ der Stil "`{\tt german}"' geladen werden.
   \bgroup
     \def\protect{\noexpand\protect\noexpand}%
     \let\\=\relax
+    \let\vspace=\relax
     \@splitaddress{#1}
   \egroup
   % \message{Ending \string\@splitaddress}%
@@ -5290,15 +5307,25 @@ der Stil "`{\tt german}"' geladen werden.
   \space\number\year}
 %    \end{macrocode}
 % \end{macro}
+%
+% \begin{macro}{\@znumber}
+% \begin{macro}{\ntoday}
+% \begin{macro}{\@ntoday}
 %    \begin{macrocode}
 \newcount\yearcnt
 \yearcnt=\year
 \advance\yearcnt-\number1900
 \def\@znumber#1{\ifnum\number#1<10 0\number#1\else\number#1\fi}
-\def\@ntoday{\@znumber{\number\day}.%
-             \@znumber{\number\month}.%
-             \@znumber{\the\yearcnt}}
+\def\ntoday{\@znumber{\number\day}.%
+            \@znumber{\number\month}.%
+            \@znumber{\the\yearcnt}}
+\def\@ntoday{\ntoday}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 %
+%    \begin{macrocode}
 \def\up#1{\leavevmode \raise.16ex\hbox{#1}}
 %    \end{macrocode}
 %

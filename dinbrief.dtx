@@ -1,7 +1,7 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.dtx 1.65 1996/08/06 01:17:29 Gussmann Exp Gussmann $
+% $Id: dinbrief.dtx%v 1.66 1996/10/29 20:50:05 Gussmann Exp Gussmann $
 %
 %<*styleinfo>
 =======================================================================
@@ -9,13 +9,11 @@
 shortpackagename = {dinbrief},
 longpackagename  = {dinbrief},
 baseformats      = {\LaTeX\ 2.09 and \LaTeXe},
-version          = {$Revision: 1.65 $},
-date             = {$Date: 1996/08/06 01:17:29 $},
+version          = {$Revision: 1.66 $},
+date             = {$Date: 1996/10/29 20:50:05 $},
 author           = {K.D. Braune, R. Gussmann,
-                   rz32@dkauni2.bitnet
                    braune@rz.uni-karlsruhe.de
-                   ry46@dkauni2.bitnet
-                   gussmann@rz.uni-karlsruhe.de
+                   rgussman@fiducia.de
                    Universit\"at Karlsruhe
                    Rechenzentrum
                    Postfach 6980
@@ -38,7 +36,10 @@ incompatibilities = {not full compatible to R. Sengerlings dinbrief}}
 =======================================================================
 %</styleinfo>
 %
-% $Log: dinbrief.dtx $
+% $Log: dinbrief.dtx%v $
+% Revision 1.66  1996/10/29 20:50:05  Gussmann
+% - lots of minor changes.
+%
 % Revision 1.65  1996/08/06 01:17:29  Gussmann
 % - \cmd\closing extended.
 % - minor bugs fixed.
@@ -352,7 +353,9 @@ incompatibilities = {not full compatible to R. Sengerlings dinbrief}}
 %
 % =======================================================================
 %
-% Copyright (C) 1993, 96 by University of Karlsruhe (Computing Center).
+% Copyright (C) 1993, 96, 97 by University of Karlsruhe (Computing Center).
+% Copyright (C) 1998         by University of Karlsruhe (Computing Center)
+%                           and Richard Gussmann.
 % All rights reserved.
 % For additional copyright information see further down in this file.
 %
@@ -413,7 +416,7 @@ incompatibilities = {not full compatible to R. Sengerlings dinbrief}}
 %        Standard Document Style `dinbrief'\\ for \LaTeX{} version 2.09}
 %
 % \author{%
-% Copyright \copyright\ 1993,\ 94,\ 95,\ 96\\
+% Copyright \copyright\ 1993,\ 94,\ 95,\ 96,\ 98\\
 % by Klaus Dieter Braune, Richard Gussmann
 % }
 %
@@ -449,7 +452,7 @@ incompatibilities = {not full compatible to R. Sengerlings dinbrief}}
        Standard Document Style `dinbrief'\\ for \LaTeX{} version 2.09}
 
 \author{%
-Copyright \copyright\ 1993,\ 96\\ by Klaus Dieter Braune, Richard Gussmann
+Copyright \copyright\ 1993,\ 96,\ 98\\ by Klaus Dieter Braune, Richard Gussmann
 }
 % \fi
 %
@@ -1643,8 +1646,8 @@ der Stil "`{\tt german}"' geladen werden.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1996/08/06 01:17:29 $}
-\def\RCSrevision{$Revision: 1.65 $}
+\def\RCSdate{$Date: 1996/10/29 20:50:05 $}
+\def\RCSrevision{$Revision: 1.66 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -3604,6 +3607,8 @@ der Stil "`{\tt german}"' geladen werden.
         \parbox[t]{\ka@db@tmpdima}{%\parskip .7em%
           \raggedright
           \ignorespaces #2\\[3\baselineskip]
+          \leavevmode
+          % here the signature <- not correct
           \vbox to 0pt{%
             \vskip -4\baselineskip\relax
             \hbox to 0pt{\strut#1\hss}%

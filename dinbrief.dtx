@@ -1,15 +1,15 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.46 1995/06/12 23:03:54 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.47 1995/06/12 23:43:58 Gussmann Exp $
 %
 % =======================================================================
 % @stylefile{Ltall
 % shortpackagename = {dinbrief},
 % longpackagename  = {dinbrief},
 % baseformats      = {\LaTeX\ 2.09 and \LaTeXe},
-% version          = {1.45(46)},
-% date             = {08.06.1995},
+% version          = {1.48},
+% date             = {28.06.1995},
 % author           = {K.D. Braune, R. Gussmann,
 %                    rz32@dkauni2.bitnet
 %                    braune@rz.uni-karlsruhe.de
@@ -38,6 +38,10 @@
 % =======================================================================
 %
 % $Log: dinbrief.d%v $
+% Revision 1.47  1995/06/12 23:43:58  Gussmann
+% - Only the position of the windowtics changed (all of them
+%   moved 1.1mm down).
+%
 % Revision 1.46  1995/06/12 23:03:54  Gussmann
 % - Documentation updated.
 % - Some test messages removed.
@@ -1507,8 +1511,8 @@ der Stil "`{\tt german}"' geladen werden.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/06/12 23:03:54 $}
-\def\RCSrevision{$Revision: 1.46 $}
+\def\RCSdate{$Date: 1995/06/12 23:43:58 $}
+\def\RCSrevision{$Revision: 1.47 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -1639,8 +1643,8 @@ der Stil "`{\tt german}"' geladen werden.
 %
 %    \begin{macrocode}
 \ifka@db@ltxtwoe
-  \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-  \ProvidesClass{dinbrief}[1995/05/08 LaTeX2e class]
+  \NeedsTeXFormat{LaTeX2e}[1994/12/01]
+  \ProvidesClass{dinbrief}[1995/06/28 LaTeX2e class]
 \fi
 %    \end{macrocode}
 %
@@ -2175,6 +2179,15 @@ der Stil "`{\tt german}"' geladen werden.
 %    \end{macrocode}
 %  \end{macro}
 %
+%  \subsubsection{Modelling \string\ClassWarning\ in \LaTeX\ 2.09}
+%    \begin{macrocode}
+\ifka@db@ltxtwoe\else
+  \def\ClassWarning#1#2{%
+    \typeout{Style #1 Warning: #2\on@line.}%
+  }
+\fi
+%    \end{macrocode}
+%
 %  \subsection{Font changing}
 %
 %  \subsubsection{Defining old font changing commands for \LaTeXe}
@@ -2248,12 +2261,11 @@ der Stil "`{\tt german}"' geladen werden.
 %  math mode they have no effect. Currently, the New Font Selection Scheme
 %  defines these commands to generate warning messages. Therefore, we have
 %  to define them manually.
-%
+% \changes{1.48}{1995/06/28}{Now define \cs{cal} and \cs{mit} using
+%    \cs{DeclareRobustCommand*}}
 %    \begin{macrocode}
-\renewcommand{\cal}{\protect\pcal}
-\newcommand{\pcal}{\@fontswitch{\relax}{\mathcal}}
-\renewcommand{\mit}{\protect\pmit}
-\newcommand{\pmit}{\@fontswitch{\relax}{\mathnormal}}
+\DeclareRobustCommand*{\cal}{\@fontswitch{\relax}{\mathcal}}
+\DeclareRobustCommand*{\mit}{\@fontswitch{\relax}{\mathnormal}}
 %    \end{macrocode}
 %  \end{macro}
 %  \end{macro}
@@ -3060,7 +3072,9 @@ der Stil "`{\tt german}"' geladen werden.
         \fi
       }%
       \ifdim\ht\@tempboxa>40mm
-        \@warning{Receivers address is larger than letter window}%
+        %\@warning{Receivers address is larger than letter window}%
+        \ClassWarning{dinbrief}{%
+          Receivers address is larger than letter window}%
       \else
         \setbox\@tempboxa=\vbox{%
           \hbox{%
@@ -3470,7 +3484,7 @@ der Stil "`{\tt german}"' geladen werden.
   \ka@db@ifemptyvarlocal{encl}%
     {}{\ka@db@usevarlocal{encl}\\[\baselineskip]}%
   \ka@db@ifemptyvarlocal{cc}%
-    {}{\ka@db@usevarlocal{cc}\\[\baselineskip]}%
+    {}{\ka@db@usevarlocal{cc}\\}% [\baselineskip]% <- extra space removed
 }
 %    \end{macrocode}
 %  \end{macro}
@@ -3540,25 +3554,38 @@ der Stil "`{\tt german}"' geladen werden.
 %  \cmd\closing\ also typesets both.
 %
 %    \begin{macrocode}
-\def\cc#1{%
+\def\cc{%
+  \@ifnextchar[%]
+    {\ka@db@cc}{\ka@db@cc[\ccname \\]}%
+}
+\def\ka@db@cc[#1]#2{%
   \ifnum\c@lt@state=3\relax
     \par
-    \noindent{\ccname \\
-    \ignorespaces #1\strut}%
+    \noindent{% \ccname \\
+    #1
+    \ignorespaces #2\strut}%
     \par
   \else
-    \ka@db@assignvarlocal{cc}{#1}%
+    \ka@db@assignvarlocal{cc}{#1#2}%
   \fi
 }
 \ka@db@execatletter{\ka@db@assignvarlocal{cc}{}}%
-\def\encl#1{%
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\def\encl{%
+  \@ifnextchar[%]
+    {\ka@db@encl}{\ka@db@encl[\enclname \\]}%
+}
+\def\ka@db@encl[#1]#2{%
   \ifnum\c@lt@state=3\relax
     \par
-    \noindent{\enclname \\
-    \ignorespaces #1\strut}%
+    \noindent{% \enclname \\
+    #1
+    \ignorespaces #2\strut}%
     \par
   \else
-    \ka@db@assignvarlocal{encl}{#1}%
+    \ka@db@assignvarlocal{encl}{#1#2}%
   \fi
 }
 \ka@db@execatletter{\ka@db@assignvarlocal{encl}{}}%
@@ -3628,18 +3655,24 @@ der Stil "`{\tt german}"' geladen werden.
 %  above.
 %    \begin{macrocode}
 \def\Etihoehe#1{%
-  \@warning{Use \string\setlabelheight\space instead %
-            of \string\Etihoehe}%
+  %\@warning{Use \string\setlabelheight\space instead %
+  %          of \string\Etihoehe}%
+  \ClassWarning{dinbrief}{%
+    Use \string\setlabelheight\space instead of \string\Etihoehe}%
   \setlabelheight{#1}%
   }
 \def\Etirand#1{
-  \@warning{Use \string\setlabeltopmargin\space instead %
-            of \string\Etirand}%
+  %\@warning{Use \string\setlabeltopmargin\space instead %
+  %          of \string\Etirand}%
+  \ClassWarning{dinbrief}{%
+    Use \string\setlabeltopmargin\space instead of \string\Etirand}%
   \setlabeltopmargin{#1}%
   }
 \def\Etizahl#1{
-  \@warning{Use \string\setlabelnumber\space instead %
-            of \string\Etizahl}%
+  %\@warning{Use \string\setlabelnumber\space instead %
+  %          of \string\Etizahl}%
+  \ClassWarning{dinbrief}{%
+    Use \string\setlabelnumber\space instead of \string\Etizahl}%
   \setlabelnumber{#1}%
   }
 %    \end{macrocode}
@@ -4508,8 +4541,11 @@ der Stil "`{\tt german}"' geladen werden.
   \if@filesw
     #3\c@labelgen=#1\relax
   \else
-    \@warning{\string\makelabels\space not given. %
-              \string#2\space has no effect}%
+    %\@warning{\string\makelabels\space not given. %
+    %          \string#2\space has no effect}%
+    \ClassWarning{dinbrief}{%
+      \string\makelabels\space not given. %
+      \string#2\space has no effect}%
   \fi
 }
 %    \end{macrocode}
@@ -5414,8 +5450,11 @@ der Stil "`{\tt german}"' geladen werden.
 %  \begin{macro}{\Postvermerk}
 %    \begin{macrocode}
 \def\Postvermerk#1{%
-  \@warning{Use \string\postremark\space instead %
-            of \string\Postvermerk}%
+  %\@warning{Use \string\postremark\space instead %
+  %          of \string\Postvermerk}%
+  \ClassWarning{dinbrief}{%
+    Use \string\postremark\space instead %
+    of \string\Postvermerk}%
   \postremark{#1}%
 }
 %    \end{macrocode}
@@ -5424,8 +5463,11 @@ der Stil "`{\tt german}"' geladen werden.
 %  \begin{macro}{\Behandlungsvermerk}
 %    \begin{macrocode}
 \def\Behandlungsvermerk#1{%
-  \@warning{Use \string\handling\space instead of %
-            \string\Behandlungsvermerk}%
+  %\@warning{Use \string\handling\space instead of %
+  %          \string\Behandlungsvermerk}%
+  \ClassWarning{dinbrief}{%
+    Use \string\handling\space instead of %
+    \string\Behandlungsvermerk}%
   \handling{#1}%
 }
 %    \end{macrocode}
@@ -5476,7 +5518,7 @@ der Stil "`{\tt german}"' geladen werden.
 %  \begin{macro}{\Absender}
 %    \begin{macrocode}
 \long\def\Absender#1{%
-  \@warning{Use \string\stdaddress\space instead of \string\Absender}%
+  %\@warning{Use \string\stdaddress\space instead of \string\Absender}%
   \stdaddress{#1}%
 }
 %    \end{macrocode}
@@ -5485,7 +5527,9 @@ der Stil "`{\tt german}"' geladen werden.
 %  \begin{macro}{\Retourlabel}
 %    \begin{macrocode}
 \def\Retourlabel{%
-  \@warning{\string\Retourlabel\space not yet implemented.}%
+  %\@warning{\string\Retourlabel\space not yet implemented.}%
+  \ClassWarning{dinbrief}{%
+    \string\Retourlabel\space not yet implemented.}%
 }
 %    \end{macrocode}
 %  \end{macro}
@@ -5493,7 +5537,8 @@ der Stil "`{\tt german}"' geladen werden.
 %  \begin{macro}{\Fenster}
 %    \begin{macrocode}
 \def\Fenster{%
-  \@warning{\string\Fenster\space not yet implemented.}%
+  \ClassWarning{dinbrief}{%
+    \string\Fenster\space not yet implemented.}%
 }
 %    \end{macrocode}
 %  \end{macro}
@@ -5501,8 +5546,8 @@ der Stil "`{\tt german}"' geladen werden.
 %  \begin{macro}{\Retouradresse}
 %    \begin{macrocode}
 \def\Retouradresse#1{%
-  \@warning{Use \string\backaddress\space instead %
-            of \string\Retouradresse}%
+  \ClassWarning{dinbrief}{%
+    Use \string\backaddress\space instead of \string\Retouradresse}%
   \backaddress{#1}%
 }
 %    \end{macrocode}
@@ -5511,7 +5556,8 @@ der Stil "`{\tt german}"' geladen werden.
 %  \begin{macro}{\Betreff}
 %    \begin{macrocode}
 \def\Betreff#1{%
-  \@warning{Use \string\concern\space instead of \string\Betreff}%
+  \ClassWarning{dinbrief}{%
+    Use \string\concern\space instead of \string\Betreff}%
   \concern{#1}%
 }
 %    \end{macrocode}
@@ -5537,7 +5583,8 @@ der Stil "`{\tt german}"' geladen werden.
 %  \begin{macro}{\Einrueckung}
 %    \begin{macrocode}
 \long\def\Einrueckung#1{%
-  \@warning{Use the environment dinquote in future}%
+  \ClassWarning{dinbrief}{%
+    Use the environment dinquote in future}%
   \begin{dinquote}%
   #1
   \end{dinquote}%
@@ -5562,9 +5609,9 @@ der Stil "`{\tt german}"' geladen werden.
 %    \end{macrocode}
 %  \end{macro}
 %
-%  \begin{macro}{\enclXYZ}
+%  \begin{macro}{\enclnoenclright}
 %    \begin{macrocode}
-\def\enclXYZ{%
+\def\noenclright{%
   \ka@db@enclrightfalse
 }
 %    \end{macrocode}
@@ -5584,8 +5631,10 @@ der Stil "`{\tt german}"' geladen werden.
 %  \begin{macro}{\Anlagen}
 %    \begin{macrocode}
 \def\Anlagen#1{%
-  \@warning{Use \string\encl\space instead of \string\Anlagen!}%
-  \encl{#1}%
+  %\@warning{Use \string\encl\space instead of \string\Anlagen}%
+  \ClassWarning{dinbrief}{%
+    Use \string\encl\space instead of \string\Anlagen}%
+  \encl[]{#1}%
 }
 %    \end{macrocode}
 %  \end{macro}
@@ -5593,8 +5642,10 @@ der Stil "`{\tt german}"' geladen werden.
 %  \begin{macro}{\Verteiler}
 %    \begin{macrocode}
 \def\Verteiler#1{%
-  \@warning{Use \string\cc\space instead of \string\Verteiler!}%
-  \cc{#1}%
+  %\@warning{Use \string\cc\space instead of \string\Verteiler}%
+  \ClassWarning{dinbrief}{%
+    Use \string\cc\space instead of \string\Verteiler}%
+  \cc[]{#1}%
 }
 %    \end{macrocode}
 %  \end{macro}

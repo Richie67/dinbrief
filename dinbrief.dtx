@@ -1,9 +1,14 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.18 1994/12/20 09:45:03 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.19 1994/12/21 23:54:46 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.19  1994/12/21 23:54:46  Gussmann
+% * Work around removed, which fixes a bug from the beta release
+%   of LaTeX2e.
+% * Date updated.
+%
 % Revision 1.18  1994/12/20 09:45:03  Gussmann
 % *** empty log message ***
 %
@@ -992,8 +997,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1994/12/20 09:45:03 $}
-\def\RCSrevision{$Revision: 1.18 $}
+\def\RCSdate{$Date: 1994/12/21 23:54:46 $}
+\def\RCSrevision{$Revision: 1.19 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -2639,6 +2644,17 @@ auf bekannte Fehler hingewiesen.
 %    \begin{macrocode}
 \def\document{%
   \endgroup
+%    \end{macrocode}
+%    If some options on |\documentclass| haven't been used by any
+%    package we will now give a warning since this is most certainly a
+%    misspelling.
+%    \begin{macrocode}
+  \ifka@db@ltxtwoe
+    \ifx\@unusedoptionlist\@empty\else
+      \@latex@warning@no@line{Unused global option(s):^^J%
+              \@spaces[\@unusedoptionlist]}%
+    \fi
+  \fi
   \@colht\textheight
   \@colroom\textheight
   \vsize\textheight
@@ -2660,10 +2676,41 @@ auf bekannte Fehler hingewiesen.
     \immediate\openout\@mainaux=\jobname@aux
     \immediate\write\@mainaux{\string\startlabels\string\@startlabels}%
   \fi
-  \def\do##1{\let ##1\@notprerr}
+  \ifka@db@ltxtwoe
+    \process@table
+    \let\glb@currsize\@empty  %% Force math initialisation.
+  \fi
+  \@normalsize
+  \everypar{}%
+  \ifka@db@ltxtwoe
+    \@noskipsecfalse
+    \G@refundefinedfalse
+  \fi
+%    \end{macrocode}
+%    Just before disabling the preamble commands we execute the begin
+%    document hook which contains any code contributed by
+%    |\AtBeginDocument|. Also disable the gathering of the file list,
+%    if no |\listfiles| has been issued.
+%    \begin{macrocode}
+  \ifka@db@ltxtwoe
+    \@begindocumenthook
+    \let\@begindocumenthook\@undefined
+    \ifx\@listfiles\@undefined
+      \let\@filelist\relax
+      \let\@addtofilelist\@gobble
+    \fi
+  \fi
+%    \end{macrocode}
+%    At the very end we disable all preamble commands. This has to
+%    happen after the begin document hooks was executed so that this
+%    hook can still use such commands.
+%    |\AtBeginDocument|.
+%
+%    \begin{macrocode}
+  \def\do##1{\let ##1\@notprerr}%
   \@preamblecmds
   \let\do\noexpand
-  \@normalsize\everypar{}}
+}
 %    \end{macrocode}
 % \end{macro}
 %

@@ -1,27 +1,12 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.9 1994/11/17 03:11:56 Gussmann Exp $
-%
-% $Author: Gussmann $
-%
-% $Date: 1994/11/17 03:11:56 $
-%
-% $Header: E:/DINBRF/RCS/dinbrief.d%v 1.9 1994/11/17 03:11:56 Gussmann Exp $
-%
-% $Locker:  $
-%
-% $Name:  $
-%
-% $RCSfile: dinbrief.d%v $
-%
-% $Revision: 1.9 $
-%
-% $Source: E:/DINBRF/RCS/dinbrief.d%v $
-%
-% $State: Exp $
+% $Id: dinbrief.d%v 1.10 1994/12/02 02:59:21 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.10  1994/12/02 02:59:21  Gussmann
+% Documentation completed.
+%
 % Revision 1.9  1994/11/17 03:11:56  Gussmann
 % Error corrected within the documentation.
 %
@@ -177,8 +162,8 @@ Copyright (C) 1993, 94\\ by Klaus Dieter Braune, Richard Gussmann
 \germanTeX
 %
 \expandafter\ifx\csname emph\endcsname\relax
-  \newcommand\emph[1]{{\em#1\/}}}% This is \emph{not} the LaTeX2e
-                                 %  definition!
+  \newcommand\emph[1]{{\em#1\/}}% This is \emph{not} the LaTeX2e
+                                %  definition!
 \fi
 
 % \iffalse
@@ -313,30 +298,30 @@ unseren Mikrowellenherd...
 
 \ssect{Zus"atzliche Befehle im DIN-Brief}
 
-Die {\bf Telefonnummer\/} des Absenders wird mit dem Befehl
-\cmd\phone\arg{Vorwahl}\arg{Rufnummer/Durchwahl}
-festgelegt. Sie wird in der Bezugszeichenzeile
-ausgegeben.
+Der Befehl \cmd\phone\arg{Vorwahl}\arg{Rufnummer/Durchwahl}
+legt die {\bf Telefonnummer\/} des Absenders fest.
+Sie wird in der Bezugszeichenzeile ausgegeben.
 
 Der {\bf Bezug\/} auf einen empfangenen Brief ist m"oglich
 mit Hilfe des Befehls
 \cmd\yourmail\arg{Ihre Zeichen, Ihre Nachricht vom}.
-Eine entsprechende Kennzeichnung eigener Briefe
-erfolgt durch den Befehl
-\cmd\sign\arg{Unsere Zeichen, unsere Nachricht vom}.
 
-Der {\bf Name des Sachbearbeiters\/} kann durch den Befehl
-\cmd\writer\arg{Sachbearbeiter} festgelegt werden.
+Mit dem Befehl \cmd\sign\arg{Unsere Zeichen, unsere Nachricht vom}.
+kann eine {\bf eigene Kennzeichnung\/} des Briefes angegeben werden.
+
+Mit dem Befehl \cmd\writer\arg{Sachbearbeiter} kann
+der {\bf Name des Sachbearbeiters\/} festgelegt werden.
 
 Die Bezugszeichenzeile wird nur gesetzt, falls einer der
 Befehle \cs{yourmail}, \cs{sign} oder \cs{writer} verwendet
 wird. Der Befehl \cs{writer} schaltet zus"atzlich auf das
 in der DIN Norm~676 (Entwurf Mai~1991) festgelegte Layout um.
 
-Die stichworthaltige Inhaltsangabe (der "`Betreff"') des
-Briefes wird durch den Befehl \cs{concern}\arg{"`Betreff"'}
+Der {\bf Betreff (die stichwortartige Inhaltsangabe)\/} des
+Briefes wird durch den Befehl \cs{concern}\arg{Betreff}
 angegeben. Mit \cs{backaddress} wird die Adresse festgelegt,
-die im Brieffenster als Absenderadresse eingeblendet wird.
+die als {\bf Absenderadresse im Brief\kern0pt fenster}
+eingeblendet wird.
 
 Abbildung~\ref{brief} enth"alt ein Beispiel f"ur einen Brief.
 Die Anwendung der Befehle und ihre Reihenfolge in der Quelldatei
@@ -384,15 +369,20 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
         Anschriftenfeld des Briefs fest.
 
   \item[\cmd\place\arg{{Ortsangabe im Brief}}] \hfil\break
-
-
+        Mit diesem Befehl wird der Absendeort angegeben, der
+        zusammen mit dem Datum im Briefkopf ausgegeben wird.
 
   \item[\cmd\date\arg{{Briefdatum}}] \hfil\break
-        Wird dieser Befehl nicht angegeben, so wird das
-        aktuelle Tagesdatum im Brief verwendet.
+        Soll als Absenedatum {\sl nicht\/} das aktuelle
+        Tagesdatum (des Rechners) eingesetzt werden,
+        kann mit diesem Befehl das Datum
+        explizit angegeben werden.
+
+        Ohne diesen Befehl wird das aktuelle Tagesdatum
+        im Brief verwendet.
 
   \item[\cmd\yourmail\arg{{Ihre Zeichen, Ihre Nachricht vom}}] \hfil\break
-        Dieser Befehl legt den Inhalt des Feldes {\bf Ihre
+        Der Befehl legt den Inhalt des Feldes {\bf Ihre
         Zeichen, Ihre Nachricht vom\/} in der
         Bezugszeichenzeile fest.
 
@@ -411,24 +401,30 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
         Sachbearbeiter vor. Mit dem Befehl \cmd\writer{}
         kann ein solcher Sachbearbeiter angegeben werden.
 
+        Die Verwendung dieses Befehls schaltet auf die
+        Darstellung des Briefes nach der Norm
+        DIN~676 vom Mai 1991 um.
 
   \item[\cmd\concern\arg{{Betreff}}] \hfil\break
+        Mit diesem Befehl wird der Betreff gesetzt, der den
+        Empf"anger "uber den Gegenstand des Briefes
+        informiert.
 
+  \item[\cmd\centeraddress] \hfil\break
+        Die Empf"angeranschrift wird im Brief\kern 0pt fenster
+        vertikal zentriert.
+
+  \item[\cmd\normaladdress] \hfil\break
+        Die Empf"angeranschrift wird nicht im Feld f"ur das
+        Brief\kern 0pt fenster
+        vertikal zentriert ausgerichtet. Die Anschrift wird
+        im Anschriftenfeld unten gesetzt.
 
   \item[\cmd\opening\arg{{Anrede}}] \hfil\break
         Dieser Befehl vereinbart die Anrede des Empf"angers und setzt
         den Briefkopf, die Empf"angerangaben, eine eventuell vorhandene
         Bezugszeichenzeile, den Betreff und die Anrede des Empf"angers.
-        Aus diesem Grund darf dieser Befehl auch nicht fehlen.
-
-  \item[\cmd\centeraddress] \hfil\break
-        Die Empf"angeranschrift wird im Feld f"ur das Brieffenster
-        vertikal zentriert ausgerichtet.
-
-  \item[\cmd\normaladdress] \hfil\break
-        Die Empf"angeranschrift wird nicht im Feld f"ur das Brieffenster
-        vertikal zentriert ausgerichtet. Die Anschrift f"ullt das
-        Anschriftenfeld un unten beginnend auf.
+        Dieser Befehl darf nicht fehlen!
 
   \item[\cmd\encl\arg{{Anlagen}}] \hfil\break
         Der Vermerk "uber dem Brief beigef"ugte Anlagen
@@ -457,8 +453,7 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
         Dieser Befehl mu"s in der Pr"aambel stehen; also
         zwischen \cmd\documentstyle{} oder \cmd\documentclass{}
         und dem \env\begin{document}-Befehl.
-        Mit diesem Befehl wird das Ausdrucken von
-        Adress-Etiketten aktiviert.
+        Er aktiviert das Ausdrucken von Adress-Etiketten.
 
   \item[\cmd\labelstyle\arg{{Stil der Label}}] \hfil\break
         Dieser Befehl vereinbart das Layout der
@@ -466,31 +461,29 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
         Lage sind, Briefumschl"age zu bedrucken. Mit diesem
         Befehl legt man die Form der Briefumschl"age fest.
 
-  \item[\cmd\bottomtext\arg{{Feld f\"ur Kapitalgesellschaften}}] \hfil\break
-        Am Fu"s des Briefbogens werden Gesch"aftsangaben und zus"atzlich
-        bei Kapitalgesellschaften gesellschaftsrechtliche Angaben
-        angegeben. Der Befehl \cmd\bottomtext{} vereinbart diese
-        Angaben.
+  \item[\cmd\bottomtext\arg{{Feld f\"u Kapitalgesellschaften}}] \hfil\break
+        Am Fu"s der ersten Briefseite werden Gesch"aftsangaben und
+        zus"atzlich bei Kapitalgesellschaften gesellschaftsrechtliche
+        Angaben angegeben. Der Befehl \cmd\bottomtext{} vereinbart
+        diese Angaben.
 
         Dieser Befehl mu"s nach \env\begin{document}{} stehen.
 
-  \item[\cmd\nowindowrules] \hfil\break
-        Das Anschriftenfeld im Brief wird oben und unten durch
-        einen Rahmen vom "ubrigen Brief abgegrenzt. Dieser
-        Befehl schaltet den Rahmen ab.
-
   \item[\cmd\windowrules] \hfil\break
-        Die Hervorhebung der Anschrift des Empf"angers durch
-        einen Rahmen ober- und unterhalt derselben wird durch
-        diesen Befehl aktiviert.
+        Das Anschriftenfeld im Brief wird durch Linien ober-
+        und unterhalb vom "ubrigen Brief abgegrenzt.
+        Die Hervorhebung wird aktiviert.
 
-  \item[\cmd\nowindowtics] \hfil\break
-        Es werden keine Faltmarkierungen am linken Briefrand
-        ausgedruckt.
+  \item[\cmd\nowindowrules] \hfil\break
+        Der Befehl schaltet den Rahmen ab.
 
   \item[\cmd\windowtics] \hfil\break
         Es werden Faltmarkierungen am linken Briefrand
         geruckt.
+
+  \item[\cmd\nowindowtics] \hfil\break
+        Es werden keine Faltmarkierungen am linken Briefrand
+        ausgedruckt.
 
   \item[\cmd\disabledraftstandard] \hfil\break
         Die Bestandteile des Briefes werden entsprechend den
@@ -500,7 +493,7 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
   \item[\cmd\enabledraftstandard] \hfil\break
         Die Bestandteile des Briefes werden entsprechend den
         Vorschriften des Entwurfs der Norm DIN~676 vom
-        Mai 1993 auf dem Briefbogen ausgegeben.
+        Mai~1991 auf dem Briefbogen ausgegeben.
 \end{description}
 
 %    \begin{macrocode}
@@ -590,15 +583,15 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
 %<*documentation>
 %    \end{macrocode}
 %
-\subsection{Briefkopf}\index{Briefkopf}
+\ssect{Briefkopf}\index{Briefkopf}
 %
 Bei h"aufigem Briefeschreiben kommt sicher bald der
 Wunsch nach einem eigenen Briefkopf auf; auch dies ist
 mit \LaTeX\ zu verwirklichen.
 Am besten er"offnet man sich in seiner Briefdatei (die man
 sicher fr"uher oder sp"ater anlegen wird) ein File mit dem
-Namen {\tt brfkopf.tex}. In dieses kann man z.B. den Briefkopf
-in Abb. \ref{briefkopf} aufnehmen:
+Namen {\tt brfkopf.tex}. In dieses kann man z.B.\ den Briefkopf
+in Abb.~\ref{briefkopf} aufnehmen.
 
 \renewcommand{\textfraction}{0.35}
 
@@ -649,7 +642,7 @@ f"ur die gew"unschte Ausgabe des Briefkopfes am Beginn des Briefes.
 Nat"urlich lassen sich auch andere als die hier verwendeten Schriftarten
 verwenden.
  
-\subsection{Kopfzeilen}\index{Kopfzeilen}
+\ssect{Kopfzeilen}\index{Kopfzeilen}
  
 Es stehen verschiedene Kopfzeilen zur Verf"ugung die "uber die
 Option \linebreak[4]\verb+\pagestyle{...}+\index{pagestyle@\verb+\pagestyle+}
@@ -659,18 +652,18 @@ Briefen in der Fu"szeile eingeblendet, die Kopfzeile bleibt leer.
 Durch \verb+headings+\index{headings} wird die Kopfzeile mit einer
 Anrede und der Seitenzahl bei mehrseitigen Briefen gesetzt.
  
-\subsection{Briefe in englischer oder franz"osischer Sprache}
+\ssect{Briefe in englischer oder franz"osischer Sprache}
  
 Wer Briefe in anderen Sprachen schreiben m"ochte, kann f"ur Englisch und
 Franz"osisch die Trennung (abh"angig von der Installation) und Befehle f"ur
 Buchstaben mit Akzenten mit dem Befehl
-\verb+\selectlanguage{+{\itshape Sprache\/}\verb+}+
+\cmd\selectlanguage\arg{Sprache}
 \index{selectlanguage@\verb+\selectlanguage+} umschalten.
 Das Umsetzen von Bezeichnungen z.B.\ f"ur Anlage \dots{} mu"s explizit durch
 Befehle erfolgen, die in der Dokumentation zum {\tt dinbrief} beschrieben sind.
 
  
-\subsection{Serienbriefe}\index{Serienbriefe}
+\ssect{Serienbriefe}\index{Serienbriefe}
  
 Mit \LaTeX\ lassen sich auch Serienbriefe schreiben. Man ben"otigt dazu
 nur ein kleines Makro wie z.B. das folgende:
@@ -772,11 +765,13 @@ unseren Mikrowellenherd...
 \end{figure}
 
 \ssect{Einige Regeln f"ur das Briefeschreiben}
-An dieser Stelle zitieren wir einige Passagen aus den
+
+Dieser Abschnitt enth"alt einige Passagen aus den
 Normen DIN~5008 (Regeln f"ur das Maschinenschreiben) und
-DIN~676 (Gesch"aftsbrief).
-Dieser Abschnitt erhebt keinen Anspruch auf
-Vollst"andigkeit, soll aber Anf"angern wie auch
+DIN~676 (Gesch"aftsbrief), erg"anzt um einige
+zus"atzliche Hinweise und Tips.
+Der Abschnitt erhebt keinen Anspruch auf
+Vollst"andigkeit. Er soll Anf"angern wie auch
 Ge"ubten einen "Uberblick "uber die wichtigsten
 Regeln geben. Ferner werden die Grenzen der
 vorliegenden Version aufgezeigt und es wird
@@ -819,8 +814,8 @@ auf bekannte Fehler hingewiesen.
         darf nur ein \verb|\\| stehen. Direkte
         L"angenangaben (z.B.\ \verb|\\[\medskipamount]|)
         sind nicht zul"assig und verursachen einen Fehler.
-        Der Fehler kann umgangen werden falls eine
-        Konstruktion der Form
+        Der Fehler kann umgangen werden, indem eine
+        Konstruktion
         \m{Versendungsform}\verb|\\~\\|%
         \m{Empf"angerbezeichnung} usw.\
         verwendet wird.
@@ -837,6 +832,7 @@ auf bekannte Fehler hingewiesen.
         ganzen Brief, Teilbetreffe beziehen sich auf
         Briefteile.
 
+% \iffalse
         Der {\em Wortlauf des Betreffs\/} wird ohne
         Schlu"spunkt geschrieben.
 
@@ -851,7 +847,7 @@ auf bekannte Fehler hingewiesen.
         Behandlungsvermerke (z.B.\ eilt) werden \dots,
         oder im Anschlu"s an die Betreffangabe
         geschrieben; sie k"onnen hervorgehoben werden.
-
+% \fi
   \item {\bf Anlagen- und Verteilvermerke}
 
         Anlagen- und Verteilvermerke beginnen an der
@@ -872,7 +868,7 @@ auf bekannte Fehler hingewiesen.
         nach der Gru"sformel \verb|\closing| oder
         nach Anlagen- und Verteilvermerken zu setzen.
 
-  \item {\bf Seitennummerierung}
+  \item {\bf Seitennumerierung}
 
         Die Seiten eines Schriftst"ucks sind von der
         2.~Seite an oben fortlaufend zu benummern.
@@ -897,17 +893,29 @@ auf bekannte Fehler hingewiesen.
         Dieses Vorgehen wird zur Zeit nicht unterst"utzt.
         Der Pagestyle \verb|contheadings| schreibt jedoch
         an das Ende der laufenden Seite die Seitenzahl
-        der Folgeseite. Sowie ab der zweiten Seite oben
-        die Seitenzahl.
+        der Folgeseite und auf Folgeseiten die
+        aktuelle Seite in der Kopf der Seite.
+
+        Die Kombination des Befehls \verb|\bottomtext|,
+        zum Einblenden einer weiteren Kommunikationszeile
+        am unteren Blattende der ersten Seite sowie
+        von gesellschaftsrechtlichen Angaben,
+        mit Seitenstilen, die die Fu"szeile unten mit
+        der Seitennummer oder Folgeseitennummer
+        beschriften, hat unter Umst"anden zur Folge,
+        da"s die Seiten- oder Folgeseitennummer
+        von diesen Feldern "uberschrieben wird.
 
         Bei Verwendung des Befehls \verb|\bottomtext|
         zum Einblenden einer weiteren Kommunikationszeile
-        am unteren Blattende sowie von gesellschaftlichen Angaben
+        am unteren Blattende der ersten Seite
+        sowie von gesellschaftsrechtlichen Angaben
         (bei Kapitalgesellschaften) wird die Folgeseitennummer
         gegebenenfalls von diesen Feldern "uberschrieben.
 
   \item {\bf Kommunikationszeile am Blattende und
         gesellschaftsrechtliche Angaben}
+
         Eine Kommunikationszeile am Blattende kann die folgenden
         Angaben enthalten: Gesch"aftsr"aume, Telefon, Telefax,
         Teletex, Telex, Btx und Kontoverbindungen.
@@ -916,11 +924,11 @@ auf bekannte Fehler hingewiesen.
         \begin{itemize}
           \item die Rechtsform und den Sitz der Gesellschaft,
           \item das Registergericht des Sitzes der Gesellschaft
-                und die Nummer, unter die die Gesellschaft in
+                und die Nummer, unter der die Gesellschaft in
                 das Handelsregister eingetragen ist,
           \item den Namen des Vorsitzenden des Aufsichtsrates
                 (sofern die Gesellschaft nach gesetzlicher
-                Vorschrift einen Aufsichtsrat zu bilden hat)
+                Vorschrift einen Aufsichtsrat zu bilden hat),
           \item die Namen des Vorsitzenden und aller Mitglieder
                 des Vorstandes (bei Gesellschaften mit
                 beschr"ankter Haftung die Namen der
@@ -954,8 +962,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1994/11/17 03:11:56 $}
-\def\RCSrevision{$Revision: 1.9 $}
+\def\RCSdate{$Date: 1994/12/02 02:59:21 $}
+\def\RCSrevision{$Revision: 1.10 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}

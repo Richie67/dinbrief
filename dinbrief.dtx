@@ -1,9 +1,15 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.37 1995/04/26 00:49:03 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.38 1995/04/27 23:46:43 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.38  1995/04/27 23:46:43  Gussmann
+% - Generation of labels with different sizes work now.
+% - \cmd\spare works also now.
+% - Fine tuning of the labels and their adjustement on the
+%   page is beeing still missing.
+%
 % Revision 1.37  1995/04/26 00:49:03  Gussmann
 % - Label management not yet complete (Try \Etizahl{4} to get
 %   funny results).
@@ -1098,8 +1104,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/04/26 00:49:03 $}
-\def\RCSrevision{$Revision: 1.37 $}
+\def\RCSdate{$Date: 1995/04/27 23:46:43 $}
+\def\RCSrevision{$Revision: 1.38 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -2442,6 +2448,13 @@ auf bekannte Fehler hingewiesen.
 %  \subsubsection{The \cmd\opening-Procedure}
 %  The following macros typeset most static text areas of the letter.
 %
+%  \begin{macro}{\ka@db@indadr}
+%    \begin{macrocode}
+\newdimen\ka@db@indadr
+\ka@db@indadr=0pt
+%    \end{macrocode}
+%  \end{macro}
+%
 %  \begin{macro}{\ka@db@tsfromaddress}
 %    \begin{macrocode}
 \def\ka@db@tsfromaddress{%
@@ -2580,7 +2593,10 @@ auf bekannte Fehler hingewiesen.
       \else
         \setbox\@tempboxa=\vbox{%
           \hbox{%
-            \hbox to 0pt{\hskip4in\ka@db@usevarlocal{handling}\hss}%
+            \ifdim\ka@db@indadr>0pt
+              \else
+                \hbox to 0pt{\hskip4in\ka@db@usevarlocal{handling}\hss}%
+              \fi
             %\unvbox\@tempboxa
             \box\@tempboxa
           }%
@@ -2688,7 +2704,8 @@ auf bekannte Fehler hingewiesen.
   \vskip 18.6truemm % old value 13.1truemm
   %   \vbox to 50truemm{\vss\ka@db@tstoaddress\vss}\nointerlineskip
   %   \vbox to 50truemm{\ka@db@tstoaddress}\nointerlineskip
-  \vbox to 50truemm{\ka@db@tstoaddress\vss}\nointerlineskip
+  % \vbox to 50truemm{\ka@db@tstoaddress\vss}\nointerlineskip% <- org. value
+  \moveright\ka@db@indadr\vbox to 50truemm{\ka@db@tstoaddress\vss}\nointerlineskip
   \vskip 6truemm
 }%
 \def\ka@db@placerefline{%
@@ -3357,6 +3374,7 @@ auf bekannte Fehler hingewiesen.
     % \par
     % \vskip \cspare\dlabelheight % <- didn't work
     \advance\labelcount by\cspare
+    \nointerlineskip
     \vbox to \cspare\dlabelheight{\vfill}%
 %    \vbox{\rule{4pt}{\cspare\dlabelheight}}%
     \nointerlineskip
@@ -3496,14 +3514,19 @@ auf bekannte Fehler hingewiesen.
   \gdef\@mymail{}
   \global\@reflinefalse
   \if@filesw
-    \begingroup
-      \def\protect{\string}
-      \let\\=\relax
-      \def\protect##1{\string##1\space}
-      %\immediate\write\@auxout{\string\mlabel{\@backaddress}{\toname
-      %\\\toaddress}}
-      \immediate\write\@auxout{\string\mlabel{\@backaddress}{\@addresslist}}%
-    \endgroup
+    \ifnum\c@labelgen>1
+      \begingroup
+        \def\protect{\string}
+        \let\\=\relax
+        \def\protect##1{\string##1\space}
+        %\immediate\write\@auxout{\string\mlabel{\@backaddress}{\toname
+        %\\\toaddress}}
+        \immediate\write\@auxout{\string\mlabel{\@backaddress}{\@addresslist}}%
+      \endgroup
+    \fi
+    \ifnum\c@labelgen=1
+      \onlabels
+    \fi
   \fi
   \ka@db@atendletter
   }
@@ -3914,11 +3937,85 @@ auf bekannte Fehler hingewiesen.
 %    \end{macrocode}
 % \end{macro}
 %
+% \subsubsection{Controlling the generation of labels}
+%  \cmd\makelabels\ is a preamble command to enable the generation
+%  of labels. To control the generation of labels for single
+%  letters, we provide three other commands. This commands
+%  work only if \cmd\makelabels\ is given in the preamble.
+%
+%  The other three commands \cmd\nolabels, \cmd\offlabels\ and
+%  \cmd\onlabels, which only work if \cmd\makelabels\ had
+%  been given in the preamle, control the generation of
+%  single or in case of \cmd\offlabels\ the remaining
+%  label(s). \cmd\nolabels\ avoids the label for the current
+%  letter. Further if the generation of labels was permanently
+%  disabled with \cmd\offlabels\ this also switches the generation
+%  of labels from the next letter on.
+%  \cmd\offlabels\ stops the generation of labels.
+%  \cmd\onlabels\ switch the generation of label on again.
+%
+%  The counter \cmd\c@labelgen\ indicates the current state
+%  of the generation of labels:
+%
+%    \begin{tabular}{cp{0.75\textwidth}}
+%      0 & generation of labels is switched off\\
+%      1 & generation of current label is beeing temporary switched off\\
+%      2 & generation of labels is in force\\
+%    \end{tabular}
+%
 % \begin{macro}{\makelabels}
+%    \cmd\makelabels\ is a command to enable the generation of
+%    labels.
 %    \begin{macrocode}
-\def\makelabels{\@fileswtrue}
+\def\makelabels{%
+  \@fileswtrue
+  \c@labelgen=2
+}
 %    \end{macrocode}
 % \end{macro}
+%
+%  \begin{macro}{\c@labelgen}
+%    \begin{macrocode}
+\newcount\c@labelgen
+\c@labelgen=0
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\ka@db@asslabelgen}
+%    \begin{macrocode}
+\def\ka@db@asslabelgen#1#2#3{%
+  \if@filesw
+    #3\c@labelgen=#1\relax
+  \else
+    \@warning{\string\makelabels\space not given. \string#2\space has no effect}%
+  \fi
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\nolabels}
+%    \begin{macrocode}
+\def\nolabels{%
+  \ka@db@asslabelgen{1}{\nolabels}{\relax}%
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\offlabels}
+%    \begin{macrocode}
+\def\offlabels{%
+  \ka@db@asslabelgen{0}{\offlabels}{\global}%
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\onlabels}
+%    \begin{macrocode}
+\def\onlabels{%
+  \ka@db@asslabelgen{2}{\onlabels}{\global}%
+}
+%    \end{macrocode}
+%  \end{macro}
 %
 % \begin{macro}{\@startlabels}
 %    \begin{macrocode}

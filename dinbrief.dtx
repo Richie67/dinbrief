@@ -1,11 +1,14 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.17 1994/12/14 19:25:07 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.18 1994/12/20 09:45:03 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.18  1994/12/20 09:45:03  Gussmann
+% *** empty log message ***
+%
 % Revision 1.17  1994/12/14 19:25:07  Gussmann
-% \cs\envname can't used in headlines.
+% \cs\envname can't being used in headlines.
 %
 % Revision 1.16  1994/12/14 18:25:36  Gussmann
 % * Errors removed: - Definition of \concern contains \newbox command!
@@ -989,8 +992,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1994/12/14 19:25:07 $}
-\def\RCSrevision{$Revision: 1.17 $}
+\def\RCSdate{$Date: 1994/12/20 09:45:03 $}
+\def\RCSrevision{$Revision: 1.18 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -1015,7 +1018,7 @@ auf bekannte Fehler hingewiesen.
 %
 % \subsection{The class/style file `dinbrief'}
 %
-% This is |DINBRIEF.STY| in text format, as of 1994/11/16,
+% This is |DINBRIEF.STY| in text format, as of 1994/12/21,
 % by K.~Braune and R.~Gussmann
 %    (Rechenzentrum der Universit\"at Karlsruhe).
 %
@@ -1530,7 +1533,11 @@ auf bekannte Fehler hingewiesen.
  \def\LARGE{\@setsize\LARGE{22pt}\xviipt\@xviipt}
  \def\huge{\@setsize\huge{25pt}\xxpt\@xxpt}
  \def\Huge{\@setsize\Huge{30pt}\xxvpt\@xxvpt}
+%    \end{macrocode}
+%    \begin{macrocode}
 \or % 11 pt option
+%    \end{macrocode}
+%    \begin{macrocode}
  \def\@normalsize{\@setsize\normalsize{13.6pt}\xipt\@xipt
   \abovedisplayskip 11\p@ plus3\p@ minus6\p@
   \belowdisplayskip \abovedisplayskip
@@ -1565,7 +1572,11 @@ auf bekannte Fehler hingewiesen.
  \def\LARGE{\@setsize\LARGE{22pt}\xviipt\@xviipt}
  \def\huge{\@setsize\huge{25pt}\xxpt\@xxpt}
  \def\Huge{\@setsize\Huge{30pt}\xxvpt\@xxvpt}
+%    \end{macrocode}
+%    \begin{macrocode}
 \or % 12pt option
+%    \end{macrocode}
+%    \begin{macrocode}
  \def\@normalsize{\@setsize\normalsize{15pt}\xiipt\@xiipt
   \abovedisplayskip 12\p@ plus3\p@ minus7\p@
   \belowdisplayskip \abovedisplayskip
@@ -1600,7 +1611,11 @@ auf bekannte Fehler hingewiesen.
  \def\LARGE{\@setsize\LARGE{25pt}\xxpt\@xxpt}
  \def\huge{\@setsize\huge{30pt}\xxvpt\@xxvpt}
  \let\Huge=\huge
+%    \end{macrocode}
+%    \begin{macrocode}
 \or  % Norm-Option (DIN 2107, 2142)
+%    \end{macrocode}
+%    \begin{macrocode}
  \def\@normalsize{\@setsize\normalsize{\GZA}\xipt\@xipt
   \abovedisplayskip 11\p@ plus3\p@ minus6\p@
   \belowdisplayskip \abovedisplayskip
@@ -1849,12 +1864,6 @@ auf bekannte Fehler hingewiesen.
 %  \begin{macro}{\opening}
 %    \begin{macrocode}
 \def\opening#1{\thispagestyle{first@page}
-%    \end{macrocode}
-% \changes{0.0.0}{1994/02/08}{(KDB) Macros \cmd\@gbsphack\ and \cmd\@gesphack\
-%                             used by \cmd\@enlargethispage\ are unknown}
-%    \begin{macrocode}
- \let\@gbsphack=\relax
- \let\@gesphack=\relax
 %    \end{macrocode}
 % Actually enlarge the first page by the negative height of the footer:
 %    \begin{macrocode}

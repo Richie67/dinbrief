@@ -1,27 +1,30 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.5 1994/11/16 19:25:04 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.6 1994/11/16 19:26:52 Gussmann Exp $
 %
 % $Author: Gussmann $
 %
-% $Date: 1994/11/16 19:25:04 $
+% $Date: 1994/11/16 19:26:52 $
 %
-% $Header: E:/DINBRF/RCS/dinbrief.d%v 1.5 1994/11/16 19:25:04 Gussmann Exp Gussmann $
+% $Header: E:/DINBRF/RCS/dinbrief.d%v 1.6 1994/11/16 19:26:52 Gussmann Exp $
 %
-% $Locker: Gussmann $
+% $Locker:  $
 %
 % $Name:  $
 %
 % $RCSfile: dinbrief.d%v $
 %
-% $Revision: 1.5 $
+% $Revision: 1.6 $
 %
 % $Source: E:/DINBRF/RCS/dinbrief.d%v $
 %
 % $State: Exp $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.6  1994/11/16 19:26:52  Gussmann
+% The document starts now with the user guide.
+%
 % Revision 1.5  1994/11/16 19:25:04  Gussmann
 % *** empty log message ***
 %
@@ -78,8 +81,8 @@
 % \newcommand\pstyle[1]{\textsl {#1}}
 %
 %
-% \title{Standard Document Class `dinbrief' for \LaTeX{} version 2e
-%        Standard Document Style `dinbrief' for \LaTeX{} version 2.09}
+% \title{Standard Document Class `dinbrief'\\ for \LaTeX{} version 2e\\
+%        Standard Document Style `dinbrief'\\ for \LaTeX{} version 2.09}
 %
 % \author{%
 % Copyright (C) 1993, 94 by Klaus Dieter Braune, Richard Gussmann
@@ -88,25 +91,24 @@
 % \maketitle
 %
 % \begin{abstract}
-%   This document descrips the usage and the documentation of a new
+%   This document describs the usage and the documentation of a new
 %   \LaTeX-Style or a \LaTeXe-Class. This class/style implements
-%   a new document layout for writing letters following the rules
+%   a new document layout for writing letters, according to the rules
 %   of DIN (Deutsches Institut f\"ur Normung, german institute of
 %   standardization). Therefore the rules how to write such letters
 %   are in German, because we think there is less interest outside
-%   of Germany. Of curse most of the macros are explained in English.
+%   of Germany. Of course most of the macros are explained in English.
 % \end{abstract}
 %
 % \tableofcontents
 %
-%% \section{The document style dinbrief}
+% \section{The document style dinbrief}
 %
 %    \begin{macrocode}
 %<*documentation|dintab>
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-
 \expandafter\ifx\csname documentclass\endcsname\relax
     \documentstyle[12pt,german]{article}
     \typeout{Using the commando \string\documentstyle.}
@@ -115,10 +117,9 @@
     \usepackage{german}
     \typeout{Using the commando \string\documentclass.}
   \fi
-
 %    \end{macrocode}
 %
-%  \section{The list of commands}
+%  \section{Users Guide}
 %
 \newenvironment{decl}%
     {\par\small\addvspace{4.5ex plus 1ex}%
@@ -127,20 +128,16 @@
      \begin{tabular}{|l|}\hline\ignorespaces}%
     {\\\hline\end{tabular}\par\nopagebreak\addvspace{2.3ex}%
      \vskip -\parskip}
-
-\newcommand{\declline}[1]{\\\multicolumn1{|r|}{\small#1}}
-
-\newcommand{\m}[1]{\mbox{$\langle$\emph{#1}$\rangle$}}
-
-\renewcommand{\arg}[1]{{\tt\string{}\m{#1}{\tt\string}}}
-%  \begin{macro}{\oarg}
-%  This macro is defined somewhere else, maybe in the {\sf doc\/}-package.
-%  So we put it into an macrocode (verbatim) environment.
-%    \begin{macrocode}
-\newcommand{\oarg}[1]{{\tt[}\m{#1}{\tt]}}
-%    \end{macrocode}
-%  \end{macro}
 %
+\newcommand{\declline}[1]{\\\multicolumn1{|r|}{\small#1}}
+%
+\newcommand{\m}[1]{\mbox{$\langle$\emph{#1}$\rangle$}}
+%
+\renewcommand{\arg}[1]{{\tt\string{}\m{#1}{\tt\string}}}
+%
+\expandafter\ifx\csname oarg\endcsname\relax
+  \newcommand{\oarg}[1]{{\tt[}\m{#1}{\tt]}}
+\fi
 %
 \germanTeX
 %
@@ -148,33 +145,27 @@
   \newcommand\emph[1]{{\em#1\/}}}% This is \emph{not} the LaTeX2e
                                  %  definition!
 \fi
-
-%|\documentstyle[12pt,german]{article}|
-%|\setlength{\parindent}{0pt}|
-
-%|\begin{document}|
-
 %
 %    \begin{macrocode}
 %</documentation|dintab>
-%
+%    \end{macrocode}
+%    \begin{macrocode}
 %<*documentation>
 %    \end{macrocode}
-
+%
 \renewcommand{\textfraction}{0.10}
 \renewcommand{\topfraction}{0.65}
 \renewcommand{\bottomfraction}{0.85}
 
-
-\subsection{Briefe}\index{Briefe}
+% ^^A\subsection{Briefe}\index{Briefe}
 
 \LaTeX\ erlaubt neben der mathe"-ma"-tisch-wissen"-schaft"-lichen
 Textverarbeitung u.a.\ auch das Erstellen
-von Briefen. F"ur englische Briefe existiert in der Makrosammlung \LaTeX\ die
+von Briefen\index{Briefe}.
+F"ur englische Briefe existiert in der Makrosammlung \LaTeX\ die
 Style-Klasse {\tt letter}. Deutsche Briefe k"onnen mit dem Stil {\tt dinbrief}
 geschrieben werden.
  
-
 \subsubsection{\LaTeX-Briefe (letter)}\index{Briefe, \LaTeX}
 \index{letter}\index{Briefe!letter}
  
@@ -259,10 +250,9 @@ unseren Mikrowellenherd...
 \end{letter}
 \end{document}
 \end{verbatim}}
-\caption{Brief mit \LaTeX.} \label{brief}
+\caption{Brief mit \LaTeX.}\label{brief}
 \end{center}
 \end{figure}
-
 
 \subsubsection{Deutsche Briefe (dinbrief)}\index{Briefe, deutsche}
 \index{dinbrief}
@@ -272,12 +262,12 @@ Die Dokument Class Option {\tt dinbrief} unterscheidet sich in folgendem vom
 
 Neben dem deutschen Layout sind zus"atzliche Befehle verf"ugbar:
 
-\verb+\phone{+{\it Vorwahl}\verb+}{+{\it Rufnummer}\verb+}+
+\verb+\phone{+{\it Vorwahl\/}\verb+}{+{\it Rufnummer\/}\verb+}+
 \index{phone@\verb+\phone+},
-\verb+\concern{..}+\index{concern@\verb+\concern+}, um ein ''Betreff''
+\verb+\concern{..}+\index{concern@\verb+\concern+}, um ein "`Betreff"'
 einzuf"ugen, \verb+\yourmail{...}+\index{yourmail@\verb+\yourmail+} f"ur
-{\it Ihre Zeichen, Ihre Nachricht vom} und \verb+\sign{...}+
-\index{sign@\verb+\sign+}, um {\it Unsere Zeichen} anzugeben.
+{\it Ihre Zeichen, Ihre Nachricht vom\/} und \verb+\sign{...}+
+\index{sign@\verb+\sign+}, um {\it Unsere Zeichen\/} anzugeben.
 Au"serdem l"a"st sich mit \verb+\backaddress{...}+
 \index{backaddress@\verb+\backaddress+} die Adresse des
 Absenders im Fenster des Briefkuverts einblenden. Zudem erlaubt es
@@ -286,7 +276,7 @@ auch mit dem Ort des Schreibens zu versehen.
 
 \paragraph{Fenster}\index{Fenster}
  
-F"ur alle, denen das ``Fenster'' um die Adresse nicht gef"allt,
+F"ur alle, denen das "`Fenster"' um die Adresse nicht gef"allt,
 besteht die M"oglichkeit, durch Angabe von
 \verb+\nowindowrules+\index{nowindowrules@\verb+\nowindowrules+}
 vor dem Befehl \verb+\opening+ dieses abzuschalten.
@@ -301,7 +291,8 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
 
 %    \begin{macrocode}
 %</documentation>
-%
+%    \end{macrocode}
+%    \begin{macrocode}
 %<*documentation|dintab>
 %    \end{macrocode}
 
@@ -310,27 +301,10 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
 \begin{center}
   \begin{tabular}{l}
     \hline
-      \verb|\begin{document}|                                   \\
-      \verb|\end{document}|                                     \\
     \hline
-      \verb|\begin{letter}|\arg{{Anschrift}}                    \\
-      \verb|\end{letter}|                                       \\
     \hline
-      \verb|\signature|\arg{Unterschrift des Absenders}         \\
-      \verb|\address|\arg{{Name und Adresse des Absenders}}     \\
-      \verb|\backaddress|\arg{{Absenderadresse im Brieffenster}}\\
-      \verb|\place|\arg{{Ortsangabe im Brief}}                  \\
-      \verb|\date|\arg{{Briefdatum}}                            \\
     \hline
-      \verb|\yourmail|\arg{{Ihre Zeichen, Ihre Nachricht vom}}  \\
-      \verb|\sign|\arg{{Unsere Zeichen}}                        \\
-      \verb|\phone|\arg{{Vorwahl/Durchwahl}}\arg{{Rufnummer}}   \\
     \hline
-      \verb|\concern|\arg{{Betreff}}                            \\
-      \verb|\opening|\arg{{Anrede}}                             \\
-    \hline
-      \verb|\centeraddress|                                     \\
-      \verb|\normaladdress|                                     \\
     \hline
       \verb|\encl|\arg{{Anlagen}}                               \\
       \verb|\ps|\arg{{Postscriptum}}                            \\
@@ -349,62 +323,55 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
   \end{tabular}
 \end{center}
 
-%|\documentclass[12pt]{article}|
-%|\usepackage{german}|
-
-%|\begin{document}|
-
 \begin{table}[h]
 \caption{Zusammenfassung der Dinbrief-Befehle:}\index{dinbrief!Befehle}
 
 \begin{center}
 \begin{tabular}{l}
- \hline
-  \verb|\begin{document}|                                          \\
-  \verb|\end{document}|                                            \\
- \hline
-  \verb|\signature|\{$\langle${\em Unterschrift des Absenders\/}$\rangle$\}   \\
-  \verb|\address|\{$\langle${\em Name und Adresse des Absenders\/}$\rangle$\} \\
-  \verb|\backaddress|\{$\langle${\em Absenderadresse im
-  Brieffenster\/}$\rangle$\}                                       \\
-  \verb|\phone|\{$\langle${\em Vorwahl\/$\rangle$}\}\{$\langle${\em
-  Rufnummer\/}$\rangle$\}                                          \\
-  \verb|\place|\{$\langle${\em Ortsangabe im Brief\/}$\rangle$\}   \\
-  \verb|\date|\{$\langle${\em Briefdatum\/}$\rangle$\}             \\
- \hline
-  \verb|\begin{letter}|\{$\langle${\em Anschrift\/}$\rangle$\}     \\
-  \verb|\end{letter}|                                              \\
- \hline
-  \verb|\concern|\{$\langle${\em Betreff\/}$\rangle$\}             \\
-  \verb|\opening|\{$\langle${\em Anrede\/}$\rangle$\}              \\
-  \verb|\yourmail|\{$\langle${\em Ihre Zeichen, Ihre Nachricht
-  vom\/}$\rangle$\}                                                \\
-  \verb|\sign|\{$\langle${\em Unsere Zeichen\/}$\rangle$\}         \\
- \hline
-  \verb|\centeraddress|                                            \\
-  \verb|\normaladdress|                                            \\
- \hline
-  \verb|\encl|\{$\langle${\em Anlagen\/}$\rangle$\}                \\
-  \verb|\ps|\{$\langle${\em Postscriptum\/}$\rangle$\}             \\
-  \verb|\cc|\{$\langle${\em Verteiler\/}$\rangle$\}                \\
- \hline
-  \verb|\makelabels|                                               \\
-% \verb|\labelstyle|\{$\langle${\em Stil der Label\/}$\rangle$\}   \\
- \hline
-  \verb|\bottomtext|\{$\langle${\em Feld f\"ur
-  Kapitalgesellschaften\/}$\rangle$\}                              \\
- \hline
-  \verb|\nowindowrules|                                            \\
-  \verb|\windowrules|                                              \\
-  \verb|\nowindowtics|                                             \\
-  \verb|\windowtics|                                               \\
- \hline
+  \hline
+    \verb|\begin{document}|                                          \\
+    \verb|\end{document}|                                            \\
+  \hline
+    \verb|\begin{letter}|\arg{{Anschrift}}                           \\
+    \verb|\end{letter}|                                              \\
+  \hline
+    \verb|\signature|\arg{Unterschrift des Absenders}           \\
+    \verb|\address|\arg{{Name und Adresse des Absenders}}       \\
+    \verb|\backaddress|\arg{{Absenderadresse im Brieffenster}}  \\
+  \hline
+    \verb|\place|\arg{{Ortsangabe im Brief}}                    \\
+    \verb|\date|\arg{{Briefdatum}}                              \\
+    \verb|\yourmail|\arg{{Ihre Zeichen, Ihre Nachricht vom}}    \\
+    \verb|\sign|\arg{{Unsere Zeichen (, Unsere Nachricht vom)}} \\
+    \verb|\phone|\arg{{Vorwahl}}\arg{{Rufnummer/Durchwahl}}     \\
+    \verb|\processor|\arg{{Sachbearbeiter}}                     \\
+  \hline
+    \verb|\concern|\arg{{Betreff}}                              \\
+    \verb|\opening|\arg{{Anrede}}                               \\
+  \hline
+    \verb|\centeraddress|                                       \\
+    \verb|\normaladdress|                                       \\
+  \hline
+    \verb|\encl|\arg{{Anlagen}}                               \\
+    \verb|\ps|\arg{{Postscriptum}}                            \\
+    \verb|\cc|\arg{{Verteiler}}                               \\
+  \hline
+    \verb|\makelabels|                                        \\
+    \verb|\labelstyle|\arg{{Stil der Label}}                  \\
+  \hline
+    \verb|\bottomtext|\arg{{Feld f\"ur Kapitalgesellschaften}}\\
+  \hline
+    \verb|\nowindowrules|                                     \\
+    \verb|\windowrules|                                       \\
+    \verb|\nowindowtics|                                      \\
+    \verb|\windowtics|                                        \\
+  \hline
+    \verb|\disabledraftstandard|                              \\
+    \verb|\enabledraftstandard|                               \\
+  \hline
 \end{tabular}
 \end{center}
-
 \end{table}
-
-%\clearpage
 
 \begin{table}[h]
 \caption{"Uberschriftvariablen und deren Inhalt}:
@@ -428,15 +395,14 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
 
 \end{table}
 
-%|\end{document}|
-
 %    \begin{macrocode}
 %</documentation|dintab>
-%
+%    \end{macrocode}
+%    \begin{macrocode}
 %<*documentation>
 %    \end{macrocode}
 %
-\subsubsection{Briefkopf}\index{Briefkopf}
+\subsection{Briefkopf}\index{Briefkopf}
 %
 Bei h"aufigem Briefeschreiben kommt sicher bald der
 Wunsch nach einem eigenen Briefkopf auf; auch dies ist
@@ -494,7 +460,7 @@ f"ur die gew"unschte Ausgabe des Briefkopfes am Beginn des Briefes.
 Nat"urlich lassen sich auch andere als die hier verwendeten Schriftarten
 verwenden.
  
-\paragraph{Kopfzeilen}\index{Kopfzeilen}
+\subsection{Kopfzeilen}\index{Kopfzeilen}
  
 Es stehen verschiedene Kopfzeilen zur Verf"ugung die "uber die
 Option \verb+\pagestyle{...}+\index{pagestyle@\verb+\pagestyle+}
@@ -504,7 +470,7 @@ Briefen in der Fu"szeile eingeblendet, die Kopfzeile bleibt leer.
 Durch \verb+headings+\index{headings} wird die Kopfzeile mit einer
 Anrede und der Seitenzahl bei mehrseitigen Briefen gesetzt.
  
-\paragraph{Briefe in englischer oder franz"osischer Sprache}
+\subsection{Briefe in englischer oder franz"osischer Sprache}
  
 Wer Briefe in anderen Sprachen schreiben m"ochte, kann f"ur Englisch und
 Franz"osisch die Trennung (abh"angig von der Installation) und Befehle f"ur
@@ -515,34 +481,38 @@ Das Umsetzen von Bezeichnungen z.B.\ f"ur Anlage \dots{} mu"s explizit durch
 Befehle erfolgen, die in der Dokumentation zum {\tt dinbrief} beschrieben sind.
 
  
-\subsubsection{Serienbriefe}\index{Serienbriefe}
+\subsection{Serienbriefe}\index{Serienbriefe}
  
 Mit \LaTeX\ lassen sich auch Serienbriefe schreiben. Man ben"otigt dazu
 nur ein kleines Makro wie z.B. das folgende:
- 
+
+\begin{cemter}
+\begin{minipage}{0.75\textwidth}
 \begin{verbatim}
 \def\mailto#1{
   \begin{letter}{#1}
   \input{brftext}
   \end{letter}}
 \end{verbatim}
+\end{minipage}
+\end{center}
  
-\clearpage
-
 Mit dem Befehl \verb+\input{brftext}+ wird die Datei geladen, die den Text f"ur
 den Serienbrief enth"alt. In einer weiteren Datei stehen unsere Adressaten im
 folgenden Format:
- 
+
+\begin{center}
+\begin{minipage}{0.75\textwidth}
 \begin{verbatim}
 \mailto{Karle Huber\\
-        Lichtensteinstr. 45\\
-        \medskip
+        Lichtensteinstr. 45\\[\medskipamount]
         77777 Hintertupfingen}
 \mailto{Anna H"aberle\\
-        Wallstra"se 7\\
-        \medskip
+        Wallstra"se 7\\[\medskipamount]
         88888 L"andle}
 \end{verbatim}
+\end{minipage}
+\end{center}
  
 Die Briefe k"onnen nun mit einer Umgebung wie der in Abbildung~\ref{serie}
 ausgedruckt werden.
@@ -615,32 +585,53 @@ unseren Mikrowellenherd...
 \clearpage
 %    \begin{macrocode}
 %</documentation>
-%
+%    \end{macrocode}
+%    \begin{macrocode}
 %<*documentation|dintab>
 %    \end{macrocode}
-%|\end{document}|
-%
+%    \begin{macrocode}
+\end{document}
+%    \end{macrocode}
 %    \begin{macrocode}
 %</documentation|dintab>
 %    \end{macrocode}
 %
+% \clearpage
+%
 % \originalTeX
 %
-% \section{Identification}
+% \section{Documentation}
 %
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\fileversion{0.94.1}
-\def\filedate{1994/08/15}
+\def\RCSdate{$Date$}
+\def\RCSrevision{$Revision$}
+%
+{%
+  \def\stripone $#1${\def\partone{#1}}
+  \def\striptwo Date: #1\stop{\gdef\filedate{#1}\gdef\docdate{#1}}
+  \expandafter\stripone\RCSdate
+  \expandafter\striptwo\partone\stop
+}%
+%
+{%
+  \def\stripone $#1${\def\partone{#1}}
+  \def\striptwo Revision: #1\stop{\gdef\fileversion{#1}}
+  \expandafter\stripone\RCSrevision
+  \expandafter\striptwo\partone\stop
+}%
+%
+% ^^A \def\fileversion{0.94.1}
+% ^^A \def\filedate{1994/08/15}
 \def\filename{dinbrief.dtx}
-\def\docdate {1994/08/15}
+% ^^A \def\docdate {1994/08/15}
 %    \end{macrocode}
 %
 %
-% \section{The class/style file `dinbrief'}
+% \subsection{The class/style file `dinbrief'}
 %
-% This is |DINBRIEF.STY| in text format, as of February 27, 1992,
+% This is |DINBRIEF.STY| in text format, as of \filedate,
 % by K. Braune, R. Gussmann and K. Dilper
 %    (Rechenzentrum der Universitaet Karlsruhe).
 %
@@ -651,7 +642,6 @@ unseren Mikrowellenherd...
 % letter.sty 17-Jan-86 with modifications
 % for DIN-A4 paper + window envelopes, by H.Partl (Wien)
 %
-% Changelog:
 % \changes{0.0.0}{1991/09/09}{(KB) Inserted blank space behind "P.S.:"}
 % \changes{0.0.0}{1991/10/02}{(KB) Changed "P.S.:" to "PS\cmd\newline"
 %                                  Diminished space before \cmd\ps, \cmd\cc
@@ -679,16 +669,15 @@ unseren Mikrowellenherd...
 %<*class|style>
 %    \end{macrocode}
 %
-% \section{Check the environment this style is running on}
-%
 % \subsection{Get system information}
 % First we use three conditions to identify whether or not this file
-% is running on LaTeX 2.09 or \LaTeXe and what for a font selection
-% scheme is present.
+% is running under LaTeX 2.09 or \LaTeXe\ and which font selection
+% scheme is in use.
 %
 % |\ifka@db@ltxtwoe| is true if and only if this style is running in
 % an \LaTeXe-environment. |\ifka@db@nfss| is true if we are using an
-% NFSS 1 and |\ifka@db@nfsstwo| is true if we are using the NFSS 2.
+% NFSS 1 and \linebreak[3]
+% |\ifka@db@nfsstwo| is true if we are using the NFSS 2.
 %
 %    \begin{macrocode}
 \newif\ifka@db@ltxtwoe
@@ -699,7 +688,7 @@ unseren Mikrowellenherd...
 \ka@db@nfsstwofalse
 %    \end{macrocode}
 %
-% Then we check what is present on this system
+% Then we check what is present on this system.
 %
 %    \begin{macrocode}
 \expandafter\ifx\csname documentclass\endcsname\relax\else
@@ -713,21 +702,18 @@ unseren Mikrowellenherd...
   \fi
 %    \end{macrocode}
 %
+% \subsection{Print informations about this style}
 %
-% \section{Print informations about this style}
-%
-% \subsection{Print the banner}
+% \subsubsection{Print the banner}
 %
 %    \begin{macrocode}
 \typeout{}
 \typeout{Document Class/Style 'dinbrief' - Preliminary Version \fileversion}
 \typeout{University of Karlsruhe - \filedate}
-\typeout{This is a premiliary test release, and was}
-\typeout{last modified by Richard R. Gussmann}
 \typeout{}
 %    \end{macrocode}
 %
-% \subsection{Print system information}
+% \subsubsection{Print system information}
 %    \begin{macrocode}
 \ifka@db@ltxtwoe
     \typeout{*** dinbrief: Running in LaTeX 2e mode!}
@@ -746,38 +732,35 @@ unseren Mikrowellenherd...
   \fi
 %    \end{macrocode}
 %
-% \section{Initial Code}
+% \subsection{Initial Code}
 %
 %    In this part we define a few comands that are used later on.
 %
-% \subsection{Choosing the type size}
+% \subsubsection{Choosing the type size}
 %
 % \begin{macro}{\@ptsize}
 % \begin{macro}{\ds@12pt}
 % \begin{macro}{\ds@11pt}
 % \begin{macro}{\ds@10pt}
-% \begin{macro}{\ds@13pt}
-%    This control sequence is used to store the second digit of the
-%    pointsize we are typesetting in. So, normally, it's value is one
-%    of 0, 1 or 2.
+% \begin{macro}{\ds@norm}
+%    The control sequence |\@ptsize| is used to store the second digit
+%    of the pointsize we are typesetting in. So, normally, it's value
+%    is one of 0, 1 or 2.
 %
-%    To be compatible with the old `dinbrief', we define also the
-%    pointsize 3, which does not mean typeset on 13pt, it's used
-%    to feature some other size following the rules of old stupid
-%    typewriters.
+%    To be compatible with the old `dinbrief', pointsize 3 is used to
+%    switch to special size having $\frac{1}{6}$ in as |\baselineskip|.
+%    (\dots\ it's used to feature some other size following the rules
+%    of old stupid typewriters.
 %
 %    The type size options are handled by defining |\@ptsize| to contain
 %    the last digit of the size in question and branching on |\ifcase|
 %    statements. This is done for historical reasons to stay compatible
 %    with other packages that use the |\@ptsize| variable to select
-%    special actions. It makes the declarations of size options less
-%    than 10pt difficult, although one can probably use \texttt{9}
-%    and \texttt{8} assuming that a class wont define both
-%    \Lopt{8pt} and \Lopt{18pt} options.
+%    special actions.
 %
 %    To follow the programming convertions of \LaTeXe\ we split the
 %    definition of the macros into two parts. One for the old \LaTeX\
-%    and one for \LaTeX2.
+%    and one for \LaTeXe.
 %
 %    \begin{macrocode}
 \ifka@db@ltxtwoe
@@ -804,7 +787,7 @@ unseren Mikrowellenherd...
 %
 % \begin{macro}{\jobname@aux}
 %    This control sequence is used to store the name of the aux-file.
-%    Therefore we give temporally to the character |_| the catcode 12.
+%    Therefore character |_| temporally is given catcode 12.
 %
 %    \begin{macrocode}
 {\catcode`\_=12 \gdef\jobname@aux{\jobname.aux}} % .aux or _aux or ...
@@ -814,7 +797,7 @@ unseren Mikrowellenherd...
 % \subsection{Stuff from original classes}
 %
 % \begin{macro}{\if@restonecol}
-%    When the document has to printed in two columns, we sometimes
+%    If the document has to be printed in two columns, we sometimes
 %    have to temporarily switch to one column. This switch is used to
 %    remember to switch back.
 %    \begin{macrocode}
@@ -822,15 +805,11 @@ unseren Mikrowellenherd...
 %    \end{macrocode}
 % \end{macro}
 %
-%
-%
 % \subsection{Setting Paper Sizes}
 %
 %    The variables |\paperwidth| and |\paperheight| should reflect the
 %    physical paper size after trimming. For desk printer output this
 %    is usually the real paper size since there is no post-processing.
-%    Classes for real book production will probably add other paper
-%    sizes and additionally the production of crop marks for trimming.
 %    \begin{macrocode}
 \ifka@db@ltxtwoe
   \DeclareOption{a4paper}
@@ -891,7 +870,7 @@ unseren Mikrowellenherd...
 %
 %  \subsection{Defining intern font selection commands}
 %
-%  To be compatible to all font selection scheme we define our own
+%  To be compatible to all font selection schemes we define our own
 %  font selection commands |\ka@db@fontshape| (1), |\ka@db@fontseries| (1),
 %  |ka@db@fontsize| (2), |\ka@db@selectfont| (0).
 %
@@ -956,7 +935,7 @@ unseren Mikrowellenherd...
 %    |\usepackage| command in the document preamble.
 %
 %    In the old \LaTeX\ the user starts his file with the command
-%       |\documentstyle [OPTION1, ... ,OPTIONk]{STYLE}|
+%    \linebreak[3]|\documentstyle [OPTION1, ... ,OPTIONk]{STYLE}|
 %    which saves the |OPTION|'s and |\input|'s the file |STYLE.STY|.
 %    When the |STYLE.STY| file issues the command |\@options|, the
 %    following happens for each i:
@@ -979,10 +958,11 @@ unseren Mikrowellenherd...
 %  \subsection{Loading Packages}
 %
 %  The `dinbrief' class/style file does not load additional packages.
+%  The user should load `german.sty'.
 %
-% \section{Error messages in this class/style}
+% \subsection{Error messages in this class/style}
 %
-% \subsection{General error message}
+% \subsubsection{General error message}
 %
 %  \begin{macro}{\ka@db@error}
 %    \begin{macrocode}
@@ -998,10 +978,10 @@ unseren Mikrowellenherd...
 %    \end{macrocode}
 %  \end{macro}
 %
-%  \subsection{Warning within \LaTeXe\ for forbidden commands}
+%  \subsubsection{Warning within \LaTeXe\ for forbidden commands}
 %
-%  Therefore we define a warning message for the use of this forbidden
-%  commands.
+%  Therefore we define a warning message in case forbidden
+%  commands are used.
 %  \begin{macro}{\ka@db@warning}
 %    \begin{macrocode}
 \ifka@db@ltxtwoe
@@ -1013,9 +993,9 @@ unseren Mikrowellenherd...
 %    \end{macrocode}
 %  \end{macro}
 %
-%  \section{Font changing}
+%  \subsection{Font changing}
 %
-%  \subsection{Defining old font changing commands for \LaTeXe}
+%  \subsubsection{Defining old font changing commands for \LaTeXe}
 %
 %  \changes{0.92.20}{1994/02/20}{The font changing has to
 %                                be redefined in \LaTeXe.
@@ -1027,7 +1007,8 @@ unseren Mikrowellenherd...
 %  Defining the font change commands for \LaTeXe.
 %
 %  The following commands are only available in \LaTeXe. In older
-%  \LaTeX\ the commands are defined in |lfonts.???| (I think so).
+%  versions of \LaTeX\ the commands are defined in |lfonts.???|
+%  (I think so).
 %
 %    \begin{macrocode}
 \ifka@db@ltxtwoe
@@ -1037,7 +1018,7 @@ unseren Mikrowellenherd...
 %  \textit{and} in math mode. They are provided for compatibility, but one
 %  should start using the |\text...| and |\math...| commands instead.
 %  These commands are redefined using |\@renewfontswitch|, a command
-%  wiith three arguments: the user command to be defined; \LaTeX\ commands
+%  with three arguments: the user command to be defined; \LaTeX\ commands
 %  to execute in text mode and \LaTeX\ commands to execute in math mode.
 %
 %  \begin{macro}{\rm}
@@ -1054,7 +1035,7 @@ unseren Mikrowellenherd...
 %  \end{macro}
 %
 %  \begin{macro}{\bf}
-%  The command to change to the bold series. One should |\mdseries| to
+%  The command to change to the bold series. One should use |\mdseries| to
 %  explicitly switch back to medium series.
 %    \begin{macrocode}
 \DeclareOldFontCommand{\bf}{\normalfont\bfseries}{\mathbf}
@@ -1065,8 +1046,8 @@ unseren Mikrowellenherd...
 %  \begin{macro}{\sl}
 %  \begin{macro}{\sc}
 %  And the commands to change the shape of the font. The slanted and
-%  samll caps shapes are not available by default as math alphabets, so
-%  those changes do nothing in math mode. One should use |\upshape|
+%  small caps shapes are not available by default as math alphabets, so
+%  these changes do nothing in math mode. One should use |\upshape|
 %  to explicitly change back to the upright shape.
 %
 %    \begin{macrocode}
@@ -1081,7 +1062,7 @@ unseren Mikrowellenherd...
 %  \begin{macro}{\cal}
 %  \begin{macro}{\mit}
 %  The commands |\cal| and |\mit| should only be used in math mode, outside
-%  math mode they have no effect. Currently the New Font Selection Scheme
+%  math mode they have no effect. Currently, the New Font Selection Scheme
 %  defines these commands to generate warning messages. Terefore we have
 %  to define them `by hand'.
 %
@@ -1102,14 +1083,14 @@ unseren Mikrowellenherd...
 %
 % \subsection{A special distance}
 % \begin{macro}{\GZA}
-% Baselinedistance 1/6 in = 4,23 mm (Grundzeilenabstand DIN 2107, 2142)
+%  Baselinedistance 1/6 in = 4,23 mm (Grundzeilenabstand DIN 2107, 2142)
 %    \begin{macrocode}
 \newdimen\GZA
 \GZA=1in \divide\GZA by 6
 %    \end{macrocode}
 % \end{macro}
 %
-% \section{Fontsizes und other parameters}
+% \subsection{Fontsizes und other parameters}
 %
 % \begin{macro}{\@normalsize}
 % \begin{macro}{\small}
@@ -1278,9 +1259,10 @@ unseren Mikrowellenherd...
 %
 %  \begin{macro}{\normalsize}
 %  We are doing here something different as in the classes files of
-%  \LaTeXe. This may necessary for backward compatibility. Maybe not!
+%  \LaTeXe. This may be necessary for backward compatibility. Maybe not!
 %
-%  If we are in \LaTeXe\ then we have to define the cs |\normalsize|.
+%  If we are in \LaTeXe\ then we have to define the
+%  controlsequence |\normalsize|.
 %
 %    \begin{macrocode}
 \ifka@db@ltxtwoe
@@ -1290,8 +1272,8 @@ unseren Mikrowellenherd...
 %  \end{macro}
 %
 % We initially choose the normalsize font.
-% This code has to be executed behind the definition of |\baselinestretch|,
-% if we are running without NFSS2. (This may be true also for NFSS1.)
+% This code has to be executed following the definition of |\baselinestretch|,
+% if we are not running NFSS2. (This may also be true also for NFSS1.)
 % \changes{0.92.13}{1994/01/04}{Commented out and moved to the end of the file}
 % \changes{0.92.14}{1994/01/04}{Included as conditional code}
 %    \begin{macrocode}
@@ -1304,13 +1286,11 @@ unseren Mikrowellenherd...
   \fi
 %    \end{macrocode}
 %
-% \section{Document Layout}
+% \subsection{Document Layout}
 % \label{sec:maincode}
 %
 %  In this section we are finally dealing with the nasty typographical
 %  details.
-%
-%
 %
 %    \begin{macrocode}
 \addtolength\voffset{0.8truemm}
@@ -1334,12 +1314,12 @@ unseren Mikrowellenherd...
 % \begin{macro}{\lts@textheight}
 % These dimens are used to store different values for the first page
 % and the following pages. All dimens starting with |ltf@XXX| hold
-% the values for the first page and all dimens starting with |lts@XXX|
-% hold the values for the second and follwing pages. We have to do
-% here such a funny coding becaus \LaTeX-|\thispagestyle|-mechanism
-% is to unflexible. (This code may not complete yet!)
+% values for the first page and all dimens starting with |lts@XXX|
+% hold values for the second and follwing pages. We have to do
+% here such a funny coding because \LaTeX's |\thispagestyle|-mechanism
+% is not flexible enough. (This code may not complete yet!)
 %
-% We use this to move the start of the first page on the letters
+% We use this to move the start of the first page of the letters
 % 12 mm up.
 %
 %    \begin{macrocode}
@@ -1362,8 +1342,8 @@ unseren Mikrowellenherd...
 % \end{macro}
 %
 %  \begin{macro}{\footheight}
-%    \LaTeXe has no dimen-register |\footheight|, because it is in
-%    all \LaTeX-versions not defined.
+%    \LaTeXe\ has no dimen register |\footheight|, because there is no such
+%    register in other \LaTeX-versions.
 %    \begin{macrocode}
 \ifka@db@ltxtwoe
     \relax
@@ -1396,7 +1376,7 @@ unseren Mikrowellenherd...
 %    |\footnotesep| is the height of the strut placed at the beginning
 %    of every footnote. It equals the  height of a normal
 %    |\footnotesize| strut in this
-%    class, thus no extra space occurs between footnotes.
+%    class; thus no extra space occurs between footnotes.
 %
 %    The class/style `dinbrief' uses only one value for
 %    |\footnotesep| in all pt-sizes.
@@ -1438,24 +1418,40 @@ unseren Mikrowellenherd...
 \@dblfpbot 0pt plus 1fil
 %    \end{macrocode}
 %
+% \begin{macro}{\@windowrules}
+% \begin{macro}{\windowrules}
+% \begin{macro}{\nowindowrules}
 %    \begin{macrocode}
 \def\@windowrules#1{\gdef\@@windowrules{#1}}
 \def\windowrules{\@windowrules{yes}}
 \def\nowindowrules{\@windowrules{}}
 \windowrules
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 %
+% \begin{macro}{\@windowtics}
+% \begin{macro}{\windowtics}
+% \begin{macro}{\nowindowtics}
 %    \begin{macrocode}
 \def\@windowtics#1{\gdef\@@windowtics{#1}}
 \def\windowtics{\@windowtics{yes}}
 \def\nowindowtics{\@windowtics{}}
 \windowtics
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 %
+% \begin{macro}{\backaddress}
+% \begin{macro}{\@backaddress}
 %    \begin{macrocode}
 \def\backaddress#1{\gdef\@backaddress{#1}}
 \backaddress{}
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
 %
 %  \begin{macro}{\opening}
 %    \begin{macrocode}
@@ -1637,17 +1633,17 @@ unseren Mikrowellenherd...
 %    \end{macrocode}
 %  \end{macro}
 %
-% \section{Initialisation}
+% \subsection{Initialisation}
 %
-% \subsection{Words}
+% \subsubsection{Words}
 %
 % \begin{macro}{\ccname}
 % \begin{macro}{\enclname}
 % \begin{macro}{\psname}
 % This document style/class is for documents prepared in the German language.
 % To prepare a version for another language, various German words must
-% be replaced.  All the German words that require replacement are
-% defined below in command names.
+% be replaced.  All German words that require replacement are
+% defined below in command names. (Not all!)
 %
 %    \begin{macrocode}
 \def\ccname{Verteiler}
@@ -1658,8 +1654,9 @@ unseren Mikrowellenherd...
 % \end{macro}
 % \end{macro}
 %
-% \subsection{\"Uberbleibsel aus alter Zeit?}
+% \subsubsection{\"Uberbleibsel aus alter Zeit?}
 % This is stuff from elder times and it is maybe used or not.
+% It is used by a special pagestyle called ?.
 %
 % \begin{macro}{\headtoname}
 % \begin{macro}{\pagename}
@@ -1671,7 +1668,7 @@ unseren Mikrowellenherd...
 % \end{macro}
 %
 %
-% \section{More letter macros}
+% \subsection{More letter macros}
 %  \begin{macro}{\cc}
 %  \begin{macro}{\encl}
 %  \begin{macro}{\ps}
@@ -1695,25 +1692,26 @@ unseren Mikrowellenherd...
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsection{styles for the labels}
+% \subsection{Styles for the labels}
 % 06.02.93
 % labels got some styles (R.G.)
 %
 % \begin{macro}{\labelstyle}
 %   |\labelstyle| is a command to define the layout of the labels.
-%   Normally we print labels on a special paper but some printers
+%   Normally, labels are printed on special paper, but some printers
 %   are able to print on envelopes. Therefore we define some styles
 %   for printing labels on envelops:
+%
 %   \begin{tabular}{clcl}
 %     \hline
-%       \multicolumn{2}{c}{Briefh"ullenformat} &
-%         \multicolumn{2}{c}{Gebr"auchliches}\\
+%       \multicolumn{2}{c}{Briefh\"ullenformat} &
+%         \multicolumn{2}{c}{Gebr\"auchliches}\\
 %       \multicolumn{2}{c}{} &
 %         \multicolumn{2}{c}{Einlagenformat}\\
 %       \multicolumn{1}{c}{Kurz-} &
-%         \multicolumn{1}{c}{Au"senma"se} &
+%         \multicolumn{1}{c}{Au\ss enma\ss e} &
 %         \multicolumn{1}{c}{Kurz-} &
-%         \multicolumn{1}{c}{Ma"se}\\
+%         \multicolumn{1}{c}{Ma\ss e}\\
 %       \multicolumn{1}{c}{zeichen}&
 %         \multicolumn{1}{c}{mm $\pm$ 1{,}5}&
 %         \multicolumn{1}{c}{zeichen}&
@@ -1724,6 +1722,7 @@ unseren Mikrowellenherd...
 %       C6/C5 & 114 $\times$ 229 & ---  & 105 $\times$ 210 \\
 %     \hline
 %   \end{tabular}
+%
 %   Das Einlagenformat 105 mm $\times$ 210 mm ergibt sich
 %   durch Faltung nach DIN~676.
 %
@@ -1809,7 +1808,7 @@ unseren Mikrowellenherd...
 %  \end{macro}
 %
 %  \begin{macro}{\mlabel}
-%    |\mlabel| typesets one label.
+%    |\mlabel| typesets a single label.
 %    \begin{macrocode}
 \def\mlabel#1#2{\@nameuse{label@\@labelstyle}{#1}{#2}}
 %    \end{macrocode}
@@ -1992,18 +1991,38 @@ unseren Mikrowellenherd...
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\labelcount}
 %    \begin{macrocode}
 \newcount\labelcount
+%    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{\if@refline}
+%    \begin{macrocode}
 \newif\if@refline
 \@reflinefalse
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\if@toadrcenter}
+%    \begin{macrocode}
 \newif\if@toadrcenter
 \@toadrcenterfalse
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\if@letterform}
+% \begin{macro}{\letterform}
+% \begin{macro}{\noletterform}
+%    \begin{macrocode}
 \newif\if@letterform
 \@letterformfalse
 \def\letterform{\@letterformtrue}
 \def\noletterform{\@letterformfalse}
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 %
 % \begin{macro}{\centeraddress}
 %    \begin{macrocode}
@@ -2153,7 +2172,7 @@ unseren Mikrowellenherd...
 % \end{macro}
 %
 % \begin{macro}{\processor}
-%   This macro takes as an argument the name of the processor (Sachbearbeiter)
+%   This macro takes as argument the name of the processor (Sachbearbeiter)
 %   and stores it in |\@processor|. It also toggles the the
 %   |\@reflinetrue|-switch to get an referline and further
 %   enables the layout of the new DIN draft standard 676 from May 1991.
@@ -2185,7 +2204,7 @@ unseren Mikrowellenherd...
 % This is used to include special informations such as the
 % number of the giroconto, or the name of the chairman of a corporation.
 %
-% KDB 02/08/94 \hfil\break
+% \noindent KDB 02/08/94 \hfil\break
 % Defining macro |\bottomtext| putting the specified
 % text into box |\@@bottomtext|
 % to get the height of the footer and store it in |\@@bottomht|
@@ -2284,8 +2303,8 @@ unseren Mikrowellenherd...
 \let\@texttop=\relax
 %    \end{macrocode}
 %
-% KDB 02/09/94\hfil\break
-% Switch for detecting last page introduced (used bye pagestyle contheadings
+% \noindent KDB 02/09/94\hfil\break
+% Switch for detecting last page introduced (used bye pagestyle contheadings).
 %    \begin{macrocode}
 \newif\ifka@db@lastpage
 \ka@db@lastpagefalse
@@ -2391,11 +2410,12 @@ unseren Mikrowellenherd...
 %  \end{macro}
 %
 %  \begin{macro}{ps@contheadings}
-%  KDB 02/09/94\hfil\break
+%  \noindent KDB 02/09/94\hfil\break
 %  Pagestyle 'headings' with pagenumber in top line and number of following
-%  page in bottom line
+%  page in bottom line.
 %
-%  Remark KDB 02/10/94\hfil\break
+%  \smallskip
+%  \noindent Remark KDB 02/10/94\hfil\break
 %  Problem to be solved before this pagestyle can be introduced:
 %    There must be found a method to detect the last page is typesetted
 %    (endletter is not sufficient, since there may be another pagebreak when
@@ -2428,7 +2448,7 @@ unseren Mikrowellenherd...
 %  \end{macro}
 %
 % \subsection{Fonts --- Paragraphing}
-% These parameters controls \TeX's behaviour when two lines tend
+% These parameters control \TeX's behaviour when two lines tend
 % to come too close together.
 %
 %    \begin{macrocode}
@@ -2484,9 +2504,9 @@ unseren Mikrowellenherd...
 %
 % \subsubsection{General List Parameters}
 %
-% The following commands are used to set the default values for the list
+% The following commands are used to set default values for the list
 % environment's parameters. See the \LaTeX{} manual for an explanation
-% of the meanings of the parameters.  Defaults for the list
+% of the meanings of these parameters.  Defaults for the list
 % environment are set as follows.  First, |\rightmargin|,
 % |\listparindent| and |\itemindent| are set to 0pt.  Then, for a Kth
 % level list, the command |\@listK| is called, where `K' denotes `i',
@@ -2800,7 +2820,7 @@ unseren Mikrowellenherd...
 %
 % \begin{macro}{\@mpfootins}
 %    Minipages have their own footnotes; |\skip||\@mpfootins| plays
-%    same r\^ole for footnotes in a minipage as |\skip||\footins| does
+%    the same r\^ole for footnotes in a minipage as |\skip||\footins| does
 %    for ordinary footnotes.
 %
 %    \begin{macrocode}
@@ -2813,13 +2833,16 @@ unseren Mikrowellenherd...
 % \begin{macro}{\fboxsep}
 %    The space left by |\fbox| and |\framebox| between the box and the
 %    text in it.
+%    \begin{macrocode}
+\fboxsep = 3pt
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\fboxrule}
 %    The width of the rules in the box made by |\fbox| and |\framebox|.
 %    \begin{macrocode}
 \fboxsep = 3pt
 \fboxrule = .4pt
 %    \end{macrocode}
-% \end{macro}
 % \end{macro}
 %
 % \subsubsection{Equation and eqnarray}
@@ -2873,7 +2896,7 @@ unseren Mikrowellenherd...
 % \end{macro}
 %
 % \begin{macro}{\c@footnote}
-%    The dinbrief style/class do not use this macro.
+%    The dinbrief style/class does not use this macro.
 %
 %    (Footnotes are numbered within chapters in the report and book
 %    document styles.)
@@ -2929,7 +2952,7 @@ unseren Mikrowellenherd...
 % \end{macro}
 %
 % \begin{macro}{\@makefnmark}
-%    The footnote markers that are printed in the text to point to the
+%    The footnote markers printed in the text to point to the
 %    footnotes should be produced by the macro |\@makefnmark|. We use
 %    the default definition for it.
 %    \begin{macrocode}
@@ -3015,14 +3038,13 @@ unseren Mikrowellenherd...
 %  \end{macro}
 %
 %  \begin{macro}{\@answertonew}
-%  The draft proposal of the new DIN 676 contains an additional
-%  field for the name of a person works currently on this
-%  subject the letter had been wrote for.
+%  The draft proposal of the new DIN 676 has an additional
+%  field for the name of a person who has written the letter.
 %
-%  The new DIN 676 (draft) has a big disadvantage. The refer line
+%  The new DIN 676 (draft) has a big disadvantage. The referline
 %  is larger than the normal \cmd\textwidth. So we have to add some
-%  extra space to this box. This code should be rewritten. Is is only
-%  a hack at the moment.
+%  extra space to this box. This code should be rewritten.
+%  Currently, it is just a hack.
 %
 %    \begin{macrocode}
 \def\@answertonew{%
@@ -3076,12 +3098,12 @@ unseren Mikrowellenherd...
 %  \changes{0.94.1}{1994/08/14}{\cmd\enabledraftstandard and
 %                               \cmd\disabledraftstandard
 %                               introduced.}
-%  This two macros \cmd\enabledraftstandard and \cmd\disabledraftstandard
-%  are used to switch between the two DIN version 676 (the old one and the
-%  draft one). This is simply done by letting the \cmd\@answerto being the
-%  \cmd\@answertoold oder the \cmd\@answertonew.
+%  The macros \cmd\enabledraftstandard and \cmd\disabledraftstandard
+%  are used to switch between the two DIN versions 676 (the old and the
+%  draft one). This is simply done by letting the \cmd\@answerto pointing to
+%  \cmd\@answertoold or \cmd\@answertonew.
 %
-%  By default we use the old and therefore the german standard.
+%  By default, we use the old and therefore the german standard.
 %
 %    \begin{macrocode}
 \def\enabledraftstandard{%
@@ -3095,17 +3117,16 @@ unseren Mikrowellenherd...
 }
 %
 \disabledraftstandard
-\enabledraftstandard
 %    \end{macrocode}
 %  \end{macro}
 %  \end{macro}
 %  \end{macro}
 %
-% \section{More Initialisations}
+% \subsection{More Initialisations}
 %
 % We initially choose the normalsize font.
-% This code has to be executed behind the definition of |\baselinestretch|
-% if we are running with a original \LaTeX\ font selection scheme.
+% This code has to be executed following the definition of |\baselinestretch|
+% if the original \LaTeX\ font selection scheme is used.
 %    \begin{macrocode}
 \ifka@db@nfss
   \else
@@ -3127,12 +3148,14 @@ unseren Mikrowellenherd...
 \pagenumbering{arabic}
 \onecolumn
 \@fileswfalse
+%    \end{macrocode}
 %
+%    \begin{macrocode}
 %</class|style>
 %    \end{macrocode}
 %
-% \section{The short class file/The short style file}
-%   This file inputs only the dinbrief.sty file.
+% \subsection{The short class file/The short style file}
+%   This file only inputs the dinbrief.sty file.
 %
 %    \begin{macrocode}
 %<*shortclass>
@@ -3140,7 +3163,7 @@ unseren Mikrowellenherd...
 %</shortclass>
 %    \end{macrocode}
 %
-%   This file inputs only the dinbrief.cls file.
+%   This file only inputs the dinbrief.cls file.
 %
 %    \begin{macrocode}
 %<*shortstyle>
@@ -3207,13 +3230,13 @@ unseren Mikrowellenherd...
 %    \begin{macrocode}
 %<*example>
 %    \end{macrocode}
-% Dies wird ein Brief.
+% This will be a letter.
 %    \begin{macrocode}
 
 \expandafter\ifx\csname documentclass\endcsname\relax
-    \documentstyle[12pt,german]{dinbrief}
+    \documentstyle[10pt,german]{dinbrief}
   \else
-    \documentclass[12pt]{dinbrief}
+    \documentclass[10pt]{dinbrief}
     \usepackage{german}
   \fi
 
@@ -3221,8 +3244,6 @@ unseren Mikrowellenherd...
 
 % \makelabels
 % \labelstyle{deskjet}
-
-\addtolength{\textheight}{45pt}
 
 \pagestyle{contheadings}
 
@@ -3281,7 +3302,9 @@ Problem ver"offentlichen.
 %
 % \section{Testing the Class/Style}
 %
+%    \begin{macrocode}
 %<*brfbody>
+%    \end{macrocode}
 %    \begin{macrocode}
 \yourmail{\ }
 \concern{Bitte um "Uberlassung einer Sammlung von Alka-Seltzer Flaschen}
@@ -3308,9 +3331,13 @@ Problem ver"offentlichen.
 \encl{Forschungsbericht Nr.\ 6/99 des IfA}
 
 %    \end{macrocode}
+%    \begin{macrocode}
 %</brfbody>
+%    \end{macrocode}
 %
+%    \begin{macrocode}
 %<*10pt>
+%    \end{macrocode}
 %    \begin{macrocode}
 \expandafter\ifx\csname documentclass\endcsname\relax
     \documentstyle[german]{dinbrief}
@@ -3321,9 +3348,13 @@ Problem ver"offentlichen.
     \typeout{Using the commando \string\documentclass.}
   \fi
 %    \end{macrocode}
+%    \begin{macrocode}
 %</10pt>
+%    \end{macrocode}
 %
+%    \begin{macrocode}
 %<*11pt>
+%    \end{macrocode}
 %    \begin{macrocode}
 \expandafter\ifx\csname documentclass\endcsname\relax
     \documentstyle[11pt,german]{dinbrief}
@@ -3334,9 +3365,13 @@ Problem ver"offentlichen.
     \typeout{Using the commando \string\documentclass.}
   \fi
 %    \end{macrocode}
+%    \begin{macrocode}
 %</11pt>
+%    \end{macrocode}
 %
+%    \begin{macrocode}
 %<*12pt>
+%    \end{macrocode}
 %    \begin{macrocode}
 \expandafter\ifx\csname documentclass\endcsname\relax
     \documentstyle[12pt,german]{dinbrief}
@@ -3347,9 +3382,13 @@ Problem ver"offentlichen.
     \typeout{Using the commando \string\documentclass.}
   \fi
 %    \end{macrocode}
+%    \begin{macrocode}
 %</12pt>
+%    \end{macrocode}
 %
+%    \begin{macrocode}
 %<*norm>
+%    \end{macrocode}
 %    \begin{macrocode}
 \expandafter\ifx\csname documentclass\endcsname\relax
     \documentstyle[norm,german]{dinbrief}
@@ -3360,9 +3399,13 @@ Problem ver"offentlichen.
     \typeout{Using the commando \string\documentclass.}
   \fi
 %    \end{macrocode}
+%    \begin{macrocode}
 %</norm>
+%    \end{macrocode}
 %
+%    \begin{macrocode}
 %<*test>
+%    \end{macrocode}
 %    \begin{macrocode}
 \input brfkopf.tex
 

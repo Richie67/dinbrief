@@ -1,9 +1,13 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.27 1995/01/22 21:28:52 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.28 1995/01/22 21:45:47 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.28  1995/01/22 21:45:47  Gussmann
+% * macro \cmd\ka@db@tstoaddress\space changed.
+% * \cmd\postremark\space works.
+%
 % Revision 1.27  1995/01/22 21:28:52  Gussmann
 % \cmd\ka@db@ifemptydynvar\space inserts phantom spaces. (Fixed!)
 %
@@ -1054,8 +1058,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/01/22 21:28:52 $}
-\def\RCSrevision{$Revision: 1.27 $}
+\def\RCSdate{$Date: 1995/01/22 21:45:47 $}
+\def\RCSrevision{$Revision: 1.28 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -1230,7 +1234,10 @@ auf bekannte Fehler hingewiesen.
 %    \begin{macrocode}
 \long\def\ka@db@assignvarglobal#1#2{\protect\pka@db@assignvarglobal{#1}{#2}}%
 \long\def\pka@db@assignvarglobal#1#2{%
-  \message{assignvarglobal: #1 = #2}%
+  \bgroup
+    \let\\=\relax
+    \message{assignvarglobal: #1 = #2}%
+  \egroup
   \global\@namedef{ka@db@g@#1}{#2}%
 }
 %    \end{macrocode}
@@ -1241,7 +1248,10 @@ auf bekannte Fehler hingewiesen.
 %    \begin{macrocode}
 \long\def\ka@db@assignvarlocal#1#2{\protect\pka@db@assignvarlocal{#1}{#2}}%
 \long\def\pka@db@assignvarlocal#1#2{%
-  \message{assignvarlocal: #1 = #2}%
+  \bgroup
+    \let\\=\relax
+    \message{assignvarlocal: #1 = #2}%
+  \egroup
   \global\@namedef{ka@db@l@#1}{#2}%
 }
 %    \end{macrocode}
@@ -1322,6 +1332,15 @@ auf bekannte Fehler hingewiesen.
 %  \end{macro}
 %
 %  \begin{macro}{\ka@db@ifemptydynvar}
+%  Argument one has to be a control sequence. Argument two is
+%  the argument of the control sequence given in the first argument.
+%  If the macro combined with the first two arguments is empty, then
+%  the third argument is executed. Otherwise the fourth argument is
+%  executed. We do an expansion into a temporary controlsequence.
+%  Therefore all control sequences in the expanded macro which
+%  should not be expanded should be protected. \cmd\protect\ and
+%  \cmd\\\ are set so that no expansion is given for protected
+%  control sequences and also for \cmd\\.
 %    \begin{macrocode}
 \long\def\ka@db@ifemptydynvar#1#2#3#4{%
   \bgroup
@@ -1343,6 +1362,7 @@ auf bekannte Fehler hingewiesen.
 %  \end{macro}
 %
 %  \begin{macro}{\ka@db@ifemptyvarlocal}
+%  Checks if the local entity of a variable is empty or not.
 %    \begin{macrocode}
 \long\def\ka@db@ifemptyvarlocal#1#2#3{%
   \ka@db@ifemptydynvar{\pka@db@usevarlocal}{#1}{#2}{#3}%
@@ -1367,6 +1387,7 @@ auf bekannte Fehler hingewiesen.
 %  \end{macro}
 %
 %  \begin{macro}{\ka@db@ifemptyvarglobal}
+%  Checks if the global entity of a variable is empty or not.
 %    \begin{macrocode}
 \long\def\ka@db@ifemptyvarglobal#1#2#3{%
   \ka@db@ifemptydynvar{\pka@db@usevarglobal}{#1}{#2}{#3}%
@@ -1391,6 +1412,9 @@ auf bekannte Fehler hingewiesen.
 %  \end{macro}
 %
 %  \begin{macro}{\ka@db@ifemptyvar}
+%  If both entities of the variable (local and global) are
+%  empty then the second argument is executed. Otherwise the
+%  third argument is executed.
 %    \begin{macrocode}
 \long\def\ka@db@ifemptyvar#1#2#3{%
   \ka@db@ifemptyvarlocal{#1}{% then
@@ -1432,7 +1456,8 @@ auf bekannte Fehler hingewiesen.
 %  \begin{macro}{\ka@db@atletter}
 %  The macro |\ka@db@execatletter| appends at the end of the macro
 %  |\ka@db@atletter| the stuff added in the argument of
-%  |\ka@db@execatletter|.
+%  |\ka@db@execatletter|. The macro |\@ka@db@atletter| will
+%  be executed if the |\begin{letter}|-command is processed.
 %    \begin{macrocode}
 \def\ka@db@execatletter#1{%
   \bgroup
@@ -1448,6 +1473,8 @@ auf bekannte Fehler hingewiesen.
 %
 %  \begin{macro}{\ka@db@execatendletter}
 %  \begin{macro}{\ka@db@endletter}
+%  The same as above except that the list is executed
+%  if the |\end{letter}|-command is processed.
 %    \begin{macrocode}
 \def\ka@db@execatendletter#1{%
   \bgroup
@@ -2168,6 +2195,11 @@ auf bekannte Fehler hingewiesen.
 %  \begin{macro}{\ifka@db@windowrules}
 %  \begin{macro}{\windowrules}
 %  \begin{macro}{\nowindowrules}
+%  The window rules above and below the receivers address can
+%  be switched on or off. The boolean variable |\ifka@db@windowrules|
+%  is true if the rules have to be typeset. The user commands
+%  \cmd\windowrules\ and \cmd\nowindowrules\ toggle the boolean
+%  variable.
 %    \begin{macrocode}
 \newif\ifka@db@windowrules
 \def\windowrules{\global\ka@db@windowrulestrue}
@@ -2183,6 +2215,8 @@ auf bekannte Fehler hingewiesen.
 %  \begin{macro}{\ifka@db@windowtics}
 %  \begin{macro}{\windowtics}
 %  \begin{macro}{\nowindowtics}
+%  Save as above except the tics on the left side are typeset
+%  or not.
 %    \begin{macrocode}
 \newif\ifka@db@windowtics
 \def\windowtics{\global\ka@db@windowticstrue}
@@ -2212,6 +2246,11 @@ auf bekannte Fehler hingewiesen.
 %
 %  \begin{macro}{\@splitoncr}
 %  \begin{macro}{\@splitoncrlist}
+%  The macro |\@splitoncr| splits the first argument on each |\\|.
+%  The second argument is a macro with exactly one argument. For each
+%  part the macro (in the second) argument is called.
+%  |\@splitoncrlist| is called inside |\@splitoncr| and
+%  does the real work.
 %    \begin{macrocode}
 \long\def\@splitoncr#1#2{{%
   % \tracingmacros=1
@@ -2235,6 +2274,9 @@ auf bekannte Fehler hingewiesen.
 %  \end{macro}
 %
 %  \begin{macro}{\@ignorebrackets}
+%  The first argument in brackets is ignored. The third argument
+%  is the name of a control sequece. This cs will be defined globally
+%  with the contents of the second argument.
 %    \begin{macrocode}
 \def\@ignorebrackets[#1]#2\stop#3{%
   \gdef#3{#2}\relax
@@ -2272,6 +2314,7 @@ auf bekannte Fehler hingewiesen.
 %  \end{macro}
 %
 %  \begin{macro}{\@withoutmark}
+%  This macro is not allowed to insert a |\\| into the |\@addresslist|.
 %    \begin{macrocode}
 \long\def\@withoutmark#1\stop{%
   \xdef\@addresslist{\@addresslist #1}
@@ -2283,6 +2326,8 @@ auf bekannte Fehler hingewiesen.
 %  \end{macro}
 %
 %  \begin{macro}{\@withlbracket}
+%  Adds to the |\@addresslist| in brackets the contents of the
+%  brackts following the |\\|. Looks for a |!|.
 %    \begin{macrocode}
 \long\def\@withlbracket[#1]#2\stop{%
   \xdef\@addresslist{\@addresslist\ifx\@addresslist\empty\else\\\fi[#1]}
@@ -2292,6 +2337,9 @@ auf bekannte Fehler hingewiesen.
 %  \end{macro}
 %
 %  \begin{macro}{\@withoutlbracket}
+%  Checks if |!| is immediately following the |\\|.
+%  If so |\@withmarkcr| is called otherwise |\@withoutmarkcr|
+%  is called.
 %    \begin{macrocode}
 \long\def\@withoutlbracket#1\stop{%
   \@ifnextchar!{\@withmarkcr}{\@withoutmarkcr}#1\stop
@@ -2300,6 +2348,9 @@ auf bekannte Fehler hingewiesen.
 %  \end{macro}
 %
 %  \begin{macro}{\@checkformark}
+%  Checks of the existence of a left bracket. Depending on the
+%  presence of such a left bracket the control sequence
+%  |\@withlbracket| or |\@withoutlbracket| is executed.
 %    \begin{macrocode}
 \long\def\@checkformark#1{%
   %\@ifnextchar!{\@withmark}{\@withoutmark}#1\stop
@@ -2411,6 +2462,17 @@ auf bekannte Fehler hingewiesen.
 %    \end{macrocode}
 %  \end{macro}
 %
+%  \begin{macro}{\ka@db@bafntsel}
+%  The macro |\ka@db@bafntsel| selects the font size and other
+%  parameters for the backaddress in the window.
+%    \begin{macrocode}
+\def\ka@db@bafntsel{%
+  \ka@db@fontsize{8}{9pt}%
+  \ka@db@selectfont
+}
+%    \end{macrocode}
+%  \end{macro}
+%
 %  \begin{macro}{\ka@db@tstoaddress}
 %    \begin{macrocode}
 \def\ka@db@tstoaddress{%
@@ -2437,8 +2499,7 @@ auf bekannte Fehler hingewiesen.
       \hbox to 0pt{\hspace*{-4truemm}%
         \vbox{%
           \hbox to 85truemm{\hfill
-                            {\ka@db@fontsize{8}{9pt}
-                             \ka@db@selectfont \@backaddress}\hfill}%
+                            {\ka@db@bafntsel\@backaddress}\hfill}%
           \hrule width 85truemm}\hss}%
       % \vss % <- removed to get exact layout
     }%
@@ -2466,7 +2527,11 @@ auf bekannte Fehler hingewiesen.
         \@warning{Receivers address is larger than letter window}%
       \else
         \setbox\@tempboxa=\vbox{%
-          \unvbox\@tempboxa
+          \hbox{%
+            \hbox to 0pt{\hskip4in\ka@db@usevarlocal{handling}\hss}%
+            %\unvbox\@tempboxa
+            \box\@tempboxa
+          }%
           \if@toadrcenter\relax
             \else\vskip 2.5truemm minus 2.5truemm
           \fi
@@ -2820,9 +2885,13 @@ auf bekannte Fehler hingewiesen.
 %        }%
         \parbox[t]{\@tempdimb}{%\parskip .7em%
           \ignorespaces #1\\[3\baselineskip]
-          \ifx\@empty\@fromsig
-          \else \@fromsig
-          \fi\strut
+%          \ifx\@empty\@fromsig
+%          \else \@fromsig
+%          \fi\strut
+          \ka@db@ifemptyvar{signature}{}{%
+            \ka@db@usevar{signature}%
+          }%
+          \strut
         }%
         \parbox[t]{\@tempdima}{%\parskip .7em%
           \ka@db@tsenclcc
@@ -2830,9 +2899,13 @@ auf bekannte Fehler hingewiesen.
       \egroup
     \else
       \ignorespaces #1\\[3\baselineskip]
-      \ifx\@empty\@fromsig
-      \else \@fromsig
-      \fi\strut
+%      \ifx\@empty\@fromsig
+%      \else \@fromsig
+%      \fi\strut
+      \ka@db@ifemptyvar{signature}{}{%
+        \ka@db@usevar{signature}%
+      }%
+      \strut
     \fi
   }%
   \par\medskip
@@ -2891,6 +2964,24 @@ auf bekannte Fehler hingewiesen.
 %
 %
 %  \subsection{More letter macros}
+%
+%  \begin{macro}{\handling}
+%    \begin{macrocode}
+\def\handling#1{%
+  \ka@db@assignvarlocal{handling}{#1}%
+}
+\ka@db@execatletter{\ka@db@assignvarlocal{handling}{}}%
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\postremark}
+%    \begin{macrocode}
+\def\postremark#1{%
+  \ka@db@assignvarlocal{postremark}{#1}%
+}
+\ka@db@execatletter{\ka@db@assignvarlocal{postremark}{}}%
+%    \end{macrocode}
+%  \end{macro}
 %
 %  \changes{1.22.0}{1995/01/19}{(RG) \cmd\cc\ and \cmd\encl\ extended.}
 %  \begin{macro}{\cc}
@@ -3147,7 +3238,7 @@ auf bekannte Fehler hingewiesen.
 %  This counter should replace the old boolean flag |\ifka@db@inletter|.
 %  We further use the different states to change the behavior of some
 %  API macros. This is necessary because the {\tt old dinbrief\/}
-%  requests to have \cmd\Anlagen\ and \Verteiler\ beeing in front of
+%  requests to have \cmd\Anlagen\ and \cmd\Verteiler\ beeing in front of
 %  \cmd\closing. And our implementation wants to have \cmd\encl\
 %  and \cmd\cc\ after the \cmd\closing{}-command.
 %
@@ -3171,7 +3262,7 @@ auf bekannte Fehler hingewiesen.
 % \changes{1.22.0}{1995/01/19}{(RG) State counter added to \cmd\letter.
 %                              Check for nested letter envs changed.}
 % \changes{1.25.0}{1995/01/21}{(RG) \cmd\ka@db@atletter-hook added and
-%                              use of |\if@ka@dbinletter| deleted.}
+%                              use of \cs{if@ka@dbinletter} deleted.}
 %    \begin{macrocode}
   \ifnum\c@lt@state>0
     \ka@db@error{%
@@ -3346,7 +3437,11 @@ auf bekannte Fehler hingewiesen.
 %
 % \begin{macro}{\signature}
 %    \begin{macrocode}
-\def\signature#1{\def\@fromsig{#1}}
+%\def\signature#1{\def\@fromsig{#1}}
+\def\signature#1{%
+  \ka@db@assignvar{signature}{#1}%
+}
+\ka@db@execatletter{\ka@db@assignvarlocal{signature}{}}%
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4520,15 +4615,6 @@ auf bekannte Fehler hingewiesen.
 %    \end{macrocode}
 %  \end{macro}
 %
-%  \begin{macro}{\postremark}
-%    \begin{macrocode}
-\def\postremark#1{%
-  \ka@db@assignvarlocal{postremark}{#1}%
-}
-\ka@db@execatletter{\ka@db@assignvarlocal{postremark}{}}%
-%    \end{macrocode}
-%  \end{macro}
-%
 %  \begin{macro}{\Postvermerk}
 %    \begin{macrocode}
 \def\Postvermerk#1{%
@@ -4538,10 +4624,19 @@ auf bekannte Fehler hingewiesen.
 %    \end{macrocode}
 %  \end{macro}
 %
+%  \begin{macro}{\Behandlungsvermerk}
+%    \begin{macrocode}
+\def\Behandlungsvermerk#1{%
+  \@warning{Use \string\handling\space instead of \string\Behandlungsvermerk}%
+  \handling{#1}%
+}
+%    \end{macrocode}
+%  \end{macro}
+%
 %  \begin{macro}{\Datum}
 %    \begin{macrocode}
 \def\Datum#1{%
-  \date{#1}
+  \date{#1}%
 }
 %    \end{macrocode}
 %  \end{macro}
@@ -4554,8 +4649,8 @@ auf bekannte Fehler hingewiesen.
     \ka@db@splitdblpty #1\@st@p@
   \fi
 }
-\def\ka@db@fromadrone{}
-\def\ka@db@fromadrtwo{}
+\def\ka@db@fromadrone{}%
+\def\ka@db@fromadrtwo{}%
 \long\def\ka@db@splitdblptx #1::#2\@st@p@{%
   \def\ka@db@fromadrone{#1}%
   \def\ka@db@fromadrtwo{#2}%
@@ -4565,9 +4660,9 @@ auf bekannte Fehler hingewiesen.
 }
 %    \end{macrocode}
 %
-%  \begin{macro}{\Absender}
+%  \begin{macro}{\stdaddress}
 %    \begin{macrocode}
-\long\def\Absender#1{%
+\long\def\stdaddress#1{%
   \ka@db@splitondblpt{#1}
   \address{%
     \vspace*{7truemm}
@@ -4576,6 +4671,15 @@ auf bekannte Fehler hingewiesen.
     \parbox[t]{\textwidth}{\ka@db@fromadrone\ka@db@fromadrtwo}%
   }%
   \@noreflinetrue
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\Absender}
+%    \begin{macrocode}
+\long\def\Absender#1{%
+  \@warning{Use \string\stdaddress\space instead of \string\Absender}%
+  \stdaddress{#1}%
 }
 %    \end{macrocode}
 %  \end{macro}
@@ -4631,14 +4735,13 @@ auf bekannte Fehler hingewiesen.
 % \end{macro}
 % \end{macro}
 %
-%
 %  \begin{macro}{\Einrueckung}
 %    \begin{macrocode}
 \long\def\Einrueckung#1{%
   \@warning{Use the environment dinquote in future}%
   \begin{dinquote}%
   #1
-  \end{dinquote}
+  \end{dinquote}%
 }
 %    \end{macrocode}
 %  \end{macro}
@@ -4649,6 +4752,22 @@ auf bekannte Fehler hingewiesen.
 %    \begin{macrocode}
 \newif\ifka@db@enclright
 \ka@db@enclrightfalse
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\enclright}
+%    \begin{macrocode}
+\def\enclright{%
+  \ka@db@enclrighttrue
+}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\enclXYZ}
+%    \begin{macrocode}
+\def\enclXYZ{%
+  \ka@db@enclrightfalse
+}
 %    \end{macrocode}
 %  \end{macro}
 %
@@ -4919,7 +5038,8 @@ stellen, die wir "uber dieses kritische Problem ver"offentlichen.
           \item[Second] \verb|\item| in Level 2.
           \item[Third]
                 \begin{description}
-                  \item[Fourth] \verb|\item| in Level 3.
+                  \item \verb|\item| in Level 3.
+                  \item Zweites \verb|\item| in Level 3.
                 \end{description}
         \end{description}
   \item[Second] Zweites \verb|\item|.
@@ -4932,15 +5052,16 @@ stellen, die wir "uber dieses kritische Problem ver"offentlichen.
           \item \verb|\item| in Level 2.
           \item
                 \begin{enumerate}
-                  \item[Fourth] \verb|\item| in Level 3.
+                  \item \verb|\item| in Level 3.
+                  \item Zweites \verb|\item| in Level 3.
                 \end{enumerate}
         \end{itemize}
   \item[Second] Zweites \verb|\item|.
   \item[Third]
         \begin{enumerate}
-          \item Brain damaged \LaTeX.
-          \item Why is there so large distance between the label and
-                the first number?
+          \item Genius \LaTeX.
+          \item Why has been there so large distance between the label and
+                the first number in elder versions of \LaTeX?
         \end{enumerate}
 \end{description}
 
@@ -5189,8 +5310,7 @@ Postfach 3322\\[\medskipamount]
  % API (application programming interface). We recommend to use the
  % new dinbrief API which is much more powerfull. The outcome may be
  % quiet unsatisfied if you mix both APIs. We had made a few changes
- % to adapt the file to \LaTeXe. We also marked the commands not
- % implemented in the version of May 11th, 1992.
+ % to adapt the file to \LaTeXe.
  %
 \expandafter\ifx\csname documentclass\endcsname\relax
     \documentstyle[german]{dinbrief}
@@ -5201,9 +5321,9 @@ Postfach 3322\\[\medskipamount]
     \typeout{Using the command \string\documentclass.}
   \fi
 
- % \Etihoehe{41mm}%  <- command not present
- % \Etirand{46.3mm}% <- command not present
- % \Etizahl{6}%      <- command not present
+ % \Etihoehe{41mm}%
+ % \Etirand{46.3mm}%
+ % \Etizahl{6}%
 \makelabels
 \spare{1}
  %\pagestyle{empty}
@@ -5220,7 +5340,7 @@ Postfach 28 17\par
 3400 G"ottingen
 }
 \Postvermerk{Einschreiben}
- % \Behandlungsvermerk{E\ i\ l\ t} % <- command not preset
+\Behandlungsvermerk{E\ i\ l\ t}
 \Datum{G"ottingen, 29.04.86}
 \Absender{Klaus Waldmann\\B"urgerstra"se 135\\3400 G"ottingen\\::Tel.\
 (05 51) 9 34 56}

@@ -1,9 +1,13 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.32 1995/04/25 23:13:18 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.33 1995/04/25 23:20:03 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.33  1995/04/25 23:20:03  Gussmann
+% \cmd\closing\ changed. Forgott to insert a minus sign in the calculation
+% of the witdh of the parboxes.
+%
 % Revision 1.32  1995/04/25 23:13:18  Gussmann
 % *** empty log message ***
 %
@@ -1076,8 +1080,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/04/25 23:13:18 $}
-\def\RCSrevision{$Revision: 1.32 $}
+\def\RCSdate{$Date: 1995/04/25 23:20:03 $}
+\def\RCSrevision{$Revision: 1.33 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -1207,6 +1211,18 @@ auf bekannte Fehler hingewiesen.
 % \subsection{Initial code}
 %
 %    In this part we define a few comands that are used later on.
+%
+% \subsubsection{temporary variables}
+%
+%  \begin{macro}{\ka@db@tmpdima}
+%  Unfortunately we have to define out own temporary dimen
+%  variable, because inside a parbox \cmd\@tempdima\ and
+%  \cmd\@tempdimb\ are used. \cmd\@tempdimc\ ist used maybe
+%  in fontswitch commands.
+%    \begin{macrocode}
+\newdimen\ka@db@tmpdima
+%    \end{macrocode}
+%  \end{macro}
 %
 % \subsubsection{{\tt dinbrief\/} programming environment}
 %
@@ -2892,16 +2908,16 @@ auf bekannte Fehler hingewiesen.
     \leavevmode
     \ifka@db@enclright
       \bgroup
-        \@tempdima=\textwidth
-        \@tempdimb=4in
-        \advance\@tempdima by -\@tempdimb
+%        \@tempdima=\textwidth
+        \ka@db@tmpdima=4in
+%        \advance\@tempdima by -\ka@db@tmpdima
 %        \hbox to 0pt{%
 %          \hskip\@tempdimb\relax
 %          \parbox[t]{\@tempdima}{%\parskip .7em
 %                                 \ka@db@tsenclcc}%
 %          \hss
 %        }%
-        \parbox[t]{\@tempdimb}{%\parskip .7em%
+        \parbox[t]{\ka@db@tmpdima}{%\parskip .7em%
           \ignorespaces #1\\[3\baselineskip]
 %          \ifx\@empty\@fromsig
 %          \else \@fromsig
@@ -2911,6 +2927,8 @@ auf bekannte Fehler hingewiesen.
           }%
           \strut
         }%
+        \@tempdima=\textwidth
+        \advance\@tempdima by -\ka@db@tmpdima
         \parbox[t]{\@tempdima}{%\parskip .7em%
           \ka@db@tsenclcc
         }%

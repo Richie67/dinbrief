@@ -1,9 +1,13 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.35 1995/04/25 23:51:49 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.36 1995/04/25 23:54:35 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.36  1995/04/25 23:54:35  Gussmann
+% Assignments for \labelnumber, \labelheight and \labelwidth are now
+% global.
+%
 % Revision 1.35  1995/04/25 23:51:49  Gussmann
 % Only comments added behind some closing braces.
 %
@@ -1088,8 +1092,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/04/25 23:51:49 $}
-\def\RCSrevision{$Revision: 1.35 $}
+\def\RCSdate{$Date: 1995/04/25 23:54:35 $}
+\def\RCSrevision{$Revision: 1.36 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -3222,9 +3226,13 @@ auf bekannte Fehler hingewiesen.
  \strut\ignorespaces #2}}%
  %\vbox to 50.8truemm{\vss \box0 \vss}%
  \vbox to\dlabelheight{\vss \box0 \vss}%
+ \message{\string\label@plain: counter \string\labelcount\space\the\labelcount}%
+ \message{\string\label@plain: counter \string\clabelnumber\space\the\clabelnumber}%
+ \advance\labelcount by 1\nointerlineskip
  \ifnum\labelcount<\clabelnumber
-   \advance\labelcount by 1\nointerlineskip
+   % \advance\labelcount by 1\nointerlineskip
  \else
+   \vfill\newpage
    \labelcount=0
  \fi}
 %    \end{macrocode}
@@ -3322,12 +3330,18 @@ auf bekannte Fehler hingewiesen.
   \parindent\z@
   \parskip\z@skip
   \twocolumn\relax
+  \message{counter \string\cspare\space\the\cspare}%
+  \message{counter \string\clabelnumber\space\the\clabelnumber}%
   \ifnum\cspare>\z@
+    \message{\string\cspare\space is greater than zero}%
     \ifnum\cspare<\clabelnumber\else
+      \message{\string\cspace\space is greater than or equal \string\clabelnumber}
       \mbox{}%
       \newpage
       \advance\cspare -\clabelnumber
     \fi
+    \message{after processing: counter \string\cspare\space\the\cspare}%
+    \message{after processing: counter \string\clabelnumber\space\the\clabelnumber}%
     \vspace*{\cspare\dlabelheight}%
     \par
   \fi

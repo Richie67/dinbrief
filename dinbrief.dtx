@@ -1,13 +1,13 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.4 1994/11/16 19:21:20 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.5 1994/11/16 19:25:04 Gussmann Exp Gussmann $
 %
 % $Author: Gussmann $
 %
-% $Date: 1994/11/16 19:21:20 $
+% $Date: 1994/11/16 19:25:04 $
 %
-% $Header: E:/DINBRF/RCS/dinbrief.d%v 1.4 1994/11/16 19:21:20 Gussmann Exp Gussmann $
+% $Header: E:/DINBRF/RCS/dinbrief.d%v 1.5 1994/11/16 19:25:04 Gussmann Exp Gussmann $
 %
 % $Locker: Gussmann $
 %
@@ -15,13 +15,16 @@
 %
 % $RCSfile: dinbrief.d%v $
 %
-% $Revision: 1.4 $
+% $Revision: 1.5 $
 %
 % $Source: E:/DINBRF/RCS/dinbrief.d%v $
 %
 % $State: Exp $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.5  1994/11/16 19:25:04  Gussmann
+% *** empty log message ***
+%
 % Revision 1.4  1994/11/16 19:21:20  Gussmann
 % *** empty log message ***
 %
@@ -96,6 +99,532 @@
 %
 % \tableofcontents
 %
+%% \section{The document style dinbrief}
+%
+%    \begin{macrocode}
+%<*documentation|dintab>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+
+\expandafter\ifx\csname documentclass\endcsname\relax
+    \documentstyle[12pt,german]{article}
+    \typeout{Using the commando \string\documentstyle.}
+  \else
+    \documentclass[12pt]{article}
+    \usepackage{german}
+    \typeout{Using the commando \string\documentclass.}
+  \fi
+
+%    \end{macrocode}
+%
+%  \section{The list of commands}
+%
+\newenvironment{decl}%
+    {\par\small\addvspace{4.5ex plus 1ex}%
+     \vskip -\parskip
+     \noindent\hspace{-\leftmargini}%
+     \begin{tabular}{|l|}\hline\ignorespaces}%
+    {\\\hline\end{tabular}\par\nopagebreak\addvspace{2.3ex}%
+     \vskip -\parskip}
+
+\newcommand{\declline}[1]{\\\multicolumn1{|r|}{\small#1}}
+
+\newcommand{\m}[1]{\mbox{$\langle$\emph{#1}$\rangle$}}
+
+\renewcommand{\arg}[1]{{\tt\string{}\m{#1}{\tt\string}}}
+%  \begin{macro}{\oarg}
+%  This macro is defined somewhere else, maybe in the {\sf doc\/}-package.
+%  So we put it into an macrocode (verbatim) environment.
+%    \begin{macrocode}
+\newcommand{\oarg}[1]{{\tt[}\m{#1}{\tt]}}
+%    \end{macrocode}
+%  \end{macro}
+%
+%
+\germanTeX
+%
+\expandafter\ifx\csname emph\endcsname\relax
+  \newcommand\emph[1]{{\em#1\/}}}% This is \emph{not} the LaTeX2e
+                                 %  definition!
+\fi
+
+%|\documentstyle[12pt,german]{article}|
+%|\setlength{\parindent}{0pt}|
+
+%|\begin{document}|
+
+%
+%    \begin{macrocode}
+%</documentation|dintab>
+%
+%<*documentation>
+%    \end{macrocode}
+
+\renewcommand{\textfraction}{0.10}
+\renewcommand{\topfraction}{0.65}
+\renewcommand{\bottomfraction}{0.85}
+
+
+\subsection{Briefe}\index{Briefe}
+
+\LaTeX\ erlaubt neben der mathe"-ma"-tisch-wissen"-schaft"-lichen
+Textverarbeitung u.a.\ auch das Erstellen
+von Briefen. F"ur englische Briefe existiert in der Makrosammlung \LaTeX\ die
+Style-Klasse {\tt letter}. Deutsche Briefe k"onnen mit dem Stil {\tt dinbrief}
+geschrieben werden.
+ 
+
+\subsubsection{\LaTeX-Briefe (letter)}\index{Briefe, \LaTeX}
+\index{letter}\index{Briefe!letter}
+ 
+Wird als Dokumentklasse {\tt letter} (oder eine Variante davon) angegeben,
+kann zwischen \verb+\begin{document}+ und \verb+\end{document}+ ein oder
+mehrere Briefe geschrieben werden.
+ 
+Mit \verb+\signature{...}+\index{signature@\verb+\signature+}  und
+\verb+\address{...}+\index{address@\verb+\address+}
+definiert man Name und Adresse des Absenders.
+Das Datum kann durch den Befehl \verb+\date{...}+\index{date@\verb+\date+}
+fest eingesetzt werden (standardm"a"sig ist es auf das aktuelle
+Tagesdatum eingestellt), ebenso wie die Telefonnummer mit
+\verb+\telephone{...}+.\index{telephone@\verb+\telephone+}
+ 
+\verb+\begin{letter}{...}+
+beginnt einen Brief an den im Parameter mit Name und Adresse angegebenen
+Empf"anger. In \verb+{...}+ f"ugt man hierbei die Adresse des
+Adressaten ein. Durch \verb+\encl{...}+\index{encl@\verb+\encl+}
+k"onnen Anlagen eingef"ugt
+werden, \verb+\cc{...}+\index{cc@\verb+\cc+} steht f"ur den Verteiler zur
+Verf"ugung und \verb+\ps{...}+\index{ps@\verb+\ps+} ist f"ur das "ubliche
+P.S. da.
+ 
+\verb+\opening{...}+\index{opening@\verb+\opening+} (mu"s angegeben werden)
+schreibt die Anrede und \verb+\closing{...}+\index{closing@\verb+\closing+}
+den abschlie"senden Gru"s, an den automatisch
+die mit \verb+\signature{...}+\index{signature@\verb+\signature+} vereinbarte
+Unterschrift angef"ugt wird.
+ 
+Die Gliederung in Abs"atze geschieht wie immer in \LaTeX\ durch Einf"ugen
+einer Leerzeile, dadurch l"a"st der Formatierer dann im Dokument ebenfalls
+etwa eine Leerzeile Platz. \verb+\end{letter}+ beendet den jeweiligen Brief.
+ 
+Durch Angabe des Befehls \verb+\makelabels+ vor \verb+\begin{document}+,
+werden au"serdem Adre"s-Etiketten erzeugt.
+ 
+Abb.~\ref{brief} enth"alt ein Beispiel f"ur einen Brief.
+
+\begin{figure}[p]
+\begin{center}
+{\small
+\begin{verbatim}
+\documentclass[12pt]{dinbrief}
+\usepackage{german}
+
+\address{R"udiger Kurz\\
+         Am See 1\\
+         76133 Karlsruhe}
+\backaddress{R. Kurz, Am See 1, 76133 Karslruhe}
+ 
+\signature{R"udiger Kurz}
+\place{Karlsruhe}
+ 
+\begin{document}
+\phone{0721}{222222}
+\begin{letter}{Deutsche Bundespost\\
+               Fernmeldeamt Karlsruhe\\
+               Postfach 7300\\[\medskipamount]
+               {\bf 76131 Karlsruhe}}
+ 
+\yourmail{01.04.93}
+\sign{123456}
+\concern{Betrieb eines Mikrowellensenders}
+ 
+\opening{Sehr geehrte Damen und Herren,}
+ 
+anbei sende ich Ihnen eine Kopie der bisherigen Genehmigung f"ur
+unseren Mikrowellenherd...
+ 
+... Ihre Bem"uhungen im voraus vielen Dank.
+ 
+\closing{Mit freundlichen Gr"u"sen,}
+ 
+\ps{Wir bitten um schnelle Erledigung.}
+\cc{Deutsche Bundespost\\
+    Karlsruher Privatfunk \\
+    S"uddeutscher Rundfunk}
+ 
+\encl{Abschrift der Urkunde}
+ 
+\end{letter}
+\end{document}
+\end{verbatim}}
+\caption{Brief mit \LaTeX.} \label{brief}
+\end{center}
+\end{figure}
+
+
+\subsubsection{Deutsche Briefe (dinbrief)}\index{Briefe, deutsche}
+\index{dinbrief}
+
+Die Dokument Class Option {\tt dinbrief} unterscheidet sich in folgendem vom
+{\tt letter}-Stil:
+
+Neben dem deutschen Layout sind zus"atzliche Befehle verf"ugbar:
+
+\verb+\phone{+{\it Vorwahl}\verb+}{+{\it Rufnummer}\verb+}+
+\index{phone@\verb+\phone+},
+\verb+\concern{..}+\index{concern@\verb+\concern+}, um ein ''Betreff''
+einzuf"ugen, \verb+\yourmail{...}+\index{yourmail@\verb+\yourmail+} f"ur
+{\it Ihre Zeichen, Ihre Nachricht vom} und \verb+\sign{...}+
+\index{sign@\verb+\sign+}, um {\it Unsere Zeichen} anzugeben.
+Au"serdem l"a"st sich mit \verb+\backaddress{...}+
+\index{backaddress@\verb+\backaddress+} die Adresse des
+Absenders im Fenster des Briefkuverts einblenden. Zudem erlaubt es
+\verb+\place{...}+\index{place@\verb+\place+} den Brief au"ser mit dem Datum
+auch mit dem Ort des Schreibens zu versehen.
+
+\paragraph{Fenster}\index{Fenster}
+ 
+F"ur alle, denen das ``Fenster'' um die Adresse nicht gef"allt,
+besteht die M"oglichkeit, durch Angabe von
+\verb+\nowindowrules+\index{nowindowrules@\verb+\nowindowrules+}
+vor dem Befehl \verb+\opening+ dieses abzuschalten.
+Durch \verb+\windowrules+\index{windowrules@\verb+\windowrules+} l"a"st es
+sich wieder aktivieren.
+ 
+\paragraph{Faltmarkierung}\index{Faltmarkierung}
+ 
+Die Faltmarkierung am linken Papierrand wird durch den Befehl
+\verb+\nowindowtics+\index{nowindowtics@\verb+\nowindowtics+} ab- und mit
+\verb+\windowtics+\index{windowtics@\verb+\windowtics+} wieder angeschaltet.
+
+%    \begin{macrocode}
+%</documentation>
+%
+%<*documentation|dintab>
+%    \end{macrocode}
+
+\section{Summery of the Commands}
+
+\begin{center}
+  \begin{tabular}{l}
+    \hline
+      \verb|\begin{document}|                                   \\
+      \verb|\end{document}|                                     \\
+    \hline
+      \verb|\begin{letter}|\arg{{Anschrift}}                    \\
+      \verb|\end{letter}|                                       \\
+    \hline
+      \verb|\signature|\arg{Unterschrift des Absenders}         \\
+      \verb|\address|\arg{{Name und Adresse des Absenders}}     \\
+      \verb|\backaddress|\arg{{Absenderadresse im Brieffenster}}\\
+      \verb|\place|\arg{{Ortsangabe im Brief}}                  \\
+      \verb|\date|\arg{{Briefdatum}}                            \\
+    \hline
+      \verb|\yourmail|\arg{{Ihre Zeichen, Ihre Nachricht vom}}  \\
+      \verb|\sign|\arg{{Unsere Zeichen}}                        \\
+      \verb|\phone|\arg{{Vorwahl/Durchwahl}}\arg{{Rufnummer}}   \\
+    \hline
+      \verb|\concern|\arg{{Betreff}}                            \\
+      \verb|\opening|\arg{{Anrede}}                             \\
+    \hline
+      \verb|\centeraddress|                                     \\
+      \verb|\normaladdress|                                     \\
+    \hline
+      \verb|\encl|\arg{{Anlagen}}                               \\
+      \verb|\ps|\arg{{Postscriptum}}                            \\
+      \verb|\cc|\arg{{Verteiler}}                               \\
+    \hline
+      \verb|\makelabels|                                        \\
+      \verb|\labelstyle|\arg{{Stil der Label}}                  \\
+    \hline
+      \verb|\bottomtext|\arg{{Feld f\"ur Kapitalgesellschaften}}\\
+    \hline
+      \verb|\nowindowrules|                                     \\
+      \verb|\windowrules|                                       \\
+      \verb|\nowindowtics|                                      \\
+      \verb|\windowtics|                                        \\
+    \hline
+  \end{tabular}
+\end{center}
+
+%|\documentclass[12pt]{article}|
+%|\usepackage{german}|
+
+%|\begin{document}|
+
+\begin{table}[h]
+\caption{Zusammenfassung der Dinbrief-Befehle:}\index{dinbrief!Befehle}
+
+\begin{center}
+\begin{tabular}{l}
+ \hline
+  \verb|\begin{document}|                                          \\
+  \verb|\end{document}|                                            \\
+ \hline
+  \verb|\signature|\{$\langle${\em Unterschrift des Absenders\/}$\rangle$\}   \\
+  \verb|\address|\{$\langle${\em Name und Adresse des Absenders\/}$\rangle$\} \\
+  \verb|\backaddress|\{$\langle${\em Absenderadresse im
+  Brieffenster\/}$\rangle$\}                                       \\
+  \verb|\phone|\{$\langle${\em Vorwahl\/$\rangle$}\}\{$\langle${\em
+  Rufnummer\/}$\rangle$\}                                          \\
+  \verb|\place|\{$\langle${\em Ortsangabe im Brief\/}$\rangle$\}   \\
+  \verb|\date|\{$\langle${\em Briefdatum\/}$\rangle$\}             \\
+ \hline
+  \verb|\begin{letter}|\{$\langle${\em Anschrift\/}$\rangle$\}     \\
+  \verb|\end{letter}|                                              \\
+ \hline
+  \verb|\concern|\{$\langle${\em Betreff\/}$\rangle$\}             \\
+  \verb|\opening|\{$\langle${\em Anrede\/}$\rangle$\}              \\
+  \verb|\yourmail|\{$\langle${\em Ihre Zeichen, Ihre Nachricht
+  vom\/}$\rangle$\}                                                \\
+  \verb|\sign|\{$\langle${\em Unsere Zeichen\/}$\rangle$\}         \\
+ \hline
+  \verb|\centeraddress|                                            \\
+  \verb|\normaladdress|                                            \\
+ \hline
+  \verb|\encl|\{$\langle${\em Anlagen\/}$\rangle$\}                \\
+  \verb|\ps|\{$\langle${\em Postscriptum\/}$\rangle$\}             \\
+  \verb|\cc|\{$\langle${\em Verteiler\/}$\rangle$\}                \\
+ \hline
+  \verb|\makelabels|                                               \\
+% \verb|\labelstyle|\{$\langle${\em Stil der Label\/}$\rangle$\}   \\
+ \hline
+  \verb|\bottomtext|\{$\langle${\em Feld f\"ur
+  Kapitalgesellschaften\/}$\rangle$\}                              \\
+ \hline
+  \verb|\nowindowrules|                                            \\
+  \verb|\windowrules|                                              \\
+  \verb|\nowindowtics|                                             \\
+  \verb|\windowtics|                                               \\
+ \hline
+\end{tabular}
+\end{center}
+
+\end{table}
+
+%\clearpage
+
+\begin{table}[h]
+\caption{"Uberschriftvariablen und deren Inhalt}:
+\index{dinbrief!"Uberschriftvariablen}
+
+\begin{center}
+(Voreinstellung entspricht DIN)
+
+\begin{tabular}{l}
+ \hline
+  \verb|\ccname|\{{\tt Verteiler}\}        \\
+  \verb|\enclname|\{{\tt Anlage(n)}\}      \\
+  \verb|\psname|\{{\tt PS}\}               \\
+ \hline
+  \verb|\phonemsg|\{{\tt Telefon}\}        \\
+  \verb|\signmsg|\{{\tt Unsere Zeichen}\}  \\
+  \verb|\yourmailmsg|\{{\tt Ihre Zeichen, Ihre Nachricht vom}\}  \\
+ \hline
+\end{tabular}
+\end{center}
+
+\end{table}
+
+%|\end{document}|
+
+%    \begin{macrocode}
+%</documentation|dintab>
+%
+%<*documentation>
+%    \end{macrocode}
+%
+\subsubsection{Briefkopf}\index{Briefkopf}
+%
+Bei h"aufigem Briefeschreiben kommt sicher bald der
+Wunsch nach einem eigenen Briefkopf auf; auch dies ist
+mit \LaTeX\ zu verwirklichen.
+Am besten er"offnet man sich in seiner Briefdatei (die man
+sicher fr"uher oder sp"ater anlegen wird) ein File mit dem
+Namen {\tt brfkopf.tex}. In dieses kann man z.B. den Briefkopf
+in Abb. \ref{briefkopf} aufnehmen:
+
+\renewcommand{\textfraction}{0.35}
+
+\begin{figure}[p]
+\begin{center}
+\begin{verbatim}
+\newlength{\UKAwd}
+\newlength{\ADDRwd}
+%
+\def\briefkopf{
+ \font\fa=cmcsc10  scaled 1440
+ \font\fb=cmss12   scaled 1095
+ \font\fc=cmss10   scaled 1000
+ \settowidth{\UKAwd}{\fa Institut f"ur Verpackungen}
+ \settowidth{\ADDRwd}{\fc EARN/BITNET: yx99 at dkauni2}
+%
+ \vspace*{7truemm}
+ \raisebox{-11.7mm}{\unilogo{15}}
+ {\fc\hspace{.7em}}
+ \parbox[t]{\UKAwd}{
+        \centering{\fa Universit\"at Gralsruhe} \\
+        \centering{\fa Institut f"ur Verpackungen} \\[.5ex]
+        \centering{\fb Prof.\ Dr.\ Fritz Schreiber}
+        }
+ \hfill
+ \parbox[t]{\ADDRwd}{
+        \fc Engesserstr.\ 9 $\cdot$ Postfach 6980 \\
+        \fc 76128 Karlsruhe\\
+        \fc Telefon: (0721) 608-9790 \\
+        }  }
+%
+\signature{Prof.\ Dr.\ Fritz Schreiber}
+\place{Karlsruhe}
+\address{\briefkopf}
+\phone{(0721)}{608-9790}
+\def\FS{Prof.\,F.\,Schreiber, Univ.\,Karlsruhe,
+        Postf.\,6980, 76128\,Karlsruhe\rule[-1ex]{0pt}{0pt}}
+\end{verbatim}
+\caption{Definition eines Briefkopfs}\label{briefkopf}
+\end{center}
+\end{figure}
+
+Am Anfang des Briefes sollte nun der Befehl \verb+\input{brfkopf}+
+aufgenommen werden gefolgt von \verb+\address{\myaddress}+
+\index{myaddress@\verb+\myaddress+}. Dies sorgt
+f"ur die gew"unschte Ausgabe des Briefkopfes am Beginn des Briefes.
+Nat"urlich lassen sich auch andere als die hier verwendeten Schriftarten
+verwenden.
+ 
+\paragraph{Kopfzeilen}\index{Kopfzeilen}
+ 
+Es stehen verschiedene Kopfzeilen zur Verf"ugung die "uber die
+Option \verb+\pagestyle{...}+\index{pagestyle@\verb+\pagestyle+}
+ausgew"ahlt werden k"onnen.
+Bei \verb+plain+\index{plain} wird eine Seitennumerierung bei mehrseitigen
+Briefen in der Fu"szeile eingeblendet, die Kopfzeile bleibt leer.
+Durch \verb+headings+\index{headings} wird die Kopfzeile mit einer
+Anrede und der Seitenzahl bei mehrseitigen Briefen gesetzt.
+ 
+\paragraph{Briefe in englischer oder franz"osischer Sprache}
+ 
+Wer Briefe in anderen Sprachen schreiben m"ochte, kann f"ur Englisch und
+Franz"osisch die Trennung (abh"angig von der Installation) und Befehle f"ur
+Buchstaben mit Akzenten mit dem Befehl
+\verb+\selectlanguage{+{\itshape Sprache\/}\verb+}+
+\index{selectlanguage@\verb+\selectlanguage+} umschalten.
+Das Umsetzen von Bezeichnungen z.B.\ f"ur Anlage \dots{} mu"s explizit durch
+Befehle erfolgen, die in der Dokumentation zum {\tt dinbrief} beschrieben sind.
+
+ 
+\subsubsection{Serienbriefe}\index{Serienbriefe}
+ 
+Mit \LaTeX\ lassen sich auch Serienbriefe schreiben. Man ben"otigt dazu
+nur ein kleines Makro wie z.B. das folgende:
+ 
+\begin{verbatim}
+\def\mailto#1{
+  \begin{letter}{#1}
+  \input{brftext}
+  \end{letter}}
+\end{verbatim}
+ 
+\clearpage
+
+Mit dem Befehl \verb+\input{brftext}+ wird die Datei geladen, die den Text f"ur
+den Serienbrief enth"alt. In einer weiteren Datei stehen unsere Adressaten im
+folgenden Format:
+ 
+\begin{verbatim}
+\mailto{Karle Huber\\
+        Lichtensteinstr. 45\\
+        \medskip
+        77777 Hintertupfingen}
+\mailto{Anna H"aberle\\
+        Wallstra"se 7\\
+        \medskip
+        88888 L"andle}
+\end{verbatim}
+ 
+Die Briefe k"onnen nun mit einer Umgebung wie der in Abbildung~\ref{serie}
+ausgedruckt werden.
+
+\begin{figure}[p]
+\begin{center}
+\begin{verbatim}
+\documentclass[12pt]{dinbrief}
+\usepackage{german}
+ 
+\input{brfkopf}
+\address{\myaddress}
+\backaddress{R. Kurz, Am See 1, 76139 Karlsruhe}
+ 
+\signature{R. Kurz}
+\place{76139 Karlsruhe}
+ 
+\def\mailto#1{                % zum ausdrucken von
+                              % Serienbriefen
+  \begin{letter}{#1}
+  \input{brftext}             % Datei, die den Text enthaelt
+  \end{letter}}
+ 
+\begin{document}
+ 
+\input{#address}              % Adress-Datei
+ 
+\end{document}
+\end{verbatim}
+\caption{Erstellen von Serienbriefen}
+\label{serie}
+\end{center}
+\end{figure}
+
+Beachten sollte man, da"s dann der Text in der Datei {\tt brftext.tex}
+direkt mit
+\verb+\opening{...}+ beginnt (also kein \verb+\begin{letter}+ und
+\verb+\end{letter}+ enth"alt) und mit \verb+\closing{...}+ bzw.
+\verb+\ps{...}+ abschlie"st.
+ 
+Ein Beispiel f"ur die Datei {\tt brftext.tex} befindet sich in
+Abbildung~\ref{brftext}.
+ 
+\begin{figure}[p]
+\begin{center}
+\begin{verbatim}
+\opening{Betrieb eines Mikrowellensenders}
+ 
+Sehr geehrte Damen und Herren,
+ 
+anbei sende ich Ihnen eine Kopie der bisherigen Genehmigung f"ur
+unseren Mikrowellenherd...
+ 
+... Ihre Bem"uhungen im voraus vielen Dank.
+ 
+\closing{Mit freundlichen Gr"u"sen,}
+ 
+\ps{Wir bitten um schnelle Erledigung.}
+\cc{Deutsche Bundespost\\
+    Karlsruher Privatfunk\\
+    S"uddeutscher Rundfunk}
+ 
+\encl{Abschrift der Urkunde}
+\end{verbatim}
+\caption{Rumpf eines Serienbriefes}
+\label{brftext}
+\end{center}
+\end{figure}
+
+\clearpage
+%    \begin{macrocode}
+%</documentation>
+%
+%<*documentation|dintab>
+%    \end{macrocode}
+%|\end{document}|
+%
+%    \begin{macrocode}
+%</documentation|dintab>
+%    \end{macrocode}
+%
+% \originalTeX
 %
 % \section{Identification}
 %
@@ -211,7 +740,8 @@
     \ifka@db@nfsstwo
       \typeout{*** dinbrief: NFSS 2!}
     \else
-      \typeout{*** dinbrief: original LaTeX 2.09 font selection mechanism found!!!}
+      \typeout{%
+        *** dinbrief: original LaTeX 2.09 font selection mechanism found!!!}
     \fi
   \fi
 %    \end{macrocode}
@@ -1370,7 +1900,7 @@
   \@processto{#1}%
   \ka@db@inlettertrue
   }
-%   \end{macrocode}
+%    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\endletter}
@@ -1587,8 +2117,20 @@
 % \end{macro}
 %
 % \begin{macro}{\signmsg}
+% \begin{macro}{\signmsgold}
+% \begin{macro}{\signmsgnew}
 %    \begin{macrocode}
-\def\signmsg{Unsere Zeichen}
+\def\signmsgold{Unsere Zeichen}
+\def\signmsgnew{Unsere Zeichen, unsere Nachricht vom}
+\let\signmsg\signmsgold
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\datemsg}
+%    \begin{macrocode}
+\def\datemsg{Datum}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2465,7 +3007,7 @@
     \ifx\@empty\@place
        \vphantom{K}\rule{2pt}{0pt}
      \else
-       \@place{}
+       \@place{}%
      \fi
     }\hfill\\ \@ntoday}
   }
@@ -2488,25 +3030,40 @@
     \setlength{\@fordate}{\textwidth}%
     \addtolength{\@fordate}{-156.4truemm}%
     \addtolength{\@fordate}{3cm}% This is a heavens value. Write better code!
-    \parbox[b]{50.8truemm}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont
+    \parbox[b]{50.8truemm}{{\ka@db@fontsize{7}{9pt}\ka@db@selectfont
                             \yourmailmsg{}}%
                            \hfill\\ \@yourmail\hbox{}\hss}%
-    \parbox[b]{50.8truemm}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont \signmsg{}}%
+    \parbox[b]{50.8truemm}{{\ka@db@fontsize{7}{9pt}\ka@db@selectfont \signmsg{}}%
                            \hfill\\ \@mymail\hbox{}\hss}%
-    \parbox[b]{50.8truemm}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont \phonemsg{}%
-                               \ifx\@empty\@prephone\relax
-                               \else
-                                 \ \@prephone{}%
-                               \fi
+    \parbox[b]{50.8truemm}{{\ka@db@fontsize{7}{9pt}\ka@db@selectfont \phonemsg{}%
+                               %\ifx\@empty\@prephone\relax
+                               %\else
+                               %  \ \@prephone{}%
+                               %\fi
                                \processormsg{}%
                                }%
-                           \hfill\\ \@phone\hbox{}\hss}%
-    \parbox[b]{\@fordate}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont
-      \ifx\@empty\@place
-         \vphantom{K}\rule{2pt}{0pt}
-       \else
-         \@place{}
-       \fi
+                           \hfill\\
+                           \ifx\@empty\@prephone\relax
+                           \else
+                             \@prephone{}
+                           \fi
+                           \@phone
+                           \ifx\@empty\@processor\relax
+                           \else
+                             \ifx\@empty\@phone\relax
+                             \else
+                             ,\ % insert comma and blank only if both
+                             \fi% are nonempty
+                             \@processor
+                           \fi
+                           \hbox{}\hss}%
+    \parbox[b]{\@fordate}{{\ka@db@fontsize{7}{9pt}\ka@db@selectfont
+      \datemsg
+      %\ifx\@empty\@place
+      %   \vphantom{K}\rule{2pt}{0pt}
+      % \else
+      %   \@place{}
+      % \fi
       }\hfill\\ \@ntoday}
     \hss}%
   }
@@ -2528,10 +3085,12 @@
 %
 %    \begin{macrocode}
 \def\enabledraftstandard{%
+  \let\signmsg=\signmsgnew
   \let\@answerto=\@answertonew
 }
 %
 \def\disabledraftstandard{%
+  \let\signmsg=\signmsgold
   \let\@answerto=\@answertoold
 }
 %
@@ -2720,522 +3279,132 @@ Problem ver"offentlichen.
 %</example>
 %    \end{macrocode}
 %
-% \section{The document style dinbrief}
+% \section{Testing the Class/Style}
 %
+%<*brfbody>
 %    \begin{macrocode}
-%<*documentation|dintab>
-%    \end{macrocode}
-%
-%    \begin{macrocode}
+\yourmail{\ }
+\concern{Bitte um "Uberlassung einer Sammlung von Alka-Seltzer Flaschen}
 
+\opening{Sehr geehrter Herr Prof.\ Forschegut,}
+
+von Kollegen habe ich erfahren, da"s sich bei Ihnen eine gro"se Anzahl von
+Alka-Seltzer Flaschen mit nur noch einer Tablette angesammelt hat, da eine
+Flasche 25~Tabletten enth"alt, der Beipackzettel aber angibt, da"s stets
+2~Tabletten gleichzeitig einzunehmen sind.
+
+Ich forsche gerade im Bereich m"oglicher Anwendungen einzelner Schmerztabletten.
+Falls Sie so freundlich w"aren, Ihre Alka-Seltzer Sammlung f"ur unser Projekt
+zu stiften, w"urde ich Ihnen gerne Vorabdrucke aller zuk"unftigen
+Forschungsberichte zur Verf"ugung stellen, die wir "uber dieses kritische
+Problem ver"offentlichen.
+
+\closing{Mit freundlichen Gr"u"sen}
+
+\ps{Falls Sie es w"unschen, lasse ich "uberpr"ufen, ob Sie Ihre Schenkung
+    in Verbindung mit unserer Forschung von der Steuer absetzen k"onnen.}
+\cc{Future Pharma\\
+    Bundesministerium zur Unterst"utzung der Pharmaindustrie}
+\encl{Forschungsbericht Nr.\ 6/99 des IfA}
+
+%    \end{macrocode}
+%</brfbody>
+%
+%<*10pt>
+%    \begin{macrocode}
 \expandafter\ifx\csname documentclass\endcsname\relax
-    \documentstyle[12pt,german]{article}
-    \typeout{\string\documentstyle \space}
+    \documentstyle[german]{dinbrief}
+    \typeout{Using the commando \string\documentstyle.}
   \else
-    \documentclass[12pt]{article}
+    \documentclass[10pt]{dinbrief}
     \usepackage{german}
-    \typeout{\string\documentclass \space}
+    \typeout{Using the commando \string\documentclass.}
   \fi
-
 %    \end{macrocode}
+%</10pt>
 %
-%  \section{The list of commands}
-%
-\newenvironment{decl}%
-    {\par\small\addvspace{4.5ex plus 1ex}%
-     \vskip -\parskip
-     \noindent\hspace{-\leftmargini}%
-     \begin{tabular}{|l|}\hline\ignorespaces}%
-    {\\\hline\end{tabular}\par\nopagebreak\addvspace{2.3ex}%
-     \vskip -\parskip}
-
-\newcommand{\declline}[1]{\\\multicolumn1{|r|}{\small#1}}
-
-\newcommand{\m}[1]{\mbox{$\langle$\emph{#1}$\rangle$}}
-
-\renewcommand{\arg}[1]{{\tt\string{}\m{#1}{\tt\string}}}
-\newcommand{\oarg}[1]{{\tt[}\m{#1}{\tt]}}
-
-\expandafter\ifx\csname emph\endcsname\relax
-  \newcommand\emph[1]{{\em#1\/}}}% This is \emph{not} the LaTeX2e
-                                 %  definition!
-\fi
-
-%|\documentstyle[12pt,german]{article}|
-%|\setlength{\parindent}{0pt}|
-
-%|\begin{document}|
-
-%
+%<*11pt>
 %    \begin{macrocode}
-%</documentation|dintab>
-%
-%<*documentation>
+\expandafter\ifx\csname documentclass\endcsname\relax
+    \documentstyle[11pt,german]{dinbrief}
+    \typeout{Using the commando \string\documentstyle.}
+  \else
+    \documentclass[11pt]{dinbrief}
+    \usepackage{german}
+    \typeout{Using the commando \string\documentclass.}
+  \fi
 %    \end{macrocode}
+%</11pt>
+%
+%<*12pt>
+%    \begin{macrocode}
+\expandafter\ifx\csname documentclass\endcsname\relax
+    \documentstyle[12pt,german]{dinbrief}
+    \typeout{Using the commando \string\documentstyle.}
+  \else
+    \documentclass[12pt]{dinbrief}
+    \usepackage{german}
+    \typeout{Using the commando \string\documentclass.}
+  \fi
+%    \end{macrocode}
+%</12pt>
+%
+%<*norm>
+%    \begin{macrocode}
+\expandafter\ifx\csname documentclass\endcsname\relax
+    \documentstyle[norm,german]{dinbrief}
+    \typeout{Using the commando \string\documentstyle.}
+  \else
+    \documentclass[norm]{dinbrief}
+    \usepackage{german}
+    \typeout{Using the commando \string\documentclass.}
+  \fi
+%    \end{macrocode}
+%</norm>
+%
+%<*test>
+%    \begin{macrocode}
+\input brfkopf.tex
 
-\renewcommand{\textfraction}{0.10}
-\renewcommand{\topfraction}{0.65}
-\renewcommand{\bottomfraction}{0.85}
-
-
-\subsection{Briefe}\index{Briefe}
-
-\LaTeX\ erlaubt neben der mathe"-ma"-tisch-wissen"-schaft"-lichen
-Textverarbeitung u.a.\ auch das Erstellen
-von Briefen. F"ur englische Briefe existiert in der Makrosammlung \LaTeX\ die
-Style-Klasse {\tt letter}. Deutsche Briefe k"onnen mit dem Stil {\tt dinbrief}
-geschrieben werden.
- 
-
-\subsubsection{\LaTeX-Briefe (letter)}\index{Briefe, \LaTeX}
-\index{letter}\index{Briefe!letter}
- 
-Wird als Dokumentklasse {\tt letter} (oder eine Variante davon) angegeben,
-kann zwischen \verb+\begin{document}+ und \verb+\end{document}+ ein oder
-mehrere Briefe geschrieben werden.
- 
-Mit \verb+\signature{...}+\index{signature@\verb+\signature+}  und
-\verb+\address{...}+\index{address@\verb+\address+}
-definiert man Name und Adresse des Absenders.
-Das Datum kann durch den Befehl \verb+\date{...}+\index{date@\verb+\date+}
-fest eingesetzt werden (standardm"a"sig ist es auf das aktuelle
-Tagesdatum eingestellt), ebenso wie die Telefonnummer mit
-\verb+\telephone{...}+.\index{telephone@\verb+\telephone+}
- 
-\verb+\begin{letter}{...}+
-beginnt einen Brief an den im Parameter mit Name und Adresse angegebenen
-Empf"anger. In \verb+{...}+ f"ugt man hierbei die Adresse des
-Adressaten ein. Durch \verb+\encl{...}+\index{encl@\verb+\encl+}
-k"onnen Anlagen eingef"ugt
-werden, \verb+\cc{...}+\index{cc@\verb+\cc+} steht f"ur den Verteiler zur
-Verf"ugung und \verb+\ps{...}+\index{ps@\verb+\ps+} ist f"ur das "ubliche
-P.S. da.
- 
-\verb+\opening{...}+\index{opening@\verb+\opening+} (mu"s angegeben werden)
-schreibt die Anrede und \verb+\closing{...}+\index{closing@\verb+\closing+}
-den abschlie"senden Gru"s, an den automatisch
-die mit \verb+\signature{...}+\index{signature@\verb+\signature+} vereinbarte
-Unterschrift angef"ugt wird.
- 
-Die Gliederung in Abs"atze geschieht wie immer in \LaTeX\ durch Einf"ugen
-einer Leerzeile, dadurch l"a"st der Formatierer dann im Dokument ebenfalls
-etwa eine Leerzeile Platz. \verb+\end{letter}+ beendet den jeweiligen Brief.
- 
-Durch Angabe des Befehls \verb+\makelabels+ vor \verb+\begin{document}+,
-werden au"serdem Adre"s-Etiketten erzeugt.
- 
-Abb.~\ref{brief} enth"alt ein Beispiel f"ur einen Brief.
-
-\begin{figure}[p]
-\begin{center}
-{\small
-\begin{verbatim}
-\documentclass[12pt]{dinbrief}
-\usepackage{german}
-
-\address{R"udiger Kurz\\
-         Am See 1\\
-         76133 Karlsruhe}
-\backaddress{R. Kurz, Am See 1, 76133 Karslruhe}
- 
-\signature{R"udiger Kurz}
-\place{Karlsruhe}
- 
 \begin{document}
-\phone{0721}{222222}
-\begin{letter}{Deutsche Bundespost\\
-               Fernmeldeamt Karlsruhe\\
-               Postfach 7300\\[\medskipamount]
-               {\bf 76131 Karlsruhe}}
- 
-\yourmail{01.04.93}
-\sign{123456}
-\concern{Betrieb eines Mikrowellensenders}
- 
-\opening{Sehr geehrte Damen und Herren,}
- 
-anbei sende ich Ihnen eine Kopie der bisherigen Genehmigung f"ur
-unseren Mikrowellenherd...
- 
-... Ihre Bem"uhungen im voraus vielen Dank.
- 
-\closing{Mit freundlichen Gr"u"sen,}
- 
-\ps{Wir bitten um schnelle Erledigung.}
-\cc{Deutsche Bundespost\\
-    Karlsruher Privatfunk \\
-    S"uddeutscher Rundfunk}
- 
-\encl{Abschrift der Urkunde}
- 
+
+\backaddress{\FS}
+
+\enabledraftstandard
+
+\begin{letter}{%
+Herrn Professor\\
+Dr.\ Hans Forschegut\\
+Institut f"ur Abfallbeseitigung\\
+Fachhochschule Waldstadt\\
+Postfach 3322\\[\medskipamount]
+{\bf 1100 Waldstadt}}
+
+\input brfbody.tex
+
 \end{letter}
+
+\disabledraftstandard
+
+\begin{letter}{%
+Herrn Professor\\
+Dr.\ Hans Forschegut\\
+Institut f"ur Abfallbeseitigung\\
+Fachhochschule Waldstadt\\
+Postfach 3322\\[\medskipamount]
+{\bf 1100 Waldstadt}}
+
+\input brfbody.tex
+
+\end{letter}
+%    \end{macrocode}
+%</test>
+%
+%    \begin{macrocode}
+%<*10pt|11pt|12pt|norm>
 \end{document}
-\end{verbatim}}
-\caption{Brief mit \LaTeX.} \label{brief}
-\end{center}
-\end{figure}
-
-
-\subsubsection{Deutsche Briefe (dinbrief)}\index{Briefe, deutsche}
-\index{dinbrief}
-
-Die Dokument Class Option {\tt dinbrief} unterscheidet sich in folgendem vom
-{\tt letter}-Stil:
-
-Neben dem deutschen Layout sind zus"atzliche Befehle verf"ugbar:
-
-\verb+\phone{+{\it Vorwahl}\verb+}{+{\it Rufnummer}\verb+}+
-\index{phone@\verb+\phone+},
-\verb+\concern{..}+\index{concern@\verb+\concern+}, um ein ''Betreff''
-einzuf"ugen, \verb+\yourmail{...}+\index{yourmail@\verb+\yourmail+} f"ur
-{\it Ihre Zeichen, Ihre Nachricht vom} und \verb+\sign{...}+
-\index{sign@\verb+\sign+}, um {\it Unsere Zeichen} anzugeben.
-Au"serdem l"a"st sich mit \verb+\backaddress{...}+
-\index{backaddress@\verb+\backaddress+} die Adresse des
-Absenders im Fenster des Briefkuverts einblenden. Zudem erlaubt es
-\verb+\place{...}+\index{place@\verb+\place+} den Brief au"ser mit dem Datum
-auch mit dem Ort des Schreibens zu versehen.
-
-\paragraph{Fenster}\index{Fenster}
- 
-F"ur alle, denen das ``Fenster'' um die Adresse nicht gef"allt,
-besteht die M"oglichkeit, durch Angabe von
-\verb+\nowindowrules+\index{nowindowrules@\verb+\nowindowrules+}
-vor dem Befehl \verb+\opening+ dieses abzuschalten.
-Durch \verb+\windowrules+\index{windowrules@\verb+\windowrules+} l"a"st es
-sich wieder aktivieren.
- 
-\paragraph{Faltmarkierung}\index{Faltmarkierung}
- 
-Die Faltmarkierung am linken Papierrand wird durch den Befehl
-\verb+\nowindowtics+\index{nowindowtics@\verb+\nowindowtics+} ab- und mit
-\verb+\windowtics+\index{windowtics@\verb+\windowtics+} wieder angeschaltet.
-
-%    \begin{macrocode}
-%</documentation>
-%
-%<*documentation|dintab>
+%</10pt|11pt|12pt|norm>
 %    \end{macrocode}
-
-\section{Summery of the Commands}
-
-\begin{center}
-  \begin{tabular}{l}
-    \hline
-      \verb|\begin{document}|                                   \\
-      \verb|\end{document}|                                     \\
-    \hline
-      \verb|\begin{letter}|\arg{{Anschrift}}                    \\
-      \verb|\end{letter}|                                       \\
-    \hline
-      \verb|\signature|\arg{Unterschrift des Absenders}         \\
-      \verb|\address|\arg{{Name und Adresse des Absenders}}     \\
-      \verb|\backaddress|\arg{{Absenderadresse im Brieffenster}}\\
-      \verb|\place|\arg{{Ortsangabe im Brief}}                  \\
-      \verb|\date|\arg{{Briefdatum}}                            \\
-    \hline
-      \verb|\yourmail|\arg{{Ihre Zeichen, Ihre Nachricht vom}}  \\
-      \verb|\sign|\arg{{Unsere Zeichen}}                        \\
-      \verb|\phone|\arg{{Vorwahl/Durchwahl}}\arg{{Rufnummer}}   \\
-    \hline
-      \verb|\concern|\arg{{Betreff}}                            \\
-      \verb|\opening|\arg{{Anrede}}                             \\
-    \hline
-      \verb|\centeraddress|                                     \\
-      \verb|\normaladdress|                                     \\
-    \hline
-      \verb|\encl|\arg{{Anlagen}}                               \\
-      \verb|\ps|\arg{{Postscriptum}}                            \\
-      \verb|\cc|\arg{{Verteiler}}                               \\
-    \hline
-      \verb|\makelabels|                                        \\
-      \verb|\labelstyle|\arg{{Stil der Label}}                  \\
-    \hline
-      \verb|\bottomtext|\arg{{Feld f\"ur Kapitalgesellschaften}}\\
-    \hline
-      \verb|\nowindowrules|                                     \\
-      \verb|\windowrules|                                       \\
-      \verb|\nowindowtics|                                      \\
-      \verb|\windowtics|                                        \\
-    \hline
-  \end{tabular}
-\end{center}
-
-%|\documentclass[12pt]{article}|
-%|\usepackage{german}|
-
-%|\begin{document}|
-
-\begin{table}[h]
-\caption{Zusammenfassung der Dinbrief-Befehle:}\index{dinbrief!Befehle}
-
-\begin{center}
-\begin{tabular}{l}
- \hline
-  \verb|\begin{document}|                                          \\
-  \verb|\end{document}|                                            \\
- \hline
-  \verb|\signature|\{$\langle${\em Unterschrift des Absenders\/}$\rangle$\}   \\
-  \verb|\address|\{$\langle${\em Name und Adresse des Absenders\/}$\rangle$\} \\
-  \verb|\backaddress|\{$\langle${\em Absenderadresse im
-  Brieffenster\/}$\rangle$\}                                       \\
-  \verb|\phone|\{$\langle${\em Vorwahl\/$\rangle$}\}\{$\langle${\em
-  Rufnummer\/}$\rangle$\}                                          \\
-  \verb|\place|\{$\langle${\em Ortsangabe im Brief\/}$\rangle$\}   \\
-  \verb|\date|\{$\langle${\em Briefdatum\/}$\rangle$\}             \\
- \hline
-  \verb|\begin{letter}|\{$\langle${\em Anschrift\/}$\rangle$\}     \\
-  \verb|\end{letter}|                                              \\
- \hline
-  \verb|\concern|\{$\langle${\em Betreff\/}$\rangle$\}             \\
-  \verb|\opening|\{$\langle${\em Anrede\/}$\rangle$\}              \\
-  \verb|\yourmail|\{$\langle${\em Ihre Zeichen, Ihre Nachricht
-  vom\/}$\rangle$\}                                                \\
-  \verb|\sign|\{$\langle${\em Unsere Zeichen\/}$\rangle$\}         \\
- \hline
-  \verb|\centeraddress|                                            \\
-  \verb|\normaladdress|                                            \\
- \hline
-  \verb|\encl|\{$\langle${\em Anlagen\/}$\rangle$\}                \\
-  \verb|\ps|\{$\langle${\em Postscriptum\/}$\rangle$\}             \\
-  \verb|\cc|\{$\langle${\em Verteiler\/}$\rangle$\}                \\
- \hline
-  \verb|\makelabels|                                               \\
-% \verb|\labelstyle|\{$\langle${\em Stil der Label\/}$\rangle$\}   \\
- \hline
-  \verb|\bottomtext|\{$\langle${\em Feld f\"ur
-  Kapitalgesellschaften\/}$\rangle$\}                              \\
- \hline
-  \verb|\nowindowrules|                                            \\
-  \verb|\windowrules|                                              \\
-  \verb|\nowindowtics|                                             \\
-  \verb|\windowtics|                                               \\
- \hline
-\end{tabular}
-\end{center}
-
-\end{table}
-
-%\clearpage
-
-\begin{table}[h]
-\caption{"Uberschriftvariablen und deren Inhalt}:
-\index{dinbrief!"Uberschriftvariablen}
-
-\begin{center}
-(Voreinstellung entspricht DIN)
-
-\begin{tabular}{l}
- \hline
-  \verb|\ccname|\{{\tt Verteiler}\}        \\
-  \verb|\enclname|\{{\tt Anlage(n)}\}      \\
-  \verb|\psname|\{{\tt PS}\}               \\
- \hline
-  \verb|\phonemsg|\{{\tt Telefon}\}        \\
-  \verb|\signmsg|\{{\tt Unsere Zeichen}\}  \\
-  \verb|\yourmailmsg|\{{\tt Ihre Zeichen, Ihre Nachricht vom}\}  \\
- \hline
-\end{tabular}
-\end{center}
-
-\end{table}
-
-%|\end{document}|
-
-%    \begin{macrocode}
-%</documentation|dintab>
-%
-%<*documentation>
-%    \end{macrocode}
-%
-\subsubsection{Briefkopf}\index{Briefkopf}
-%
-Bei h"aufigem Briefeschreiben kommt sicher bald der
-Wunsch nach einem eigenen Briefkopf auf; auch dies ist
-mit \LaTeX\ zu verwirklichen.
-Am besten er"offnet man sich in seiner Briefdatei (die man
-sicher fr"uher oder sp"ater anlegen wird) ein File mit dem
-Namen {\tt brfkopf.tex}. In dieses kann man z.B. den Briefkopf
-in Abb. \ref{briefkopf} aufnehmen:
-
-\renewcommand{\textfraction}{0.35}
-
-\begin{figure}[p]
-\begin{center}
-\begin{verbatim}
-\newlength{\UKAwd}
-\newlength{\ADDRwd}
-%
-\def\briefkopf{
- \font\fa=cmcsc10  scaled 1440
- \font\fb=cmss12   scaled 1095
- \font\fc=cmss10   scaled 1000
- \settowidth{\UKAwd}{\fa Institut f"ur Verpackungen}
- \settowidth{\ADDRwd}{\fc EARN/BITNET: yx99 at dkauni2}
-%
- \vspace*{7truemm}
- \raisebox{-11.7mm}{\unilogo{15}}
- {\fc\hspace{.7em}}
- \parbox[t]{\UKAwd}{
-        \centering{\fa Universit\"at Gralsruhe} \\
-        \centering{\fa Institut f"ur Verpackungen} \\[.5ex]
-        \centering{\fb Prof.\ Dr.\ Fritz Schreiber}
-        }
- \hfill
- \parbox[t]{\ADDRwd}{
-        \fc Engesserstr.\ 9 $\cdot$ Postfach 6980 \\
-        \fc 76128 Karlsruhe\\
-        \fc Telefon: (0721) 608-9790 \\
-        }  }
-%
-\signature{Prof.\ Dr.\ Fritz Schreiber}
-\place{Karlsruhe}
-\address{\briefkopf}
-\phone{(0721)}{608-9790}
-\def\FS{Prof.\,F.\,Schreiber, Univ.\,Karlsruhe,
-        Postf.\,6980, 76128\,Karlsruhe\rule[-1ex]{0pt}{0pt}}
-\end{verbatim}
-\caption{Definition eines Briefkopfs}\label{briefkopf}
-\end{center}
-\end{figure}
-
-Am Anfang des Briefes sollte nun der Befehl \verb+\input{brfkopf}+
-aufgenommen werden gefolgt von \verb+\address{\myaddress}+
-\index{myaddress@\verb+\myaddress+}. Dies sorgt
-f"ur die gew"unschte Ausgabe des Briefkopfes am Beginn des Briefes.
-Nat"urlich lassen sich auch andere als die hier verwendeten Schriftarten
-verwenden.
- 
-\paragraph{Kopfzeilen}\index{Kopfzeilen}
- 
-Es stehen verschiedene Kopfzeilen zur Verf"ugung die "uber die
-Option \verb+\pagestyle{...}+\index{pagestyle@\verb+\pagestyle+}
-ausgew"ahlt werden k"onnen.
-Bei \verb+plain+\index{plain} wird eine Seitennumerierung bei mehrseitigen
-Briefen in der Fu"szeile eingeblendet, die Kopfzeile bleibt leer.
-Durch \verb+headings+\index{headings} wird die Kopfzeile mit einer
-Anrede und der Seitenzahl bei mehrseitigen Briefen gesetzt.
- 
-\paragraph{Briefe in englischer oder franz"osischer Sprache}
- 
-Wer Briefe in anderen Sprachen schreiben m"ochte, kann f"ur Englisch und
-Franz"osisch die Trennung (abh"angig von der Installation) und Befehle f"ur
-Buchstaben mit Akzenten mit dem Befehl
-\verb+\selectlanguage{+{\itshape Sprache\/}\verb+}+
-\index{selectlanguage@\verb+\selectlanguage+} umschalten.
-Das Umsetzen von Bezeichnungen z.B.\ f"ur Anlage \dots{} mu"s explizit durch
-Befehle erfolgen, die in der Dokumentation zum {\tt dinbrief} beschrieben sind.
-
- 
-\subsubsection{Serienbriefe}\index{Serienbriefe}
- 
-Mit \LaTeX\ lassen sich auch Serienbriefe schreiben. Man ben"otigt dazu
-nur ein kleines Makro wie z.B. das folgende:
- 
-\begin{verbatim}
-\def\mailto#1{
-  \begin{letter}{#1}
-  \input{brftext}
-  \end{letter}}
-\end{verbatim}
- 
-\clearpage
-
-Mit dem Befehl \verb+\input{brftext}+ wird die Datei geladen, die den Text f"ur
-den Serienbrief enth"alt. In einer weiteren Datei stehen unsere Adressaten im
-folgenden Format:
- 
-\begin{verbatim}
-\mailto{Karle Huber\\
-        Lichtensteinstr. 45\\
-        \medskip
-        77777 Hintertupfingen}
-\mailto{Anna H"aberle\\
-        Wallstra"se 7\\
-        \medskip
-        88888 L"andle}
-\end{verbatim}
- 
-Die Briefe k"onnen nun mit einer Umgebung wie der in Abbildung~\ref{serie}
-ausgedruckt werden.
-
-\begin{figure}[p]
-\begin{center}
-\begin{verbatim}
-\documentclass[12pt]{dinbrief}
-\usepackage{german}
- 
-\input{brfkopf}
-\address{\myaddress}
-\backaddress{R. Kurz, Am See 1, 76139 Karlsruhe}
- 
-\signature{R. Kurz}
-\place{76139 Karlsruhe}
- 
-\def\mailto#1{                % zum ausdrucken von
-                              % Serienbriefen
-  \begin{letter}{#1}
-  \input{brftext}             % Datei, die den Text enthaelt
-  \end{letter}}
- 
-\begin{document}
- 
-\input{#address}              % Adress-Datei
- 
-\end{document}
-\end{verbatim}
-\caption{Erstellen von Serienbriefen}
-\label{serie}
-\end{center}
-\end{figure}
-
-Beachten sollte man, da"s dann der Text in der Datei {\tt brftext.tex}
-direkt mit
-\verb+\opening{...}+ beginnt (also kein \verb+\begin{letter}+ und
-\verb+\end{letter}+ enth"alt) und mit \verb+\closing{...}+ bzw.
-\verb+\ps{...}+ abschlie"st.
- 
-Ein Beispiel f"ur die Datei {\tt brftext.tex} befindet sich in
-Abbildung~\ref{brftext}.
- 
-\begin{figure}[p]
-\begin{center}
-\begin{verbatim}
-\opening{Betrieb eines Mikrowellensenders}
- 
-Sehr geehrte Damen und Herren,
- 
-anbei sende ich Ihnen eine Kopie der bisherigen Genehmigung f"ur
-unseren Mikrowellenherd...
- 
-... Ihre Bem"uhungen im voraus vielen Dank.
- 
-\closing{Mit freundlichen Gr"u"sen,}
- 
-\ps{Wir bitten um schnelle Erledigung.}
-\cc{Deutsche Bundespost\\
-    Karlsruher Privatfunk\\
-    S"uddeutscher Rundfunk}
- 
-\encl{Abschrift der Urkunde}
-\end{verbatim}
-\caption{Rumpf eines Serienbriefes}
-\label{brftext}
-\end{center}
-\end{figure}
-
-\clearpage
-%    \begin{macrocode}
-%</documentation>
-%
-%<*documentation|dintab>
-%    \end{macrocode}
-%|\end{document}|
-%
-%    \begin{macrocode}
-%</documentation|dintab>
-%    \end{macrocode}
-%
 %
 % \section{The documentation driver file}
 %

@@ -1,7 +1,7 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.56 1995/08/15 23:04:24 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.57 1995/08/15 23:31:20 Gussmann Exp Gussmann $
 %
 %<*styleinfo>
 =======================================================================
@@ -9,8 +9,8 @@
 shortpackagename = {dinbrief},
 longpackagename  = {dinbrief},
 baseformats      = {\LaTeX\ 2.09 and \LaTeXe},
-version          = {$Revision: 1.56 $},
-date             = {$Date: 1995/08/15 23:04:24 $},
+version          = {$Revision: 1.57 $},
+date             = {$Date: 1995/08/15 23:31:20 $},
 author           = {K.D. Braune, R. Gussmann,
                    rz32@dkauni2.bitnet
                    braune@rz.uni-karlsruhe.de
@@ -39,6 +39,10 @@ incompatibilities = {not full compatible to R. Sengerlings dinbrief}}
 %</styleinfo>
 %
 % $Log: dinbrief.d%v $
+% Revision 1.57  1995/08/15 23:31:20  Gussmann
+% - Documentation changed.
+% - Checksum set.
+%
 % Revision 1.56  1995/08/15 23:04:24  Gussmann
 % - \cmd\subject changed. It's now a link to \cmd\concern.
 %
@@ -735,9 +739,8 @@ anzugeben.
         Sachbearbeiter vor. Mit dem Befehl \cmd\writer{}
         kann ein solcher Sachbearbeiter angegeben werden.
 
-        {\sl Die Verwendung dieses Befehls schaltet auf die
-        Darstellung des Briefes nach der Norm
-        DIN~676 vom Mai 1991 um.\/}
+        {\sl Die Verwendung dieses Befehls gestaltet den Brief
+        entsprechend der Norm DIN~676 vom Mai 1991.\/}
 
   \item[\cmd\subject\arg{{Betreff}}] \hfil\break
         Mit diesem Befehl wird der Betreff gesetzt, der den
@@ -1014,10 +1017,14 @@ anzugeben.
 Bei h"aufigem Briefeschreiben kommt sicher bald der
 Wunsch nach einem eigenen Briefkopf auf; auch dies ist
 mit \LaTeX\ zu verwirklichen.
-Am besten er"offnet man sich in seiner Briefdatei (die man
-sicher fr"uher oder sp"ater anlegen wird) ein File mit dem
-Namen {\tt brfkopf.tex}. In dieses kann man z.B.\ den Briefkopf
-in Abb.~\ref{briefkopf} aufnehmen.
+% Am besten er"offnet man sich in seiner Briefdatei (die man
+% sicher fr"uher oder sp"ater anlegen wird) ein File mit dem
+% Namen {\tt brfkopf.tex}. In dieses kann man z.B.\ den Briefkopf
+% in Abb.~\ref{briefkopf} aufnehmen.
+Am besten erstellt man eine Datei mit den Einstellungen
+f"ur eigene Briefe, wie im Beispiel die Datei {\tt brfkopf.tex}.
+Diese Datei kann z.B.\ den Briefkopf aus
+Abb.~\ref{briefkopf} enthalten.
 
 \renewcommand{\textfraction}{0.35}
 
@@ -1081,10 +1088,11 @@ verwenden.
 Es stehen verschiedene Kopfzeilen zur Verf"ugung die "uber die
 Option \linebreak[4]\verb+\pagestyle{...}+\index{pagestyle@\verb+\pagestyle+}
 ausgew"ahlt werden k"onnen.
-Bei \verb+plain+\index{plain} wird eine Seitennumerierung bei mehrseitigen
-Briefen in der Fu"szeile eingeblendet, die Kopfzeile bleibt leer.
-Durch \verb+headings+\index{headings} wird die Kopfzeile mit einer
-Anrede und der Seitenzahl bei mehrseitigen Briefen gesetzt.
+Bei \verb+plain+\index{plain@\verb+plain+} wird eine Seitennumerierung
+bei mehrseitigen Briefen in der Fu"szeile eingeblendet, die Kopfzeile
+bleibt leer. Durch \verb+headings+\index{headings@\verb+headings+} wird
+die Kopfzeile mit einer Anrede und der Seitenzahl bei mehrseitigen
+Briefen gesetzt.
  
 \ssect{Briefe in englischer oder franz"osischer Sprache}
  
@@ -1569,8 +1577,8 @@ der Stil "`{\tt german}"' geladen werden.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/08/15 23:04:24 $}
-\def\RCSrevision{$Revision: 1.56 $}
+\def\RCSdate{$Date: 1995/08/15 23:31:20 $}
+\def\RCSrevision{$Revision: 1.57 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -4505,6 +4513,11 @@ der Stil "`{\tt german}"' geladen werden.
   \begingroup
     \@floatplacement
     \@dblfloatplacement
+    \makeatletter
+    \ifka@db@ltxtwoe
+      \let\@writefile\@gobbletwo
+      \global\@multiplelabelsfalse
+    \fi
     \@input{\jobname@aux}%
   \endgroup
   \if@filesw
@@ -4530,10 +4543,20 @@ der Stil "`{\tt german}"' geladen werden.
 %    Just before disabling the preamble commands we execute the begin
 %    document hook which contains any code contributed by
 %    |\AtBeginDocument|. Also disable the gathering of the file list,
-%    if no |\listfiles| has been issued.
+%    if no |\listfiles| has been issued. Since a value of exactly 0pt
+%    for |\topskip| causes |\twocolumn[]| to misbehave, we add this
+%    check, hoping that it will not cause any problems elsewhere.
+%
+%    Most of the following assignments will be done globally in case
+%    the user adds something like |\begin{multicols}| to the document
+%    hook, ie starts a group in |\begin{document}|.
 %    \begin{macrocode}
   \ifka@db@ltxtwoe
     \@begindocumenthook
+    \ifdim\topskip<1sp
+      \topskip 1sp
+      \relax
+    \fi
     \let\@begindocumenthook\@undefined
     \ifx\@listfiles\@undefined
       \let\@filelist\relax
@@ -4549,7 +4572,12 @@ der Stil "`{\tt german}"' geladen werden.
 %    \begin{macrocode}
   \def\do##1{\let ##1\@notprerr}%
   \@preamblecmds
-  \let\do\noexpand
+%    \end{macrocode}
+%    The next line is a pure safty measure in case a do list is
+%    ever expanded at the wrong place. In addition it will save
+%    a few tokens to get rid of the above definition.
+%    \begin{macrocode}
+  \global\let\do\noexpand
 }
 %    \end{macrocode}
 % \end{macro}

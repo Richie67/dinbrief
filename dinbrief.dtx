@@ -1,9 +1,20 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.40 1995/04/28 01:36:09 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.41 1995/05/09 00:48:54 Gussmann Exp $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.41  1995/05/09 00:48:54  Gussmann
+% - Yeah! Labels can now be printed on Herma copy-print 4452 (105mm x 42mm)
+% - \cmd\hoffset will not be changed, therefore \cmd\evensidemargin and
+%   \cmd\oddsidemargin hold now other values.
+% - \cmd\voffset will not be changed, therefore \cmd\topmargin
+%   hold now other values.
+% - \cmd\setlabelwidth holds now the width of one label.
+% - still inconsistent label commands: \setlabelwidth, \labelheight,
+%   \labeltopmargin.
+% - new trace flag \cs{if@kadb@tracinglabels}.
+%
 % Revision 1.40  1995/04/28 01:36:09  Gussmann
 % - Fixed bug in switch commands for the generation of labels, \cmd\nolabels,.
 % - Fixed bug in typesetting the labels.
@@ -521,7 +532,7 @@ Die Faltmarkierung am linken Papierrand wird durch den Befehl
         zusammen mit dem Datum im Briefkopf ausgegeben wird.
 
   \item[\cmd\date\arg{{Briefdatum}}] \hfil\break
-        Soll als Absenedatum {\sl nicht\/} das aktuelle
+        Soll als Absendedatum {\sl nicht\/} das aktuelle
         Tagesdatum (des Rechners) eingesetzt werden,
         kann mit diesem Befehl das Datum
         explizit angegeben werden.
@@ -1089,6 +1100,144 @@ auf bekannte Fehler hingewiesen.
         der Firma angegeben werden.
 \end{enumerate}
 
+\ssect{Die Befehle aus Rainer Sengerlings `dinbrief'}
+Im Jahr 1992 wurde an der Universit"at Karlsruhe ein Briefstil
+entwickelt, dem der Namen `dinbrief' gegeben wurde. Im gleichen
+Jahr ver"offentlichte Rainer Sengerling einen Briefstil unter
+dem gleichen Namen.
+
+Rainer Sengerling hat darauf verzichtet seinen Briefstil
+an \LaTeXe\ anzupassen. Daraufhin haben wir den Briefstil
+`dinbrief' im Dezember 1994 als \LaTeXe-Klasse ver"offentlicht.
+Wegen der unterschiedlichen Befehle der beiden Stile haben
+uns viele Anfragen erreicht. Die jetzt vorliegende Fassung
+stellt beide Befehlss"atze zur Verf"ugung und f"uhrt die
+bisher unabh"anigen Briefstile zusammen.
+
+\begin{description}
+  \item[\cmd\Retouradresse\arg{{Absenderadresse im Brief\kern 0pt fenster}}]
+        Der Befehl legt die Anschrift des Absenders oben im
+        Anschriftenfeld des Briefs fest.
+  \item[\cmd\Retourlabel] \hfil\break
+        Dieser Befehl erzeugt Absenderadre"s-Etiketten, falls
+        die Erzeugung der Etiketten aktiviert wurde.
+
+        Ferner wird die Ausgabe der \cmd\Retouradresse\ unterdr"uckt.
+
+        Dieser Befehl wird gegenw"artig nicht unterst"utzt und
+        erzeugt eine Warnung.
+  \item[\cmd\Fenster] \hfil\break
+        Bei der Verwendung von Fensterbriefh"ullen wird die mit
+        \cmd\Retouradresse\ vereinbarte einzeile R"ucksendeadresse
+        (Absenderadresse) oben im Anschriftenfeld eingeblendet,
+        falls der Befehl \cmd\Fenster\ angegeben wurde. Ferner
+        werden die Faltmarken am linken Rand ausgegeben.
+
+        Daf"ur wird die Ausgabe der Etiketten unterdr"uckt.
+
+        Dieser Befehl wird gegenw"artig nicht unterst"utzt und
+        erzeugt eine Warnung.
+  \item[\cmd\Postvermerk\arg{Postvermerk}] \hfil\break
+        Dieser Befehl vereinbart Vermerke f"ur den
+        Postversand wie z.B.\ Einschreiben.
+  \item[\cmd\Behandlungsvermerk\arg{Behandlungsvermerk}] \hfil\break
+        Der Befehl \cmd\Behandlungsvermerk\ dient zur
+        Angabe von (man wirds kaum glauben) Behandlungsvermerke
+        wie z.B.\ Eilt, pers"onlich oder "`F"ur die unterste
+        Schublade"'.
+  \item[\cmd\Absender\arg{Name und Adresse des Absenders}] \hfil\break
+        Die Adresse des Absenders wird vereinbart.
+        Dieser Befehl gilt f"ur den laufenden und alle
+        weiteren Briefe; er gilt solange, bis ein
+        weiterer \cmd\Absender- oder \cmd\address-Befehl
+        angegeben wird.
+  \item[\cmd\Absender\arg{Teil 1::Teil 2}] \hfil\break
+        Dies ist eine Sonderform des \cmd\Absender-Befehls.
+        Der durch \verb|::| abgetrennte {\em Teil2\/}
+        erscheint im Briefkopf, aber nicht im
+        Absenderetikett, falls ein solches mit dem
+        Befehl \cmd\Retourlabel\ angefordert
+        wurde.
+  \item[\cmd\Datum\arg{Briefdatum}] \hfil\break
+        Soll als Absendedatum {\sl nicht\/} das aktuelle
+        Tagesdatum (des Rechners) eingesetzt werden, kann
+        mit diesem Befehl das Datum explizit angegeben werden.
+  \item[\cmd\Betreff\arg{{Betreff}}] \hfil\break
+        Mit diesem Befehl wird der Betreff gesetzt, der den
+        Empf"anger "uber den Gegenstand des Briefes
+        informiert. Der Betreff kann ein oder mehrzeilig sein.
+  \item[\cmd\Einrueckung\arg{Text}] \hfil\break
+        Der Text wird um $1 in$ einger"uckt und geht bis zum
+        rechten Rand. Der Text darf Abs"atze enthalten.
+  \item[\cmd\anlagenrechts] \hfil\break
+        Die Anlagen- und Verteilvermerke beginnen {\sl rechts\/}
+        neben der Gru"sformel auf Grad 50. Mit diesem Befehl
+        kann Platz gespart werden, falls sie Seite fast voll
+        ist, und kein neues Blatt begonnen werden soll.
+        Dieser Befehl mu"s vor \cmd\closing\ stehen.
+        Die Anlagen- und Verteilvermerke m"ussen in diesem
+        Fall ebenfalls vor dem \cmd\closing-Befehl stehen.
+  \item[\cmd\Anlagen\arg{Anlagenvermerk}] \hfil\break
+        Mit diesem Befehl werden eventuelle Anlagenvermerke
+        vereinbart oder gesetzt. Dieser Befehl darf sowohl
+        vor dem \cmd\closing-Befehl als auch hinter diesem
+        stehen. Der Anlagenvermerk wird nur vereinbart falls
+        der Befehl vor dem \cmd\closing-Befehl angegeben wird.
+        Der Anlagenvermerk wird sofort ausgegeben und gesetzt,
+        falls der Befehl nach dem \cmd\closing-Befehl angegeben
+        wird.
+  \item[\cmd\Verteiler\arg{Verteilvermerk}] \hfil\break
+        Dieser Befehl vereinbart oder setzt Verteilvermerke.
+        Die Ausf"uhrungen zum \cmd\Anlagen-Befehl gelten
+        auch f"ur diesen Befehl.
+  \item[\cmd\Etihoehe\arg{H"ohe eines Adressetiketts}] \hfil\break
+        Verschiedene Herstelle vertreiben Adressetiketten,
+        die alle ein bischen anders sind. Um den Briefstil
+        an unterschiedlich hohe Adre"setiketten anzupassen,
+        kann mit dem Befehl \cmd\Etihoehe\ die H"ohe eines
+        Etiketts angegeben werden.
+  \item[\cmd\Etirand\arg{oberer Rand}] \hfil\break
+        Die B"ogen mit den Adre"setiketten haben oft einen
+        Versatz oder oberen Rand. Mit dem Befehl \cmd\Etirand\
+        kann dieser Versatz eingestellt werden.
+  \item[\cmd\Etizahl\arg{Zahl der Etiketten}] \hfil\break
+        Auf ein Blatt mit Adre"setiketten passen leider
+        nicht beliebig viele sondern nur eine begrenzte
+        Anzahl von Etiketten, die sich dann auch nicht kunterbunt
+        auf dem Blatt tummeln, sondern Spaltenweise angeordnet
+        sind. Die Zahl der Etiketten, die in eine Spalte
+        passen werden durch den Befehl \cmd\Etizahl\
+        angegeben.
+  \item[\cmd\spare\arg{{n}}] \hfil\break
+        Das Bedrucken der Adre"setiketten beginnt nach {\em n\/}
+        leeren Adre"slabeln. Die Label werden spaltenweise
+        durchgez"ahlt.
+  \item[\env\begin{letter}\arg{{Anschrift}} \dots\ \env\end{letter}] \hfil\break
+        Diese Befehle rahmen jeden einzelnen Brief ein. Die
+        Anschrift des Em\-pf"an\-gers wird als Argument des Befehls
+        \env\begin{letter}\arg{Anschrift} angegeben.
+        Die einzelnen Zeilen in der Anschrift werden durch
+        \cmd\\ getrennt.
+        Es d"urfen weitere Briefe folgen.
+  \item[\cmd\opening\arg{{Anrede}}] \hfil\break
+        Dieser Befehl vereinbart die Anrede des Empf"angers und setzt
+        den Briefkopf, die Empf"angerangaben, eine eventuell vorhandene
+        Bezugszeichenzeile, den Betreff und die Anrede des Empf"angers.
+
+        {\bf Dieser Befehl darf nicht fehlen!\/}
+
+  \item[\cmd\closing\arg{{Gru"sformel}}] \hfil\break
+        Der Befehl \cmd\closing{} setzt die Gru"sformel und nach
+        drei Leerzeilen die maschinenschrifliche Wiederholung
+        der Unterschrift.
+  \item[\cmd\makelabels] \hfil\break
+        Dieser Befehl mu"s in der Pr"aambel stehen; also
+        zwischen \cmd\documentstyle{} oder \cmd\documentclass{}
+        und dem \env\begin{document}-Befehl.
+        Er aktiviert das Ausdrucken von Adress-Etiketten.
+\end{description}
+
+
 \clearpage
 % \iffalse
 %</documentation>
@@ -1112,8 +1261,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/04/28 01:36:09 $}
-\def\RCSrevision{$Revision: 1.40 $}
+\def\RCSdate{$Date: 1995/05/09 00:48:54 $}
+\def\RCSrevision{$Revision: 1.41 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}

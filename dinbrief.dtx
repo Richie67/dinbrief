@@ -1,9 +1,14 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.30 1995/03/01 23:44:04 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.31 1995/03/02 00:54:57 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.31  1995/03/02 00:54:57  Gussmann
+% * Test messages has being commented out.
+% * Some bugs fixed in \cmd\label@plain.
+% * \cmd\label@plain still contains errors.
+%
 % Revision 1.30  1995/03/01 23:44:04  Gussmann
 % * \cmd\spare implemented (still not complete).
 % * \cmd\Etihoehe, \cmd\Etirand and \cmd\Etizahl implemented.
@@ -1068,8 +1073,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/03/01 23:44:04 $}
-\def\RCSrevision{$Revision: 1.30 $}
+\def\RCSdate{$Date: 1995/03/02 00:54:57 $}
+\def\RCSrevision{$Revision: 1.31 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -5425,11 +5430,12 @@ Postfach 3322\\[\medskipamount]
  % to adapt the file to \LaTeXe.
  %
 \expandafter\ifx\csname documentclass\endcsname\relax
-    \documentstyle[german]{dinbrief}
+    \documentstyle[german,trace]{dinbrief}
     \typeout{Using the command \string\documentstyle.}
   \else
     \documentclass[10pt]{dinbrief}
     \usepackage{german}
+    \usepackage{trace}
     \typeout{Using the command \string\documentclass.}
   \fi
 

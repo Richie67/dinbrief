@@ -1,9 +1,17 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.15 1994/12/14 14:18:44 Braune Exp Gussmann $
+% $Id: dinbrief.d%v 1.16 1994/12/14 18:25:36 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.16  1994/12/14 18:25:36  Gussmann
+% * Errors removed: - Definition of \concern contains \newbox command!
+%                     \newbox moved outside.
+%                   - Equation numbers not reset at the end of a letter.
+%                     (Fixed)
+% * Still more documentation added and some (a lot of) errors corrected.
+% * Test for equation added.
+%
 % Revision 1.15  1994/12/14 14:18:44  Braune
 % *** empty log message ***
 %
@@ -224,7 +232,7 @@ In einem Dokument k"onnen mehrere Briefe geschrieben werden.
 Die Gliederung in Abs"atze erfolgt durch Einf"ugen einer
 Leerzeile (wie in \LaTeX\ "ublich).
 
-\sect{Befehle in der \protect\envname{dinbrief}-Klasse}
+\sect{Befehle in der {\protect\tt dinbrief}-Klasse}
 \index{Briefe!DIN 676}\index{DIN-Brief}\index{Briefe!dinbrief@\envname{dinbrief}}
 
 Bereits vor \env\begin{document} kann man Angaben machen, die f"ur
@@ -232,7 +240,7 @@ alle Briefe g"ultig sind, z.B.\ {\bf Absender\/} (\cs{address}
 bzw.\ \cs{backaddress}), {\bf Absendeort\/} (\cs{place}),
 {\bf Telefon\/} (\cs{phone}) und {\bf Unterschrift\/} (\cs{signature}).
 
-\ssect{Aus der \protect\envname{letter}-Klasse "ubernommene Befehle}
+\ssect{Aus der {\protect\tt letter}-Klasse "ubernommene Befehle}
 
 Jeder Brief steht in einer eigenen \envname{letter}-Umgebung.
 Der Empf"anger wird als Argument des
@@ -978,8 +986,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1994/12/14 14:18:44 $}
-\def\RCSrevision{$Revision: 1.15 $}
+\def\RCSdate{$Date: 1994/12/14 18:25:36 $}
+\def\RCSrevision{$Revision: 1.16 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -1839,8 +1847,8 @@ auf bekannte Fehler hingewiesen.
 %    \begin{macrocode}
 \def\opening#1{\thispagestyle{first@page}
 %    \end{macrocode}
-% \changes{0.0.0}{1994/02/08}{(KDB) Macros |\@gbsphack| and |\@gesphack|
-%                             used by |\@enlargethispage| are unknown}
+% \changes{0.0.0}{1994/02/08}{(KDB) Macros \cmd\@gbsphack\ and \cmd\@gesphack\
+%                             used by \cmd\@enlargethispage\ are unknown}
 %    \begin{macrocode}
  \let\@gbsphack=\relax
  \let\@gesphack=\relax
@@ -1885,19 +1893,19 @@ auf bekannte Fehler hingewiesen.
   \fi
 %    \end{macrocode}
 % \changes{0.0.0}{1994/02/08}{(KDB) Changed to check the height of
-%                             the footer (|\@@bottomtext| now dimen,
+%                             the footer (\cmd\@@bottomtext\ now dimen,
 %                             no longer command)}
 %    \begin{macrocode}
  \ifdim\ht\@@bottomtext>0pt
 %    \end{macrocode}
-% \changes{0.0.0}{1994/02/08}{(KDB) |\@@bottomtext| should be set
-%                             within a |\vbox to 0pt{\vss ...}|}
+% \changes{0.0.0}{1994/02/08}{(KDB) \cmd\@@bottomtext\  should be set
+%                             within a \env{\vbox to 0pt}{\cmd\vss ...}}
 %    \begin{macrocode}
     \vbox to 0pt{%
       \rule{0pt}{243.5truemm}%
 %    \end{macrocode}
-% \changes{0.0.0}{1994/02/08}{(KDB) |\hbox{ ... }| moved to box |\@@bottomtext|}
-% \changes{0.0.0}{1994/11/17}{(RG) |\unhbox| changed to |\unhcopy|,
+% \changes{0.0.0}{1994/02/08}{(KDB) \cmd\hbox{ ... } moved to box \cmd\@@bottomtext}
+% \changes{0.0.0}{1994/11/17}{(RG) \cmd\unhbox\ changed to \cmd\unhcopy,
 %                             because we can have more than one letter
 %                             in one document. So the bottomline is
 %                             inserted into every first page of letters.}
@@ -2594,10 +2602,10 @@ auf bekannte Fehler hingewiesen.
 % This is used to include special informations such as the
 % number of the giroconto, or the name of the chairman of a corporation.
 %
-% \changes{0.0.0}{1994/02/08}{(KDB) Defining macro |\bottomtext| putting
-%                             the specified text into box |\@@bottomtext|
+% \changes{0.0.0}{1994/02/08}{(KDB) Defining macro \cmd\bottomtext\ putting
+%                             the specified text into box \cmd\@@bottomtext\
 %                             to get the height of the footer and store
-%                             it in |\@@bottomht|}
+%                             it in \cmd\@@bottomht}
 %    \begin{macrocode}
 \newbox\@@bottomtext
 \setbox\@@bottomtext=\vbox to 0pt{}
@@ -2823,7 +2831,7 @@ auf bekannte Fehler hingewiesen.
 %  number of following page in bottom line.
 %
 %  \smallskip
-%  \changes{}{1994/02/10}{(KDB)
+%  \changes{}{1994/02/10}{(KDB)}
 %  Problem to be solved before this pagestyle can be introduced:
 %    There must be found a method to detect the last page is typesetted
 %    (endletter is not sufficient, since there may be another pagebreak when

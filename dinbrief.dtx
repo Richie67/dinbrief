@@ -1,7 +1,7 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.dtx 1.63 1996/05/21 19:13:50 Gussmann Exp Gussmann $
+% $Id: dinbrief.dtx 1.64 1996/05/30 22:36:59 Gussmann Exp Gussmann $
 %
 %<*styleinfo>
 =======================================================================
@@ -9,8 +9,8 @@
 shortpackagename = {dinbrief},
 longpackagename  = {dinbrief},
 baseformats      = {\LaTeX\ 2.09 and \LaTeXe},
-version          = {$Revision: 1.63 $},
-date             = {$Date: 1996/05/21 19:13:50 $},
+version          = {$Revision: 1.64 $},
+date             = {$Date: 1996/05/30 22:36:59 $},
 author           = {K.D. Braune, R. Gussmann,
                    rz32@dkauni2.bitnet
                    braune@rz.uni-karlsruhe.de
@@ -39,6 +39,9 @@ incompatibilities = {not full compatible to R. Sengerlings dinbrief}}
 %</styleinfo>
 %
 % $Log: dinbrief.dtx $
+% Revision 1.64  1996/05/30 22:36:59  Gussmann
+% - Fixed a typo.
+%
 % Revision 1.63  1996/05/21 19:13:50  Gussmann
 % - twoside option added.
 %
@@ -1599,8 +1602,8 @@ der Stil "`{\tt german}"' geladen werden.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1996/05/21 19:13:50 $}
-\def\RCSrevision{$Revision: 1.63 $}
+\def\RCSdate{$Date: 1996/05/30 22:36:59 $}
+\def\RCSrevision{$Revision: 1.64 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -2867,13 +2870,14 @@ der Stil "`{\tt german}"' geladen werden.
 %  |\@splitoncrlist| is called inside |\@splitoncr| and
 %  does the real work.
 %    \begin{macrocode}
-\long\def\@splitoncr#1#2{\begingroup
-  % \tracingmacros=1
-  \let\\=a% because characters are not expanded
-  \long\def\@rgjob##1{#2{##1}}%
-  % \expandafter\@splitoncrlist#1\\\stop \\
-  \@splitoncrlist#1\\\stop \\
-\endgroup}
+\long\def\@splitoncr#1#2{%
+  \begingroup
+    % \tracingmacros=1
+    \let\\=a% because characters are not expanded
+    \long\def\@rgjob##1{#2{##1}}%
+    % \expandafter\@splitoncrlist#1\\\stop \\
+    \@splitoncrlist#1\\\stop \\
+  \endgroup}
 %    \end{macrocode}
 %    \changes{1.63.0}{1996/05/21}{call to \cmd\@splitoncrlist changed
 %                                 as sugested by B.~Raichle}
@@ -2920,7 +2924,7 @@ der Stil "`{\tt german}"' geladen werden.
 %    \begin{macrocode}
 \long\def\@withmarkcr!#1\stop{%
   \xdef\@addresslist{%
-    \@addresslist\ifx\@addresslist\empty\else\\\fi#1}%
+    \@addresslist\ifx\@addresslist\empty\else\\\fi{#1}}%
   \@ifnextchar[%]
     {\@ignorebrackets}{\@ignorebrackets[]}#1\stop{\@addressname}
 }
@@ -2931,7 +2935,7 @@ der Stil "`{\tt german}"' geladen werden.
 %    \begin{macrocode}
 \long\def\@withoutmarkcr#1\stop{%
   \xdef\@addresslist{%
-    \@addresslist\ifx\@addresslist\empty\else\\\fi#1}
+    \@addresslist\ifx\@addresslist\empty\else\\\fi{#1}}
   \ifx\@addressname\relax
     \@ifnextchar[%]
       {\@ignorebrackets}{\@ignorebrackets[]}#1\stop{\@addressname}
@@ -2943,7 +2947,7 @@ der Stil "`{\tt german}"' geladen werden.
 %  \begin{macro}{\@withmark}
 %    \begin{macrocode}
 \long\def\@withmark!#1\stop{%
-  \xdef\@addresslist{\@addresslist #1}
+  \xdef\@addresslist{\@addresslist {#1}}
   \@ifnextchar[%]
     {\@ignorebrackets}{\@ignorebrackets[]}#1\stop{\@addressname}%
 }
@@ -2954,7 +2958,7 @@ der Stil "`{\tt german}"' geladen werden.
 %  This macro is not allowed to insert a |\\| into the |\@addresslist|.
 %    \begin{macrocode}
 \long\def\@withoutmark#1\stop{%
-  \xdef\@addresslist{\@addresslist #1}
+  \xdef\@addresslist{\@addresslist {#1}}
   \ifx\@addressname\relax
     \@ifnextchar[%]
       {\@ignorebrackets}{\@ignorebrackets[]}#1\stop{\@addressname}
@@ -3524,9 +3528,14 @@ der Stil "`{\tt german}"' geladen werden.
 %  \end{macro}
 %
 %  \begin{macro}{\closing}
+% \changes{1.64.0}{1996/08/06}{(RG) closing has now an optional argument}
 %  \begin{macro}{\ka@db@closinghook}
 %    \begin{macrocode}
 \long\def\closing#1{%
+  \@ifnextchar[%]
+    {\ka@db@closing}{\ka@db@closing[]}%
+}
+\long\def\ka@db@closing[#1]#2{%
 %    \end{macrocode}
 % \changes{1.22.0}{1995/01/19}{(RG) State counter added to \cmd\closing.}
 %    \begin{macrocode}
@@ -3549,8 +3558,12 @@ der Stil "`{\tt german}"' geladen werden.
 %        }%
         \parbox[t]{\ka@db@tmpdima}{%\parskip .7em%
           \raggedright
-          \ignorespaces #1\\[3\baselineskip]
-%          \ifx\@empty\@fromsig
+          \ignorespaces #2\\[3\baselineskip]
+          \vbox to 0pt{%
+            \vskip -4\baselineskip\relax
+            \hbox to 0pt{\strut#1\hss}%
+          \vss}%
+   %          \ifx\@empty\@fromsig
 %          \else \@fromsig
 %          \fi\strut
           \ka@db@ifemptyvar{signature}{}{%
@@ -3569,7 +3582,13 @@ der Stil "`{\tt german}"' geladen werden.
       \egroup
     \else
       \raggedright
-      \ignorespaces #1\\[3\baselineskip]
+      \ignorespaces #2\\[3\baselineskip]
+      \leavevmode
+      % here the signature <- not correct
+      \vbox to 0pt{%
+        \vskip -4\baselineskip\relax
+        \hbox to 0pt{\strut#1\hss}%
+      \vss}%
 %      \ifx\@empty\@fromsig
 %      \else \@fromsig
 %      \fi\strut
@@ -4451,7 +4470,7 @@ der Stil "`{\tt german}"' geladen werden.
 %
 % \begin{macro}{\yourmail}
 %    \begin{macrocode}
-\def\yourmail#1{\gdef\@yourmail{#1}\@reflinetrue}
+\def\yourmail#1{\gdef\@yourmail{#1}\global\@reflinetrue}
 %    \end{macrocode}
 % \end{macro}
 %

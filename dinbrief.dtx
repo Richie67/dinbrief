@@ -1,15 +1,15 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.50 1995/06/29 12:45:15 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.51 1995/06/29 12:48:35 Gussmann Exp Gussmann $
 %
 % =======================================================================
 % @stylefile{Ltall
 % shortpackagename = {dinbrief},
 % longpackagename  = {dinbrief},
 % baseformats      = {\LaTeX\ 2.09 and \LaTeXe},
-% version          = {$Revision: 1.50 $},
-% date             = {$Date: 1995/06/29 12:45:15 $},
+% version          = {$Revision: 1.51 $},
+% date             = {$Date: 1995/06/29 12:48:35 $},
 % author           = {K.D. Braune, R. Gussmann,
 %                    rz32@dkauni2.bitnet
 %                    braune@rz.uni-karlsruhe.de
@@ -38,6 +38,9 @@
 % =======================================================================
 %
 % $Log: dinbrief.d%v $
+% Revision 1.51  1995/06/29 12:48:35  Gussmann
+% *** empty log message ***
+%
 % Revision 1.50  1995/06/29 12:45:15  Gussmann
 % - Versionnumber is overtaken from rcs.
 %
@@ -1532,8 +1535,8 @@ der Stil "`{\tt german}"' geladen werden.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/06/29 12:45:15 $}
-\def\RCSrevision{$Revision: 1.50 $}
+\def\RCSdate{$Date: 1995/06/29 12:48:35 $}
+\def\RCSrevision{$Revision: 1.51 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -3447,7 +3450,6 @@ der Stil "`{\tt german}"' geladen werden.
   \vspace{\parskip}
   \stopbreaks
   {%
-    \raggedright
     \leavevmode
     \ifka@db@enclright
       \bgroup
@@ -3461,6 +3463,7 @@ der Stil "`{\tt german}"' geladen werden.
 %          \hss
 %        }%
         \parbox[t]{\ka@db@tmpdima}{%\parskip .7em%
+          \raggedright
           \ignorespaces #1\\[3\baselineskip]
 %          \ifx\@empty\@fromsig
 %          \else \@fromsig
@@ -3473,10 +3476,14 @@ der Stil "`{\tt german}"' geladen werden.
         \@tempdima=\textwidth
         \advance\@tempdima by -\ka@db@tmpdima
         \parbox[t]{\@tempdima}{%\parskip .7em%
+          \raggedright
           \ka@db@tsenclcc
+          \unskip % <- removing unneccessary skip from
+                  %    \cmd\ka@db@tsenclcc
         }%
       \egroup
     \else
+      \raggedright
       \ignorespaces #1\\[3\baselineskip]
 %      \ifx\@empty\@fromsig
 %      \else \@fromsig
@@ -3490,6 +3497,7 @@ der Stil "`{\tt german}"' geladen werden.
   \par\medskip
   \ifka@db@enclright
   \else
+    \raggedright
     \ka@db@tsenclcc
   \fi
   \ka@db@closinghook
@@ -3505,7 +3513,7 @@ der Stil "`{\tt german}"' geladen werden.
   \ka@db@ifemptyvarlocal{encl}%
     {}{\ka@db@usevarlocal{encl}\\[\baselineskip]}%
   \ka@db@ifemptyvarlocal{cc}%
-    {}{\ka@db@usevarlocal{cc}\\}% [\baselineskip]% <- extra space removed
+    {}{\ka@db@usevarlocal{cc}\\[\baselineskip]}%
 }
 %    \end{macrocode}
 %  \end{macro}
@@ -3564,31 +3572,52 @@ der Stil "`{\tt german}"' geladen werden.
 %    \end{macrocode}
 %  \end{macro}
 %
+%  \changes{1.52.0}{1995/06/29}{(RG) generic command for all enclosures added.}
+%  \begin{macro}{\ka@db@genencl}
+%  The macro \cmd\ka@db@genencl can be called at every
+%  position inside the {\tt letter}-environment. If it is called
+%  between \cmd\closing\ and \env\end{letter}\ it directly typesets
+%  its arguments. If it is called before \cmd\closing\ is
+%  given it stores its arguments in the variable.
+%  \cmd\closing\ will typeset all the stuff.
+%
+%    \begin{macrocode}
+\def\ka@db@genencl#1[#2]#3{%
+  \ifnum\c@lt@state=3\relax
+    \par
+    \noindent{%
+    \bgroup
+      \def\tmpa{#2}%
+      \expandafter\egroup
+    \ifx\tmpa\@empty\else
+      #2\hfil\break
+    \fi
+    \ignorespaces #3\strut}%
+    \par
+  \else
+    \bgroup
+      \def\tmpa{#2}%
+      \expandafter\egroup
+    \ifx\tmpa\@empty
+      \ka@db@assignvarlocal{#1}{#3}%
+    \else
+      \ka@db@assignvarlocal{#1}{#2\hfil\break #3}%
+    \fi
+  \fi
+}
+%    \end{macrocode}
+%  \end{macro}
+%
 %  \changes{1.22.0}{1995/01/19}{(RG) \cmd\cc\ and \cmd\encl\ extended.}
 %  \begin{macro}{\cc}
 %  \begin{macro}{\encl}
-%  The macros \cmd\cc\ and \cmd\encl\ can now be called at every
-%  position inside the {\tt letter}-environment. If they are called
-%  between \cmd\closing\ and \env\end{letter}\ they directly typeset
-%  their arguments. If they are called before \cmd\closing\ is
-%  given they store their arguments in the variables and
-%  \cmd\closing\ also typesets both.
+%  The macros \cmd\cc\ and \cmd\encl\ new use the generic enclosures
+%  macro.
 %
 %    \begin{macrocode}
 \def\cc{%
   \@ifnextchar[%]
-    {\ka@db@cc}{\ka@db@cc[\ccname \\]}%
-}
-\def\ka@db@cc[#1]#2{%
-  \ifnum\c@lt@state=3\relax
-    \par
-    \noindent{% \ccname \\
-    #1
-    \ignorespaces #2\strut}%
-    \par
-  \else
-    \ka@db@assignvarlocal{cc}{#1#2}%
-  \fi
+    {\ka@db@genencl{cc}}{\ka@db@genencl{cc}[\ccname]}%
 }
 \ka@db@execatletter{\ka@db@assignvarlocal{cc}{}}%
 %    \end{macrocode}
@@ -3596,18 +3625,7 @@ der Stil "`{\tt german}"' geladen werden.
 %    \begin{macrocode}
 \def\encl{%
   \@ifnextchar[%]
-    {\ka@db@encl}{\ka@db@encl[\enclname \\]}%
-}
-\def\ka@db@encl[#1]#2{%
-  \ifnum\c@lt@state=3\relax
-    \par
-    \noindent{% \enclname \\
-    #1
-    \ignorespaces #2\strut}%
-    \par
-  \else
-    \ka@db@assignvarlocal{encl}{#1#2}%
-  \fi
+    {\ka@db@genencl{encl}}{\ka@db@genencl{encl}[\enclname]}%
 }
 \ka@db@execatletter{\ka@db@assignvarlocal{encl}{}}%
 %    \end{macrocode}
@@ -4035,6 +4053,7 @@ der Stil "`{\tt german}"' geladen werden.
   \clearpage
   \refstepcounter{letter}%
   \c@page\@ne
+  \global\ka@db@lastpagefalse
   \interlinepenalty=200
   % \@processto{#1}%
   % \message{Starting \string\@splitaddress}%
@@ -4076,6 +4095,8 @@ der Stil "`{\tt german}"' geladen werden.
         \def\protect{\string}
         \let\\=\relax
         \def\protect##1{\string##1\space}
+        \let\vspace=\relax
+        \let\rule=\relax
         %\immediate\write\@auxout{\string\mlabel{\@backaddress}{\toname
         %\\\toaddress}}
         %\immediate\write\@auxout{%
@@ -4548,7 +4569,7 @@ der Stil "`{\tt german}"' geladen werden.
 %    labels.
 %    \begin{macrocode}
 \def\makelabels{%
-  \@fileswtrue
+  % \@fileswtrue
   \c@labelgen=2
 }
 %    \end{macrocode}
@@ -5711,7 +5732,7 @@ der Stil "`{\tt german}"' geladen werden.
 \ps@plain
 \pagenumbering{arabic}
 \onecolumn
-\@fileswfalse
+% \@fileswfalse
 \errorcontextlines=10
 %    \end{macrocode}
 %
@@ -6373,6 +6394,34 @@ F-58500 CLAMECY}
 %    \end{macrocode}
 %    \begin{macrocode}
 %</dinbriefold>
+%    \end{macrocode}
+%
+% \section{Tracing the dinbrief}
+%
+%    \begin{macrocode}
+%<*dbtrace>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+ % \tracingcommands\tw@
+ % \tracingstats\tw@
+ % \tracingpages\@ne
+ % \tracingoutput\@ne
+ % \tracinglostchars\@ne
+ % \tracingmacros\tw@
+ % \tracingparagraphs\@ne
+ % \tracingrestores\@ne
+ % \showboxbreadth\maxdimen
+\showboxbreadth15
+ % \showboxdepth\maxdimen
+\showboxdepth15
+\errorstopmode
+\errorcontextlines\maxdimen
+ % \tracingonline\@ne
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</dbtrace>
 %    \end{macrocode}
 %
 % \section{The documentation driver file}

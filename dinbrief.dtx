@@ -1,9 +1,13 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.25 1995/01/22 00:27:24 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.26 1995/01/22 21:25:59 Gussmann Exp Gussmann $
 %
 % $Log: dinbrief.d%v $
+% Revision 1.26  1995/01/22 21:25:59  Gussmann
+% * many changes (lot of intern commands changed)
+% * \cmd\postremark\space added
+%
 % Revision 1.25  1995/01/22 00:27:24  Gussmann
 % * layout bug in envelope window detected and fixed.
 %
@@ -1047,8 +1051,8 @@ auf bekannte Fehler hingewiesen.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/01/22 00:27:24 $}
-\def\RCSrevision{$Revision: 1.25 $}
+\def\RCSdate{$Date: 1995/01/22 21:25:59 $}
+\def\RCSrevision{$Revision: 1.26 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -1326,10 +1330,10 @@ auf bekannte Fehler hingewiesen.
     \expandafter\egroup
     \ifx\tmpa\@empty
       \message{var is empty!}%
-      #3
+      #3%
     \else
       \message{var is not empty!}%
-      #4
+      #4%
     \fi
 }
 %    \end{macrocode}

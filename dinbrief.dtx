@@ -1,7 +1,7 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.d%v 1.59 1995/10/05 22:53:59 Gussmann Exp Gussmann $
+% $Id: dinbrief.d%v 1.60 1995/10/27 00:13:16 Gussmann Exp Gussmann $
 %
 %<*styleinfo>
 =======================================================================
@@ -9,8 +9,8 @@
 shortpackagename = {dinbrief},
 longpackagename  = {dinbrief},
 baseformats      = {\LaTeX\ 2.09 and \LaTeXe},
-version          = {$Revision: 1.59 $},
-date             = {$Date: 1995/10/05 22:53:59 $},
+version          = {$Revision: 1.60 $},
+date             = {$Date: 1995/10/27 00:13:16 $},
 author           = {K.D. Braune, R. Gussmann,
                    rz32@dkauni2.bitnet
                    braune@rz.uni-karlsruhe.de
@@ -39,6 +39,9 @@ incompatibilities = {not full compatible to R. Sengerlings dinbrief}}
 %</styleinfo>
 %
 % $Log: dinbrief.d%v $
+% Revision 1.60  1995/10/27 00:13:16  Gussmann
+% File: brfkopf.tex changed. \vspace* moved before the picture.
+%
 % Revision 1.59  1995/10/05 22:53:59  Gussmann
 % Forgot to change the \cmd\checksum.
 %
@@ -362,7 +365,7 @@ incompatibilities = {not full compatible to R. Sengerlings dinbrief}}
 % etc.
 % \fi
 %
-% \CheckSum{4756}
+% \CheckSum{4755}
 %%
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -1584,8 +1587,8 @@ der Stil "`{\tt german}"' geladen werden.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 1995/10/05 22:53:59 $}
-\def\RCSrevision{$Revision: 1.59 $}
+\def\RCSdate{$Date: 1995/10/27 00:13:16 $}
+\def\RCSrevision{$Revision: 1.60 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -2248,7 +2251,7 @@ der Stil "`{\tt german}"' geladen werden.
 %    \end{macrocode}
 %  \end{macro}
 %
-%  \subsubsection{Modelling \string\ClassWarning\ in \LaTeX\ 2.09}
+%  \subsubsection{Modelling {\tt \char92 ClassWarning} in \LaTeX\ 2.09}
 %    \begin{macrocode}
 \ifka@db@ltxtwoe\else
   \def\ClassWarning#1#2{%
@@ -4544,7 +4547,11 @@ der Stil "`{\tt german}"' geladen werden.
   \everypar{}%
   \ifka@db@ltxtwoe
     \@noskipsecfalse
-    \G@refundefinedfalse
+%    \end{macrocode}
+%    |\G@refundefinedfalse| ist not longer needed. D.\ Carlile send us
+%    an E-Mail (95/12/12) to avoid conflicts with the December 1995
+%    release of \LaTeXe.
+%    \begin{macrocode}
   \fi
 %    \end{macrocode}
 %    Just before disabling the preamble commands we execute the begin

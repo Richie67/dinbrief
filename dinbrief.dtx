@@ -1,7 +1,7 @@
 %
 % \iffalse meta-comment
 %
-% $Id: dinbrief.dtx 1.70 2000/01/12 21:54:33 Gussmann Exp $
+% $Id: dinbrief.dtx,v 1.73 2000/03/02 12:49:21 rz32 Exp $
 %
 %<*styleinfo>
 =======================================================================
@@ -9,8 +9,8 @@
 shortpackagename = {dinbrief},
 longpackagename  = {dinbrief},
 baseformats      = {\LaTeX\ 2.09 and \LaTeXe},
-version          = {$Revision: 1.70 $},
-date             = {$Date: 2000/01/12 21:54:33 $},
+version          = {$Revision: 1.73 $},
+date             = {$Date: 2000/03/02 12:49:21 $},
 author           = {K.D. Braune, R. Gussmann,
                    Klaus.Braune@rz.uni-karlsruhe.de
                    richard@gussmann.de
@@ -36,7 +36,35 @@ incompatibilities = {not full compatible to R. Sengerlings dinbrief}}
 =======================================================================
 %</styleinfo>
 %
-% $Log: dinbrief.dtx $
+% $Log: dinbrief.dtx,v $
+% Revision 1.73  2000/03/02 12:49:21  rz32
+% <CR><LF> replaced by UNIX's newline.
+% Adjustment of \textheight due to a high position of the bottomtext corrected.
+% Made position of bottomtext work correct with pagestyles empty, headings and
+% myheadings.
+%
+% Revision 1.72  2000/01/19 14:51:04  rz32
+% Made version ready for distribution
+%
+% Revision 1.71  2000/01/19 14:41:57  rz32
+% Many changes, the more important ones being:
+%  - replacing absolut length by variables and expressions
+%  - support for a configurtion file
+%  - made bottomtext working before \begin{document}
+%  - minor modifications to make the documentation (except dinbrief.drv)
+%    working under LaTeX 209
+%
+% Revision 1.72  2000/01/19 11:51:09  rz32
+% Minor modifications to make the documentation (except dinbrief.drv)
+% working under LaTeX209
+%
+% Revision 1.71  2000/01/19 00:18:53  rz32
+% Many changes, the more important ones being:
+%  - replacing absolut length by variables and expressions
+%  - support for a configurtion file
+%  - support for both letter versions
+%  - made bottomtext working before \begin{document}
+%
 % Revision 1.70  2000/01/12 21:54:33  Gussmann
 % - Documentation for extended \closing[]{} added.
 %
@@ -399,7 +427,7 @@ incompatibilities = {not full compatible to R. Sengerlings dinbrief}}
 % 
 % \fi
 %
-% \CheckSum{4858}
+% \CheckSum{5317}
 %%
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -417,8 +445,12 @@ incompatibilities = {not full compatible to R. Sengerlings dinbrief}}
 %%   Grave accent  \`     Left brace    \{     Vertical bar  \|
 %%   Right brace   \}     Tilde         \~}
 %%
+% \changes{1.70.1}{2000/01/10}{(KB) Inserted commands for \LaTeXe\ packages
+%			       and document options}
 % \setcounter{StandardModuleDepth}{1}
+% \newcommand\Dopt[1]{\texttt {#1}}
 % \newcommand\Lopt[1]{\textsf {#1}}
+% \newcommand\Lpkg[1]{\textsf {#1}}
 % \newcommand\file[1]{\texttt {#1}}
 % \newcommand\Lcount[1]{\textsl {\small#1}}
 % \newcommand\pstyle[1]{\textsl {#1}}
@@ -454,11 +486,15 @@ incompatibilities = {not full compatible to R. Sengerlings dinbrief}}
 \expandafter\ifx\csname documentclass\endcsname\relax
     \documentstyle[german]{article}
     \typeout{Using the command \string\documentstyle.}
+    \newcommand\LaTeXe{\LaTeX\kern.15em2$_\varepsilon$}
   \else
     \documentclass[10pt]{article}
     \usepackage{german}
     \typeout{Using the command \string\documentclass.}
   \fi
+
+\newcommand\Dopt[1]{{\tt #1\/}}
+\newcommand\file[1]{{\tt #1\/}}
 
 \title{Standard Document Class `dinbrief'\\ for \LaTeX{} version 2e\\
        Standard Document Style `dinbrief'\\ for \LaTeX{} version 2.09}
@@ -551,7 +587,7 @@ von D.~Heinrich abgefa"st wurde. Seinerseits geht dieser
 zur"uck auf den Stil \envname{a4letter} von H.~Partl, welcher
 seinen Ursprung im urspr"unglichen \envname{letter}-Stil
 von L.~Lamport hatte. Zus"atzlich wurden aus den \envname{dinbrief.sty}
-von R.~Sengerling der Befehlsvorrat und die Option \verb|norm|
+von R.~Sengerling der Befehlsvorrat und die Option \Dopt{norm}
 "ubernommen. Ferner enth"alt diese Klasse Tips und Anregungen von
 B.~Raichle.
 
@@ -561,8 +597,23 @@ In einem Dokument k"onnen mehrere Briefe geschrieben werden.
 Die Gliederung in Abs"atze erfolgt durch Einf"ugen einer
 Leerzeile (wie in \LaTeX\ "ublich).
 
-\sect{Befehle in der {\protect\tt dinbrief}-Klasse}
-\index{Briefe!DIN 676}\index{DIN-Brief}\index{Briefe!dinbrief@\envname{dinbrief}}
+\sect{Zus"atzliche Optionen der {\protect\tt dinbrief}-Klasse}%
+\index{Briefe>Optionen}\index{Optionen der dinbrief-Klasse=Optionen der \envname{dinbrief}-Klasse}
+
+In der DIN Norm~676 werden zwei Formen von Briefen festgelegt.
+In "alteren Versionen dieses Paketes wurde nur diejenige Form unterst"utzt,
+in der oben ein Rand von 45mm f"ur den Briefkopf freigelassen wird.
+In der zweiten Version ist dieser Rand auf 27mm verk"urzt; damit steht f"ur
+den Brieftext mehr Platz (18mm) zur Verf"ugung.
+
+Die Wahl der gew"unschten Form kann durch Angabe der Optionen \Dopt{addresshigh}
+f"ur einen oberen Rand von 27mm oder \Dopt{addressstd} f"ur einen oberen Rand
+von 45mm getroffen werden.
+Die Angabe der Option \Dopt{addressstd} kann unterbleiben, da sie ohnehin
+voreingestellt ist.
+
+\sect{Befehle in der {\protect\tt dinbrief}-Klasse}%
+\index{Briefe>DIN 676}\index{DIN-Brief}\index{Briefe>dinbrief=\envname{dinbrief}}
 
 Bereits vor \env\begin{document} kann man Angaben machen, die f"ur
 alle Briefe g"ultig sind, z.B.\ {\bf Absender\/} (\cs{address}
@@ -685,14 +736,109 @@ kann dem Beispiel entnommen werden.
 
 F"ur alle, denen das "`Fenster"' um die Adresse nicht gef"allt,
 besteht die M"oglichkeit, durch Angabe von
-\cmd\nowindowrules\index{nowindowrules@\verb+\nowindowrules+}
+\cmd\nowindowrules\index{nowindowrules=\verb+\nowindowrules+}
 vor dem Befehl \cmd\opening\ dieses abzuschalten.
-Durch \cmd\windowrules\index{windowrules@\verb+\windowrules+} l"a"st es
+Durch \cmd\windowrules\index{windowrules=\verb+\windowrules+} l"a"st es
 sich wieder aktivieren.
+
+Der Trennstrich zwischen der R"ucksendeadresse und der Anschrift im
+Anschriftenfeld kann mit dem Befehl
+\cmd\nobackaddressrule\index{nobackaddressrule=\verb+\nobackaddressrule+}
+unterdr"uckt und bei folgenden Briefen mit
+\cmd\backaddressrule\index{backaddressrule=\verb+\backaddressrule+} wieder
+aktiviert werden.
  
-Die Faltmarkierung am linken Papierrand wird durch den Befehl
-\cmd\nowindowtics\index{nowindowtics@\verb+\nowindowtics+} ab- und mit
-\cmd\windowtics\index{windowtics@\verb+\windowtics+} wieder angeschaltet.
+Die Faltmarkierung am linken Blattrand wird durch den Befehl
+\cmd\nowindowtics\index{nowindowtics=\verb+\nowindowtics+} ab- und mit
+\cmd\windowtics\index{windowtics=\verb+\windowtics+} wieder angeschaltet.
+\medskip
+
+Die Ver"anderung des Layouts der Briefe ist mit Hilfe von insgesamt 13 Befehlen
+m"oglich.
+Um f"ur einen Brief wirksam zu werden, m"ussen diese Befehle {\em vor\/}
+dem Befehl \cmd\opening\ angegeben werden.
+Die ersten 9 dieser Befehle legen Gr"o"se und Position des Fensters f"ur die
+Anschrift und der Adresse des Absenders im Anschriften-Fenster fest.
+Die "ubrigen Befehle legen den Abstand der Oberkante der Bezugszeichenzeile,
+den Abstand der Oberkante des Bereiches f"ur Angaben zu Kapitalgesellschaften
+und die Abst"ande der Faltmarkierungen vom oberen Papierrand fest.
+Ein Befehl zur Festlegung der Lochmarkierung ist "ubrigens nicht vorgesehen,
+da die Lochmarkierung in die Mitte der Seite -- abh"angig vom Wert der L"ange
+\cmd\paperheight\ -- gesetzt wird.
+
+Der Befehl \cmd\setaddressllcorner\arg{L"angenangabe}\arg{L"angenangabe}\index{setaddressllcorner=\verb+\setaddressllcorner+}
+legt mit seinen beiden Argumenten die Position der linken {\em unteren\/} Ecke
+des Fensters bezogen auf die linke {\em obere\/} Ecke des Blattes fest: das
+erste den Abstand vom linken und das zweite den Anstand vom oberen Blattrand.
+Der Abstand des Fensters vom linken Rand -- ohne "Anderung des Abstandes vom
+oberen Rand -- kann mit dem Befehl
+\cmd\setaddressllhpos\arg{L"angenangabe}\index{setaddressllhpos=\verb+\setaddressllhpos+}
+festgelegt werden.
+Entsprechend legt der Befehl
+\cmd\setaddressllvpos\arg{L"angenangabe}\index{setaddressllvpos=\verb+\setaddressllvpos+}
+den Abstand des unteren Randes des Fensters vom oberen Blattrand fest.
+
+Zur Auswahl der zu verwendenden Variante der Briefform -- hochgestellte oder
+tiefer gestelltes Feld f"ur die Anschrift -- stehen die beiden Befehle
+\cmd\addresshigh\ (hochgestellte Anschrift) und \cmd\addressstd\ 
+(voreingestellte tiefer gestellte Anschrift) zur Verf"ugung.
+Beide Befehle sind nur wirksam, wenn sie {\em vor\/} dem \cmd\opening-Befehl
+angegeben werden.
+Gegebenenfalls k"onnen sie auch -- wie viele anderen Befehle -- in der
+Konfigurationsdatei verwendet werden.
+
+Auch zur Festlegung der H"ohe und Breite des Fensters f"ur die Anschrift sind
+Befehle vorgesehen.
+Der Befehl \cmd\setaddresswidth\arg{L"angenangabe}\index{setaddresswidth=\verb+\setaddresswidth+}
+setzt die Breite des Fensters auf die angegebene L"ange.
+Entsprechend legt der Befehl
+\cmd\setaddressheight\arg{L"angenangabe}\index{setaddressheight=\verb+\setaddressheight+}
+die H"ohe des Fensters fest (ohne das direkt dar"uber angeordnete Feld f"ur
+den Absender).
+
+In der Regel m"ochte man den Text der Anschrift nicht direkt am linken Rand
+beginnen lassen -- wie auch in diesem Paket voreingstellt.
+Mit dem Befehl \cmd\setaddressoffset\arg{L"angenangabe}\index{setaddressoffset=\verb+\setaddressoffset+}
+kann man diese Einr"uckung selbst festlegen.
+Der Text der Anschrift wird "ubrigens nicht abgeschnitten und kann daher
+gegebenenfalls "uber den rechten Rand des Fensters hinausragen -- bitte
+brechen Sie in diesem Fall zu lange Zeilen an einer geigneten Stelle selbst
+um.
+
+Die H"ohe des Feldes f"ur den Absender direkt oben anschlie"send an das
+Feld f"ur die Anschrift kann mit dem Befehl
+\cmd\setbackaddressheight\arg{L"angenangabe}\index{setbackaddressheight=\verb+\setbackaddressheight+}
+festgelegt werden.
+
+Werden der DIN Norm entsprechende Fensterumschl"age verwendet, sollten die
+Voreinstellungen f"ur Gr"o"se und Position des Fensters f"ur die Anschrift
+und den Absender nicht ver"andert werden, damit sie im Fenster sichtbar sind.
+
+Der Befehl \cmd\setreflinetop\arg{L"angenangabe}\index{setreflinetop=\verb+\setreflinetop+}
+legt den Abstand der Oberkante der Bezugszeichenzeile vom oberen Papierrand
+fest; bei den beiden Formen der DIN Norm liegt diese Oberkante 8.5mm unterhalb
+des Fensters f"ur die Anschrift.
+
+Am Ende der ersten Seite von Briefen ist ein Feld f"ur Angaben zu
+Kapitalgesellschaften vorgesehen, das man bei eigenen Briefen gegebenenfalls
+zur Angabe des eigenen Kontos verwenden kann.
+Die Formbl"atter der Norm sehen f"ur dieses Feld nur die letzten 16mm des
+Papiers vor.
+Ben"otigt man mehr Platz f"ur Angaben in diesem Feld, kann man mit dem Befehl
+\cmd\setbottomtexttop\arg{L"angenangabe}\index{setbottomtexttop=\verb+\setbottomtexttop+}
+die Oberkante des Feldes geeignet festlegen.
+Der f"ur den Brieftext zur Verf"ugung stehende Platz wird automatisch
+angepa"st.
+
+Im Zusammenhang mit einer Verschiebung des Fensters f"ur die Anschrift
+m"ussen gegebenenfalls die Faltmarkierungen angepa"st werden.
+Den Abstand der oberen Faltmarkierung vom oberen Blattrand legt man mit dem
+Befehl \cmd\setupperfoldmarkvpos\arg{L"angenangabe}\index{setupperfoldmarkvpos=\verb+\setupperfoldmarkvpos+}
+fest, den der unteren Faltmarkierung entsprechend mit dem Befehl
+\cmd\setlowerfoldmarkvpos\arg{L"angenangabe}\index{setlowerfoldmarkvpos=\verb+\setlowerfoldmarkvpos+}.
+Die H"ohe der Markierung zum Lochen (in der Blattmitte) ergibt sich automatisch
+aus der Blatth"ohe und kann nicht ver"andert werden.
+\medskip
 
 % \iffalse
 % Die Gr"o"se und Form von Adre"s-Etiketten kann mit den Befehlen
@@ -811,11 +957,21 @@ anzugeben.
 
         {\bf Dieser Befehl darf nicht fehlen!\/}
 
-  \item[\cmd\closing\arg{{Gru"sformel}}] \hfil\break
+  \item[\cmd\closing\oarg{Unterschrift}\arg{{Gru"sformel}}] \hfil\break
         Der Befehl \cmd\closing{} setzt die Gru"sformel und nach
         drei Leerzeilen die maschinenschrifliche Wiederholung
-        der Unterschrift. Die erweiterte Form des Befehls
-        lautet: \cmd\closing\oarg{Unterschrift}\arg{Gru"sformel}.
+        der Unterschrift.
+
+        Die erweiterte Form \cmd\closing\oarg{Unterschrift}\arg{Gru"sformel}
+        setzt zus"atzlich das optionale Argument -- beispielsweise eine mit
+        \cmd\includegraphics\ eingebundene PostScript-Datei -- als
+        Unterschrift in die freigelassenen Zeilen.
+        "Uberschreitet die H"ohe des optionalen Argumentes zwei Zeilen,
+        rutscht die maschinenschrifliche Wiederholung der Unterschrift
+        entsprechend nach unten.
+        Bitte beachten Sie, da"s ein optionales Argument eckige Klammern nur
+        enthalten darf, wenn das optionale Argument selbst in geschweifte
+        Klammern eingeschlossen ist.
 
   \item[\cmd\encl\arg{{Anlagen}}] \hfil\break
         Der Vermerk "uber dem Brief beigef"ugte Anlagen
@@ -867,7 +1023,7 @@ anzugeben.
         Angaben angegeben. Der Befehl \cmd\bottomtext{} vereinbart
         diese Angaben.
 
-        {\sl Dieser Befehl mu"s nach \env\begin{document}{} stehen.\/}
+%        {\sl Dieser Befehl mu"s nach \env\begin{document}{} stehen.\/}
 
   \item[\cmd\windowrules] \hfil\break
         Das Anschriftenfeld im Brief wird durch Linien ober-
@@ -876,6 +1032,14 @@ anzugeben.
 
   \item[\cmd\nowindowrules] \hfil\break
         Der Befehl schaltet den Rahmen ab.
+
+  \item[\cmd\backaddressrule] \hfil\break
+        Der Absender und die Anschrift im Anschriftenfeld des Briefes werden
+	durch eine Linie getrennt (Voreinstellung).
+
+  \item[\cmd\nobackaddressrule] \hfil\break
+	Die Trennungslinie zwischen dem Absender und der Anschrift im
+	Anschriftenfeld des Briefes wird unterdr"uckt.
 
   \item[\cmd\windowtics] \hfil\break
         Es werden Faltmarkierungen am linken Briefrand
@@ -894,6 +1058,108 @@ anzugeben.
         Der Brief wird entsprechend den
         Vorschriften des Entwurfs der Norm DIN~676 vom
         Mai~1991 auf dem Briefbogen ausgegeben.
+
+  \item[\cmd\setaddressllcorner\arg{Abstand vom linken Rand}%
+        \arg{Abstand vom oberen  Rand}] \hfil\break
+        Mit diesem Befehl legt man die Position der linken unteren Ecke
+        des Fensters f"ur die Anschrift des Empf"angers fest.
+        Beide Argumente sind L"angen, wobei die erste den (horizontalen)
+        Abstand zum linken Blattrand und die zweite den (vertikalen)
+        Abstand zum oberen Blattrand angibt.
+
+  \item[\cmd\setaddressllhpos\arg{Abstand vom linken Rand}] \hfil\break
+        Der Befehle legt den (horizontalen) Abstand des Fensters f"ur die
+        Anschrift vom linken Blattrand fest.
+        Soll gleichzeitig die H"ohe des Fensters ge"andert werden, kann der
+        Befehle \cmd\setaddressllcorner\ verwendet werden.
+
+        In der DIN Norm ist der Abstand vom linken Rand fest als 20mm
+        vorgegeben (dieser Wert ist voreingestellt).
+
+  \item[\cmd\setaddressllvpos\arg{Abstand vom oberen Rand}] \hfil\break
+        Der Befehl legt den (vertikalen) Abstand des Fensters f"ur die
+        Anschrift vom oberen Blattrand fest.
+        Soll das Fenster gleichzeitig horizontal verschoben werden, kann der
+        Befehle \cmd\setaddressllcorner\ verwendet werden.
+
+        Die DIN Norm sieht zwei Varianten mit einer hochgestellten und einer
+        tiefer gestellten Anschrift vor.
+        Voreingestellt ist die tiefer gestellte Variante mit einem Wert von
+        90mm.
+        F"ur die hochgestellte Variante ist der Wert 72mm vorgeschrieben.
+
+        Zur einfachen Auswahl der Varianten stehen die beiden Optionen
+        \Dopt{addresshigh} (hochgestellte Anschrift) und \Dopt{addressstd}
+	(voreingestellte tiefer gestellte Anschrift) vorgesehen.
+
+  \item[\cmd\addresshigh] \hfil\break
+        Dieser Befehl setzt die L"angen \verb|\addrvpos|, \verb|\reflinevpos|,
+        \verb|\ufldmarkvpos| und \verb|\lfldmarkvpos| entsprechend der Variante
+        mit hochgestelltem Feld f"ur die Anschrift entsprechend der Form~A der
+        DIN Norm.
+        Der Befehl ist nur wirksam, wenn er {\em vor\/} dem
+        \cmd\opening-Befehl steht (auch in der Konfigurationsdatei).
+
+  \item[\cmd\addressstd] \hfil\break
+        Der Befehl setzt die L"angen \verb|\addrvpos|, \verb|\reflinevpos|,
+        \verb|\ufldmarkvpos| und \verb|\lfldmarkvpos| entsprechend der Variante mit
+        tiefer gestelltem Feld f"ur die Anschrift entsprechend der Form~B der
+        DIN Norm und entspricht der Voreinstellung.
+        Der Befehl ist ebenfalls nur {\em vor\/} dem \cmd\opening-Befehl
+        wirksam (auch in der Konfigurationsdatei).
+
+  \item[\cmd\setaddresswidth\arg{Breite des Fensters f"ur die Anschrift}]
+        \hfil\break
+        Mit diesem Befehl wird die Breite des Fensters f"ur die Anschrift
+        festgelegt (voreingestellt: 85mm).
+
+  \item[\cmd\setaddressheight\arg{H"ohe des Fensters f"ur die Anschrift}]
+        \hfil\break
+        Die H"ohe des Fensters f"ur die Anschrift kann man mit diesem Befehl
+        festlegen.  Voreingestellt sind 40mm.
+
+  \item[\cmd\setaddressoffset\arg{Abstand vom linken Fensterrand}] \hfil\break
+        In der Regel m"ochte man, da"s die Anschrift nicht direkt am linken
+        Rand des Fensters f"ur die Anschrift beginnt, sondern einige
+        Millimeter einger"uckt ist.
+        Mit diesem Befehl kann man die Einr"uckung festlegen.
+        Voreingestellt sind 4mm.
+        Die Anschrift beginnt bei dieser Einstellung b"undig mit dem
+        Text des Briefes.
+
+  \item[\cmd\setbackaddressheight\arg{H"ohe des Feldes f"ur den Absender}]
+        \hfil\break
+        Das Feld f"ur den Absender schlie"st oben an das Fensters f"ur die
+        Anschrift an.  Die H"ohe dieses Feldes wird mit dem Befehl
+        \cmd\setbackaddressheight\ festgelegt.  Voreingestellt sind 5mm.
+
+  \item[\cmd\setreflinetop\arg{Abstand vom oberen Rand}] \hfil\break
+        Mit diesem Befehl wird der Abstand der Oberkante der
+        Bezugszeichenzeile vom oberen Blattrand festgelegt.
+        Voreingestellt sind 98.5mm; bei Angabe der Option f"ur eine
+        hochgestellte Anschrift wird der Wert auf 80.5mm gesetzt.
+
+  \item[\cmd\setbottomtexttop\arg{Abstand vom oberen Rand}] \hfil\break
+        Mit diesem Befehl legt man den den Abstand der Oberkante des Feldes
+        f"ur Gesch"aftsangaben und (nur bei Kapitalgesellschaften)
+        gesellschaftsrechtliche Angaben auf der ersten Seite und dem oberen
+        Blattrand fest.
+        Voreingestellt sind 281mm; bei mehrzeiligen Angaben in diesem Fekd
+        mu"s man den Wert entsprechend verringern.
+        Der Abgleich mit der H"ohe der letzten verf"ugbaren Zeile auf der
+        Seite erfolgt automatisch.
+
+  \item[\cmd\setupperfoldmarkvpos\arg{Abstand vom oberen Rand}] \hfil\break
+        Mit diesem Befehl legt man den Abstand der \emph{oberen}
+        Faltmarkierung vom oberen Blattrand fest.
+        Voreingestellt sind 105mm und bei Angabe der Option f"ur eine
+        hochgestellte Anschrift 87mm.
+
+  \item[\cmd\setlowerfoldmarkvpos\arg{Abstand vom oberen Rand}] \hfil\break
+        Den Abstand der \emph{unteren} Faltmarkierung vom oberen Blattrand
+        legt man mit diesem Befehl fest.
+        Voreingestellt sind 210mm und bei Angabe der Option f"ur eine
+        hochgestellte Anschrift 192mm.
 
   \item[\cmd\setlabelwidth\arg{Breite eines Labels}] \hfil\break
         Dieser Befehl legt die Breite eines Labels fest.
@@ -965,7 +1231,7 @@ anzugeben.
 % \fi
 
 \begin{table}[htp]
-\caption{Zusammenfassung der Dinbrief-Befehle:}\index{dinbrief!Befehle}
+\caption{Zusammenfassung der Dinbrief-Befehle (Teil 1):}\index{dinbrief>Befehle}
 
 \begin{center}
 \begin{tabular}{l}
@@ -1006,11 +1272,38 @@ anzugeben.
   \hline
     \verb|\nowindowrules|                                     \\
     \verb|\windowrules|                                       \\
+    \verb|\nobackaddressrule|                                 \\
+    \verb|\backaddressrule|                                   \\
     \verb|\nowindowtics|                                      \\
     \verb|\windowtics|                                        \\
   \hline
     \verb|\disabledraftstandard|                              \\
     \verb|\enabledraftstandard|                               \\
+  \hline
+    \verb|\setaddressllcorner|\arg{Abstand vom linken Rand}   \\
+    \verb|\setaddressllhpos|\arg{Abstand vom linken Rand}     \\
+    \verb|\setaddressllvpos|\arg{Abstand vom oberen Rand}     \\
+    \verb|\addresshigh|                                       \\
+    \verb|\addressstd|                                        \\
+    \verb|\setaddresswidth|\arg{Breite des Anschriften-Fensters}\\
+    \verb|\setaddressheight|\arg{H"ohe des Anschriften-Fensters}\\
+    \verb|\setaddressoffset|\arg{Abstand vom linken Fensterrand}\\
+    \verb|\setbackaddressheight|\arg{H"ohe des Anschriften-Fensters}\\
+  \hline
+    \verb|\setreflinetop|\arg{Abstand vom oberen Rand}     \\
+    \verb|\setbottomtexttop|\arg{Abstand vom oberen Rand}   \\
+    \verb|\setupperfoldmarkvpos|\arg{Abstand vom oberen Rand} \\
+    \verb|\setlowerfoldmarkvpos|\arg{Abstand vom oberen Rand}  \\
+  \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[htp]
+\caption{Zusammenfassung der Dinbrief-Befehle (Teil 2):}\index{dinbrief>Befehle}
+
+\begin{center}
+\begin{tabular}{l}
   \hline
     \verb|\setlabelwidth|\arg{Breite eines Labels}            \\
     \verb|\setlabelheight|\arg{H"ohe eines Labels}            \\
@@ -1037,8 +1330,8 @@ anzugeben.
 % \fi
 
 \begin{table}[ht]
-\caption{"Uberschriftvariablen und deren Inhalt}
-\index{dinbrief!"Uberschriftvariablen}
+\caption{"Uberschriftvariablen und deren Inhalt}%
+\index{dinbrief>"Uberschriftvariablen}
 
 \begin{center}
 (Voreinstellung entspricht DIN)
@@ -1077,23 +1370,53 @@ Abbildung~\ref{fig:referlines} wiedergegeben.
   \linethickness{0.4pt}
   \thinlines
   %
-    \put( 10.0, 49){\parbox[t]{50.8\unitlength}{{\sffamily\tiny Ihre Zeichen, Ihre Nachricht vom}\\{\cmd\yourmail}}}
-    \put( 60.8, 49){\parbox[t]{50.8\unitlength}{{\sffamily\tiny Unsere Zeichen}\\{\cmd\sign}}}
-    \put(111.6, 49){\parbox[t]{25.4\unitlength}{{\sffamily\tiny Telefon}\\{\cmd\phone}}}
-    \put(137.0, 49){\parbox[t]{25.4\unitlength}{{\sffamily\tiny Ortsname\\[-2ex] (Datum)}\\{\cmd\place}\\{\cmd\date}}}
+    \put( 10.0, 49){\parbox[t]{50.8\unitlength}{{\sf\tiny Ihre Zeichen, Ihre Nachricht vom}\\{\cmd\yourmail}}}
+    \put( 60.8, 49){\parbox[t]{50.8\unitlength}{{\sf\tiny Unsere Zeichen}\\{\cmd\sign}}}
+    \put(111.6, 49){\parbox[t]{25.4\unitlength}{{\sf\tiny Telefon}\\{\cmd\phone}}}
+    \put(137.0, 49){\parbox[t]{25.4\unitlength}{{\sf\tiny Ortsname\\[-2ex] (Datum)}\\{\cmd\place}\\{\cmd\date}}}
     \put(  0.0, 56){\makebox(190, 0){Bezugszeichenzeile nach DIN 676 vom Dezember 1976}}
     \put(  0.0, 30){\framebox(190, 30){}}
   %
-    \put( 10.0, 16){\parbox[t]{50.8\unitlength}{{\sffamily\tiny Ihr Zeichen, Ihre Nachricht vom}\\{\cmd\yourmail}}}
-    \put( 60.8, 16){\parbox[t]{50.8\unitlength}{{\sffamily\tiny Unser Zeichen, unsere Nachricht vom}\\{\cmd\sign}}}
-    \put(111.6, 16){\parbox[t]{50.8\unitlength}{{\sffamily\tiny Telefon, Bearbeiter}\\{\cmd\phone}\\{\cmd\writer}}}
-    \put(162.4, 16){\parbox[t]{15.0\unitlength}{{\sffamily\tiny Datum}\\{\cmd\place}\\{\cmd\date}}}
+    \put( 10.0, 16){\parbox[t]{50.8\unitlength}{{\sf\tiny Ihr Zeichen, Ihre Nachricht vom}\\{\cmd\yourmail}}}
+    \put( 60.8, 16){\parbox[t]{50.8\unitlength}{{\sf\tiny Unser Zeichen, unsere Nachricht vom}\\{\cmd\sign}}}
+    \put(111.6, 16){\parbox[t]{50.8\unitlength}{{\sf\tiny Telefon, Bearbeiter}\\{\cmd\phone}\\{\cmd\writer}}}
+    \put(162.4, 16){\parbox[t]{15.0\unitlength}{{\sf\tiny Datum}\\{\cmd\place}\\{\cmd\date}}}
     \put(  0.0, 23){\makebox(190, 0){Bezugszeichenzeile nach DIN 676 vom Mai 1991 (Entwurf)}}
     \put(  0.0,  1){\framebox(190, 27){}}
 \end{picture}%
 \caption{Formen von Bezugszeichenzeilen}\label{fig:referlines}
 \end{center}
 \end{figure}
+%
+
+%
+\ssect{Standardkonfiguration mit einer Konfigurationsdatei}\index{Konfigurationsdatei}
+%
+Am Ende der Bearbeitung der Dokumentklasse \envname{dinbrief} wird die
+Konfigurationsdatei \file{dinbrief.cfg} eingelesen, falls eine Datei dieses
+Namens im Suchpfad f"ur \TeX-Eingabedateien gefunden wird.
+Die Suche wird in der gleichen Weise durchgef"uhrt wie bei anderen
+\TeX-Eingabedateien.
+
+In der Konfigurationsdatei k"onnen alle Befehle verwendet werden, die man vor
+\cmd\begin\arg{document} angeben darf.
+Beispielsweise kann die Datei mit den daf"ur vorgesehenen Befehlen das Layout
+des Briefes abweichend von der DIN Norm festlegen, einen Briefkopf definieren
+oder das Feld f"ur Angaben bei Kapitalgesellschaften vergr"o"ern und auch
+die Angaben selbst mit dem Befehl \cmd\bottomtext\ festlegen.
+
+Die Angabe der Optionen \Dopt{addresshigh} oder \Dopt{addressstd}
+"uberschreibt Angaben vertikalen Positionierung des  Feldes f"ur die Anschrift,
+der Bezugszeichenzeile und der Faltmarkierungen.
+Explizite Festlegungen vor dem Befehl \cmd\opening\ "uberschreiben sowohl
+Einstellungen durch Angabe von Optionen in der \cmd\documentclass-Anweisung
+als auch in der Konfigurationsdatei.
+
+Beim Auspacken der \envname{dinbrief}-Verteilung wird auch eine
+Konfigurationsdatei erstellt, die nur Kommentare enth"alt.
+Einzelne Befehle k"onnen durch Entfernen des Kommentarzeichens aktiviert
+werden.
+Die verwendeten Befehle sind in dieser Dokumentation beschrieben.
 %
 
 %
@@ -1162,8 +1485,8 @@ Abb.~\ref{briefkopf} enthalten.
 \end{figure}
 
 Am Anfang des Briefes sollte nun der Befehl \verb+\input{brfkopf}+
-aufgenommen werden gefolgt von \verb+\address{\myaddress}+
-\index{myaddress@\verb+\myaddress+}. Dies sorgt
+aufgenommen werden gefolgt von \verb+\address{\myaddress}+%
+\index{myaddress=\verb+\myaddress+}. Dies sorgt
 f"ur die gew"unschte Ausgabe des Briefkopfes am Beginn des Briefes.
 Nat"urlich lassen sich auch andere als die hier verwendeten Schriftarten
 verwenden.
@@ -1171,11 +1494,11 @@ verwenden.
 \ssect{Kopfzeilen}\index{Kopfzeilen}
  
 Es stehen verschiedene Kopfzeilen zur Verf"ugung die "uber die
-Option \linebreak[4]\verb+\pagestyle{...}+\index{pagestyle@\verb+\pagestyle+}
+Option \linebreak[4]\verb+\pagestyle{...}+\index{pagestyle=\verb+\pagestyle+}
 ausgew"ahlt werden k"onnen.
-Bei \verb+plain+\index{plain@\verb+plain+} wird eine Seitennumerierung
+Bei \verb+plain+\index{plain=\verb+plain+} wird eine Seitennumerierung
 bei mehrseitigen Briefen in der Fu"szeile eingeblendet, die Kopfzeile
-bleibt leer. Durch \verb+headings+\index{headings@\verb+headings+} wird
+bleibt leer. Durch \verb+headings+\index{headings=\verb+headings+} wird
 die Kopfzeile mit einer Anrede und der Seitenzahl bei mehrseitigen
 Briefen gesetzt.
 
@@ -1183,18 +1506,18 @@ Briefen gesetzt.
 \cmd\closing\oarg{Unterschrift}\arg{Gru"sformel} erlaubt es,
 die Unterschrift als Graphik einzubinden. F"ur unser Beispiel
 nehmen wir an, da"s die Graphik als encapuslated Postscript-Datei
-im Verzeichnis und mit Namen \verb|graph/sig.eps| vorliegt.
+im Verzeichnis und mit Namen \file{graph/sig.eps} vorliegt.
 Die Befehle zum Einbinden von Graphiken stellt das Paket
 {\sc graphics} zur Verfgung. In der Pr"aambel des Briefes wird
-ein Befehl zum Setzen der Unterschrift definiert:
-\verb|\newcommand{\setsignature}{\includegraphics{graph/sig.eps}}|
-Die Gru"sformel wird dann in der erweiterten Form gesetzt:
-\verb|\closing[\protect\setsignature]{Mit freundlichen Gr"u"sen}|.
+ein Befehl zum Setzen der Unterschrift definiert:\\[\medskipamount]
+\hspace*{2em}\verb|\newcommand{\setsignature}{\includegraphics{graph/sig.eps}}|\\[\medskipamount]
+Die Gru"sformel wird dann in der erweiterten Form gesetzt:\\[\medskipamount]
+\hspace*{2em}\verb|\closing[\protect\setsignature]{Mit freundlichen Gr"u"sen}|\\[\medskipamount]
 Gegebenenfalls ist es notwendig, die Unterschrift mit dem
 Befehl \verb+\raisebox+ in die notwendige Position zu schieben.
 Dazu ist die Definition des Macros zum Einbinden der Unterschrift
-wie folgt anzupassen:
-\verb|\newcommand{\setsignature}{\raisebox{-3mm}{\includegraphics{graph/sig.eps}}}|.
+wie folgt anzupassen:\\[\medskipamount]
+\hspace*{2em}\verb|\newcommand{\setsignature}{\raisebox{-3mm}{\includegraphics{graph/sig.eps}}}|\\[\medskipamount]
 Die L"angenangabe (hier -3mm) ist entsprechend anzupassen.
 
 \ssect{Briefe in englischer oder franz"osischer Sprache}
@@ -1203,7 +1526,7 @@ Wer Briefe in anderen Sprachen schreiben m"ochte, kann f"ur Englisch und
 Franz"osisch die Trennung (abh"angig von der Installation) und Befehle f"ur
 Buchstaben mit Akzenten mit dem Befehl
 \cmd\selectlanguage\arg{Sprache}
-\index{selectlanguage@\verb+\selectlanguage+} umschalten.
+\index{selectlanguage=\verb+\selectlanguage+} umschalten.
 Das Umsetzen von Bezeichnungen z.B.\ f"ur Anlage \dots{} mu"s explizit durch
 Befehle erfolgen, die in der Dokumentation zum {\tt dinbrief} beschrieben sind.
 
@@ -1680,8 +2003,8 @@ der Stil "`{\tt german}"' geladen werden.
 %    We store the date, version and name of this file in four control
 %    sequences, for future use.
 %    \begin{macrocode}
-\def\RCSdate{$Date: 2000/01/12 21:54:33 $}
-\def\RCSrevision{$Revision: 1.70 $}
+\def\RCSdate{$Date: 2000/03/02 12:49:21 $}
+\def\RCSrevision{$Revision: 1.73 $}
 %
 {%
   \def\stripone $#1${\def\partone{#1}}
@@ -1697,10 +2020,7 @@ der Stil "`{\tt german}"' geladen werden.
   \expandafter\striptwo\partone\stop
 }%
 %
-% ^^A \def\fileversion{0.94.1}
-% ^^A \def\filedate{1994/08/15}
 \def\filename{dinbrief.dtx}
-% ^^A \def\docdate {1994/08/15}
 %    \end{macrocode}
 %
 %
@@ -1739,6 +2059,32 @@ der Stil "`{\tt german}"' geladen werden.
 % \changes{0.92.20}{1994/02/23}{(RG) some more Comments added}
 % \changes{0.93.0}{1994/06/07}{(RG) some more Comments added\hfil\break
 %                                   styles for labels added}
+% \changes{1.70.1}{2000/01/09}{(KB) Replaced absolute lengths related to
+%				    the letter layout (not for printing
+%				    labels) by variables and expressions
+%				    computed from their values\hfil\break
+%                                   Inserted equal sign when assigning a value
+%				    to a length\hfil\break
+%                                   Added support for a configuration
+%				    file\hfil\break
+%                                   Some inactive lines (comments)
+%				    removed}
+% \changes{1.70.1}{2000/01/17}{(KB) \cmd\hfill\ changed to \cmd\hfil\ 
+%				    according to a proposal by Markus
+%				    Pilzecker\hfil\break
+%                                   Introduced class options to switch between
+%				    both forms of the DIN 676 letter
+%				    layout\hfil\break
+%                                   Mechanism and handling of bottomtext
+%				    changed}
+% \changes{1.72.0}{2000/02/29}{(KB) {\tt$\langle$CR$\rangle\langle$LF$\rangle$}
+%				    replaced by UNIX's newline\hfil\break
+%				    Adjustment of \cmd\textheight\ due to a
+%				    high position of the bottomtext
+%				    corrected\hfil\break
+%				    \cmd\oldopening\ restored by
+%				    (re)introducing \cmd\@@bottomtext\ into
+%				    the definition of \cmd\oldopening}
 %
 % \subsection{Get system information}
 % First we use three conditions to identify whether or not this file
@@ -1780,7 +2126,7 @@ der Stil "`{\tt german}"' geladen werden.
 %    \begin{macrocode}
 \typeout{}
 \typeout{Document Class/Style 'dinbrief' - %
-         (Preliminary) Version \fileversion}
+         Version \fileversion}
 \typeout{University of Karlsruhe - \filedate}
 \typeout{}
 %    \end{macrocode}
@@ -1808,8 +2154,10 @@ der Stil "`{\tt german}"' geladen werden.
 %
 %    \begin{macrocode}
 \ifka@db@ltxtwoe
-  \NeedsTeXFormat{LaTeX2e}[1994/12/01]
-  \ProvidesClass{dinbrief}[1995/07/01 LaTeX2e class]
+  \NeedsTeXFormat{LaTeX2e}[1996/12/01]
+  \ProvidesClass{dinbrief}[2000/03/02 LaTeX2e class]
+\else
+  \long\def\@firstofone#1{#1}
 \fi
 %    \end{macrocode}
 %
@@ -1819,14 +2167,18 @@ der Stil "`{\tt german}"' geladen werden.
 %
 % \subsubsection{temporary variables}
 %
+%  \changes{1.70.1}{2000/01/09}{(KB) Added second temporary length}
 %  \begin{macro}{\ka@db@tmpdima}
+%  \begin{macro}{\ka@db@tmpdimb}
 %  Unfortunately we have to define our own temporary dimen
-%  variable, because inside a parbox \cmd\@tempdima\ and
+%  variables, because inside a parbox \cmd\@tempdima\ and
 %  \cmd\@tempdimb\ are used. \cmd\@tempdimc\ ist used maybe
 %  in fontswitch commands.
 %    \begin{macrocode}
 \newdimen\ka@db@tmpdima
+\newdimen\ka@db@tmpdimb
 %    \end{macrocode}
+%  \end{macro}
 %  \end{macro}
 %
 % \subsubsection{{\tt dinbrief\/} programming environment}
@@ -1900,7 +2252,7 @@ der Stil "`{\tt german}"' geladen werden.
 %
 %  \begin{macro}{\ka@db@declvar}
 %    The macro \cmd\ka@db@declvar\arg{NAME} defines two control sequences
-%    with the following names |\kd@db@l@|NAME and |\ka@db@g|NAME.
+%    with the following names |\ka@db@l@|NAME and |\ka@db@g|NAME.
 %    The control sequences are initialized with |\@empty|.
 %    \begin{macrocode}
 \def\ka@db@declvar#1{%
@@ -2162,23 +2514,23 @@ der Stil "`{\tt german}"' geladen werden.
 %    \begin{macrocode}
 \ifka@db@ltxtwoe
   \DeclareOption{a4paper}
-     {\setlength\paperheight {297mm}%
-      \setlength\paperwidth  {210mm}}
+     {\paperheight=297mm%
+      \paperwidth =210mm}
   \DeclareOption{a5paper}
-     {\setlength\paperheight {210mm}%
-      \setlength\paperwidth  {148mm}}
+     {\paperheight=210mm%
+      \paperwidth =148mm}
   \DeclareOption{b5paper}
-     {\setlength\paperheight {250mm}%
-      \setlength\paperwidth  {176mm}}
+     {\paperheight=250mm%
+      \paperwidth =176mm}
   \DeclareOption{letterpaper}
-     {\setlength\paperheight {11in}%
-      \setlength\paperwidth  {8.5in}}
+     {\paperheight=11in%
+      \paperwidth =8.5in}
   \DeclareOption{legalpaper}
-     {\setlength\paperheight {14in}%
-      \setlength\paperwidth  {8.5in}}
+     {\paperheight=14in%
+      \paperwidth =8.5in}
   \DeclareOption{executivepaper}
-     {\setlength\paperheight {10.5in}%
-      \setlength\paperwidth  {7.25in}}
+     {\paperheight=10.5in%
+      \paperwidth =7.25in}
 \fi
 %    \end{macrocode}
 %
@@ -2196,6 +2548,28 @@ der Stil "`{\tt german}"' geladen werden.
   \DeclareOption{twoside}{\@twosidetrue}
 \fi
 \@twosidefalse
+%    \end{macrocode}
+%
+%  \subsection{Support for both variants of DIN 676 letter layout}
+%
+%  \changes{1.70.1}{2000/01/09}{(KB) Support for both variants of
+%				DIN 676 letter layout}
+%
+%    Changing the letter layout parameters from absolute lengths to length
+%    variables allows easy support of both versions of the DIN 676 letter
+%    layout:  `Form A' with address filed put high on the page
+%    (\Lopt{addresshigh}), and `Form B' with address field 18mm lower
+%    (\Lopt{addrl ow}).  Since up to now only `Form B' has been supported,
+%    it has been choosen to be the default.  The option code is executed
+%    after the other class commands since the lengths used are introduced
+%    later on.  These options are available only in case of using \LaTeXe.
+%    Specification of the length |\addrvpos|, |\ufldmarkvpos| and
+%    |\lfldmarkvpos| in the configuration file overwrite these options.
+%    \begin{macrocode}
+\ifka@db@ltxtwoe
+  \DeclareOption{addresshigh}{\AtEndOfClass{\addresshigh}}
+  \DeclareOption{addressstd}{\AtEndOfClass{\addressstd}}
+\fi
 %    \end{macrocode}
 %
 %  \subsection{Draft option}
@@ -2762,14 +3136,12 @@ der Stil "`{\tt german}"' geladen werden.
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\oddsidemargin 0in
-\evensidemargin 0in
-\marginparwidth .08in
-\marginparsep .01in
-\marginparpush 5pt
-% \topmargin -15pt
-\topmargin0pt
-\topmargin-5mm
+\oddsidemargin=0in
+\evensidemargin=0in
+\marginparwidth=.08in
+\marginparsep=.01in
+\marginparpush=5pt
+\topmargin=-5mm
 %    \end{macrocode}
 %
 % \begin{macro}{\ltf@headheight}
@@ -2795,10 +3167,10 @@ der Stil "`{\tt german}"' geladen werden.
 \newdimen\lts@headsep
 \newdimen\ltf@textheight
 \newdimen\lts@textheight
-\ltf@headheight 4.2truemm %
-\lts@headheight 0truemm %
-\ltf@headsep 8.8truemm %
-\lts@headsep 0truemm %
+\ltf@headheight=4.2truemm %
+\lts@headheight=0truemm %
+\ltf@headsep=8.8truemm %
+\lts@headsep=0truemm %
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -2814,14 +3186,13 @@ der Stil "`{\tt german}"' geladen werden.
 \ifka@db@ltxtwoe
     \relax
   \else
-    \footheight 4.2truemm
+    \footheight=4.2truemm
   \fi
 %    \end{macrocode}
 %  \end{macro}
 %
 %    \begin{macrocode}
-\footskip 8.8truemm
-\textheight 260truemm
+\footskip=8.8truemm
 %    \end{macrocode}
 %
 % \iffalse
@@ -2830,10 +3201,10 @@ der Stil "`{\tt german}"' geladen werden.
 % \changes{0.0.0}{1993/11/29}{(RG) printer can't output the last line}
 %
 %    \begin{macrocode}
-\textheight 254truemm
-\textwidth 165truemm
-\columnsep 10pt
-\columnseprule 0pt
+\textheight=254truemm
+\textwidth=165truemm
+\columnsep=10pt
+\columnseprule=0pt
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -2850,7 +3221,7 @@ der Stil "`{\tt german}"' geladen werden.
 %    |\footnotesep| in all pt-sizes.
 %
 %    \begin{macrocode}
-\footnotesep 4.2truemm
+\footnotesep=4.2truemm
 %    \end{macrocode}
 %  \end{macro}
 %
@@ -2867,24 +3238,268 @@ der Stil "`{\tt german}"' geladen werden.
 %  \end{macro}
 %
 %    \begin{macrocode}
-\floatsep 12pt plus 2pt minus 2pt
-\textfloatsep 20pt plus 2pt minus 4pt
-\intextsep 12pt plus 2pt minus 2pt
-\dblfloatsep 12pt plus 2pt minus 2pt
-\dbltextfloatsep 20pt plus 2pt minus 4pt
+\floatsep=12pt plus 2pt minus 2pt
+\textfloatsep=20pt plus 2pt minus 4pt
+\intextsep=12pt plus 2pt minus 2pt
+\dblfloatsep=12pt plus 2pt minus 2pt
+\dbltextfloatsep=20pt plus 2pt minus 4pt
 \ifka@db@ltxtwoe
     \relax
   \else
-    \@maxsep 20pt
-    \@dblmaxsep 20pt
+    \@maxsep=20pt
+    \@dblmaxsep=20pt
   \fi
-\@fptop 0pt plus 1fil
-\@fpsep 8pt plus 2fil
-\@fpbot 0pt plus 1fil
-\@dblfptop 0pt plus 1fil
-\@dblfpsep 8pt plus 2fil
-\@dblfpbot 0pt plus 1fil
+\@fptop=0pt plus 1fil
+\@fpsep=8pt plus 2fil
+\@fpbot=0pt plus 1fil
+\@dblfptop=0pt plus 1fil
+\@dblfpsep=8pt plus 2fil
+\@dblfpbot=0pt plus 1fil
 %    \end{macrocode}
+%
+%  \subsubsection{User definable layout positions}
+%
+%  \changes{1.70.1}{2000/01/09}{(KB) Inserted lengths to make letter layout
+%				customizable by the user}
+%
+%  This section defines some layout relevant lengths, all preset according
+%  to DIN 676.  Some of them can be redefined by the user, others are
+%  bound to the class definition.
+%
+%  \begin{macro}{\ka@db@txtlmarg}
+%  The length |\ka@db@txtlmarg| describes the left margin of the letter
+%  text and is used for correct horizontal positioning.
+%    \begin{macrocode}
+\newdimen\ka@db@txtlmarg
+\ka@db@txtlmarg=24truemm
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\addrhpos}
+%  \begin{macro}{\addrvpos}
+%  \begin{macro}{\addrwd}
+%  \begin{macro}{\addrht}
+%  \begin{macro}{\addroffset}
+%  \begin{macro}{\ka@db@addrhoffs}
+%  These length describe the position and size of the address field.
+%  |\addrhpos| and |\addrvpos| specify the lower left corner of this
+%  field, |\addrwd| and |\addrht| describe the width and the height of
+%  the field.
+%  The length |\addroffset| is an offset of the address text to the left
+%  margin of the address field, since in most cases it is preferred to start
+%  it a small amount off that margin.  The default value is 4mm.
+%  |\ka@db@addrhoffs| specifies the offset of the address field against the
+%  beginning of the text lines (defined as 24mm off the left paper  bound).
+%    \begin{macrocode}
+\newdimen\addrhpos
+\newdimen\addrvpos
+\newdimen\addrwd
+\newdimen\addrht
+\newdimen\addroffset
+\newdimen\ka@db@addrhoffs
+\addrhpos=20truemm
+\addrvpos=90truemm
+\addrwd=85truemm
+\addrht=40truemm
+\addroffset=4truemm
+\ka@db@addrhoffs=-4truemm
+%    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%
+%  \begin{macro}{\setaddressllcorner}
+%  \begin{macro}{\setaddressllhpos}
+%  \begin{macro}{\setaddressllvpos}
+%  \begin{macro}{\setaddresswidth}
+%  \begin{macro}{\setaddressheight}
+%  \begin{macro}{\setaddressoffset}
+%  \begin{macro}{\addresshigh}
+%  \begin{macro}{\addressstd}
+%  Four macros assign values to the lengths just defined:
+%  \cmd\setaddressllcorner\ sets both |\addrhpos| and |\addrvpos|,
+%  \cmd\setaddresswidth\ and \cmd\setaddressheight\ set the height |\addrht|
+%  and the width |\addrwd| of the address window (without the backaddress
+%  field, \cmd\setaddressoffset\ defines an offset for the address text
+%  against the left margin of the address window.
+%  The two remaining macros \cmd\addresshigh\ and \cmd\addressstd\ preset
+%  then length |\addrvpos|, |\reflinevpos|, |\ufldmarkvpos| and
+%  |\lfldmarkvpos| as required by the two variants of the DIN norm, the high
+%  and the lower address fields, respectively.
+%    \begin{macrocode}
+\def\setaddressllcorner#1#2{\global\addrhpos=#1\global\addrvpos=#2\relax}
+\def\setaddressllhpos#1{\global\addrhpos=#1\relax}
+\def\setaddressllvpos#1{\global\addrvpos=#1\relax}
+\def\setaddresswidth#1{\global\addrwd=#1\relax}
+\def\setaddressheight#1{\global\addrht=#1\relax}
+\def\setaddressoffset#1{\global\addroffset=#1\relax}
+\def\addresshigh{\addrvpos    =72truemm%
+                 \reflinevpos =80.5truemm%
+                 \ufldmarkvpos=87truemm%
+                 \lfldmarkvpos=192truemm}
+\def\addressstd{\addrvpos    =90truemm%
+                \reflinevpos =98.5truemm%
+                \ufldmarkvpos=105truemm%
+                \lfldmarkvpos=210truemm}
+%    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%
+%  \begin{macro}{\backaddrht}
+%  \begin{macro}{\reflinevpos}
+%  |\backaddrht| gives the height of the field for the backaddress placed
+%  directly above the address fields described above.
+%  |\reflinevpos| specifies the distance distance from top of the paper to
+%  the upper bound of the reference line (Bezugszeichenzeile).
+%    \begin{macrocode}
+\newdimen\backaddrht
+\newdimen\reflinevpos
+\backaddrht=5truemm
+\reflinevpos=98.5truemm 
+%    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
+%
+%  \begin{macro}{\setbackaddressheight}
+%  \begin{macro}{\setreflinetop}
+%  These two macros are used to redefine the length |\backaddrht| and
+%  |\reflinevpos|.
+%    \begin{macrocode}
+\def\setbackaddressheight#1{\global\backaddrht=#1\relax}
+\def\setreflinetop#1{\global\reflinevpos=#1\relax} 
+%    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
+%
+%  \begin{macro}{\ufldmarkvpos}
+%  \begin{macro}{\lfldmarkvpos}
+%  \begin{macro}{\perfmarkvpos}
+%  \begin{macro}{\ka@db@foldmarkhoffs}
+%  \begin{macro}{\ka@db@perfmarkhoffs}
+%  \begin{macro}{\ka@db@foldmarklen}
+%  \begin{macro}{\ka@db@perfmarklen}
+%  The first three length describe the height of the tic marks:
+%  |\ufldmarkvpos| and |\lfldmarkvpos| the upper and lower fold marks, and
+%  |\perfmarkvpos| the mark for perforation.
+%  |\ka@db@foldmarkhoffs| specifies the offset of the fold marks against the
+%  beginning of the text lines (defined as 24mm off the left paper  bound),
+%  |\ka@db@perfmarkhoffs| definies the corresponding offset for the perforation
+%  mark.
+%    \begin{macrocode}
+\newdimen\ufldmarkvpos
+\newdimen\lfldmarkvpos
+\newdimen\perfmarkvpos
+\newdimen\ka@db@foldmarkhoffs
+\newdimen\ka@db@perfmarkhoffs
+\newdimen\ka@db@foldmarklen
+\newdimen\ka@db@perfmarklen
+\ufldmarkvpos=105truemm
+\lfldmarkvpos=210truemm
+\ifka@db@ltxtwoe
+  \perfmarkvpos=.5\paperheight
+\else
+  \perfmarkvpos=148.5truemm
+\fi
+\ka@db@foldmarkhoffs=-24truemm
+\ka@db@perfmarkhoffs=-18truemm
+\ka@db@foldmarklen=7truemm
+\ka@db@perfmarklen=6truemm
+%    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
+%
+%  \begin{macro}{\setupperfoldmarkvpos}
+%  \begin{macro}{\setlowerfoldmarkvpos}
+%  Two macros are provided to set the distance of the upper and lower fold
+%  marks from the top of the paper sheet.
+%    \begin{macrocode}
+\def\setupperfoldmarkvpos#1{\global\ufldmarkvpos=#1\relax}
+\def\setlowerfoldmarkvpos#1{\global\lfldmarkvpos=#1\relax}
+%    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
+%
+%  \begin{macro}{\bottomtextvpos}
+%  The height of the lower bound of the bottom text is given by the length
+%  |\bottomtextvpos|.
+%    \begin{macrocode}
+\newdimen\bottomtextvpos
+\bottomtextvpos=281truemm
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\setbottomtexttop}
+%    \begin{macrocode}
+\def\setbottomtexttop#1{\global\bottomtextvpos=#1\relax}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\ka@db@headup}
+%  This length specifies the shift of the letter head, normally showing
+%  information about the sender of the letter.  It is preset with a negative
+%  value shifting the letter head up as much as possible leaving a small
+%  distance to the upper paper bound.  The definition of the letter head
+%  can shift the head downwards (upwards is not recommended).
+%    \begin{macrocode}
+\newdimen\ka@db@headup
+\ka@db@headup=-19.4truemm
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\ka@db@vfuzz}
+%  This length is introduced to correct absolute position values as specified
+%  by the length describing the letter layout onto the internal TeX positions
+%  used within this class.  The value is choosen as difference of positions
+%  as specified by the DIN Norm and the values used in earlier versions of
+%  this class.
+%    \begin{macrocode}
+\newdimen\ka@db@vfuzz
+\ka@db@vfuzz=23.9truemm
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\ka@db@stdskip}
+%  This length specifies a standard skip value used for example between the
+%  address and backadress field and the window rules.  It is used at some
+%  other places, too.
+%    \begin{macrocode}
+\newdimen\ka@db@stdskip
+\ka@db@stdskip=2.5truemm
+%    \end{macrocode}
+%  \end{macro}
+%
+%  \begin{macro}{\ka@db@fieldwd}
+%  \begin{macro}{\ka@db@fldskip}
+%  \begin{macro}{\ka@db@shfldwd}
+%  |\ka@db@fieldwd| defines the (used) width of the fields.  The length
+%  |\ka@db@fldskip| gives the skip (space) between consecutive fileds.
+%  In case of the old reference line the phone number field has a different
+%  width, specified by the length |\ka@db@shfldwd|.
+%    \begin{macrocode}
+\newdimen\ka@db@fieldwd
+\newdimen\ka@db@fldskip
+\newdimen\ka@db@shfldwd
+\ka@db@fieldwd=50.8truemm
+\ka@db@fldskip=0truemm
+\ka@db@shfldwd=25.4truemm
+%    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
+%  \end{macro}
 %
 %  \subsubsection{Rules above and below the receiver's window}
 %
@@ -2931,6 +3546,26 @@ der Stil "`{\tt german}"' geladen werden.
 \def\backaddress#1{\gdef\@backaddress{#1}}
 \backaddress{}
 %    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
+%
+%  \changes{1.70.1}{2000/01/09}{(KB) Added code to enable and disable
+%				underlining of the backaddress}
+%
+%  \begin{macro}{\ifka@db@baddrrule}
+%  \begin{macro}{\backaddressrule}
+%  \begin{macro}{\nobackaddressrule}
+%  The rules below the backaddress can be switched on or off by setting the
+%  boolean variable |\ifka@db@baddrrule| which is true if the rule is to be
+%  typeset. The user commands \cmd\backaddressrule\ (default) and
+%  \cmd\nobackaddressrule\ toggle the boolean variable.
+%    \begin{macrocode}
+\newif\ifka@db@baddrrule
+\def\backaddressrule{\global\ka@db@baddrruletrue}
+\def\nobackaddressrule{\global\ka@db@baddrrulefalse}
+\backaddressrule
+%    \end{macrocode}
+%  \end{macro}
 %  \end{macro}
 %  \end{macro}
 %
@@ -3076,7 +3711,6 @@ der Stil "`{\tt german}"' geladen werden.
 %  |\@withlbracket| or |\@withoutlbracket| is executed.
 %    \begin{macrocode}
 \long\def\@checkformark#1{%
-  %\@ifnextchar!{\@withmark}{\@withoutmark}#1\stop
   \@ifnextchar[{\@withlbracket}{\@withoutlbracket}#1\stop
 }
 %    \end{macrocode}
@@ -3127,7 +3761,7 @@ der Stil "`{\tt german}"' geladen werden.
   \ifx\@empty\@fromaddress
     \vbox to 0pt{\vss}\nointerlineskip
   \else
-    \vbox to 0pt{\vskip -19.4truemm\raggedright\@fromaddress\vss}%
+    \vbox to 0pt{\vskip \ka@db@headup\raggedright\@fromaddress\vss}%
     \nointerlineskip
   \fi
 }
@@ -3138,65 +3772,92 @@ der Stil "`{\tt german}"' geladen werden.
 %    \begin{macrocode}
 \def\ka@db@tswindowtics{%
   \ifka@db@windowtics
+    \ka@db@tmpdimb=\ufldmarkvpos
+    \advance\ka@db@tmpdimb by -\ka@db@vfuzz
     \vbox to 0pt{%
-     \rule{0pt}{81.1truemm}% 62.5truemm > 80.0truemm
-     \hbox to 0pt{\hspace*{-24truemm}\vbox{\hrule width 7truemm}\hss}%
-     \vss}\nointerlineskip
+      \rule{0pt}{\ka@db@tmpdimb}%
+      \hbox to 0pt{\hspace*{\ka@db@foldmarkhoffs}%
+      \vbox{\hrule width \ka@db@foldmarklen}\hss}%
+      \vss}\nointerlineskip
+    \ka@db@tmpdimb=\perfmarkvpos
+    \advance\ka@db@tmpdimb by -\ka@db@vfuzz
     \vbox to 0pt{%
-     \rule{0pt}{124.6truemm}% 106.0truemm > 123.5truemm
-     \hbox to 0pt{\hspace*{-18truemm}\vbox{\hrule width 6truemm}\hss}%
-     \vss}\nointerlineskip
+      \rule{0pt}{\ka@db@tmpdimb}%
+      \hbox to 0pt{\hspace*{\ka@db@perfmarkhoffs}%
+      \vbox{\hrule width \ka@db@perfmarklen}\hss}%
+      \vss}\nointerlineskip
+    \ka@db@tmpdimb=\lfldmarkvpos
+    \advance\ka@db@tmpdimb by -\ka@db@vfuzz
     \vbox to 0pt{%
-     \rule{0pt}{186.1truemm}% 167.5truemm > 185.0truemm
-     \hbox to 0pt{\hspace*{-24truemm}\vbox{\hrule width 7truemm}\hss}%
-     \vss}\nointerlineskip
+      \rule{0pt}{\ka@db@tmpdimb}%
+      \hbox to 0pt{\hspace*{\ka@db@foldmarkhoffs}%
+      \vbox{\hrule width \ka@db@foldmarklen}\hss}%
+      \vss}\nointerlineskip
   \else
-    \vbox to 0pt{\rule{0pt}{81.1truemm}%
-     \hbox to 0pt{\vbox{\hrule width 0pt}\hss}%
-     \vss}\nointerlineskip
-    \vbox to 0pt{\rule{0pt}{124.6truemm}%
-     \hbox to 0pt{\vbox{\hrule width 0pt}\hss}%
-     \vss}\nointerlineskip
-    \vbox to 0pt{\rule{0pt}{186.1truemm}%
-     \hbox to 0pt{\vbox{\hrule width 0pt}\hss}%
-     \vss}\nointerlineskip
+    \ka@db@tmpdimb=\ufldmarkvpos
+    \advance\ka@db@tmpdimb by -\ka@db@vfuzz
+    \vbox to 0pt{\rule{0pt}{\ka@db@tmpdimb}%
+      \hbox to 0pt{\vbox{\hrule width 0pt}\hss}%
+      \vss}\nointerlineskip
+    \ka@db@tmpdimb=\perfmarkvpos
+    \advance\ka@db@tmpdimb by -\ka@db@vfuzz
+    \vbox to 0pt{\rule{0pt}{\ka@db@tmpdimb}%
+      \hbox to 0pt{\vbox{\hrule width 0pt}\hss}%
+      \vss}\nointerlineskip
+    \ka@db@tmpdimb=\lfldmarkvpos
+    \advance\ka@db@tmpdimb by -\ka@db@vfuzz
+    \vbox to 0pt{\rule{0pt}{\ka@db@tmpdimb}%
+      \hbox to 0pt{\vbox{\hrule width 0pt}\hss}%
+      \vss}\nointerlineskip
   \fi
 }
 %    \end{macrocode}
 %  \end{macro}
 %
-%  \begin{macro}{\dbottomtext}
-%    \begin{macrocode}
-\newdimen\dbottomtext
-\dbottomtext=261.0truemm
-%    \end{macrocode}
-%  \end{macro}
+%  \changes{1.70.1}{2000/01/10}{(KB) Definition of \cmd\dbottomtext\ moved to
+%				the place where other lengths are defined and
+%				renamed to \cmd\bottomtextvpos}
 %
 %  \begin{macro}{\ka@db@tsbottomtext}
-%  \changes{0.0.0}{1994/02/08}{(KDB) Changed to check the height of
+%  \changes{0.0.0}{1994/02/08}{(KB) Changed to check the height of
 %                              the footer (\cmd\@@bottomtext\ now dimen,
 %                              no longer command)}
+%  \changes{1.70.1}{2000/01/14}{(KB) \cmd\@@bottomtext\ removed and using
+%				\cmd\ka@db@bottomtext\ instead (macro)
+%				holding the argument of \cmd\bottomtext
+%				or \cmd\relax}
 %    \begin{macrocode}
 \def\ka@db@tsbottomtext{%
-  \ifdim\ht\@@bottomtext>0pt
+%  \ifdim\ht\@@bottomtext>0pt
+  \ifx\empty\ka@db@bottomtext
+    \relax
+  \else
 %    \end{macrocode}
-%  \changes{0.0.0}{1994/02/08}{(KDB) \cmd\@@bottomtext\  should be set
+%  \changes{0.0.0}{1994/02/08}{(KB) \cmd\@@bottomtext\  should be set
 %                              within a \env{\vbox to 0pt}{\cmd\vss ...}}
 %  \changes{1.22.0}{1995/01/16}{(RG) rule position changed}
 %  \changes{1.43.0}{1995/05/23}{(RG) rule position is now defined in a dimen
 %                               register}
 %    \begin{macrocode}
+    \ka@db@tmpdimb=\bottomtextvpos
+    \advance\ka@db@tmpdimb by -\ka@db@vfuzz
     \vbox to 0pt{%
-%      \rule{0pt}{261.0truemm}% 243.5truemm
-      \rule{0pt}{\dbottomtext}% 243.5truemm
+      \rule{0pt}{\ka@db@tmpdimb}%
 %    \end{macrocode}
-% \changes{0.0.0}{1994/02/08}{(KDB) \cmd\hbox{ ... } moved to box \cmd\@@bottomtext}
+% \changes{0.0.0}{1994/02/08}{(KB) \cmd\hbox\{ ... \} moved to box \cmd\@@bottomtext}
 % \changes{0.0.0}{1994/11/17}{(RG) \cmd\unhbox\ changed to \cmd\unhcopy,
 %                             because we can have more than one letter
 %                             in one document. So the bottomline is
 %                             inserted into every first page of letters.}
+% \changes{1.70.1}{2000/01/14}{(KB) Inserting the contents of the macro
+%			       \cmd\ka@db@bottomtext\ into a box of height
+%			       and width 0pt}
 %    \begin{macrocode}
-      \unhcopy\@@bottomtext
+%      \unhcopy\@@bottomtext
+      \hbox to 0pt{\hskip0pt minus 4truemm%
+        \vbox to 0pt {\raggedright \ka@db@bottomtext
+                      \vss}%
+        \hss}
       \vss
     }\nointerlineskip%
   \fi
@@ -3218,9 +3879,12 @@ der Stil "`{\tt german}"' geladen werden.
 %  \begin{macro}{\ka@db@tstoaddress}
 %    \begin{macrocode}
 \def\ka@db@tstoaddress{%
+%  \ka@db@tmpdima=\addrhpos
+%  \advance\ka@db@tmpdima by -\ka@db@txtlmarg
   \vbox to 0pt{\vss%
     \ifka@db@windowrules
-      \hbox to 0pt{\hspace*{-4truemm}\vbox{\hrule width 85truemm}\hss}%
+%      \hbox to 0pt{\hspace*{\ka@db@tmpdima}\vbox{\hrule width \addrwd}\hss}%
+      \hbox to 0pt{\vbox{\hrule width \addrwd}\hss}%
     \else
       \hbox to 0pt{\hss}%
     \fi
@@ -3228,28 +3892,39 @@ der Stil "`{\tt german}"' geladen werden.
   }%
   \nointerlineskip
 %    \end{macrocode}
+%  \changes{1.70.1}{2000/01/09}{(KB) Inserted code to conditionally underline
+%				the backaddress}
 %    \begin{macrocode}
+  \ka@db@tmpdimb=\backaddrht
+  \advance\ka@db@tmpdimb by \ka@db@stdskip
   \ifx\@empty\@backaddress
-    \vbox to 7.5truemm{%
+    \vbox to \ka@db@tmpdimb{%
       \vfill
     }%
     \nointerlineskip
   \else
-    \vbox to 7.5truemm{%
-      \vskip 2.5truemm
+    \vbox to \ka@db@tmpdimb{%
+      \vskip \ka@db@stdskip
       \vss
-      \hbox to 0pt{\hspace*{-4truemm}%
+%      \hbox to 0pt{\hspace*{\ka@db@tmpdima}%
+      \hbox to 0pt{%
         \vbox{%
-          \hbox to 85truemm{\hfill
-                            {\ka@db@bafntsel\@backaddress}\hfill}%
-          \hrule width 85truemm}\hss}%
-      % \vss % <- removed to get exact layout
+          \hbox to \addrwd{\hfil
+                            {\ka@db@bafntsel\@backaddress}\hfil}%
+          \ifka@db@baddrrule
+            \hrule width \addrwd%
+          \else
+            \hrule width 0pt%
+          \fi%
+          }\hss%
+        }%
     }%
     \nointerlineskip
   \fi
 %    \end{macrocode}
 %    \begin{macrocode}
-  \vbox to 40truemm{%
+  \moveright\addroffset%
+  \vbox to \addrht{%
     \vss
     \hbox to 0pt{\hskip0pt minus 4truemm%
       \setbox\@tempboxa=\vbox{%
@@ -3261,11 +3936,11 @@ der Stil "`{\tt german}"' geladen werden.
           \ka@db@ifemptyvarlocal{postremark}{}{%
             \ka@db@usevarlocal{postremark}\\[\medskipamount]
           }%
-          \raggedright \@addresslist %\toname \\ \toaddress%
+          \raggedright \@addresslist
           % \typeout{End dumping \string\@addresslist}%
         \fi
       }%
-      \ifdim\ht\@tempboxa>40mm
+      \ifdim\ht\@tempboxa>\the\addrht
         %\@warning{Receivers address is larger than letter window}%
         \ClassWarning{dinbrief}{%
           Receivers address is larger than letter window}%
@@ -3276,11 +3951,10 @@ der Stil "`{\tt german}"' geladen werden.
               \else
                 \hbox to 0pt{\hskip4in\ka@db@usevarlocal{handling}\hss}%
               \fi
-            %\unvbox\@tempboxa
             \box\@tempboxa
           }%
           \if@toadrcenter\relax
-            \else\vskip 2.5truemm minus 2.5truemm
+            \else\vskip \the\ka@db@stdskip minus \the\ka@db@stdskip
           \fi
         }%
       \fi
@@ -3291,12 +3965,13 @@ der Stil "`{\tt german}"' geladen werden.
       \vss
     \fi
   }\nointerlineskip
-  \vskip 2.5truemm
+  \vskip \ka@db@stdskip
 %    \end{macrocode}
 %    \begin{macrocode}
   \vbox to 0pt{\vss%
     \ifka@db@windowrules
-      \hbox to 0pt{\hspace*{-4truemm}\vbox{\hrule width 85truemm}\hss}%
+%      \hbox to 0pt{\hspace*{\ka@db@tmpdima}\vbox{\hrule width \addrwd}\hss}%
+      \hbox to 0pt{\vbox{\hrule width \addrwd}\hss}%
     \else
       \hbox to 0pt{\hss}%
     \fi
@@ -3380,14 +4055,23 @@ der Stil "`{\tt german}"' geladen werden.
   \vbox to 0pt{\ka@db@tsbottomtext\vss}\nointerlineskip
 }%
 \def\ka@db@placetoaddress{%
-  \vskip 18.6truemm % old value 13.1truemm
-  %   \vbox to 50truemm{\vss\ka@db@tstoaddress\vss}\nointerlineskip
-  %   \vbox to 50truemm{\ka@db@tstoaddress}\nointerlineskip
-  % \vbox to 50truemm{\ka@db@tstoaddress\vss}\nointerlineskip
-  % ^- org. value
-  \moveright\ka@db@indadr\vbox to 50truemm{\ka@db@tstoaddress\vss}%
+  \ka@db@tmpdima=\addrvpos
+  \advance\ka@db@tmpdima by -\ka@db@vfuzz
+  \advance\ka@db@tmpdima by -\addrht
+  \advance\ka@db@tmpdima by -\backaddrht
+  \advance\ka@db@tmpdima by -\ka@db@stdskip
+  \vskip \ka@db@tmpdima
+  \ka@db@tmpdima=\addrht
+  \advance\ka@db@tmpdima by \backaddrht
+  \advance\ka@db@tmpdima by 2\ka@db@stdskip
+  \ka@db@tmpdimb=\addrhpos
+  \advance\ka@db@tmpdimb by -\ka@db@txtlmarg
+  \moveright\ka@db@tmpdimb\vbox to \ka@db@tmpdima{\ka@db@tstoaddress\vss}%
   \nointerlineskip
-  \vskip 6truemm
+  \ka@db@tmpdima=\reflinevpos
+  \advance\ka@db@tmpdima by -\addrvpos
+  \advance\ka@db@tmpdima by -\ka@db@stdskip
+  \vskip \ka@db@tmpdima
 }%
 \def\ka@db@placerefline{%
   \vbox{\ka@db@tsrefline}\nointerlineskip
@@ -3417,6 +4101,11 @@ der Stil "`{\tt german}"' geladen werden.
 \def\opening#1{%
 %    \end{macrocode}
 % \changes{1.22.0}{1995/01/19}{(RG) State counter added to \cmd\opening.}
+% \changes{1.72.0}{2000/03/02}{(KB) Check \cmd\footskip\ set to 0pt as done by
+%			       the pagestyles empty, headings and myheadings
+%			       and calculate position of bottomtext as if
+%			       \cmd\footskip\ would be 8.8mm.}
+%                             
 %    \begin{macrocode}
   \setcounter{lt@state}{2}
   \thispagestyle{first@page}
@@ -3424,7 +4113,22 @@ der Stil "`{\tt german}"' geladen werden.
 % Actually enlarge the first page by the negative height of the footer:
 %    \begin{macrocode}
   \ifka@db@ltxtwoe
-     \enlargethispage{-\ht\@@bottomtext}
+    \ifx\empty\ka@db@bottomtext
+      \relax
+    \else
+      \ka@db@tmpdima=\textheight
+      \advance\ka@db@tmpdima by \topmargin
+      \advance\ka@db@tmpdima by \ka@db@vfuzz
+      \ifdim\footskip>0pt
+        \advance\ka@db@tmpdima by \footskip
+      \else
+	\advance\ka@db@tmpdima by 8.8truemm
+      \fi
+      \advance\ka@db@tmpdima by -\bottomtextvpos
+      \ifdim\ka@db@tmpdima>0pt
+        \enlargethispage{-\ka@db@tmpdima}
+      \fi
+    \fi
   \fi
 %    \end{macrocode}
 %    Then we start printing the parts of the letter.
@@ -3453,12 +4157,25 @@ der Stil "`{\tt german}"' geladen werden.
 %    \end{macrocode}
 %  \end{macro}
 %  \begin{macro}{\oldopening}
+%  \changes{1.72.0}{2000/02/29}{(KB) Box \cmd\@@bottomtext\ no longer used by
+%				\cmd\opening\ (and thus dropped) defined here
+%			        to make \cmd\oldopening\ work as before}
 %    \begin{macrocode}
 \def\oldopening#1{\thispagestyle{first@page}
 %    \end{macrocode}
 % Actually enlarge the first page by the negative height of the footer:
 %    \begin{macrocode}
   \ifka@db@ltxtwoe
+     \expandafter\ifx\csname @@bottomtext\endcsname\relax
+        \newbox\@@bottomtext
+     \fi
+     \ifx\empty\ka@db@bottomtext
+        \setbox\@@bottomtext=\vbox to 0pt{}
+     \else
+	\setbox\@@bottomtext=\hbox to 0pt{\hskip0pt minus 4truemm%
+       	   \vbox{\raggedright \ka@db@bottomtext}%
+       	   \hss}
+     \fi
      \enlargethispage{-\ht\@@bottomtext}
   \fi
 %    \end{macrocode}
@@ -3495,19 +4212,19 @@ der Stil "`{\tt german}"' geladen werden.
      \vss}\nointerlineskip
   \fi
 %    \end{macrocode}
-% \changes{0.0.0}{1994/02/08}{(KDB) Changed to check the height of
+% \changes{0.0.0}{1994/02/08}{(KB) Changed to check the height of
 %                             the footer (\cmd\@@bottomtext\ now dimen,
 %                             no longer command)}
 %    \begin{macrocode}
  \ifdim\ht\@@bottomtext>0pt
 %    \end{macrocode}
-% \changes{0.0.0}{1994/02/08}{(KDB) \cmd\@@bottomtext\  should be set
+% \changes{0.0.0}{1994/02/08}{(KB) \cmd\@@bottomtext\  should be set
 %                             within a \env{\vbox to 0pt}{\cmd\vss ...}}
 %    \begin{macrocode}
     \vbox to 0pt{%
       \rule{0pt}{243.5truemm}%
 %    \end{macrocode}
-% \changes{0.0.0}{1994/02/08}{(KDB) \cmd\hbox{ ... } moved to box \cmd\@@bottomtext}
+% \changes{0.0.0}{1994/02/08}{(KB) \cmd\hbox{ ... } moved to box \cmd\@@bottomtext}
 % \changes{0.0.0}{1994/11/17}{(RG) \cmd\unhbox\ changed to \cmd\unhcopy,
 %                             because we can have more than one letter
 %                             in one document. So the bottomline is
@@ -3620,8 +4337,16 @@ der Stil "`{\tt german}"' geladen werden.
 \long\def\ka@db@closing[#1]#2{%
 %    \end{macrocode}
 % \changes{1.22.0}{1995/01/19}{(RG) State counter added to \cmd\closing.}
+% \changes{1.70.1}{2000/01/10}{(KB) Changed placing of the graphical signature
+%			       according to the proposal for a graphical
+%			       signature by Martin Haefele, Max Planck
+%			       Institute for Dynamics of Complex Technical
+%			       Systems at Magdeburg}
 %    \begin{macrocode}
   \setcounter{lt@state}{3}
+  \setbox\@tempboxa=\hbox{#1}
+  \ka@db@tmpdimb=\ht\@tempboxa
+  \advance\ka@db@tmpdimb by \dp\@tempboxa
   \par\nobreak
   \vspace{\parskip}
   \stopbreaks
@@ -3640,19 +4365,29 @@ der Stil "`{\tt german}"' geladen werden.
 %        }%
         \parbox[t]{\ka@db@tmpdima}{%\parskip .7em%
           \raggedright
-          \ignorespaces #2\\[3\baselineskip]
+          \ifdim\ka@db@tmpdimb>0pt
+            \ignorespaces #2\\[1\baselineskip]
+          \else
+            \ignorespaces #2\\[3\baselineskip]
+          \fi
           \leavevmode
-          % here the signature <- not correct
-          \vbox to 0pt{%
-            \vskip -4\baselineskip\relax
-            \hbox to 0pt{\strut#1\hss}%
-          \vss}%
+%          \vbox to 0pt{%
+%            \vskip -4\baselineskip\relax
+%            \hbox to 0pt{\strut#1\hss}%
+%          \vss}%
 %          \ifx\@empty\@fromsig
 %          \else \@fromsig
 %          \fi\strut
-          \ka@db@ifemptyvar{signature}{}{%
-            \ka@db@usevar{signature}%
-          }%
+          \ifdim\ka@db@tmpdimb>0pt
+            \rule{0pt}{2\baselineskip}\box\@tempboxa \newline
+            \ka@db@ifemptyvar{signature}{}{%
+              \ka@db@usevar{signature}%
+              }%
+          \else
+            \ka@db@ifemptyvar{signature}{}{%
+              \ka@db@usevar{signature}%
+              }%
+          \fi
           \strut
         }%
         \@tempdima=\textwidth
@@ -3666,19 +4401,29 @@ der Stil "`{\tt german}"' geladen werden.
       \egroup
     \else
       \raggedright
-      \ignorespaces #2\\[3\baselineskip]
-      \leavevmode
-      % here the signature <- not correct
-      \vbox to 0pt{%
-        \vskip -4\baselineskip\relax
-        \hbox to 0pt{\strut#1\hss}%
-      \vss}%
+      \ifdim\ka@db@tmpdimb>0pt
+        \ignorespaces #2\\[1\baselineskip]
+      \else
+        \ignorespaces #2\\[3\baselineskip]
+      \fi
+      \leavevmode%
+%      \vbox to 0pt{%
+%        \vskip -4\baselineskip\relax
+%        \hbox to 0pt{\strut#1\hss}%
+%      \vss}%
 %      \ifx\@empty\@fromsig
 %      \else \@fromsig
 %      \fi\strut
-      \ka@db@ifemptyvar{signature}{}{%
-        \ka@db@usevar{signature}%
-      }%
+      \ifdim\ka@db@tmpdimb>0pt
+        \rule{0pt}{2\baselineskip}\box\@tempboxa \\
+        \ka@db@ifemptyvar{signature}{}{%
+          \ka@db@usevar{signature}%
+          }%
+      \else
+        \ka@db@ifemptyvar{signature}{}{%
+          \ka@db@usevar{signature}%
+          }%
+      \fi
       \strut
     \fi
   }%
@@ -3820,9 +4565,10 @@ der Stil "`{\tt german}"' geladen werden.
 %  \end{macro}
 %  \end{macro}
 %
+%  \changes{1.70.1}{2000/01/09}{(KB) Changed \cmd\\\ to \cmd\newline}
 %  \begin{macro}{\ps}
 %    \begin{macrocode}
-\def\ps#1{\par\noindent{\psname \\
+\def\ps#1{\par\noindent{\psname \newline
           \ignorespaces #1\strut}\par}
 %    \end{macrocode}
 %  \end{macro}
@@ -3862,7 +4608,7 @@ der Stil "`{\tt german}"' geladen werden.
 %  \begin{macro}{\setlabelwidth}
 %  \begin{macro}{\setlabeltopmargin}
 %  \begin{macro}{\setlabelnumber}
-%  These three macros assigns values to the counters defined
+%  These four macros assigns values to the lengths and counter defined
 %  above.
 %    \begin{macrocode}
 \def\setlabelheight#1{\global\dlabelheight=#1\relax}
@@ -3999,9 +4745,8 @@ der Stil "`{\tt german}"' geladen werden.
 %
 % \begin{macro}{\label@plain}
 %    \begin{macrocode}
-\long\def\label@plain#1#2{\setbox0\vbox{\hsize\dlabelwidth
+\long\def\label@plain#1#2{\setbox0\vbox{\hsize=\dlabelwidth
  \strut\ignorespaces #2}%{}%
- %\vbox to 50.8truemm{\vss \box0 \vss}%
  \vbox to\dlabelheight{%
    \if@kadb@tracelabels
      \hrule
@@ -4044,24 +4789,36 @@ der Stil "`{\tt german}"' geladen werden.
       \else
         \hbox to 0pt{\hspace*{-4truemm}%
                      \vbox{\hrule width 85truemm}\hss}%
+%        \hbox to 0pt{\hspace*{\ka@db@addrhoffs}%
+%                     \vbox{\hrule width \addrwd}\hss}%
       \fi
       \vss}\nointerlineskip
 %
     \vbox to 7.5truemm{
+%    \ka@db@tmpdimb=\backaddrht
+%    \advance\ka@db@tmpdimb by \ka@db@stdskip
+%    \vbox to \ka@db@tmpdimb{%
       \vskip 2.5truemm
+%      \vskip \ka@db@stdskip
       \vss
       \hbox to 0pt{\hspace*{-4truemm}\vbox{%
         \hbox to 85truemm{\hfill{\ka@db@fontsize{8}{9pt}
                                  \ka@db@selectfont #1}\hfill}
         \hrule width 85truemm}\hss}%
+%      \hbox to 0pt{\hspace*{\ka@db@addrhoffs}\vbox{%
+%        \hbox to \addrwd{\hfil{\ka@db@fontsize{8}{9pt}
+%                               \ka@db@selectfont #1}\hfil}
+%        \hrule width \addrwd}\hss}%
         \vss}\nointerlineskip
 %
     \vbox to 40truemm{%
+%    \vbox to \addrht{%
       \vss
       \hbox to 0pt{\hskip0pt minus 4truemm%
         \vbox{\raggedright #2%
           \if@toadrcenter
            \relax\else\vskip 2.5truemm minus 2.5truemm
+%           \relax\else\vskip \the\ka@db@stdskip minus \the\ka@db@stdskip
            \fi}%
         \hss}
       \if@toadrcenter
@@ -4069,6 +4826,7 @@ der Stil "`{\tt german}"' geladen werden.
       \fi
     }\nointerlineskip
     \vskip 2.5truemm
+%    \vskip \ka@db@stdskip
 %
     \vbox to 0pt{\vss%
       \ifx\@empty\@@windowrules
@@ -4076,12 +4834,16 @@ der Stil "`{\tt german}"' geladen werden.
       \else
         \hbox to 0pt{\hspace*{-4truemm}%
                      \vbox{\hrule width 85truemm}\hss}%
+%        \hbox to 0pt{\hspace*{\ka@db@addrhoffs}%
+%                     \vbox{\hrule width \addrwd}\hss}%
       \fi
       \vss}\nointerlineskip
     }}%
   \vbox to 0pt{\vss}%
   \vskip 18.0truemm
+%  \vskip ???
   \vbox to 50.8truemm{\vss \box0 \vss}%
+%  \vbox to \ka@db@???{\vss \box0 \vss}%
   \ifnum\labelcount=4 \labelcount=0
     \else \advance\labelcount by 1\nointerlineskip
     \fi
@@ -4107,18 +4869,18 @@ der Stil "`{\tt german}"' geladen werden.
 % \begin{macro}{\lstyle@plain}
 %    \begin{macrocode}
 \def\lstyle@plain{
-  \topmargin-25.4truemm%
+  \topmargin=-25.4truemm%
   \advance\topmargin\dlabeltopmargin
   \headsep\z@
   \headheight\z@
   \topskip\z@
-  \oddsidemargin -12.9truemm
-  \evensidemargin -12.9truemm
+  \oddsidemargin=-12.9truemm
+  \evensidemargin=-12.9truemm
   \textheight=\clabelnumber\dlabelheight
   \advance\textheight by .0001truemm
-  \@colht\textheight \@colroom\textheight \vsize\textheight
-  \columnsep 25mm
-  \textwidth2\dlabelwidth
+  \@colht=\textheight \@colroom=\textheight \vsize=\textheight
+  \columnsep=25mm
+  \textwidth=2\dlabelwidth
   \advance\textwidth by\columnsep
   \ka@db@fontsize{12}{14.4pt}\ka@db@selectfont
   \boxmaxdepth\z@
@@ -4146,11 +4908,11 @@ der Stil "`{\tt german}"' geladen werden.
 % \begin{macro}{\lstyle@deskjet}
 %    \begin{macrocode}
 \def\lstyle@deskjet{
-  \textheight 25.4truecm
+  \textheight=25.4truecm
   \advance\textheight by .0001truemm
-%  \@colht\textheight \@colroom\textheight \vsize\textheight
-  \textwidth 193.3truemm
-  \columnsep 25pt
+%  \@colht=\textheight \@colroom=\textheight \vsize=\textheight
+  \textwidth=193.3truemm
+  \columnsep=25pt
 %  \ka@db@fontsize{12}{14.4pt}\ka@db@selectfont
 %  \boxmaxdepth=0pt
 %  \twocolumn
@@ -4166,15 +4928,15 @@ der Stil "`{\tt german}"' geladen werden.
   \labelcount=0
   \pagestyle{empty}
   \let\@texttop=\relax
-% \topmargin -17.6truemm
-% \headsep 0pt
-% \oddsidemargin -12.3truemm
-% \evensidemargin -12.3truemm
-% \textheight 25.4truecm
+% \topmargin=-17.6truemm
+% \headsep=0pt
+% \oddsidemargin=-12.3truemm
+% \evensidemargin=-12.3truemm
+% \textheight=25.4truecm
 % \advance\textheight by .0001truemm
-% \@colht\textheight \@colroom\textheight \vsize\textheight
-% \textwidth 193.3truemm
-% \columnsep 25pt
+% \@colht=\textheight \@colroom=\textheight \vsize=\textheight
+% \textwidth=193.3truemm
+% \columnsep=25pt
 % \ka@db@fontsize{12}{14.4pt}\ka@db@selectfont
 % \boxmaxdepth=0pt
 % \twocolumn\relax
@@ -4268,7 +5030,7 @@ der Stil "`{\tt german}"' geladen werden.
 %    \begin{macrocode}
   \setcounter{lt@state}{0}%
 %    \end{macrocode}
-% \changes{0.0.0}{1994/02/09}{(KDB) Switch for last page added}
+% \changes{0.0.0}{1994/02/09}{(KB) Switch for last page added}
 %    \begin{macrocode}
   \ka@db@lastpagetrue
 %    \end{macrocode}
@@ -4364,7 +5126,11 @@ der Stil "`{\tt german}"' geladen werden.
 %
 % \begin{macro}{\@nobreakcr}
 %    \begin{macrocode}
-\def\@nobreakcr{\vadjust{\penalty\@M}\@ifstar{\@xnewline}{\@xnewline}}
+\ifka@db@ltxtwoe
+  \def\@nobreakcr{\@ifstar{\@normalcr*}{\@normalcr*}}
+\else
+  \def\@nobreakcr{\vadjust{\penalty\@M}\@ifstar{\@xnewline}{\@xnewline}}
+\fi
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4430,7 +5196,6 @@ der Stil "`{\tt german}"' geladen werden.
 %
 % \begin{macro}{\signature}
 %    \begin{macrocode}
-%\def\signature#1{\def\@fromsig{#1}}
 \def\signature#1{%
   \ka@db@assignvar{signature}{#1}%
 }
@@ -4440,7 +5205,7 @@ der Stil "`{\tt german}"' geladen werden.
 %
 % \begin{macro}{\@fromsig}
 %    \begin{macrocode}
-\def\@fromsig{}
+% \def\@fromsig{}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4603,22 +5368,36 @@ der Stil "`{\tt german}"' geladen werden.
 % This is used to include special informations such as the
 % number of the giroconto, or the name of the chairman of a corporation.
 %
-% \changes{0.0.0}{1994/02/08}{(KDB) Defining macro \cmd\bottomtext\ putting
+% \changes{0.0.0}{1994/02/08}{(KB) Defining macro \cmd\bottomtext\ putting
 %                             the specified text into box \cmd\@@bottomtext\
 %                             to get the height of the footer and store
 %                             it in \cmd\@@bottomht}
+% \changes{1.70.1}{2000/01/14}{(KB) Got rid of box \cmd\@@bottomtext\ and the
+%			       macros \cmd\ka@db@bottomtextmsg,
+%			       \cmd\ka@db@praebottomtext\ and
+%			       \cmd\ka@db@mainbottomtext}
+% The implementation of \cmd\bottomtext\ puts its argument into the macro
+% \cmd\ka@db@bottomtext\ preset with \cmd\relax\ (maybe, the name of this
+% internal command should be changed).  This allows the bottom text to be
+% specified before \cmd\begin\arg{document}.  The contents of the macro
+% \cmd\ka@db@bottomtext\ are put into a box of height and width 0pt by
+% \cmd\ka@db@tsbottomtext\ as well as \cmd\oldopening\ which is immediately
+% set into the letter (without using a box register).  Wheter bottom text is
+% to be set can be checked by comparing \cmd\ka@db@bottomtext\ to
+% \cmd\relax.
 %    \begin{macrocode}
-\newbox\@@bottomtext
-\setbox\@@bottomtext=\vbox to 0pt{}
-\def\ka@db@bottomtextmsg{}
-\long\def\ka@db@praebottomtext#1{%
-  \gdef\ka@db@bottomtextmsg{#1}%
-}
-\long\def\ka@db@mainbottomtext#1{%
-  \setbox\@@bottomtext=\hbox to 0pt{\hskip0pt minus 4truemm%
-       \vbox{\raggedright #1}%
-       \hss}%
-}
+% \newbox\@@bottomtext
+% \setbox\@@bottomtext=\vbox to 0pt{}
+% \def\ka@db@bottomtextmsg{}
+% \long\def\ka@db@praebottomtext#1{%
+%   \gdef\ka@db@bottomtextmsg{#1}%
+% }
+% \long\def\ka@db@mainbottomtext#1{%
+%   \setbox\@@bottomtext=\hbox to 0pt{\hskip0pt minus 4truemm%
+%        \vbox{\raggedright #1}%
+%        \hss}%
+% }
+\def\ka@db@bottomtext{}
 \long\def\bottomtext#1{%
   \ifka@db@ltxtwoe \relax \else
       \@@warning{\string\bottomtext \space is reserving space for
@@ -4626,13 +5405,14 @@ der Stil "`{\tt german}"' geladen werden.
                  With other LaTeX formats you will have to place a
                  \string\clearpage-command at the appropriate position}%
   \fi
-  \ka@db@dobottomtext{#1}%
+%  \ka@db@bottomtext{#1}%
+  \long\gdef\ka@db@bottomtext{#1}%
   % \gdef\ka@db@bottomtextmsg{#1}%
   % \setbox\@@bottomtext=\hbox to 0pt{\hskip0pt minus 4truemm%
   %      \vbox{\raggedright #1}%
   %      \hss}%
   }
-\long\def\ka@db@dobottomtext#1{\ka@db@praebottomtext{#1}}
+% \long\def\ka@db@bottomtext#1{\ka@db@praebottomtext{#1}}
 
 
 % \long\def\bottomtext#1{%
@@ -4674,19 +5454,19 @@ der Stil "`{\tt german}"' geladen werden.
               \@spaces[\@unusedoptionlist]}%
     \fi
   \fi
-  \@colht\textheight
-  \@colroom\textheight
-  \vsize\textheight
-  \columnwidth\textwidth
-  \@clubpenalty\clubpenalty
+  \@colht=\textheight
+  \@colroom=\textheight
+  \vsize=\textheight
+  \columnwidth=\textwidth
+  \@clubpenalty=\clubpenalty
   \if@twocolumn
     \advance\columnwidth -\columnsep
     \divide\columnwidth\tw@
-    \hsize\columnwidth
+    \hsize=\columnwidth
     \@firstcolumntrue
   \fi
-  \hsize\columnwidth
-  \linewidth\hsize
+  \hsize=\columnwidth
+  \linewidth=\hsize
   \begingroup
     \@floatplacement
     \@dblfloatplacement
@@ -4761,8 +5541,7 @@ der Stil "`{\tt german}"' geladen werden.
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-  % \ka@db@assbottomtext{\ka@db@bottomtextmsg}%
-  \long\def\ka@db@dobottomtext##1{\ka@db@mainbottomtext{##1}}
+%  \long\def\ka@db@bottomtext##1{\ka@db@mainbottomtext{##1}}
 }
 %    \end{macrocode}
 % \end{macro}
@@ -4882,7 +5661,7 @@ der Stil "`{\tt german}"' geladen werden.
 \let\@texttop=\relax
 %    \end{macrocode}
 %
-% \changes{}{1994/02/09}{(KDB)}
+% \changes{0.0.0}{1994/02/09}{(KB)}
 %  \begin{macro}{\ifka@db@lastpage}
 %  The following switch is used by pagestyle |contheadings| to detect the
 %  last page.
@@ -5026,12 +5805,12 @@ der Stil "`{\tt german}"' geladen werden.
 %  \end{macro}
 %
 %  \begin{macro}{ps@contheadings}
-%  \changes{}{1994/02/09}{(KDB)}
+%  \changes{0.0.0}{1994/02/09}{(KB)}
 %  Like pagestyle 'headings' with pagenumber in top line and
 %  number of following page in bottom line.
 %
 %  \smallskip
-%  \changes{}{1994/02/10}{(KDB)}
+%  \changes{0.0.0}{1994/02/10}{(KB)}
 %  Problem to be solved before this pagestyle can be introduced:
 %    There must be found a method to detect the last page is typesetted
 %    (endletter is not sufficient, since there may be another pagebreak when
@@ -5486,7 +6265,7 @@ der Stil "`{\tt german}"' geladen werden.
 %    |\jot| is the extra space added between lines of an eqnarray
 %    environment. The default value is used.
 %    \begin{macrocode}
-% \setlength\jot{3pt}
+% \jot=3pt
 %    \end{macrocode}
 % \end{macro}
 %
@@ -5651,7 +6430,7 @@ der Stil "`{\tt german}"' geladen werden.
 %
 % \begin{macro}{\concern}
 % \begin{macro}{\subject}
-% \changes{}{1994/12/14}{(RG) \cmd\newbox\cmd\@betr being moved outside of
+% \changes{1.15.0}{1994/12/14}{(RG) \cmd\newbox\cmd\@betr being moved outside of
 %                        \cmd\concern}
 %    \begin{macrocode}
 \newbox\@betr
@@ -5666,48 +6445,58 @@ der Stil "`{\tt german}"' geladen werden.
 % \end{macro}
 %
 %  \begin{macro}{\@fordate}
+%  \changes{1.70.1}{2000/01/17}{(KB) length \cmd\@fordate\ eliminated and
+%                               width of date field set to
+%                               \cmd\ka@db@shfldwd=25.4mm}
 %  |\@fordate| is the length of the remaining part of the
 %  referline.
 %    \begin{macrocode}
-\newlength{\@fordate}
-\setlength{\@fordate}{\textwidth}
-\addtolength{\@fordate}{-131truemm}
+%\newdimen\@fordate
+%\@fordate=\textwidth
+%\addtolength{\@fordate}{-131truemm}
 %    \end{macrocode}
 %  \end{macro}
 %
+%  \changes{1.70.1}{2000/01/09}{(KB) Changed \cmd\\\ to \cmd\newline}
 %  \begin{macro}{\@answertoold}
 %    The macro \cmd\@answertoold is used to typeset the referline in the
 %    original DIN 676 style.
 %
-%    The length \cmd\@fordate\ is the width of the field for date
-%    and place. This length is being determined by subtracting the
-%    length of the other fields (50,8mm + 50,8mm + 25,4mm + 4mm)
-%    131 mm from \cmd\textwidth. (why 4mm?)
+%    %The length \cmd\@fordate\ is the width of the field for date
+%    %and place. This length is being determined by subtracting the
+%    %length of the other fields (50,8mm + 50,8mm + 25,4mm + 4mm)
+%    %131 mm from \cmd\textwidth. (why 4mm?)
+%    The length of the field for date and/or place -- the remaining part of
+%    the reference line -- is no longer computed since its specific value
+%    has no effect to the output.  Instead, the field width is set to
+%    |\ka@db@shfldwd|=25.4mm leaving 8.2mm to the right paper bound.
 %
 %    \begin{macrocode}
 \def\@answertoold{%
-  \setlength{\@fordate}{\textwidth}
-  \addtolength{\@fordate}{-131truemm}
-  \parbox[b]{50.8truemm}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont
-                          \yourmailmsg{}}%
-                         \hfill\\ \@yourmail\hbox{}\hss}%
-  \parbox[b]{50.8truemm}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont
-                          \signmsg{}}%
-                         \hfill\\ \@mymail\hbox{}\hss}%
-  \parbox[b]{25.4truemm}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont
-                          \phonemsg{} \@prephone{}}%
-                         \hfill\\ \@phone\hbox{}\hss}%
-  \parbox[b]{\@fordate}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont
-    \ifx\@empty\@place
-       \vphantom{K}\rule{2pt}{0pt}
-     \else
-       \@place{}%
-     \fi
-    }\hfill\\ \@ntoday}
+  \parbox[b]{\ka@db@fieldwd}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont
+                              \yourmailmsg{}}%
+                             \hfil\newline \@yourmail\hbox{}\hss}%
+  \hskip\ka@db@fldskip%
+  \parbox[b]{\ka@db@fieldwd}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont
+                              \signmsg{}}%
+                             \hfil\newline \@mymail\hbox{}\hss}%
+  \hskip\ka@db@fldskip%
+  \parbox[b]{\ka@db@shfldwd}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont
+                              \phonemsg{} \@prephone{}}%
+                             \hfil\newline \@phone\hbox{}\hss}%
+  \hskip\ka@db@fldskip%
+  \parbox[b]{\ka@db@shfldwd}{{\ka@db@fontsize{9}{11pt}\ka@db@selectfont
+                             \ifx\@empty\@place
+                               \vphantom{K}\rule{2pt}{0pt}
+                             \else
+                               \@place{}%
+                             \fi
+                            }\hfil\newline \@ntoday}
   }
 %    \end{macrocode}
 %  \end{macro}
 %
+%  \changes{1.70.1}{2000/01/09}{(KB) Changed \cmd\\\ to \cmd\newline}
 %  \begin{macro}{\@answertonew}
 %  The draft proposal of the new DIN 676 has an additional
 %  field for the name of a person who has written the letter.
@@ -5720,46 +6509,46 @@ der Stil "`{\tt german}"' geladen werden.
 %    \begin{macrocode}
 \def\@answertonew{%
   \hbox to \textwidth{%
-    \setlength{\@fordate}{\textwidth}%
-    \addtolength{\@fordate}{-156.4truemm}%
-    \addtolength{\@fordate}{3cm}% This is a heavens value.
-    \parbox[b]{50.8truemm}{{\ka@db@fontsize{7}{9pt}\ka@db@selectfont
-                            \yourmailmsg{}}%
-                           \hfill\\ \@yourmail\hbox{}\hss}%
-    \parbox[b]{50.8truemm}{{\ka@db@fontsize{7}{9pt}\ka@db@selectfont
-                            \signmsg{}}%
-                           \hfill\\ \@mymail\hbox{}\hss}%
-    \parbox[b]{50.8truemm}{{\ka@db@fontsize{7}{9pt}\ka@db@selectfont
-                            \phonemsg{}%
-                            \writermsg{}%
-                            }%
-                           \hfill\\
-                           \ifx\@empty\@prephone\relax
-                           \else
-                             \@prephone{}
-                           \fi
-                           \@phone
-                           \ka@db@ifemptyvar{writer}%
-                             {}% true
-                             {% false
-                               \ifx\@empty\@phone\relax
+    \parbox[b]{\ka@db@fieldwd}{{\ka@db@fontsize{7}{9pt}\ka@db@selectfont
+                                \yourmailmsg{}}%
+                               \hfil\newline \@yourmail\hbox{}\hss}%
+    \hskip\ka@db@fldskip%
+    \parbox[b]{\ka@db@fieldwd}{{\ka@db@fontsize{7}{9pt}\ka@db@selectfont
+                                \signmsg{}}%
+                               \hfil\newline \@mymail\hbox{}\hss}%
+    \hskip\ka@db@fldskip%
+    \parbox[b]{\ka@db@fieldwd}{{\ka@db@fontsize{7}{9pt}\ka@db@selectfont
+                                \phonemsg{}%
+                                \writermsg{}%
+                               }%
+                               \hfil\newline
+                               \ifx\@empty\@prephone\relax
                                \else
-                                 ,\ % insert comma and blank only
-                               \fi%   if both are nonempty
-                               \ka@db@usevar{writer}%
-                             }%
-%                           \ifx\@empty\@writer\relax
-%                           \else
-%                             \ifx\@empty\@phone\relax
-%                             \else
-%                             ,\ % insert comma and blank only if both
-%                             \fi% are nonempty
-%                             \@writer
-%                           \fi
-                           \hbox{}\hss}%
-    \parbox[b]{\@fordate}{{\ka@db@fontsize{7}{9pt}\ka@db@selectfont
-      \datemsg
-      }\hfill\\ \@ntoday}
+                                 \@prephone{}
+                               \fi
+                               \@phone
+                               \ka@db@ifemptyvar{writer}%
+                                 {}% true
+                                 {% false
+                                   \ifx\@empty\@phone\relax
+                                   \else
+                                     ,\ % insert comma and blank only
+                                   \fi%   if both are nonempty
+                                   \ka@db@usevar{writer}%
+                                 }%
+%                               \ifx\@empty\@writer\relax
+%                               \else
+%                                 \ifx\@empty\@phone\relax
+%                                 \else
+%                                   ,\ % insert comma and blank only if both
+%                                 \fi% are nonempty
+%                                 \@writer
+%                               \fi
+                               \hbox{}\hss}%
+    \hskip\ka@db@fldskip%
+    \parbox[b]{\ka@db@shfldwd}{{\ka@db@fontsize{7}{9pt}\ka@db@selectfont
+                               \datemsg
+                              }\hfil\newline \@ntoday}
     \hss}%
   }
 %    \end{macrocode}
@@ -6029,6 +6818,17 @@ der Stil "`{\tt german}"' geladen werden.
 \errorcontextlines=10
 %    \end{macrocode}
 %
+% Finally, read the configuration file - if it exists.
+%    \begin{macrocode}
+\ifka@db@ltxtwoe
+  \IfFileExists{dinbrief.cfg}{%
+    \makeatother%
+    \input{dinbrief.cfg}%
+    \makeatletter%
+   }{\relax}
+\fi
+%    \end{macrocode}
+%
 %    \begin{macrocode}
 %</class|style>
 %    \end{macrocode}
@@ -6048,6 +6848,42 @@ der Stil "`{\tt german}"' geladen werden.
 %<*shortstyle>
 \input dinbrief.cls
 %</shortstyle>
+%    \end{macrocode}
+%
+% \subsection{The configuration file}
+%  The configuration file is searched according to the standard search path
+%  for \TeX\ files.  It is input by the last command of the class but before
+%  any package.
+%
+%    \begin{macrocode}
+%<*cfg>
+%    \end{macrocode}
+%<<COMMENTSONLY
+%    \begin{macrocode}
+% Example configuration file
+%
+% This file is input by the last command of the class `dinbrief'
+%
+%\setaddressllhpos{100truemm}
+%\setaddressllvpos{96truemm}
+%\setaddressllcorner{20truemm}{72truemm}
+%\addressstd
+%\nobackaddressrule
+%\nowindowrules
+%\address{R\"udiger Kurz\\ % Package `german' not yet loaded!
+%         Am See 1\\
+%         76133 Karlsruhe}
+%\backaddress{R.~Kurz, Am See 1, 76133 Karslruhe}
+%\place{Gralsruhe}
+%\phone{(0127)}{806-0815}
+%\signature{R\"udiger Kurz}
+%\setbottomtexttop{284.9truemm}
+%\bottomtext{%
+%  \makebox[\textwidth][c]{\small\sf
+%     Bankverbindung $\cdot$ Kreissparkasse Gralsruhe %
+%     (BLZ~999~500~00) 98~765~4}}
+%COMMENTSONLY
+%</cfg>
 %    \end{macrocode}
 %
 % \section{An example letter}
@@ -6117,8 +6953,69 @@ der Stil "`{\tt german}"' geladen werden.
 \expandafter\ifx\csname documentclass\endcsname\relax
     \documentstyle[german]{dinbrief}
   \else
+    \begin{filecontents*}{signatur.ps}
+%!PS-Adobe-2.0 EPSF-2.0
+%%BoundingBox: 0 0 57 32
+%%EndComments
+/$F2psDict 200 dict def
+$F2psDict begin
+$F2psDict /mtrx matrix put
+/col0 {0.000 0.000 0.000 srgb} bind def
+end
+save
+1.0 30.0 translate
+1 -1 scale
+
+/c  {curveto} bind def
+/cp {closepath} bind def
+/ef {eofill} bind def
+/gr {grestore} bind def
+/gs {gsave} bind def
+/rs {restore} bind def
+/l {lineto} bind def
+/m {moveto} bind def
+/n {newpath} bind def
+/s {stroke} bind def
+/slw {setlinewidth} bind def
+/srgb {setrgbcolor} bind def
+/sc {scale} bind def
+/tr {translate} bind def
+/DrawEllipse {
+	/endangle exch def
+	/startangle exch def
+	/yrad exch def
+	/xrad exch def
+	/y exch def
+	/x exch def
+	/savematrix mtrx currentmatrix def
+	x y tr xrad yrad sc 0 0 1 startangle endangle arc
+	closepath
+	savematrix setmatrix
+	} def
+
+/$F2psBegin {$F2psDict begin /$F2psEnteredState save def} def
+/$F2psEnd {$F2psEnteredState restore end} def
+%%EndProlog
+
+$F2psBegin
+10 setmiterlimit
+n -1000 1472 m -1000 -1000 l 1888 -1000 l 1888 1472 l cp clip
+ 0.06299 0.06299 sc
+25.000 slw
+n 338 432 10 10 0 360 DrawEllipse gs col0 s gr
+n 183 9 m 267 450 l gs col0 s gr 
+n 273 447 m 273 444 250 427 376 22 c 376 22 400 -40 426 21 c gs col0 s gr 
+n 9 390 m 9 410 35 480 59 411 c 59 411 150 224 177 3 c gs col0 s gr 
+n 778 432 10 10 0 360 DrawEllipse gs col0 s gr
+n 623 9 m 707 450 l gs col0 s gr 
+n 713 447 m 713 444 690 427 816 22 c 816 22 840 -40 866 21 c gs col0 s gr 
+n 449 390 m 449 410 475 480 499 411 c 499 411 590 224 617 3 c gs col0 s gr 
+$F2psEnd
+rs
+    \end{filecontents*}
     \documentclass[10pt]{dinbrief}
     \usepackage{german}
+    \usepackage{graphicx}
   \fi
 
 \input brfkopf
@@ -6164,7 +7061,12 @@ Sammlung f"ur unser Projekt zu stiften, w"urde ich Ihnen gerne
 Vorabdrucke aller zuk"unftigen Forschungsberichte zur Verf"ugung
 stellen, die wir "uber dieses kritische Problem ver"offentlichen.
 
-\closing{Mit freundlichen Gr"u"sen}
+\expandafter\ifx\csname documentclass\endcsname\relax
+    \closing{Mit freundlichen Gr"u"sen}
+\else
+    \closing[{\includegraphics[height=2\baselineskip]{signatur.ps}}]%
+            {Mit freundlichen Gr"u"sen}
+\fi
 
 \ps{Falls Sie es w"unschen, lasse ich "uberpr"ufen, ob Sie Ihre
     Schenkung in Verbindung mit unserer Forschung von der Steuer

@@ -427,7 +427,7 @@ incompatibilities = {not full compatible to R. Sengerlings dinbrief}}
 % 
 % \fi
 %
-% \CheckSum{5317}
+% \CheckSum{5402}
 %%
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -454,6 +454,7 @@ incompatibilities = {not full compatible to R. Sengerlings dinbrief}}
 % \newcommand\file[1]{\texttt {#1}}
 % \newcommand\Lcount[1]{\textsl {\small#1}}
 % \newcommand\pstyle[1]{\textsl {#1}}
+% \newcommand\simm[1]{\SI{#1}{\milli\meter}}
 %
 %
 % \title{Standard Document Class `dinbrief'\\ for \LaTeX{} version 2e\\
@@ -514,6 +515,7 @@ Copyright \copyright\ 1993,\ 96,\ 98\\ by Klaus Dieter Braune, Richard Gussmann
 %
 \newcommand{\declline}[1]{\\\multicolumn1{|r|}{\small#1}}
 %
+\let\m\relax
 \newcommand{\m}[1]{\mbox{$\langle$\emph{#1}$\rangle$}}
 %
 \renewcommand{\arg}[1]{{\tt\string{}\m{#1}{\tt\string}}}
@@ -539,7 +541,7 @@ Copyright \copyright\ 1993,\ 96,\ 98\\ by Klaus Dieter Braune, Richard Gussmann
 \newcommand{\env}[2]{\cmd{#1}{\protect\tt\char`\{#2\char`\}}}
 \newcommand{\envname}[1]{{\protect\tt#1}}
 %
-\germanTeX
+\selectlanguage{ngerman}
 %
 \expandafter\ifx\csname emph\endcsname\relax
   \newcommand\emph[1]{{\em#1\/}}% This is \emph{not} the LaTeX2e
@@ -583,15 +585,15 @@ geschrieben werden.
 Die vorliegende Klasse \envname{dinbrief} basiert auf dem
 \envname{dinbrief}-Stil der Universit"at Karlsruhe. Dieser
 Stil wurde aus \envname{dletter.sty} entwickelt, welcher
-von D.~Heinrich abgefa"st wurde. Seinerseits geht dieser
+von D.~Heinrich abgefasst wurde. Seinerseits geht dieser
 zur"uck auf den Stil \envname{a4letter} von H.~Partl, welcher
 seinen Ursprung im urspr"unglichen \envname{letter}-Stil
 von L.~Lamport hatte. Zus"atzlich wurden aus den \envname{dinbrief.sty}
 von R.~Sengerling der Befehlsvorrat und die Option \Dopt{norm}
-"ubernommen. Ferner enth"alt diese Klasse Tips und Anregungen von
+"ubernommen. Ferner enth"alt diese Klasse Tipps und Anregungen von
 B.~Raichle.
 
-In den Briefen k"onnen u.a.\ Formeln,
+In den Briefen k"onnen u.\,a.\ Formeln,
 Tabellen und beliebige Listen verwendet werden.
 In einem Dokument k"onnen mehrere Briefe geschrieben werden.
 Die Gliederung in Abs"atze erfolgt durch Einf"ugen einer
@@ -602,13 +604,13 @@ Leerzeile (wie in \LaTeX\ "ublich).
 
 In der DIN Norm~676 werden zwei Formen von Briefen festgelegt.
 In "alteren Versionen dieses Paketes wurde nur diejenige Form unterst"utzt,
-in der oben ein Rand von 45mm f"ur den Briefkopf freigelassen wird.
-In der zweiten Version ist dieser Rand auf 27mm verk"urzt; damit steht f"ur
-den Brieftext mehr Platz (18mm) zur Verf"ugung.
+in der oben ein Rand von \simm{45} f"ur den Briefkopf freigelassen wird.
+In der zweiten Version ist dieser Rand auf \simm{27} verk"urzt; damit steht f"ur
+den Brieftext mehr Platz (\simm{18}) zur Verf"ugung.
 
 Die Wahl der gew"unschten Form kann durch Angabe der Optionen \Dopt{addresshigh}
-f"ur einen oberen Rand von 27mm oder \Dopt{addressstd} f"ur einen oberen Rand
-von 45mm getroffen werden.
+f"ur einen oberen Rand von \simm{27} oder \Dopt{addressstd} f"ur einen oberen Rand
+von \simm{45} getroffen werden.
 Die Angabe der Option \Dopt{addressstd} kann unterbleiben, da sie ohnehin
 voreingestellt ist.
 
@@ -642,13 +644,13 @@ Die erweiterte Form \cmd\closing\oarg{Unterschrift}\arg{Gru"sformel}
 erm"oglicht es, die Unterschrift unter den Brief als Text oder Graphik
 einzubinden.
 
-Im Anschlu"s an die Gru"sformel werden {\bf Anlagen-\/}
+Im Anschluss an die Gru"sformel werden {\bf Anlagen-\/}
 (\cmd\encl\arg{Anlage}), {\bf Verteilvermerke\/}
 (\cmd\cc\arg{Verteiler}) und das {\bf Postscriptum\/}
 (\cmd\ps\arg{Postscriptum}) an den Brief angef"ugt.
 
 Mit dem Befehl \cs{makelabels} (vor \env\begin{document})
-werden zus"atzlich {\bf Adre"s-Etiketten\/} erzeugt.
+werden zus"atzlich {\bf Adress-Etiketten\/} erzeugt.
 
 Dar"uberhinaus wurden die oben erw"ahnten Befehle
 \cs{address}, \cs{place} und \cs{signature} aus
@@ -738,7 +740,7 @@ F"ur alle, denen das "`Fenster"' um die Adresse nicht gef"allt,
 besteht die M"oglichkeit, durch Angabe von
 \cmd\nowindowrules\index{nowindowrules=\verb+\nowindowrules+}
 vor dem Befehl \cmd\opening\ dieses abzuschalten.
-Durch \cmd\windowrules\index{windowrules=\verb+\windowrules+} l"a"st es
+Durch \cmd\windowrules\index{windowrules=\verb+\windowrules+} l"asst es
 sich wieder aktivieren.
 
 Der Trennstrich zwischen der R"ucksendeadresse und der Anschrift im
@@ -816,22 +818,22 @@ und den Absender nicht ver"andert werden, damit sie im Fenster sichtbar sind.
 
 Der Befehl \cmd\setreflinetop\arg{L"angenangabe}\index{setreflinetop=\verb+\setreflinetop+}
 legt den Abstand der Oberkante der Bezugszeichenzeile vom oberen Papierrand
-fest; bei den beiden Formen der DIN Norm liegt diese Oberkante 8.5mm unterhalb
+fest; bei den beiden Formen der DIN Norm liegt diese Oberkante \simm{8.5} unterhalb
 des Fensters f"ur die Anschrift.
 
 Am Ende der ersten Seite von Briefen ist ein Feld f"ur Angaben zu
 Kapitalgesellschaften vorgesehen, das man bei eigenen Briefen gegebenenfalls
 zur Angabe des eigenen Kontos verwenden kann.
-Die Formbl"atter der Norm sehen f"ur dieses Feld nur die letzten 16mm des
+Die Formbl"atter der Norm sehen f"ur dieses Feld nur die letzten \simm{16} des
 Papiers vor.
 Ben"otigt man mehr Platz f"ur Angaben in diesem Feld, kann man mit dem Befehl
 \cmd\setbottomtexttop\arg{L"angenangabe}\index{setbottomtexttop=\verb+\setbottomtexttop+}
 die Oberkante des Feldes geeignet festlegen.
 Der f"ur den Brieftext zur Verf"ugung stehende Platz wird automatisch
-angepa"st.
+angepasst.
 
 Im Zusammenhang mit einer Verschiebung des Fensters f"ur die Anschrift
-m"ussen gegebenenfalls die Faltmarkierungen angepa"st werden.
+m"ussen gegebenenfalls die Faltmarkierungen angepasst werden.
 Den Abstand der oberen Faltmarkierung vom oberen Blattrand legt man mit dem
 Befehl \cmd\setupperfoldmarkvpos\arg{L"angenangabe}\index{setupperfoldmarkvpos=\verb+\setupperfoldmarkvpos+}
 fest, den der unteren Faltmarkierung entsprechend mit dem Befehl
@@ -841,7 +843,7 @@ aus der Blatth"ohe und kann nicht ver"andert werden.
 \medskip
 
 % \iffalse
-% Die Gr"o"se und Form von Adre"s-Etiketten kann mit den Befehlen
+% Die Gr"o"se und Form von Adress-Etiketten kann mit den Befehlen
 % \cmd\setlabelwidth\arg{Breite}\ und \cmd\setlabelheight\arg{H"ohe}\
 % festgelegt werden. Die Anzahl der Labels in einer Spalte wird durch
 % \cmd\setlabelnumber{Anzahl} angegeben. Der obere Rand kann mit dem
@@ -849,10 +851,10 @@ aus der Blatth"ohe und kann nicht ver"andert werden.
 % \cmd\spare{Anzahl} k"onnen am Anfang {\sl Anzahl\/} Labels frei
 % gelassen werden.
 % \fi
-Ausf"uhrungen und Erl"auterungen zum Erstellen von Adre"s-Etiketten
+Ausf"uhrungen und Erl"auterungen zum Erstellen von Adress-Etiketten
 finden Sie in einem eigenen Abschnitt weiter hinten in diesem Dokument.
 Die Befehlsreferenz enth"alt ebenfalls kurze Beschreibungen der
-Befehle zu den Adre"s-Etiketten.
+Befehle zu den Adress-Etiketten.
 
 Eine einfache Absenderanschrift in der auf Schreibmaschinen "ublichen
 Form (DIN~5008) wird durch den Befehl \cmd\stdaddress\arg{Absenderanschrift}
@@ -969,7 +971,7 @@ anzugeben.
         "Uberschreitet die H"ohe des optionalen Argumentes zwei Zeilen,
         rutscht die maschinenschrifliche Wiederholung der Unterschrift
         entsprechend nach unten.
-        Bitte beachten Sie, da"s ein optionales Argument eckige Klammern nur
+        Bitte beachten Sie, dass ein optionales Argument eckige Klammern nur
         enthalten darf, wenn das optionale Argument selbst in geschweifte
         Klammern eingeschlossen ist.
 
@@ -1003,7 +1005,7 @@ anzugeben.
         \cmd\ps{} wird ein Postskriptum gesetzt.
 
   \item[\cmd\makelabels] \hfil\break
-        Dieser Befehl mu"s in der Pr"aambel stehen; also
+        Dieser Befehl muss in der Pr"aambel stehen; also
         zwischen \cmd\documentstyle{} oder \cmd\documentclass{}
         und dem \env\begin{document}-Befehl.
         Er aktiviert das Ausdrucken von Adress-Etiketten.
@@ -1023,7 +1025,7 @@ anzugeben.
         Angaben angegeben. Der Befehl \cmd\bottomtext{} vereinbart
         diese Angaben.
 
-%        {\sl Dieser Befehl mu"s nach \env\begin{document}{} stehen.\/}
+%        {\sl Dieser Befehl muss nach \env\begin{document}{} stehen.\/}
 
   \item[\cmd\windowrules] \hfil\break
         Das Anschriftenfeld im Brief wird durch Linien ober-
@@ -1073,7 +1075,7 @@ anzugeben.
         Soll gleichzeitig die H"ohe des Fensters ge"andert werden, kann der
         Befehle \cmd\setaddressllcorner\ verwendet werden.
 
-        In der DIN Norm ist der Abstand vom linken Rand fest als 20mm
+        In der DIN Norm ist der Abstand vom linken Rand fest als \simm{20}
         vorgegeben (dieser Wert ist voreingestellt).
 
   \item[\cmd\setaddressllvpos\arg{Abstand vom oberen Rand}] \hfil\break
@@ -1085,8 +1087,8 @@ anzugeben.
         Die DIN Norm sieht zwei Varianten mit einer hochgestellten und einer
         tiefer gestellten Anschrift vor.
         Voreingestellt ist die tiefer gestellte Variante mit einem Wert von
-        90mm.
-        F"ur die hochgestellte Variante ist der Wert 72mm vorgeschrieben.
+        \simm{90}.
+        F"ur die hochgestellte Variante ist der Wert \simm{72} vorgeschrieben.
 
         Zur einfachen Auswahl der Varianten stehen die beiden Optionen
         \Dopt{addresshigh} (hochgestellte Anschrift) und \Dopt{addressstd}
@@ -1111,19 +1113,19 @@ anzugeben.
   \item[\cmd\setaddresswidth\arg{Breite des Fensters f"ur die Anschrift}]
         \hfil\break
         Mit diesem Befehl wird die Breite des Fensters f"ur die Anschrift
-        festgelegt (voreingestellt: 85mm).
+        festgelegt (voreingestellt: \simm{85}).
 
   \item[\cmd\setaddressheight\arg{H"ohe des Fensters f"ur die Anschrift}]
         \hfil\break
         Die H"ohe des Fensters f"ur die Anschrift kann man mit diesem Befehl
-        festlegen.  Voreingestellt sind 40mm.
+        festlegen.  Voreingestellt sind \simm{40}.
 
   \item[\cmd\setaddressoffset\arg{Abstand vom linken Fensterrand}] \hfil\break
-        In der Regel m"ochte man, da"s die Anschrift nicht direkt am linken
+        In der Regel m"ochte man, dass die Anschrift nicht direkt am linken
         Rand des Fensters f"ur die Anschrift beginnt, sondern einige
         Millimeter einger"uckt ist.
         Mit diesem Befehl kann man die Einr"uckung festlegen.
-        Voreingestellt sind 4mm.
+        Voreingestellt sind \simm{4}.
         Die Anschrift beginnt bei dieser Einstellung b"undig mit dem
         Text des Briefes.
 
@@ -1131,35 +1133,35 @@ anzugeben.
         \hfil\break
         Das Feld f"ur den Absender schlie"st oben an das Fensters f"ur die
         Anschrift an.  Die H"ohe dieses Feldes wird mit dem Befehl
-        \cmd\setbackaddressheight\ festgelegt.  Voreingestellt sind 5mm.
+        \cmd\setbackaddressheight\ festgelegt.  Voreingestellt sind \simm{5}.
 
   \item[\cmd\setreflinetop\arg{Abstand vom oberen Rand}] \hfil\break
         Mit diesem Befehl wird der Abstand der Oberkante der
         Bezugszeichenzeile vom oberen Blattrand festgelegt.
-        Voreingestellt sind 98.5mm; bei Angabe der Option f"ur eine
-        hochgestellte Anschrift wird der Wert auf 80.5mm gesetzt.
+        Voreingestellt sind \simm{98.5}; bei Angabe der Option f"ur eine
+        hochgestellte Anschrift wird der Wert auf \simm{80.5} gesetzt.
 
   \item[\cmd\setbottomtexttop\arg{Abstand vom oberen Rand}] \hfil\break
         Mit diesem Befehl legt man den den Abstand der Oberkante des Feldes
         f"ur Gesch"aftsangaben und (nur bei Kapitalgesellschaften)
         gesellschaftsrechtliche Angaben auf der ersten Seite und dem oberen
         Blattrand fest.
-        Voreingestellt sind 281mm; bei mehrzeiligen Angaben in diesem Fekd
-        mu"s man den Wert entsprechend verringern.
+        Voreingestellt sind \simm{281}; bei mehrzeiligen Angaben in diesem Fekd
+        muss man den Wert entsprechend verringern.
         Der Abgleich mit der H"ohe der letzten verf"ugbaren Zeile auf der
         Seite erfolgt automatisch.
 
   \item[\cmd\setupperfoldmarkvpos\arg{Abstand vom oberen Rand}] \hfil\break
         Mit diesem Befehl legt man den Abstand der \emph{oberen}
         Faltmarkierung vom oberen Blattrand fest.
-        Voreingestellt sind 105mm und bei Angabe der Option f"ur eine
-        hochgestellte Anschrift 87mm.
+        Voreingestellt sind \simm{105} und bei Angabe der Option f"ur eine
+        hochgestellte Anschrift \simm{87}.
 
   \item[\cmd\setlowerfoldmarkvpos\arg{Abstand vom oberen Rand}] \hfil\break
         Den Abstand der \emph{unteren} Faltmarkierung vom oberen Blattrand
         legt man mit diesem Befehl fest.
-        Voreingestellt sind 210mm und bei Angabe der Option f"ur eine
-        hochgestellte Anschrift 192mm.
+        Voreingestellt sind \simm{210} und bei Angabe der Option f"ur eine
+        hochgestellte Anschrift \simm{192}.
 
   \item[\cmd\setlabelwidth\arg{Breite eines Labels}] \hfil\break
         Dieser Befehl legt die Breite eines Labels fest.
@@ -1186,7 +1188,7 @@ anzugeben.
   \item[\cmd\spare\arg{Anzahl leerer Labels}] \hfil\break
         Es werden die im Argument des Befehls angegebene
         Anzahl von Label freigelassen, bevor das erste
-        Adre"s--Etikett ausgegeben wird. Die Label werden
+        Adress-Etikett ausgegeben wird. Die Label werden
         spaltenweise durchgez"ahlt.
 
 % \iffalse
@@ -1212,14 +1214,14 @@ anzugeben.
   \item[\cmd\postremark\arg{Postvermerk}] \hfil\break
         Der Postvermerk wird mit dem Befehl \cmd\postremark{}
         vereinbart. Der Postvermerk geht der Empf"angeranschrift
-        mit einer Leerzeile voraus. Dieser Befehl mu"s zwischen
+        mit einer Leerzeile voraus. Dieser Befehl muss zwischen
         \env\begin{letter} und dem Befehl \cmd\opening\ stehen.
 
   \item[\cmd\handling\arg{Behandlungsvermerk}] \hfil\break
         Der Behandlungsvermerk wird rechts neben der
         Empf"angeranschrift auf Grad 50 (bei einer 10er Teilung)
         in H"ohe der letzten Zeile der Empf"angeranschrift
-        ausgegeben. Dieser Befehl mu"s zwischen
+        ausgegeben. Dieser Befehl muss zwischen
         \env\begin{letter} und dem Befehl \cmd\opening\ stehen.
 \end{description}
 
@@ -1505,10 +1507,10 @@ Briefen gesetzt.
 \ssect{Einblenden von Unterschriften}
 \cmd\closing\oarg{Unterschrift}\arg{Gru"sformel} erlaubt es,
 die Unterschrift als Graphik einzubinden. F"ur unser Beispiel
-nehmen wir an, da"s die Graphik als encapuslated Postscript-Datei
+nehmen wir an, dass die Graphik als encapuslated Postscript-Datei
 im Verzeichnis und mit Namen \file{graph/sig.eps} vorliegt.
 Die Befehle zum Einbinden von Graphiken stellt das Paket
-{\sc graphics} zur Verfgung. In der Pr"aambel des Briefes wird
+{\sc graphics} zur Verf"ugung. In der Pr"aambel des Briefes wird
 ein Befehl zum Setzen der Unterschrift definiert:\\[\medskipamount]
 \hspace*{2em}\verb|\newcommand{\setsignature}{\includegraphics{graph/sig.eps}}|\\[\medskipamount]
 Die Gru"sformel wird dann in der erweiterten Form gesetzt:\\[\medskipamount]
@@ -1518,7 +1520,7 @@ Befehl \verb+\raisebox+ in die notwendige Position zu schieben.
 Dazu ist die Definition des Macros zum Einbinden der Unterschrift
 wie folgt anzupassen:\\[\medskipamount]
 \hspace*{2em}\verb|\newcommand{\setsignature}{\raisebox{-3mm}{\includegraphics{graph/sig.eps}}}|\\[\medskipamount]
-Die L"angenangabe (hier -3mm) ist entsprechend anzupassen.
+Die L"angenangabe (hier \simm{-3}) ist entsprechend anzupassen.
 
 \ssect{Briefe in englischer oder franz"osischer Sprache}
  
@@ -1527,7 +1529,7 @@ Franz"osisch die Trennung (abh"angig von der Installation) und Befehle f"ur
 Buchstaben mit Akzenten mit dem Befehl
 \cmd\selectlanguage\arg{Sprache}
 \index{selectlanguage=\verb+\selectlanguage+} umschalten.
-Das Umsetzen von Bezeichnungen z.B.\ f"ur Anlage \dots{} mu"s explizit durch
+Das Umsetzen von Bezeichnungen z.B.\ f"ur Anlage \dots{} muss explizit durch
 Befehle erfolgen, die in der Dokumentation zum {\tt dinbrief} beschrieben sind.
 
  
@@ -1598,7 +1600,7 @@ Platzhalter \verb|#address| durch den Dateinamen zu ersetzen.
 \end{center}
 \end{figure}
 
-Beachten sollte man, da"s dann der Text in der Datei {\tt brftext.tex}
+Beachten sollte man, dass dann der Text in der Datei {\tt brftext.tex}
 direkt mit
 \verb+\opening{...}+ beginnt (also kein \verb+\begin{letter}+ und
 \verb+\end{letter}+ enth"alt) und mit \verb+\closing{...}+ bzw.
@@ -1638,7 +1640,7 @@ unseren Mikrowellenherd...
 Dieser Abschnitt enth"alt Passagen aus den
 Normen DIN~5008 (Regeln f"ur das Maschinenschreiben) und
 DIN~676 (Gesch"aftsbrief), erg"anzt um einige
-zus"atzliche Hinweise und Tips.
+zus"atzliche Hinweise und Tipps.
 Der Abschnitt erhebt keinen Anspruch auf
 Vollst"andigkeit. Er soll Anf"angern wie auch
 Ge"ubten einen "Uberblick "uber die wichtigsten
@@ -1670,7 +1672,7 @@ auf bekannte Fehler hingewiesen.
         der Zeile mit Postfach oder Stra"se und Hausnummer
         und der Zeile mit dem Bestimmungsort entbehrlich,
         wenn das Bestimmungsland unter der entsprechenden
-        Zeile angegeben werden mu"s.
+        Zeile angegeben werden muss.
 
         Im Verkehr mit bestimmten L"andern kann auf die
         Angabe des Bestimmungslandes verzichtet werden,
@@ -1704,7 +1706,7 @@ auf bekannte Fehler hingewiesen.
         Briefteile.
 
         Der {\em Wortlauf des Betreffs\/} wird ohne
-        Schlu"spunkt geschrieben.
+        Schlusspunkt geschrieben.
 % \iffalse
         Der {\em Teilbetreff\/} beginnt an der Fluchtlinie
         (linker Rand), schlie"st mit einem Punkt und wird
@@ -1717,7 +1719,7 @@ auf bekannte Fehler hingewiesen.
         Behandlungsvermerke (z.B.\ eilt) werden
         neben das Anschriftenfeld, beginnend auf
         Grad 50 (bei einer 10er Teilung), oder im
-        Anschlu"s an die Betreffangabe geschrieben;
+        Anschluss an die Betreffangabe geschrieben;
         sie k"onnen hervorgehoben werden.
 
   \item {\bf Anlagen- und Verteilvermerke}
@@ -1775,7 +1777,7 @@ auf bekannte Fehler hingewiesen.
         mit Seitenstilen, die die Fu"szeile unten mit
         der Seitennummer oder Folgeseitennummer
         beschriften, hat unter Umst"anden zur Folge,
-        da"s die Seiten- oder Folgeseitennummer
+        dass die Seiten- oder Folgeseitennummer
         von diesen Feldern "uberschrieben wird.
 
   \item {\bf Kommunikationszeile am Blattende und
@@ -1804,8 +1806,8 @@ auf bekannte Fehler hingewiesen.
         der Firma angegeben werden.
 \end{enumerate}
 
-\ssect{Adre"s--Etiketten}
-Das Ausdrucken von Adre"s-Etiketten ist w"unschenswert, wenn
+\ssect{Adress-Etiketten}
+Das Ausdrucken von Adress-Etiketten ist w"unschenswert, wenn
 keine Fensterbriefh"ullen verwendet werden. Damit das Bedrucken
 von verschiedenen Etiketts"atzen m"oglich wird, kann die Breite
 und H"ohe der einzelnen Etiketten mit den Befehlen
@@ -1818,7 +1820,7 @@ Die Anzahl der Labels in einer Spalte wird durch den Befehl
 Verwendung eines Etikettenblatts wird durch den Befehl
 \verb|\spare|\arg{Anzahl} m"oglich. Dieser Befehl r"uckt
 den Druckbeginn um {\em Anzahl\/} Positionen vor.
-Die Ausgabe der Adre"s--Etiketten erfolgt spaltenweise.
+Die Ausgabe der Adress--Etiketten erfolgt spaltenweise.
 
 In vielen Druckern bleiben die Etikettenbl"atter h"angen,
 wenn die Tr"agerfolie in beiden Spalten freiliegt. Drucker,
@@ -1842,7 +1844,7 @@ Fassung stellt beide Befehlss"atze zur Verf"ugung und f"uhrt die
 bisher unabh"anigen Briefstile zusammen.
 
 Gegenw"artig wird die Klassenoption \verb|german| nicht ausgewertet
-und f"uhrt zu einer Warnung. Alternativ mu"s mit dem Befehl
+und f"uhrt zu einer Warnung. Alternativ muss mit dem Befehl
 \begin{quote}
   \verb|\usepackage{german}|\\
 \end{quote}
@@ -1855,7 +1857,7 @@ der Stil "`{\tt german}"' geladen werden.
         Anschriftenfeld des Briefs fest.
 
   \item[\cmd\Retourlabel] \hfil\break
-        Dieser Befehl erzeugt Absenderadre"s-Etiketten, falls
+        Dieser Befehl erzeugt Absenderadress-Etiketten, falls
         die Erzeugung der Etiketten aktiviert wurde.
 
         Ferner wird die Ausgabe der \cmd\Retouradresse\ unterdr"uckt.
@@ -1927,7 +1929,7 @@ der Stil "`{\tt german}"' geladen werden.
         neben der Gru"sformel auf Grad 50. Mit diesem Befehl
         kann Platz gespart werden, falls die Seite fast voll
         ist, und kein neues Blatt begonnen werden soll.
-        Dieser Befehl mu"s vor \cmd\closing\ stehen.
+        Dieser Befehl muss vor \cmd\closing\ stehen.
         Die Anlagen- und Verteilvermerke m"ussen in diesem
         Fall ebenfalls vor dem \cmd\closing-Befehl stehen.
 
@@ -1949,17 +1951,17 @@ der Stil "`{\tt german}"' geladen werden.
   \item[\cmd\Etihoehe\arg{H"ohe eines Adressetiketts}] \hfil\break
         Verschiedene Herstelle vertreiben Adressetiketten,
         die alle ein bischen anders sind. Um den Briefstil
-        an unterschiedlich hohe Adre"setiketten anzupassen,
+        an unterschiedlich hohe Adressetiketten anzupassen,
         kann mit dem Befehl \cmd\Etihoehe\ die H"ohe eines
         Etiketts angegeben werden.
 
   \item[\cmd\Etirand\arg{oberer Rand}] \hfil\break
-        Die B"ogen mit den Adre"setiketten haben oft einen
+        Die B"ogen mit den Adressetiketten haben oft einen
         Versatz oder oberen Rand. Mit dem Befehl \cmd\Etirand\
         kann dieser Versatz eingestellt werden.
 
   \item[\cmd\Etizahl\arg{Zahl der Etiketten}] \hfil\break
-        Auf ein Blatt mit Adre"setiketten passen leider
+        Auf ein Blatt mit Adressetiketten passen leider
         nicht beliebig viele sondern nur eine begrenzte
         Anzahl von Etiketten, die sich dann auch nicht kunterbunt
         auf dem Blatt tummeln, sondern Spaltenweise angeordnet
@@ -1968,8 +1970,8 @@ der Stil "`{\tt german}"' geladen werden.
         angegeben.
 
   \item[\cmd\spare\arg{{n}}] \hfil\break
-        Das Bedrucken der Adre"setiketten beginnt nach {\em n\/}
-        leeren Adre"slabeln. Die Label werden spaltenweise
+        Das Bedrucken der Adressetiketten beginnt nach {\em n\/}
+        leeren Adresslabeln. Die Label werden spaltenweise
         durchgez"ahlt.
 
 \end{description}
@@ -2155,7 +2157,7 @@ der Stil "`{\tt german}"' geladen werden.
 %    \begin{macrocode}
 \ifka@db@ltxtwoe
   \NeedsTeXFormat{LaTeX2e}[1996/12/01]
-  \ProvidesClass{dinbrief}[2000/03/02 LaTeX2e class]
+  \ProvidesClass{dinbrief}[2021/05/06 LaTeX2e class]
 \else
   \long\def\@firstofone#1{#1}
 \fi
@@ -2558,7 +2560,7 @@ der Stil "`{\tt german}"' geladen werden.
 %    Changing the letter layout parameters from absolute lengths to length
 %    variables allows easy support of both versions of the DIN 676 letter
 %    layout:  `Form A' with address filed put high on the page
-%    (\Lopt{addresshigh}), and `Form B' with address field 18mm lower
+%    (\Lopt{addresshigh}), and `Form B' with address field \simm{18} lower
 %    (\Lopt{addrl ow}).  Since up to now only `Form B' has been supported,
 %    it has been choosen to be the default.  The option code is executed
 %    after the other class commands since the lengths used are introduced
@@ -3287,9 +3289,9 @@ der Stil "`{\tt german}"' geladen werden.
 %  the field.
 %  The length |\addroffset| is an offset of the address text to the left
 %  margin of the address field, since in most cases it is preferred to start
-%  it a small amount off that margin.  The default value is 4mm.
+%  it a small amount off that margin.  The default value is \simm{4}.
 %  |\ka@db@addrhoffs| specifies the offset of the address field against the
-%  beginning of the text lines (defined as 24mm off the left paper  bound).
+%  beginning of the text lines (defined as \simm{24} off the left paper  bound).
 %    \begin{macrocode}
 \newdimen\addrhpos
 \newdimen\addrvpos
@@ -3391,7 +3393,7 @@ der Stil "`{\tt german}"' geladen werden.
 %  |\ufldmarkvpos| and |\lfldmarkvpos| the upper and lower fold marks, and
 %  |\perfmarkvpos| the mark for perforation.
 %  |\ka@db@foldmarkhoffs| specifies the offset of the fold marks against the
-%  beginning of the text lines (defined as 24mm off the left paper  bound),
+%  beginning of the text lines (defined as \simm{24} off the left paper  bound),
 %  |\ka@db@perfmarkhoffs| definies the corresponding offset for the perforation
 %  mark.
 %    \begin{macrocode}
@@ -4104,7 +4106,7 @@ der Stil "`{\tt german}"' geladen werden.
 % \changes{1.72.0}{2000/03/02}{(KB) Check \cmd\footskip\ set to 0pt as done by
 %			       the pagestyles empty, headings and myheadings
 %			       and calculate position of bottomtext as if
-%			       \cmd\footskip\ would be 8.8mm.}
+%			       \cmd\footskip\ would be \simm{8.8}.}
 %                             
 %    \begin{macrocode}
   \setcounter{lt@state}{2}
@@ -5439,66 +5441,125 @@ der Stil "`{\tt german}"' geladen werden.
 %    \end{macrocode}
 % \end{macro}
 %
+%    \LaTeXe\ provides a new hook system since release 2020-10-01.
+%    Then, the hack of redefining environment \texttt{document}
+%    is no longer needed. The hack is dangerous, because it
+%    breaks packages that use the new hooks.
+%
+%    The switch \cs{ifka@db@ltxhooks} is enabled, if the
+%    used new \LaTeXe\ hooks commands and hooks are present.
+%    \begin{macrocode}
+\newif\ifka@db@ltxhooks
+\begingroup\expandafter\expandafter\expandafter\endgroup
+\expandafter\ifx\csname IfHookExistsTF\endcsname\relax
+\else
+  \begingroup\expandafter\expandafter\expandafter\endgroup
+  \expandafter\ifx\csname AddToHook\endcsname\relax
+  \else
+    \ka@db@ltxhookstrue
+    \IfHookExistsTF{begindocument/before}{}{\ka@db@ltxhooksfalse}
+    \IfHookExistsTF{enddocument/afterlastpage}{}{\ka@db@ltxhooksfalse}
+  \fi
+\fi
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\ifka@db@ltxhooks
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+  \def\ka@db@document{%
+    \if@filesw
+      \ifnum\c@labelgen>0
+        \immediate\openout\@mainlbl=\jobname@lbl
+        \immediate\write\@mainlbl{\string\relax}%
+        \immediate\write\@mainlbl{\string\startlabels\string\@startlabels}%
+      \fi
+    \fi
+  }
+  \AddToHook{begindocument/before}{\ka@db@document}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+  \def\ka@db@enddocument{%
+    \if@filesw
+      \ifnum\c@labelgen>0
+        \immediate\closeout\@mainlbl
+        \edef\ka@db@restore@at@catcode{\catcode64=\the\catcode64\relax}%
+        \makeatletter
+        \input \jobname@lbl\relax
+        \clearpage
+        \ka@db@restore@at@catcode
+      \fi
+    \fi
+  }
+  \AddToHook{enddocument/afterlastpage}{\ka@db@enddocument}
+%    \end{macrocode}
+%
+%    \begin{macrocode}  
+\else
+%    \end{macrocode}
+%
 % \begin{macro}{\document}
 %    \begin{macrocode}
-\def\document{%
+  \def\document{%
   \endgroup
 %    \end{macrocode}
 %    If some options on |\documentclass| haven't been used by any
 %    package we will now give a warning since this is most certainly a
 %    misspelling.
 %    \begin{macrocode}
-  \ifka@db@ltxtwoe
-    \ifx\@unusedoptionlist\@empty\else
-      \@latex@warning@no@line{Unused global option(s):^^J%
-              \@spaces[\@unusedoptionlist]}%
-    \fi
-  \fi
-  \@colht=\textheight
-  \@colroom=\textheight
-  \vsize=\textheight
-  \columnwidth=\textwidth
-  \@clubpenalty=\clubpenalty
-  \if@twocolumn
-    \advance\columnwidth -\columnsep
-    \divide\columnwidth\tw@
-    \hsize=\columnwidth
-    \@firstcolumntrue
-  \fi
-  \hsize=\columnwidth
-  \linewidth=\hsize
-  \begingroup
-    \@floatplacement
-    \@dblfloatplacement
-    \makeatletter
     \ifka@db@ltxtwoe
-      \let\@writefile\@gobbletwo
+      \ifx\@unusedoptionlist\@empty\else
+        \@latex@warning@no@line{Unused global option(s):^^J%
+                \@spaces[\@unusedoptionlist]}%
+      \fi
     \fi
-    \@input{\jobname@aux}%
-  \endgroup
-  \if@filesw
-    \ifnum\c@labelgen>0
-      \immediate\openout\@mainlbl=\jobname@lbl
-      \immediate\write\@mainlbl{\string\relax}%
-      \immediate\write\@mainlbl{\string\startlabels\string\@startlabels}%
+    \@colht=\textheight
+    \@colroom=\textheight
+    \vsize=\textheight
+    \columnwidth=\textwidth
+    \@clubpenalty=\clubpenalty
+    \if@twocolumn
+      \advance\columnwidth -\columnsep
+      \divide\columnwidth\tw@
+      \hsize=\columnwidth
+      \@firstcolumntrue
     \fi
-    \immediate\openout\@mainaux=\jobname@aux
-    \immediate\write\@mainaux{\string\relax}%
-  \fi
-  \ifka@db@ltxtwoe
-    \process@table
-    \let\glb@currsize\@empty  %% Force math initialisation.
-  \fi
-  \@normalsize
-  \everypar{}%
-  \ifka@db@ltxtwoe
-    \@noskipsecfalse
+    \hsize=\columnwidth
+    \linewidth=\hsize
+    \begingroup
+      \@floatplacement
+      \@dblfloatplacement
+      \makeatletter
+      \ifka@db@ltxtwoe
+        \let\@writefile\@gobbletwo
+      \fi
+      \@input{\jobname@aux}%
+    \endgroup
+    \if@filesw
+      \ifnum\c@labelgen>0
+        \immediate\openout\@mainlbl=\jobname@lbl
+        \immediate\write\@mainlbl{\string\relax}%
+        \immediate\write\@mainlbl{\string\startlabels\string\@startlabels}%
+      \fi
+      \immediate\openout\@mainaux=\jobname@aux
+      \immediate\write\@mainaux{\string\relax}%
+    \fi
+    \ifka@db@ltxtwoe
+      \process@table
+      \let\glb@currsize\@empty  %% Force math initialisation.
+    \fi
+    \@normalsize
+    \everypar{}%
+    \ifka@db@ltxtwoe
+      \@noskipsecfalse
 %    \end{macrocode}
-%    |\G@refundefinedfalse| ist not longer needed. D.\ Carlile send us
+%    |\G@refundefinedfalse| ist not longer needed. D.\ Carlisle send us
 %    an E-Mail (95/12/12) to avoid conflicts with the December 1995
 %    release of \LaTeXe.
 %    \begin{macrocode}
-  \fi
+    \fi
 %    \end{macrocode}
 %    Just before disabling the preamble commands we execute the begin
 %    document hook which contains any code contributed by
@@ -5511,18 +5572,18 @@ der Stil "`{\tt german}"' geladen werden.
 %    the user adds something like |\begin{multicols}| to the document
 %    hook, ie starts a group in |\begin{document}|.
 %    \begin{macrocode}
-  \ifka@db@ltxtwoe
-    \@begindocumenthook
-    \ifdim\topskip<1sp
-      \topskip 1sp
-      \relax
+    \ifka@db@ltxtwoe
+      \@begindocumenthook
+      \ifdim\topskip<1sp
+        \topskip 1sp
+        \relax
+      \fi
+      \let\@begindocumenthook\@undefined
+      \ifx\@listfiles\@undefined
+        \let\@filelist\relax
+        \let\@addtofilelist\@gobble
+      \fi
     \fi
-    \let\@begindocumenthook\@undefined
-    \ifx\@listfiles\@undefined
-      \let\@filelist\relax
-      \let\@addtofilelist\@gobble
-    \fi
-  \fi
 %    \end{macrocode}
 %    At the very end we disable all preamble commands. This has to
 %    happen after the begin document hooks was executed so that this
@@ -5530,42 +5591,46 @@ der Stil "`{\tt german}"' geladen werden.
 %    |\AtBeginDocument|.
 %
 %    \begin{macrocode}
-  \def\do##1{\let ##1\@notprerr}%
-  \@preamblecmds
+    \def\do##1{\let ##1\@notprerr}%
+    \@preamblecmds
 %    \end{macrocode}
 %    The next line is a pure safty measure in case a do list is
 %    ever expanded at the wrong place. In addition it will save
 %    a few tokens to get rid of the above definition.
 %    \begin{macrocode}
-  \global\let\do\noexpand
+    \global\let\do\noexpand
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-%  \long\def\ka@db@bottomtext##1{\ka@db@mainbottomtext{##1}}
+%    \long\def\ka@db@bottomtext##1{\ka@db@mainbottomtext{##1}}
 }
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\enddocument}
 %    \begin{macrocode}
-\def\enddocument{%
-  \@checkend{document}
-  \newpage
-  \begingroup
-    \if@filesw
-      \ifnum\c@labelgen>0
-        \immediate\closeout\@mainlbl
-        \makeatletter
-        \input \jobname@lbl\relax
-        \clearpage
+  \def\enddocument{%
+    \@checkend{document}
+    \newpage
+    \begingroup
+      \if@filesw
+        \ifnum\c@labelgen>0
+          \immediate\closeout\@mainlbl
+          \makeatletter
+          \input \jobname@lbl\relax
+          \clearpage
+        \fi
+        \immediate\closeout\@mainaux
       \fi
-      \immediate\closeout\@mainaux
-    \fi
-  \endgroup
-  \deadcycles\z@
-  \@@end}
+    \endgroup
+    \deadcycles\z@
+    \@@end}
 %    \end{macrocode}
 % \end{macro}
+%
+%    \begin{macrocode}
+\fi
+%    \end{macrocode}
 %
 % \subsubsection{Controlling the generation of labels}
 %  \cmd\makelabels\ is a preamble command to enable the generation
@@ -6464,12 +6529,12 @@ der Stil "`{\tt german}"' geladen werden.
 %
 %    %The length \cmd\@fordate\ is the width of the field for date
 %    %and place. This length is being determined by subtracting the
-%    %length of the other fields (50,8mm + 50,8mm + 25,4mm + 4mm)
-%    %131 mm from \cmd\textwidth. (why 4mm?)
+%    %length of the other fields (\simm{50.8} + \simm{50.8} + \simm{25.4} + \simm{4})
+%    %131 mm from \cmd\textwidth. (why \simm{4}?)
 %    The length of the field for date and/or place -- the remaining part of
 %    the reference line -- is no longer computed since its specific value
 %    has no effect to the output.  Instead, the field width is set to
-%    |\ka@db@shfldwd|=25.4mm leaving 8.2mm to the right paper bound.
+%    |\ka@db@shfldwd|=25.4mm leaving \simm{8.2} to the right paper bound.
 %
 %    \begin{macrocode}
 \def\@answertoold{%
@@ -6757,7 +6822,7 @@ der Stil "`{\tt german}"' geladen werden.
 %  \end{macro}
 %
 %  \begin{macro}{\anlagenrechts}
-%  The enclosures are placed on the right side (at degree 50) 101.6mm
+%  The enclosures are placed on the right side (at degree 50) \simm{101.6}
 %  from the left margin. They start at the same line as the closing
 %  formula.
 %    \begin{macrocode}
@@ -7049,10 +7114,10 @@ rs
 
 \opening{Sehr geehrter Herr Prof.\ Forschegut,}
 
-von Kollegen habe ich erfahren, da"s sich bei Ihnen eine gro"se
+von Kollegen habe ich erfahren, dass sich bei Ihnen eine gro"se
 Anzahl von Alka-Seltzer Flaschen mit nur noch einer Tablette
 angesammelt hat, da eine Flasche 25~Tabletten enth"alt, der
-Beipackzettel aber angibt, da"s stets 2~Tabletten gleichzeitig
+Beipackzettel aber angibt, dass stets 2~Tabletten gleichzeitig
 einzunehmen sind.
 
 Ich forsche gerade im Bereich m"oglicher Anwendungen einzelner
@@ -7095,10 +7160,10 @@ stellen, die wir "uber dieses kritische Problem ver"offentlichen.
 
 \opening{Sehr geehrter Herr Prof.\ Forschegut,}
 
-von Kollegen habe ich erfahren, da"s sich bei Ihnen eine gro"se
+von Kollegen habe ich erfahren, dass sich bei Ihnen eine gro"se
 Anzahl von Alka-Seltzer Flaschen mit nur noch einer Tablette
 angesammelt hat, da eine Flasche 25~Tabletten enth"alt, der
-Beipackzettel aber angibt, da"s stets 2~Tabletten gleichzeitig
+Beipackzettel aber angibt, dass stets 2~Tabletten gleichzeitig
 einzunehmen sind.
 
 Ich forsche gerade im Bereich m"oglicher Anwendungen einzelner
@@ -7174,7 +7239,7 @@ stellen, die wir "uber dieses kritische Problem ver"offentlichen.
 Wild zuckt der Blitz,\\
 im fahlen Lichte steht ein Turn,\\
 der Donner rollt,\\
-ein Reiter k"ampft mit seinem Ro"s,\\
+ein Reiter k"ampft mit seinem Ross,\\
 springt ab un pocht ans Tor und l"armt.\\
 Sein Mantel saust im Wind,\\
 und knarrent "offnet jetzt das Tor ein Edelmann.\\
@@ -7466,7 +7531,7 @@ werden soll, bitte ich dringend, das Genehmigungsverfahren zu
 beschleunigen.
 }  % Ende der Einrueckung
 
-Gleichzeitig bitte ich um Auskunft, ob damit zu rechnen ist, da"s der
+Gleichzeitig bitte ich um Auskunft, ob damit zu rechnen ist, dass der
 nur geschotterte Waldrebenweg in absehbarer Zeit zu einer "`Stra"se im
 vorl"aufigen Ausbau"' umgestaltet wird.
 
@@ -7599,7 +7664,9 @@ F-58500 CLAMECY}
 %    \begin{macrocode}
 %<*driver>
 \documentclass{ltxdoc}
-\usepackage{german}
+\usepackage{microtype}
+\usepackage[ngerman]{babel}
+\usepackage{siunitx}
 \originalTeX
 %    \end{macrocode}
 %

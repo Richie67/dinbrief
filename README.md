@@ -29,14 +29,14 @@ Distribution of unchanged versions:
 
  It may be distributed under the terms of the LaTeX Project Public
  License (LPPL), as described in lppl.txt in the base LaTeX distribution.
- Either version 1.1 or, at your option, any later version.
+ Either version 1.3c or, at your option, any later version.
 
  The latest version of this license is in
 
        http://www.latex-project.org/lppl.txt
 
- LPPL Version 1.1 or later is part of all distributions of LaTeX
- version 1999/06/01 or later.
+ LPPL Version 1.3c or later is part of all distributions of LaTeX
+ version 2008-05-04 or later.
 
  For error reports in case of UNCHANGED versions see readme files.
 

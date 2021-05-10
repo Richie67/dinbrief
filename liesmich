@@ -2,7 +2,7 @@
 %% This is LIESMICH                                          <2000/01/19>
 %% ======================================================================
 
-Diese neue Version 1.72 des LaTeX-Paketes 'dinbrief' ist lauffaehig
+Diese neue Version 1.74 des LaTeX-Paketes 'dinbrief' ist lauffaehig
 unter LaTeX2e ab der Version vom 01.12.96 oder unter LaTeX 209.
 Unter LaTeX 209 muss man gewisse Einschraenkungen in Kauf nehmen -
 beispielsweise wird die neu eingefuehrte Konfigurationsdatei unter
@@ -11,12 +11,6 @@ Paketes in 'dinbrief.drv' laesst sich nicht mit LaTeX 209 formatieren;
 Alle Beispiele und das Benutzerhandbuch koennen aber auch unter
 LaTeX 209 formatiert werden.
 
-Anmerkungen und Fehlerreports bitte an
-    Richard Gussmann
-    EMAIL: Internet: richard@gussmann.de
-  oder an
-    Dr. Klaus Braune
-    EMAIL: Internet: braune@rz.uni-karlsruhe.de
 
 1) Aenderungen
    1.1 Im AUX-File koennen die enthaltenen Befehle nun auch das

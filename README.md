@@ -13,10 +13,6 @@ This file is part of the dinbrief package.
 
 # GENERAL INFORMATION
 
-IMPORTANT NOTICE:
-
-You are not allowed to change this readme file.
-
 Distribution of unchanged versions:
 
  Copyright (C) 1993, 96, 97 by University of Karlsruhe (Computing Center).
@@ -113,15 +109,6 @@ Generation and distribution of changed versions:
 Please note that it is important to make the file as small as possible
 to allow us to find and fix the error soon.
 
-Error reports in case of UNCHANGED versions to
-
-                          Richard Gussmann
-                          Max-Beckmann-Stra\ss{}e 33
-                          76227 Karlsruhe
-               Internet:  <richard@gussmann.de>
-
-Please send error reports for contributed files to the original authors.
-
 # FILES IN THIS DISTRIBUTION
 
 You should get the following files:
@@ -130,7 +117,7 @@ You should get the following files:
 
   `README.md`        The readme file in MD format.
 
-  `readme`           The readme file in plain text format.
+  `liesmich`         German readme file in plain text format.
 
   `dinbrief.ins`     This is the installation script that will produce
                    the executable files in this package and the driver
@@ -181,15 +168,9 @@ special layout, etc.
 shortpackagename = {dinbrief},
 longpackagename  = {dinbrief},
 baseformats      = {\LaTeX\ 2.09 and \LaTeXe},
-version          = {$Revision: 1.72 $},
-date             = {$Date: 2000/01/19 14:51:04 $},
-author           = {K.D. Braune, R. Gussmann,
-                   richard@gussmann.de
-                   Universit\"at Karlsruhe
-                   Rechenzentrum
-                   Postfach 6980
-                   76128 Karlsruhe
-                   +49 721 608-40 31},
+version          = {$Revision: 1.74 $},
+date             = {$Date: 2021/05/10 14:51:04 $},
+author           = {K.D. Braune, R. Gussmann},
 abstract         = {This document serves as User's Guide
                    and as documentation of the new \LaTeX-Style
                    or a \LaTeXe-Class.  This class/style implements
